@@ -14,6 +14,10 @@ file( GLOB CORE_SOURCES ${CORE_INCLUDE_DIR}/*.h src/*.cpp )
 # Create core target
 add_library(core STATIC ${CORE_SOURCES})
 
+#find_package(SDL2 REQUIRED)
+#include_directories(${SDL2_INCLUDE_DIRS})
+
+
 #set_target_properties(core PROPERTIES PUBLIC_HEADER include/core.h)
 
 target_include_directories(core PUBLIC ${CORE_INCLUDE_DIR})

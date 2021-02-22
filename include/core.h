@@ -2,7 +2,9 @@
 #define INTERFACERS_CORE_H
 
 
-#include "bgfx/bgfx.h"
+namespace core {
+    void init();
+}
 
 
 #endif //INTERFACERS_CORE_H
