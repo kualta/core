@@ -3,7 +3,15 @@
 
 
 namespace core {
-    void init();
+    int init();
+    int InitWindow();
+    int InitSound();
+    int InitInput();
+    int InitNetwork();
+    int InitPhysics();
+    int InitRender();
+
+    int CreateWindow();
 }
 
 

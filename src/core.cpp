@@ -9,14 +9,16 @@
 namespace core {
 
 
-    void init() {
+    int init() {
 
-        bgfx::init();
+        InitWindow();
 
-        SDL_Init(SDL_INIT_VIDEO);
+        InitRender();
+        InitInput();
+        InitSound();
 
         SDL_Window *window = SDL_CreateWindow(
-                "SDL2Test",
+                "Interfacers",
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
                 640,
@@ -35,6 +37,24 @@ namespace core {
         SDL_Quit();
 
         std::cout << "- Core initialization complete -" << std::endl;
+        return 0;
+    }
+
+    int InitWindow() {
+
+        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
+            return 1;
+        }
+
+    }
+
+    int CreateWindow() {
+
+    }
+
+    int InitRender() {
+        bgfx::init();
     }
 
 
