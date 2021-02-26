@@ -1,4 +1,4 @@
-core::Window _mainWindow;
+core::Window _mainWindow; <-- Should be a pointer
 _mainWindow = core::CreateWindow();
 _mainWindow.SetContext(GameMainFunc()); <-- A delegate of some sort?
                             /\ Game logic loop
@@ -6,4 +6,4 @@ _mainWindow.context.SetContent(GameRenderingLoop()); <-- wtf how it works??
 
 
 
-// Maybe change _mainWindow calls to WindowStartCaptureCommands or smth?
+// Maybe change _mainWindow calls to StartCapture commands or smth? <-- No??? Are you dumb? stupid + not gonna work
