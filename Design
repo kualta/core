@@ -1,0 +1,6 @@
+core::Window _mainWindow;
+_mainWindow = core::CreateWindow();
+_mainWindow.SetContext(GameMainFunc()); <-- A delegate of some sort?
+                            /\ Game logic loop
+_mainWindow.context.SetContent(GameRenderingLoop());
+// Maybe change _mainWindow calls to WindowStartCaptureCommands or smth?

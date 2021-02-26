@@ -1,6 +1,9 @@
 #ifndef INTERFACERS_CORE_H
 #define INTERFACERS_CORE_H
 
+#define SDL_MAIN_HANDLED
+
+#include <SDL.h>
 
 namespace core {
     int init();
@@ -11,7 +14,6 @@ namespace core {
     int InitPhysics();
     int InitRender();
 
-    int CreateWindow();
 }
 
 

@@ -27,6 +27,6 @@ set(SDL2_DIR lib/SDL2)
 # Find SDL2
 find_package(SDL2 REQUIRED)
 # Add SDL2 into include directories
-include_directories(${SDL2_INCLUDE_DIRS})
+target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
 # Link SDL2 libs
 target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})

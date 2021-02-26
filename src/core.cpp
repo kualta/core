@@ -1,7 +1,9 @@
 #include "core.h"
 
 #include "bgfx/bgfx.h"
-#include "SDL.h"
+#include "bgfx/platform.h"
+
+#include <SDL_syswm.h>
 
 
 #include <iostream>
@@ -13,11 +15,8 @@ namespace core {
 
         InitWindow();
 
-        InitRender();
-        InitInput();
-        InitSound();
-
         SDL_Window *window = SDL_CreateWindow(
+
                 "Interfacers",
                 SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED,
@@ -25,6 +24,11 @@ namespace core {
                 480,
                 0
         );
+
+        InitRender();
+
+        InitInput();
+        InitSound();
 
         SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -47,15 +51,59 @@ namespace core {
             return 1;
         }
 
-    }
-
-    int CreateWindow() {
+        return 0;
 
     }
 
     int InitRender() {
-        bgfx::init();
+
+        SDL_SysWMinfo wmi;
+
+        //if (!SDL_GetWindowWMInfo(_window, &wmi)) {
+         //   return false;
+        //}
+
+        bgfx::PlatformData pd;
+
+        #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
+            pd.ndt = wmi.info.x11.display;
+            pd.nwh = (void*)(uintptr_t)wmi.info.x11.window;
+        #elif BX_PLATFORM_OSX
+            pd.ndt = NULL;
+            pd.nwh = wmi.info.cocoa.window;
+        #elif BX_PLATFORM_WINDOWS
+            pd.ndt = nullptr;
+            pd.nwh = wmi.info.win.window;
+        #endif
+
+        pd.context = nullptr;
+        pd.backBuffer = nullptr;
+        pd.backBufferDS = nullptr;
+        bgfx::setPlatformData(pd);
+
+        bgfx::Init bgfxInit;
+        bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+        bgfxInit.resolution.width = 640;
+        bgfxInit.resolution.height = 480;
+        bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+        bgfx::init(bgfxInit);
+
+        return 0;
     }
 
+    int InitInput() {
+
+        return 0;
+    }
+
+    int InitSound() {
+
+        return 0;
+    }
+
+    int MakeWindow() {
+
+        return 0;
+    }
 
 }
