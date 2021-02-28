@@ -13,7 +13,6 @@ namespace core {
     int InitNetwork();
     int InitPhysics();
     int InitRender();
-
 }
 
 
