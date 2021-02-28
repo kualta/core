@@ -5,22 +5,23 @@
 #include <string>
 
 #include "context.h"
+#include "geometry.h"
 
 namespace core {
 
     class Window {
 
     public:
-        Window(SDL_Rect);
+        Window(const std::string& t, core::Rect& r, Context& c);
+        Window(const std::string& t, Rect& r);
         ~Window();
 
-        std::string title;
-        SDL_Window *sdlWindow;
-        Context m_Context;
-
     protected:
-    private:
 
+    private:
+        core::Context context;
+        SDL_Window *sdlWindow;
+        std::string title;
     };
 
 }

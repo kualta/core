@@ -4,6 +4,12 @@
 
 namespace core {
 
+    typedef struct Rect {
+        int x, y;
+        int w, h;
+    } Rect;
+
+
     class Geometry {
 
 
@@ -11,6 +17,5 @@ namespace core {
     };
 
 }
-
 
 #endif //INTERFACERS_GEOMETRY_H
