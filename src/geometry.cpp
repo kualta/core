@@ -13,11 +13,6 @@ namespace core {
         this->y = pVector2->y;
     }
 
-    Vector2::Vector2() {
-        this->x = NULL;
-        this->y = NULL;
-    }
-
     Vector2::~Vector2() = default;
 
 }
