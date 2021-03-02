@@ -2,6 +2,7 @@
 #define INTERFACERS_CORE_H
 
 #define SDL_MAIN_HANDLED
+#define NULL 0
 
 #include <SDL.h>
 

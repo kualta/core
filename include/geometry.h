@@ -7,11 +7,14 @@ namespace core {
 
     class Vector2 {
     public:
+        Vector2();
         Vector2(int x, int y);
+        Vector2(Vector2 *pVector2);
+
         ~Vector2();
 
     private:
-        int x, y;
+        int x{}, y{};
     };
 
     class Geometry {

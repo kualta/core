@@ -4,17 +4,16 @@
 
 namespace core {
 
-    Window::Window(const std::string& title, const Vector2& pos, core::Rect& rect) {
+    Window::Window(const std::string &title, Rect &rect)
+    : title(title), height(rect.h), width(rect.w)
+    {
 
-        this->title = title;
-        this->position = pos;
+        this->position = new Vector2(rect.x, rect.y);
 
-        sdlWindow = SDL_CreateWindow(title.c_str(),
+        this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                      rect.x, rect.y,
                                      rect.w, rect.h,
                                      0);
-
-
 
     }
 

@@ -12,18 +12,16 @@ namespace core {
     class Window {
 
     public:
-        Window(const std::string& t, const Vector2& pos, Rect& r);
+        Window(const std::string &title, core::Rect &rect);
         ~Window();
 
-    protected:
-
     private:
+        SDL_Window *sdlWindow;
+        std::string title;
+        Context context;
         Vector2 position;
         int height;
         int width;
-        core::Context context;
-        SDL_Window *sdlWindow;
-        std::string title;
     };
 
 }
