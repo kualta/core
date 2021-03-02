@@ -14,9 +14,15 @@ namespace core {
 
     int init() {
 
-        InitWindow();
+        if ( InitWindow() != 0 ) {
+            // TODO: This error logging has to be replaced with the core eternal one!
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
+            return 1;
+        }
 
-        InitRender();
+        if ( InitRender() != 0 ) {
+
+        }
 
         InitInput();
         InitSound();
@@ -38,7 +44,6 @@ namespace core {
     int InitWindow() {
 
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
             return 1;
         }
 
@@ -47,8 +52,11 @@ namespace core {
     }
 
     int InitRender() {
+        // NOTE: Since bgfxInit object has to be created with platform information included we need a window for that,
+        // thus we are calling bgfx::init() with no parameters on this step. We have to call another initialization
+        // func after the window was created.
 
-        bgfx::init(bgfxInit);
+        bgfx::init();
 
         return 0;
     }

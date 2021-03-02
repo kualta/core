@@ -8,7 +8,7 @@ namespace core {
     : title(title), height(rect.h), width(rect.w)
     {
 
-        this->position = new Vector2(rect.x, rect.y);
+        this->position = Vector2(rect.x, rect.y);
 
         this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                      rect.x, rect.y,
