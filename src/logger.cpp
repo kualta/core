@@ -10,7 +10,7 @@ namespace core {
         switch (level) {
             case INFO  : LogInfo(message);
             case WARN  : LogWarn(message);
-            case ERROR : LogError(message);
+            case ERR : LogError(message);
         }
     }
 
