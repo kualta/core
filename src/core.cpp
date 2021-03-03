@@ -3,11 +3,7 @@
 #include "bgfx/bgfx.h"
 #include "bgfx/platform.h"
 
-#include <SDL_syswm.h>
-
-
-#include <iostream>
-#include <window.h>
+#include <logger.h>
 
 namespace core {
 
@@ -15,17 +11,22 @@ namespace core {
     int init() {
 
         if ( InitWindow() != 0 ) {
-            // TODO: This error logging has to be replaced with the core eternal one!
-            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
+            core::Log(LOG_LEVEL::ERROR, "Window initialization failed, terminating");
+            //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
             return 1;
         }
 
         if ( InitRender() != 0 ) {
-
+            core::Log(LOG_LEVEL::ERROR, "Render initialization failed, terminating");
         }
 
-        InitInput();
-        InitSound();
+        if ( InitInput() != 0 ) {
+            core::Log(LOG_LEVEL::ERROR, "Input initialization failed, terminating");
+        }
+
+        if ( InitSound() != 0 ) {
+            core::Log(LOG_LEVEL::ERROR, "Sound initialization failed, terminating");
+        }
 
         SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);

@@ -5,6 +5,12 @@
 #define NULL 0
 
 #include <SDL.h>
+#include <SDL_syswm.h>
+
+#include "context.h"
+#include "geometry.h"
+#include "logger.h"
+#include "window.h"
 
 namespace core {
     int init();

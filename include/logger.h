@@ -3,6 +3,9 @@
 
 #include <string>
 
+// Umm... We'll talk about this one later, ok?
+#undef ERROR
+
 namespace core {
 
     enum LOG_LEVEL {

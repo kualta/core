@@ -1,4 +1,5 @@
 #include <logger.h>
+#include <iostream>
 #include <string>
 
 
@@ -14,14 +15,17 @@ namespace core {
     }
 
     void LogInfo(const std::string& message) {
+        std::cout << "INFO: " << message << std::endl;
         // TODO: Actual info logging
     }
 
     void LogWarn(const std::string& message) {
+        std::cout << "WARN: " << message << std::endl;
         // TODO: Actual warn logging
     }
 
     void LogError(const std::string& message) {
+        std::cout << "ERROR! " << message << std::endl;
         // TODO: Actual error logging + reporting
     }
 
