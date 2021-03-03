@@ -6,6 +6,7 @@
 namespace core {
 
 
+    // TODO: Add time/date stamps to logs
     void Log(LOG_LEVEL level, const std::string& message) {
         switch (level) {
             case INFO  : LogInfo(message, NO_INFO);
@@ -14,11 +15,11 @@ namespace core {
         }
     }
 
-    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO passInfo) {
+    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO success) {
         switch (level) {
-            case INFO  : LogInfo(message, passInfo);
-            case WARN  : LogWarn(message, passInfo);
-            case ERR   : LogError(message, passInfo);
+            case INFO  : LogInfo(message, success);
+            case WARN  : LogWarn(message, success);
+            case ERR   : LogError(message, success);
         }
     }
 
@@ -43,7 +44,8 @@ namespace core {
     }
 
     class Logger {
-        // FIXME: why do we need this again?
+
+        // TODO: Implement core::Logger using singleton pattern?
 
     public:
 

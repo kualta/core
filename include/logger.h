@@ -21,13 +21,13 @@ namespace core {
     };
 
     void Log(LOG_LEVEL level, const std::string& message);
-    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO passInfo);
+    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO success);
 
-    void LogInfo(const std::string& message);
+    void LogInfo(const std::string& message, PASS_INFO success);
 
-    void LogWarn(const std::string& message);
+    void LogWarn(const std::string& message, PASS_INFO success);
 
-    void LogError(const std::string& message);
+    void LogError(const std::string& message, PASS_INFO success);
 
 }
 
