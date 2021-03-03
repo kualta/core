@@ -13,7 +13,9 @@
 #include "window.h"
 
 namespace core {
-    int init();
+    int Initialize();
+    int Quit();
+
     int InitWindow();
     int InitSound();
     int InitInput();

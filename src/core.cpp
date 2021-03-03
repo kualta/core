@@ -8,7 +8,7 @@
 namespace core {
 
 
-    int init() {
+    int Initialize() {
 
         if ( InitWindow() != 0 ) {
             core::Log(LOG_LEVEL::ERR, "Window initialization failed, terminating");
@@ -28,17 +28,10 @@ namespace core {
             core::Log(LOG_LEVEL::ERR, "Sound initialization failed, terminating");
         }
 
-        SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
-
-        SDL_Delay(3000);
-
-        SDL_DestroyWindow(window);
         SDL_Quit();
 
-        std::cout << "- Core initialization complete -" << std::endl;
+        core::Log(INFO, "- Core initialization complete -");
+
         return 0;
     }
 
