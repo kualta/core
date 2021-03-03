@@ -11,21 +11,21 @@ namespace core {
     int init() {
 
         if ( InitWindow() != 0 ) {
-            core::Log(LOG_LEVEL::ERROR, "Window initialization failed, terminating");
+            core::Log(LOG_LEVEL::ERR, "Window initialization failed, terminating");
             //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
             return 1;
         }
 
         if ( InitRender() != 0 ) {
-            core::Log(LOG_LEVEL::ERROR, "Render initialization failed, terminating");
+            core::Log(LOG_LEVEL::ERR, "Render initialization failed, terminating");
         }
 
         if ( InitInput() != 0 ) {
-            core::Log(LOG_LEVEL::ERROR, "Input initialization failed, terminating");
+            core::Log(LOG_LEVEL::ERR, "Input initialization failed, terminating");
         }
 
         if ( InitSound() != 0 ) {
-            core::Log(LOG_LEVEL::ERROR, "Sound initialization failed, terminating");
+            core::Log(LOG_LEVEL::ERR, "Sound initialization failed, terminating");
         }
 
         SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
