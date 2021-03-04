@@ -7,52 +7,46 @@ namespace core {
 
 
     // TODO: Add time/date stamps to logs
-    void Log(LOG_LEVEL level, const std::string& message) {
+    void Logger::Log(LOG_LEVEL level, const std::string& message) {
         switch (level) {
-            case INFO  : LogInfo(message, NO_INFO);
-            case WARN  : LogWarn(message, NO_INFO);
-            case ERR   : LogError(message, NO_INFO);
+            case INFO  : Logger::LogInfo(message, NO_INFO);
+            case WARN  : Logger::LogWarn(message, NO_INFO);
+            case ERR   : Logger::LogError(message, NO_INFO);
         }
     }
 
-    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO success) {
+    void Logger::Log(LOG_LEVEL level, const std::string& message, PASS_INFO success) {
         switch (level) {
-            case INFO  : LogInfo(message, success);
-            case WARN  : LogWarn(message, success);
-            case ERR   : LogError(message, success);
+            case INFO  : Logger::LogInfo(message, success);
+            case WARN  : Logger::LogWarn(message, success);
+            case ERR   : Logger::LogError(message, success);
         }
     }
 
-    void LogInfo(const std::string& message, PASS_INFO passInfo) {
+    void Logger::LogInfo(const std::string& message, PASS_INFO passInfo) {
+        std::cout << "INFO: " << message << AfterText(passInfo) << std::endl;
+    }
+
+    void Logger::LogWarn(const std::string& message, PASS_INFO passInfo) {
+        std::cout << "WARN: " << message << AfterText(passInfo) << std::endl;
+    }
+
+    void Logger::LogError(const std::string& message, PASS_INFO passInfo) {
+        std::cout << "ERROR! " << message << AfterText(passInfo) << std::endl;
+    }
+
+    std::string Logger::AfterText(PASS_INFO success) {
 
         std::string afterText;
 
-        switch (passInfo) {
+        switch (success) {
             case NO_INFO : afterText = "";
-            case SUCCESS : afterText =
+            case SUCCESS : afterText = successText;
+            case FAIL    : afterText = failText;
         }
 
-        std::cout << "INFO: " << message << successText << std::endl;
+        return afterText;
     }
 
-    void LogWarn(const std::string& message, PASS_INFO passInfo) {
-        std::cout << "WARN: " << message << std::endl;
-    }
-
-    void LogError(const std::string& message, PASS_INFO passInfo) {
-        std::cout << "ERROR! " << message << std::endl;
-    }
-
-    class Logger {
-
-        // TODO: Implement core::Logger using singleton pattern?
-
-    public:
-
-
-    private:
-
-
-    };
 
 }

@@ -6,8 +6,6 @@
 
 namespace core {
 
-    std::string successText = "- success";
-
     enum LOG_LEVEL {
         INFO,
         WARN,
@@ -20,15 +18,24 @@ namespace core {
         NO_INFO
     };
 
-    void Log(LOG_LEVEL level, const std::string& message);
-    void Log(LOG_LEVEL level, const std::string& message, PASS_INFO success);
 
-    void LogInfo(const std::string& message, PASS_INFO success);
 
-    void LogWarn(const std::string& message, PASS_INFO success);
+    class Logger {
 
-    void LogError(const std::string& message, PASS_INFO success);
+    public:
+        void Log(LOG_LEVEL level, const std::string& message);
+        void Log(LOG_LEVEL level, const std::string& message, PASS_INFO success);
 
+    private:
+        void LogInfo(const std::string& message, PASS_INFO success);
+        void LogWarn(const std::string& message, PASS_INFO success);
+        void LogError(const std::string& message, PASS_INFO success);
+        std::string AfterText(PASS_INFO success);
+
+        std::string successText = "- success";
+        std::string failText = "- failed";
+
+    };
 }
 
 
