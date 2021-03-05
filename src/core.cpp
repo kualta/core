@@ -18,14 +18,17 @@ namespace core {
 
         if ( InitRender() != 0 ) {
             core::Log(LOG_LEVEL::ERR, "Render initialization failed, terminating");
+            return 1;
         }
 
         if ( InitInput() != 0 ) {
             core::Log(LOG_LEVEL::ERR, "Input initialization failed, terminating");
+            return 1;
         }
 
         if ( InitSound() != 0 ) {
             core::Log(LOG_LEVEL::ERR, "Sound initialization failed, terminating");
+            return 1;
         }
 
         SDL_Quit();
