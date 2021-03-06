@@ -34,7 +34,7 @@ public:
     Logger(Logger& other) = delete;             /// Since Logger is a singleton, it must not be cloneable and assignable
     void operator=(const Logger &) = delete;    ///
 
-    void Log(LOG_LEVEL level, const std::string& message, LOG_TYPE logType, PASS_INFO success);
+    void Log(LOG_LEVEL level, const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
     static Logger* GetInstance();
 
 private:
