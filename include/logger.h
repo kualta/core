@@ -30,6 +30,7 @@ enum PASS_INFO {
 class Logger {
 
 public:
+    Logger();
     Logger(Logger& other) = delete;             /// Since Logger is a singleton, it must not be cloneable and assignable
     void operator=(const Logger &) = delete;    ///
 
@@ -44,10 +45,10 @@ private:
     std::string AfterText(PASS_INFO success);
     std::string PreText(LOG_TYPE log_type);
 
-    std::string successText = "- success";
-    std::string failText = "- failed";
+    std::string successText_ = "- success";
+    std::string failText_ = "- failed";
 
-    static Logger instance;
+    static Logger* logger_;
 
 };
 

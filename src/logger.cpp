@@ -35,8 +35,8 @@ std::string Logger::AfterText(PASS_INFO success) {
 
     switch (success) {
         case NO_INFO : afterText = "";
-        case FAIL    : afterText = failText;
-        case SUCCESS : afterText = successText;
+        case FAIL    : afterText = failText_;
+        case SUCCESS : afterText = successText_;
     }
 
     return afterText;
@@ -58,11 +58,18 @@ std::string Logger::PreText(LOG_TYPE logType) {
 
 }
 
+// TODO: Check this implementation for thread safety
 Logger *Logger::GetInstance() {
 
-    return &instance;
+    if (logger_ == nullptr) {
+        logger_ = new Logger();
+    }
+
+    return logger_;
 
 }
+Logger::Logger() {
 
+}
 
 }
