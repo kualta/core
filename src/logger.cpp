@@ -8,32 +8,25 @@ namespace core {
 
 
 // TODO: Add time/date stamps to logs
-void Logger::Log(LOG_LEVEL level, const std::string& message) {
+
+void Logger::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type = GENERAL, PASS_INFO success = NO_INFO) {
     switch (level) {
-        case INFO  : Logger::LogInfo(message, NO_INFO);
-        case WARN  : Logger::LogWarn(message, NO_INFO);
-        case ERR   : Logger::LogError(message, NO_INFO);
+        case INFO  : Logger::LogInfo(message, type, success);
+        case WARN  : Logger::LogWarn(message, type, success);
+        case ERR   : Logger::LogError(message, type, success);
     }
 }
 
-void Logger::Log(LOG_LEVEL level, const std::string& message, PASS_INFO success) {
-    switch (level) {
-        case INFO  : Logger::LogInfo(message, success);
-        case WARN  : Logger::LogWarn(message, success);
-        case ERR   : Logger::LogError(message, success);
-    }
+void Logger::LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
+    std::cout << PreText(logType) << "INFO: " << message << AfterText(passInfo) << std::endl;
 }
 
-void Logger::LogInfo(const std::string& message, PASS_INFO passInfo) {
-    std::cout << "INFO: " << message << AfterText(passInfo) << std::endl;
+void Logger::LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
+    std::cout << PreText(logType) << "WARN: " << message << AfterText(passInfo) << std::endl;
 }
 
-void Logger::LogWarn(const std::string& message, PASS_INFO passInfo) {
-    std::cout << "WARN: " << message << AfterText(passInfo) << std::endl;
-}
-
-void Logger::LogError(const std::string& message, PASS_INFO passInfo) {
-    std::cout << "ERROR! " << message << AfterText(passInfo) << std::endl;
+void Logger::LogError(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
+    std::cout << PreText(logType) << "ERROR! " << message << AfterText(passInfo) << std::endl;
 }
 
 std::string Logger::AfterText(PASS_INFO success) {
@@ -42,19 +35,34 @@ std::string Logger::AfterText(PASS_INFO success) {
 
     switch (success) {
         case NO_INFO : afterText = "";
-        case SUCCESS : afterText = successText;
         case FAIL    : afterText = failText;
+        case SUCCESS : afterText = successText;
     }
 
     return afterText;
 }
 
-Logger *Logger::GetInstance() {
+std::string Logger::PreText(LOG_TYPE logType) {
 
-  return &instance;
+    std::string preText;
+
+    switch (logType) {
+        case GENERAL : preText = "|";
+        case NETWORK : preText = "|NET|";
+        case PHYSICS : preText = "|PHYS|";
+        case DEBUG   : preText = "|DEBUG|";
+        case RENDER  : preText = "|RENDER|";
+    }
+
+    return preText;
 
 }
 
+Logger *Logger::GetInstance() {
+
+    return &instance;
+
+}
 
 
 }
