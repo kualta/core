@@ -68,6 +68,7 @@ namespace core {
         return 0;
     }
 
+    // TODO: Move to window class constructor
     int CreateWindow() {
 
         const core::Window& window;
