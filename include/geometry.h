@@ -24,6 +24,7 @@ namespace core {
     };
 
     typedef struct Rect {
+        Rect(int x, int y, int w, int h);
         int x, y;
         int w, h;
     } Rect;

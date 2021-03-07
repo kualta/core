@@ -20,4 +20,9 @@ namespace core {
 
     Vector2::~Vector2() = default;
 
+Rect::Rect(int x, int y, int w, int h)
+    : x(x), y(y), w(w), h(h)
+{
+
+}
 }

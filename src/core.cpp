@@ -10,6 +10,7 @@ namespace core {
 
     int Initialize() {
 
+        // TODO: Simplify logging syntax
         if ( InitWindow() != 0 ) {
             Logger::GetInstance()->Log(ERR,"Window initialization failed, terminating");
             //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
@@ -50,8 +51,8 @@ namespace core {
 
     int InitRender() {
         // NOTE: Since bgfxInit object has to be created with platform information included we need a window for that,
-        // thus we are calling bgfx::init() with no parameters on this step. We have to call another initialization
-        // func after the window was created.
+        // we are calling bgfx::init() with no parameters on this step. We have to call another initialization func
+        // after the window was created.
 
         bgfx::init();
 
