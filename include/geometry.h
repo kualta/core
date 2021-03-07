@@ -4,7 +4,7 @@
 
 namespace core {
 
-
+// TODO: Extract Vector2 class to separate file
     class Vector2 {
     public:
         Vector2(int x, int y);
@@ -12,8 +12,12 @@ namespace core {
 
         ~Vector2();
 
+        /// x == first and y == second
+        /// All 4 members are made read-only.
         const int &x;
         const int &y;
+        const int &first;
+        const int &second;
 
     private:
         int x_;
