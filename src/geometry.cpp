@@ -3,26 +3,23 @@
 
 namespace core {
 
-    Vector2::Vector2(int x, int y) {
-        this->x = x;
-        this->y = y;
-    }
 
-    Vector2::Vector2(Vector2 *pVector2) {
-        this->x = pVector2->x;
-        this->y = pVector2->y;
-    }
-
-    Vector2::Vector2() {
-        this->x = NULL;
-        this->y = NULL;
-    }
-
-    Vector2::~Vector2() = default;
+Vector2::Vector2(int x, int y) : x(x_), y(y_) {  }
+Vector2::Vector2(Vector2 *pVector2) : x(pVector2->x), y(pVector2->y) {  }
+//Vector2::Vector2() : x(0), y(0) {  }
+Vector2::~Vector2() = default;
 
 Rect::Rect(int x, int y, int w, int h)
-    : x(x), y(y), w(w), h(h)
-{
+    : position(Vector2(x, y)), w(w), h(h) {
 
 }
+Rect::Rect(Vector2 pos, int w, int h)
+    : position(pos), w(w), h(h) {
+}
+Rect::Rect(Vector2 pos, Vector2 res)
+    : position(pos), w(res.x), h(res.y){
+
+}
+
+
 }
