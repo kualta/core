@@ -9,7 +9,7 @@ namespace core {
 
 // TODO: Add time/date stamps to logs
 
-void Logger::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type = GENERAL, PASS_INFO success = NO_INFO) {
+void Logger::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type, PASS_INFO success) {
     switch (level) {
         case INFO  : Logger::LogInfo(message, type, success);
         case WARN  : Logger::LogWarn(message, type, success);

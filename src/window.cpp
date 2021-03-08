@@ -5,21 +5,21 @@
 namespace core {
 
     Window::Window(const std::string &title, Rect& rect)
-    : title(title), height(rect.h), width(rect.w)
+    : title_(title), height_(rect.h), width_(rect.w), position_(rect.position)
     {
 
-        this->position = Vector2(rect.position.x, rect.position.y);
+        this->position_ = Vector2(rect.position.x, rect.position.y);
 
-        this->sdlWindow = SDL_CreateWindow(title.c_str(),
-                                     rect.position.x, rect.position.y,
-                                     rect.w, rect.h,
-                                     0);
+        this->sdl_window_ = SDL_CreateWindow(title.c_str(),
+                                             rect.position.x, rect.position.y,
+                                             rect.w, rect.h,
+                                             0);
 
     }
 
 
     Window::~Window() {
-        SDL_DestroyWindow(sdlWindow);
+        SDL_DestroyWindow(sdl_window_);
     }
 
 }

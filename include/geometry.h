@@ -2,6 +2,7 @@
 #define INTERFACERS_GEOMETRY_H
 
 
+
 namespace core {
 
 // TODO: Extract Vector2 class to separate file
@@ -9,15 +10,12 @@ namespace core {
     public:
         Vector2(int x, int y);
         Vector2(Vector2 *pVector2);
-
         ~Vector2();
+        Vector2 operator=(Vector2 other);
 
-        /// x == first and y == second
-        /// All 4 members are made read-only.
+        /// Read-only members
         const int &x;
         const int &y;
-        const int &first;
-        const int &second;
 
     private:
         int x_;

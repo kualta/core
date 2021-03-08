@@ -16,12 +16,12 @@ namespace core {
         ~Window();
 
     private:
-        SDL_Window *sdlWindow;
-        std::string title;
-        Context context;
-        Vector2 position;
-        int height;
-        int width;
+        std::string title_;
+        SDL_Window *sdl_window_;
+        Context context_;
+        Vector2 position_;
+        int height_;
+        int width_;
     };
 
 }
