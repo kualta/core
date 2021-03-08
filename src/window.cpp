@@ -4,6 +4,7 @@
 
 namespace core {
 
+
     Window::Window(const std::string &title, Rect& rect)
     : title_(title), height_(rect.h), width_(rect.w), position_(rect.position)
     {
@@ -14,7 +15,6 @@ namespace core {
                                              rect.position.x, rect.position.y,
                                              rect.w, rect.h,
                                              0);
-
     }
 
 

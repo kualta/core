@@ -9,24 +9,20 @@ namespace core {
 
 
     int Initialize() {
-
         // TODO: Simplify logging syntax
         if ( InitWindow() != 0 ) {
             Logger::GetInstance()->Log(ERR,"Window initialization failed, terminating");
             //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
             return 1;
         }
-
         if ( InitRender() != 0 ) {
             Logger::GetInstance()->Log(ERR, "Render initialization failed, terminating");
             return 1;
         }
-
         if ( InitInput() != 0 ) {
             Logger::GetInstance()->Log(ERR, "Input initialization failed, terminating");
             return 1;
         }
-
         if ( InitSound() != 0 ) {
             Logger::GetInstance()->Log(ERR, "Sound initialization failed, terminating");
             return 1;
@@ -35,18 +31,14 @@ namespace core {
         SDL_Quit();
 
         Logger::GetInstance()->Log(INFO, "- Core initialization complete -");
-
         return 0;
     }
 
     int InitWindow() {
-
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
             return 1;
         }
-
         return 0;
-
     }
 
     int InitRender() {
@@ -55,21 +47,17 @@ namespace core {
         // after the window was created.
 
         bgfx::init();
-
         return 0;
     }
 
     int InitInput() {
-
         return 0;
     }
 
     int InitSound() {
-
         return 0;
     }
 
-    // TODO: Move to window class constructor
     int CreateWindow() {
 
         const core::Window& window;

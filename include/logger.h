@@ -6,12 +6,12 @@
 
 namespace core {
 
+
 enum LOG_LEVEL {
     INFO,
     WARN,
     ERR,
 };
-
 enum LOG_TYPE {
     GENERAL,
     PHYSICS,
@@ -19,13 +19,11 @@ enum LOG_TYPE {
     RENDER,
     DEBUG,
 };
-
 enum PASS_INFO {
     SUCCESS,
     NO_INFO,
     FAIL,
 };
-
 
 class Logger {
 
@@ -49,9 +47,7 @@ private:
     std::string failText_ = "- failed";
 
     static Logger* logger_;
-
 };
-
 
 
 }

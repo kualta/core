@@ -6,9 +6,7 @@
 namespace core {
 
 
-
 // TODO: Add time/date stamps to logs
-
 void Logger::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type, PASS_INFO success) {
     switch (level) {
         case INFO  : Logger::LogInfo(message, type, success);
@@ -16,19 +14,15 @@ void Logger::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type, PAS
         case ERR   : Logger::LogError(message, type, success);
     }
 }
-
 void Logger::LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
     std::cout << PreText(logType) << "INFO: " << message << AfterText(passInfo) << std::endl;
 }
-
 void Logger::LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
     std::cout << PreText(logType) << "WARN: " << message << AfterText(passInfo) << std::endl;
 }
-
 void Logger::LogError(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
     std::cout << PreText(logType) << "ERROR! " << message << AfterText(passInfo) << std::endl;
 }
-
 std::string Logger::AfterText(PASS_INFO success) {
 
     std::string afterText;
@@ -41,7 +35,6 @@ std::string Logger::AfterText(PASS_INFO success) {
 
     return afterText;
 }
-
 std::string Logger::PreText(LOG_TYPE logType) {
 
     std::string preText;
@@ -55,7 +48,6 @@ std::string Logger::PreText(LOG_TYPE logType) {
     }
 
     return preText;
-
 }
 
 // TODO: Check this implementation for thread safety
