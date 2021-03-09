@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_CORE_H
-#define INTERFACERS_CORE_H
+#ifndef CORE_H
+#define CORE_H
 
 #define SDL_MAIN_HANDLED
 #define NULL 0
@@ -25,4 +25,4 @@ namespace core {
 }
 
 
-#endif //INTERFACERS_CORE_H
+#endif //CORE_H

@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_CONTEXT_H
-#define INTERFACERS_CONTEXT_H
+#ifndef CORE_CONTEXT_H
+#define CORE_CONTEXT_H
 
 
 namespace core {
@@ -15,4 +15,4 @@ namespace core {
 }
 
 
-#endif //INTERFACERS_CONTEXT_H
+#endif //CORE_CONTEXT_H

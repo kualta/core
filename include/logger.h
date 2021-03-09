@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_LOGGER_H
-#define INTERFACERS_LOGGER_H
+#ifndef CORE_LOGGER_H
+#define CORE_LOGGER_H
 
 #include <string>
 
@@ -52,4 +52,4 @@ private:
 
 }
 
-#endif //INTERFACERS_LOGGER_H
+#endif //CORE_LOGGER_H

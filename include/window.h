@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_WINDOW_H
-#define INTERFACERS_WINDOW_H
+#ifndef CORE_WINDOW_H
+#define CORE_WINDOW_H
 
 #include <SDL.h>
 #include <string>
@@ -8,6 +8,7 @@
 #include "geometry.h"
 
 namespace core {
+
 
     class Window {
 
@@ -24,6 +25,7 @@ namespace core {
         int width_;
     };
 
+
 }
 
-#endif //INTERFACERS_WINDOW_H
+#endif //CORE_WINDOW_H

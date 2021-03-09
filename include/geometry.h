@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_GEOMETRY_H
-#define INTERFACERS_GEOMETRY_H
+#ifndef CORE_GEOMETRY_H
+#define CORE_GEOMETRY_H
 
 
 
@@ -38,4 +38,4 @@ namespace core {
 
 }
 
-#endif //INTERFACERS_GEOMETRY_H
+#endif //CORE_GEOMETRY_H
