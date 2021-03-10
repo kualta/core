@@ -2,6 +2,7 @@
 #define CORE_LOGGER_H
 
 #include <string>
+#include "singleton.h"
 
 
 namespace core {
@@ -17,6 +18,7 @@ enum LOG_TYPE {
     PHYSICS,
     NETWORK,
     RENDER,
+    WINDOW,
     DEBUG,
 };
 enum PASS_INFO {
@@ -25,7 +27,7 @@ enum PASS_INFO {
     FAIL,
 };
 
-class Logger {
+class Logger : public Singleton<Logger> {
 
 public:
     Logger();

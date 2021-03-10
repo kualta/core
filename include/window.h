@@ -16,7 +16,13 @@ namespace core {
         Window(const std::string &title, core::Rect &rect);
         ~Window();
 
-        friend Window GetWindowID();
+        uint32_t GetWindowID() const;
+        uint32_t GetHeight() const;
+        uint32_t GetWidth() const;
+        Vector2 GetPosition() const;
+        std::string GetTitle() const;
+
+        int SetPosition(Vector2 pos);
 
     private:
         static uint32_t win_counter_;
