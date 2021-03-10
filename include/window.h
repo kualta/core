@@ -16,16 +16,20 @@ namespace core {
         Window(const std::string &title, core::Rect &rect);
         ~Window();
 
-        friend Window GetWindowByID(unsigned int uid);
+        friend Window GetWindowID();
 
     private:
+        static uint32_t win_counter_;
+
         SDL_Window *sdl_window_;
+
         std::string title_;
-        unsigned int uid_;
         Vector2 position_;
         Context context_;
-        int height_;
-        int width_;
+        uint32_t height_;
+        uint32_t width_;
+
+        uint32_t id_;
     };
 
 

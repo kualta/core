@@ -9,9 +9,9 @@
 
 namespace core {
 
-    std::vector<std::shared_ptr<Window>> windows_pool;
+std::vector<std::shared_ptr<Window>> windows_pool;
 
-unsigned int MakeWindow();
+unsigned int MakeWindow(const std::string &title, Rect rect);
 
 
 }
