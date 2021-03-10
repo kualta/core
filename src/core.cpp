@@ -3,7 +3,6 @@
 #include "bgfx/bgfx.h"
 #include "bgfx/platform.h"
 
-#include <logger.h>
 
 namespace core {
 
@@ -11,26 +10,26 @@ namespace core {
     int Initialize() {
         // TODO: Simplify logging syntax
         if ( InitWindow() != 0 ) {
-            Logger::GetInstance()->Log(ERR,"Window initialization failed, terminating");
+            LogManager::GetInstance().Log(ERR,"Window initialization failed, terminating");
             //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
             return 1;
         }
         if ( InitRender() != 0 ) {
-            Logger::GetInstance()->Log(ERR, "Render initialization failed, terminating");
+            LogManager::GetInstance().Log(ERR, "Render initialization failed, terminating");
             return 1;
         }
         if ( InitInput() != 0 ) {
-            Logger::GetInstance()->Log(ERR, "Input initialization failed, terminating");
+            LogManager::GetInstance().Log(ERR, "Input initialization failed, terminating");
             return 1;
         }
         if ( InitSound() != 0 ) {
-            Logger::GetInstance()->Log(ERR, "Sound initialization failed, terminating");
+            LogManager::GetInstance().Log(ERR, "Sound initialization failed, terminating");
             return 1;
         }
 
         SDL_Quit();
 
-        Logger::GetInstance()->Log(INFO, "- Core initialization complete -");
+        LogManager::GetInstance().Log(INFO, "- core initialization complete -");
         return 0;
     }
 

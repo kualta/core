@@ -2,7 +2,7 @@
 #define CORE_LOGGER_H
 
 #include <string>
-#include "singleton.h"
+#include "Singleton.h"
 
 
 namespace core {
@@ -27,15 +27,12 @@ enum PASS_INFO {
     FAIL,
 };
 
-class Logger : public Singleton<Logger> {
+class LogManager : public Singleton<LogManager> {
 
 public:
-    Logger();
-    Logger(Logger& other) = delete;             /// Since Logger is a singleton, it must not be cloneable and assignable
-    void operator=(const Logger &) = delete;    ///
+    LogManager();
 
     void Log(LOG_LEVEL level, const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
-    static Logger* GetInstance();
 
 private:
     void LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO success);
@@ -48,7 +45,7 @@ private:
     std::string successText_ = "- success";
     std::string failText_ = "- failed";
 
-    static Logger* logger_;
+    static LogManager* LogManager_;
 };
 
 

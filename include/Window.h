@@ -4,8 +4,8 @@
 #include <SDL.h>
 #include <string>
 
-#include "context.h"
-#include "geometry.h"
+#include "Context.h"
+#include "Geometry.h"
 
 namespace core {
 

@@ -7,10 +7,10 @@
 #include <SDL.h>
 #include <SDL_syswm.h>
 
-#include "context.h"
-#include "geometry.h"
-#include "logger.h"
-#include "window.h"
+#include "Context.h"
+#include "Geometry.h"
+#include "LogManager.h"
+#include "Window.h"
 
 namespace core {
     int Initialize();

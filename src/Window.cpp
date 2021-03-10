@@ -1,6 +1,5 @@
 #include <window.h>
-#include "utility.h"
-#include "../lib/bgfx.cmake/bgfx/src/bgfx_p.h"
+#include "Utility.h"
 
 
 namespace core {
@@ -37,7 +36,7 @@ std::string Window::GetTitle() const {
 }
 int Window::SetPosition(Vector2 pos) {
     if (pos.x < 0 || pos.y < 0) {
-        Logger::GetInstance()->Log(ERR, "Changing window position", WINDOW, FAIL);
+        LogManager::GetInstance().Log(ERR, "Changing window position", WINDOW, FAIL);
         return -1;
     }
     position_ = pos;
