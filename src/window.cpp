@@ -1,6 +1,5 @@
 #include <window.h>
-
-#include <iostream>
+#include "utility.h"
 
 namespace core {
 
@@ -21,5 +20,8 @@ namespace core {
     Window::~Window() {
         SDL_DestroyWindow(sdl_window_);
     }
+Window GetWindowByID(unsigned int uid) {
+    return Window(std::basic_string(), core::Rect());
+}
 
 }
