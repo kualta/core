@@ -39,13 +39,11 @@ private:
     void LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO success);
     void LogError(const std::string& message, LOG_TYPE logType, PASS_INFO success);
 
-    std::string AfterText(PASS_INFO success);
-    std::string PreText(LOG_TYPE log_type);
+    std::string PassText(PASS_INFO success);
+    std::string TypeText(LOG_TYPE log_type);
 
     std::string successText_ = "- success";
     std::string failText_ = "- failed";
-
-    static LogManager* LogManager_;
 };
 
 

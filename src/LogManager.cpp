@@ -15,15 +15,15 @@ void LogManager::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type,
     }
 }
 void LogManager::LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << PreText(logType) << "INFO: " << message << AfterText(passInfo) << std::endl;
+    std::cout << TypeText(logType) << "INFO: " << message << PassText(passInfo) << std::endl;
 }
 void LogManager::LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << PreText(logType) << "WARN: " << message << AfterText(passInfo) << std::endl;
+    std::cout << TypeText(logType) << "WARN: " << message << PassText(passInfo) << std::endl;
 }
 void LogManager::LogError(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << PreText(logType) << "ERROR! " << message << AfterText(passInfo) << std::endl;
+    std::cout << TypeText(logType) << "ERROR! " << message << PassText(passInfo) << std::endl;
 }
-std::string LogManager::AfterText(PASS_INFO success) {
+std::string LogManager::PassText(PASS_INFO success) {
 
     std::string afterText;
 
@@ -35,16 +35,17 @@ std::string LogManager::AfterText(PASS_INFO success) {
 
     return afterText;
 }
-std::string LogManager::PreText(LOG_TYPE logType) {
+std::string LogManager::TypeText(LOG_TYPE log_type) {
 
     std::string preText;
 
-    switch (logType) {
+    switch (log_type) {
         case GENERAL : preText = "|";
         case NETWORK : preText = "|NET|";
         case PHYSICS : preText = "|PHYS|";
         case DEBUG   : preText = "|DEBUG|";
         case RENDER  : preText = "|RENDER|";
+        case WINDOW  : preText = "|WINDOW|";
     }
 
     return preText;

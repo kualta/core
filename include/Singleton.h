@@ -10,16 +10,11 @@ namespace core {
 
 
 template <typename T> class Singleton {
-private:
+public:
     /// Explicit private copy constructor. This is a forbidden operation.
     Singleton(const Singleton<T>&) = delete;
     /// Private operator= . This is a forbidden operation.
     Singleton& operator=(const Singleton<T>&) = delete;
-
-protected:
-    static T* singleton_;
-
-public:
     Singleton() {
         singleton_ = static_cast<T*>(this);
     }
@@ -30,6 +25,12 @@ public:
         return (*singleton_);
     }
     static T* GetInstancePtr() { return singleton_; }
+
+protected:
+    static T* singleton_;
+
+private:
+
 };
 
 
