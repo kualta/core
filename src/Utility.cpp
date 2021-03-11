@@ -1,7 +1,9 @@
-
+#include "core.h"
 #include <Utility.h>
 
-#include "core.h"
+#include <bgfx/bgfx.h>
+#include <bgfx/platform.h>
+
 
 namespace core {
 
@@ -11,23 +13,22 @@ unsigned int core::MakeWindow(const std::string& title, Rect rect) {
     Window* _window = new Window(title, rect);
 
     SDL_SysWMinfo wmi;
+    bgfx::PlatformData pd;
 
-    if (!SDL_GetWindowWMInfo(window.sdlWindow, &wmi)) {
+    if (!SDL_GetWindowWMInfo(_window->GetSDLWindowPtr(), &wmi)) {
         return false;
     }
 
-    bgfx::PlatformData pd;
-
-#if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
-    pd.ndt = wmi.info.x11.display;
-            pd.nwh = (void*)(uintptr_t)wmi.info.x11.window;
-#elif BX_PLATFORM_OSX
-    pd.ndt = NULL;
-            pd.nwh = wmi.info.cocoa.window;
-#elif BX_PLATFORM_WINDOWS
-    pd.ndt = NULL;
+    #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
+        pd.ndt = wmi.info.x11.display;
+        pd.nwh = (void*)(uintptr_t)wmi.info.x11.window;
+    #elif BX_PLATFORM_OSX
+        pd.ndt = NULL;
+        pd.nwh = wmi.info.cocoa.window;
+    #elif BX_PLATFORM_WINDOWS
+        pd.ndt = NULL;
         pd.nwh = wmi.info.win.window;
-#endif
+    #endif
 
     pd.context = NULL;
     pd.backBuffer = NULL;

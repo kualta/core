@@ -43,5 +43,8 @@ int Window::SetPosition(Vector2 pos) {
 
     return 0;
 }
+SDL_Window *Window::GetSDLWindowPtr() const {
+    return sdl_window_;
+}
 
 }

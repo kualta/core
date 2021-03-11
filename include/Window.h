@@ -20,6 +20,7 @@ namespace core {
         uint32_t GetHeight() const;
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
+        SDL_Window *GetSDLWindowPtr() const;
         std::string GetTitle() const;
 
         int SetPosition(Vector2 pos);

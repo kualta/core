@@ -5,6 +5,7 @@
 
 
 namespace core {
+
 int Initialize() {
     // TODO: Simplify logging syntax
     if ( InitWindow() != 0 ) {
@@ -25,10 +26,11 @@ int Initialize() {
         return 1;
     }
 
-    SDL_Quit();
-
     LogManager::GetInstance().Log(INFO, "- core initialization complete -");
     return 0;
+}
+int ShutDown() {
+    SDL_Quit();
 }
 int InitWindow() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
