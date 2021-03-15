@@ -7,6 +7,7 @@
 
 class Root : public Singleton<Root> {
 
+
 public:
 
 protected:

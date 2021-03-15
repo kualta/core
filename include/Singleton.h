@@ -1,6 +1,6 @@
 /*
  * This is a single-file singleton class,
- * No singleton.cpp is presented.
+ * No Singleton.cpp is presented.
  */
 #ifndef CORE_SINGLETON_H
 #define CORE_SINGLETON_H
