@@ -19,7 +19,7 @@ public:
         singleton_ = static_cast<T*>(this);
     }
     ~Singleton() {
-        singleton_ = NULL;
+        singleton_ = nullptr;
     }
     static T& GetInstance() {
         return (*singleton_);

@@ -2,13 +2,18 @@
 #define CORE_ROOT_H
 
 #include <memory>
+#include <vector>
 #include "core.h"
 #include "Singleton.h"
 
+namespace core {
+
+
 class Root : public Singleton<Root> {
 
-
 public:
+    Root();
+    ~Root();
 
 protected:
     std::vector<std::shared_ptr<Window>> windowsPool_;
@@ -21,8 +26,10 @@ protected:
     std::unique_ptr<NetworkManager> networkManager_;
 
 private:
-
 };
+
+
+}
 
 
 #endif //CORE_ROOT_H

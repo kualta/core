@@ -3,6 +3,7 @@
 
 #include "Singleton.h"
 
+
 namespace core {
 
 // TODO: TO BE IMPLEMENTED
