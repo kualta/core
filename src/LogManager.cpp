@@ -6,6 +6,7 @@
 namespace core {
 
 
+// TODO: Simplify logging syntax
 // TODO: Add time/date stamps to logs
 void LogManager::Log(LOG_LEVEL level, const std::string& message, LOG_TYPE type, PASS_INFO success) {
     // TODO: this switch could be replaced with one function

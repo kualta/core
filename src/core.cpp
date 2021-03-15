@@ -7,7 +7,6 @@
 namespace core {
 
 int Initialize() {
-    // TODO: Simplify logging syntax
     if ( InitWindow() != 0 ) {
         LogManager::GetInstance().Log(ERR,"Window initialization failed, terminating");
         //SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Fatal! Window initialization failed: %s", SDL_GetError());
