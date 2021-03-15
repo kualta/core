@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_LIB_CORE_INCLUDE_ROOT_H_
-#define INTERFACERS_LIB_CORE_INCLUDE_ROOT_H_
+#ifndef CORE_ROOT_H
+#define CORE_ROOT_H
 
 #include <memory>
 #include "core.h"
@@ -19,4 +19,4 @@ private:
 };
 
 
-#endif //INTERFACERS_LIB_CORE_INCLUDE_ROOT_H_
+#endif //CORE_ROOT_H

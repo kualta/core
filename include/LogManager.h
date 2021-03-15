@@ -1,5 +1,5 @@
-#ifndef CORE_LOGGER_H
-#define CORE_LOGGER_H
+#ifndef CORE_LOGMANAGER_H
+#define CORE_LOGMANAGER_H
 
 #include <string>
 #include "Singleton.h"
@@ -49,4 +49,4 @@ private:
 
 }
 
-#endif //CORE_LOGGER_H
+#endif //CORE_LOGMANAGER_H
