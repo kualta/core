@@ -1,5 +1,5 @@
 ## Contributing
-- __Don't__ use emoji in PRs, commits, or code comments. 🙂
+- __Don't__ use emoji in PRs, commits, or code comments.  
 
 
 ## C++ Naming Convention 
@@ -23,8 +23,8 @@ Header Guard Style: CORE_FILENAME_H
 
 
 ### Tabs and Indents
-Follow existing code style
-God bless tab character. __Use spaces__
+Follow existing code style  
+God bless tab character. __Use spaces__  
 | Indent Kind | Value | 
 | :--- | --- |
 | Regular | 4 | 
@@ -33,6 +33,15 @@ God bless tab character. __Use spaces__
 | Member of class | 4 |
 | Member of namespcae | 0 |
 | Visibility keywords | 0 |
+
+
+## Files & Structure 
+
+- C++ source files go to `src/` folder and use `.cpp` extention
+- C++ header files go to `include/` folder and use `.h` extention
+- Headers and source files use `PascalCase` for names, with one exception: `core.h` and `core.cpp`
+- Every source file __must__ have corresponding header file. 
+- Header file might go alone, without source file. In this case this has to be specified at the beginning of the file.
 
 
 ## Code Example 
@@ -70,14 +79,3 @@ private:
 
 #endif //CORE_MYCLASS_H
 ```
-
-
-
-
-## Files & Structure 
-
-- C++ source files go to `src/` folder and use `.cpp` extention
-- C++ header files go to `include/` folder and use `.h` extention
-- Headers and source files use `PascalCase` for names, with one exception: `core.h` and `core.cpp`
-- Every source file __must__ have corresponding header file. 
-- Header file might go alone, without source file. In this case this has to be specified at the beginning of the file.
