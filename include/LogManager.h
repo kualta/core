@@ -32,16 +32,13 @@ class LogManager : public Singleton<LogManager> {
 public:
     LogManager();
 
+    static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
+    static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
+    static void LogError(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
+    static std::string PassText(PASS_INFO success);
+    static std::string TypeText(LOG_TYPE log_type);
+
 private:
-    void LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO success);
-    void LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO success);
-    void LogError(const std::string& message, LOG_TYPE logType, PASS_INFO success);
-
-    std::string PassText(PASS_INFO success);
-    std::string TypeText(LOG_TYPE log_type);
-
-    std::string successText_ = "- success";
-    std::string failText_ = "- failed";
 };
 
 

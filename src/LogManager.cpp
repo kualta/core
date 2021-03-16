@@ -8,7 +8,9 @@ namespace core {
 
 // TODO: Simplify logging syntax
 // TODO: Add time/date stamps to logs
-void LogManager::LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
+LogManager::LogManager() {
+}
+void LogManager::LogInfo(const std::string &message, LOG_TYPE logType, PASS_INFO passInfo) {
     std::cout << TypeText(logType) << "INFO: " << message << PassText(passInfo) << std::endl;
 }
 void LogManager::LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
@@ -23,8 +25,8 @@ std::string LogManager::PassText(PASS_INFO success) {
 
     switch (success) {
         case NO_INFO : afterText = "";
-        case FAIL    : afterText = failText_;
-        case SUCCESS : afterText = successText_;
+        case FAIL    : afterText = "- failed";
+        case SUCCESS : afterText = "- success";
     }
 
     return afterText;
@@ -45,8 +47,5 @@ std::string LogManager::TypeText(LOG_TYPE log_type) {
     return preText;
 }
 
-LogManager::LogManager() {
-
-}
 
 }
