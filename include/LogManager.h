@@ -32,8 +32,6 @@ class LogManager : public Singleton<LogManager> {
 public:
     LogManager();
 
-    void Log(LOG_LEVEL level, const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
-
 private:
     void LogInfo(const std::string& message, LOG_TYPE logType, PASS_INFO success);
     void LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO success);

@@ -11,6 +11,9 @@ Root::Root() {
     inputManager_ = std::make_unique<InputManager>();
     soundManager_ = std::make_unique<SoundManager>();
     networkManager_ = std::make_unique<NetworkManager>();
+
+    LogManager::Log();
+
 }
 Root::~Root() {
 
