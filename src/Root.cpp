@@ -12,8 +12,7 @@ Root::Root() {
     soundManager_ = std::make_unique<SoundManager>();
     networkManager_ = std::make_unique<NetworkManager>();
 
-    LogManager::LogInfo("- Core initialization complete -");
-
+    LogManager::LogInfo("- Core initialization complete -", INTERNAL);
 }
 Root::~Root() {
 

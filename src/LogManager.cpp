@@ -38,6 +38,7 @@ std::string LogManager::TypeText(LOG_TYPE log_type) {
     switch (log_type) {
         case GENERAL : preText = "|";
         case NETWORK : preText = "|NET|";
+        case INTERNAL: preText = "|CORE|";
         case PHYSICS : preText = "|PHYS|";
         case DEBUG   : preText = "|DEBUG|";
         case RENDER  : preText = "|RENDER|";

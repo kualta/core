@@ -17,6 +17,7 @@ enum LOG_TYPE {
     GENERAL,
     PHYSICS,
     NETWORK,
+    INTERNAL,
     RENDER,
     WINDOW,
     DEBUG,
