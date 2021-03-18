@@ -10,14 +10,14 @@ namespace core {
 // TODO: Add time/date stamps to logs
 LogManager::LogManager() {
 }
-void LogManager::LogInfo(const std::string &message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << TypeText(logType) << "INFO: " << message << PassText(passInfo) << std::endl;
+void LogManager::LogInfo(const std::string &message, LOG_TYPE logType) {
+    std::cout << TypeText(logType) << "INFO: " << message << std::endl;
 }
-void LogManager::LogWarn(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << TypeText(logType) << "WARN: " << message << PassText(passInfo) << std::endl;
+void LogManager::LogWarn(const std::string& message, LOG_TYPE logType) {
+    std::cout << TypeText(logType) << "WARN: " << message << std::endl;
 }
-void LogManager::LogError(const std::string& message, LOG_TYPE logType, PASS_INFO passInfo) {
-    std::cout << TypeText(logType) << "ERROR! " << message << PassText(passInfo) << std::endl;
+void LogManager::LogError(const std::string& message, LOG_TYPE logType) {
+    std::cout << TypeText(logType) << "ERROR! " << message << std::endl;
 }
 std::string LogManager::PassText(PASS_INFO success) {
 

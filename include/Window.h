@@ -11,7 +11,6 @@ namespace core {
 
 
     class Window {
-
     public:
         Window(const std::string &title, const core::Rect &rect);
         ~Window();
@@ -20,10 +19,10 @@ namespace core {
         uint32_t GetHeight() const;
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
-        SDL_Window *GetSDLWindowPtr() const;
+        SDL_Window *GetSdlWindowPtr() const;
         std::string GetTitle() const;
 
-        int SetPosition(Vector2 pos);
+        int SetPosition(const Vector2& pos);
 
     private:
         // FIXME: Counter shouldn't be in Window class

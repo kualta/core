@@ -33,9 +33,9 @@ class LogManager : public Singleton<LogManager> {
 public:
     LogManager();
 
-    static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
-    static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
-    static void LogError(const std::string& message, LOG_TYPE logType = GENERAL, PASS_INFO success = NO_INFO);
+    static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL);
+    static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL);
+    static void LogError(const std::string& message, LOG_TYPE logType = GENERAL);
     static std::string PassText(PASS_INFO success);
     static std::string TypeText(LOG_TYPE log_type);
 

@@ -31,16 +31,16 @@ Vector2 Window::GetPosition() const {
 std::string Window::GetTitle() const {
     return title;
 }
-int Window::SetPosition(Vector2 pos) {
+int Window::SetPosition(const Vector2& pos) {
     if (pos.x < 0 || pos.y < 0) {
-        LogManager::LogError("Changing window position", WINDOW);
+        LogManager::LogError("Changing window position failed", WINDOW);
         return -1;
     }
     position = pos;
 
     return 0;
 }
-SDL_Window *Window::GetSDLWindowPtr() const {
+SDL_Window *Window::GetSdlWindowPtr() const {
     return sdlWindow;
 }
 

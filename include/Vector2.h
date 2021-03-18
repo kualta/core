@@ -9,7 +9,7 @@ public:
     Vector2(int x, int y);
     Vector2(Vector2 *pVector2);
     ~Vector2();
-    Vector2& operator=(Vector2& other);
+    Vector2 operator=(Vector2 other);
 
     /// Read-only members
     const int &x;
