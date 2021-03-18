@@ -12,7 +12,7 @@ It's mostly Google's convention, with several changes.
 | Macro | SCREAMING_SNAKE_CASE |
 | Enumerator | SCREAMING_SNAKE_CASE |
 | Namespace | snake_case |
-| Struct Member Field | camelCase + _ |
+| Struct Member Field | camelCase |
 | Global Function | PascalCase |
 | Memeber Function | PascalCase |
 | Parameter | camelCase |
@@ -69,8 +69,8 @@ public:
 
 private:
     void innerFunc();
-    std::string var_;
-    int anotherVarExample_;
+    std::string var;
+    int anotherVarExample;
 };
 
 

@@ -23,13 +23,13 @@ uint32_t WindowManager::CreateWindow(const std::string &title, const Vector2& po
     return windowPtr->GetWindowID();
 }
 void WindowManager::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
-    windowsPool_.push_back(windowPtr);
+    windowsPool.push_back(windowPtr);
 }
 void WindowManager::AddWindowToPool(const Window &window) {
-    windowsPool_.push_back(std::make_shared<Window>(window));
+    windowsPool.push_back(std::make_shared<Window>(window));
 }
 void WindowManager::DestroyAll() {
-    for (auto const& window: windowsPool_) {
+    for (auto const& window: windowsPool) {
         delete &window;
     }
 }

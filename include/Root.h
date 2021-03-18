@@ -16,7 +16,7 @@ public:
     ~Root();
 
 protected:
-    std::vector<std::shared_ptr<Window>> windowsPool_;
+    std::vector<std::shared_ptr<Window>> windowsPool;
 
     std::unique_ptr<LogManager> logManager;
     std::unique_ptr<WindowManager> windowManager;

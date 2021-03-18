@@ -23,7 +23,7 @@ public:
     void DestroyAll();
 
 protected:
-    std::vector<std::shared_ptr<Window>> windowsPool_;
+    std::vector<std::shared_ptr<Window>> windowsPool;
 
 private:
 

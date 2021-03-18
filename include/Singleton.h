@@ -16,18 +16,18 @@ public:
     /// Private operator= . This is a forbidden operation.
     Singleton& operator=(const Singleton<T>&) = delete;
     Singleton() {
-        singleton_ = static_cast<T*>(this);
+        singleton = static_cast<T*>(this);
     }
     ~Singleton() {
-        singleton_ = nullptr;
+        singleton = nullptr;
     }
     static T& GetInstance() {
-        return (*singleton_);
+        return (*singleton);
     }
-    static T* GetInstancePtr() { return singleton_; }
+    static T* GetInstancePtr() { return singleton; }
 
 protected:
-    static T* singleton_;
+    static T* singleton;
 
 private:
 

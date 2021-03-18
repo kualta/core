@@ -26,17 +26,18 @@ namespace core {
         int SetPosition(Vector2 pos);
 
     private:
-        static uint32_t win_counter_;
+        // FIXME: Counter shouldn't be in Window class
+        static uint32_t winCounter;
 
-        SDL_Window *sdl_window_;
+        SDL_Window *sdlWindow;
 
-        std::string title_;
-        Vector2 position_;
-        Context context_;
-        uint32_t height_;
-        uint32_t width_;
+        std::string title;
+        Vector2 position;
+        Context context;
+        uint32_t height;
+        uint32_t width;
 
-        uint32_t id_;
+        uint32_t id;
     };
 
 

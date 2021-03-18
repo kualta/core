@@ -10,8 +10,6 @@
 namespace core {
 
 
-unsigned int MakeWindow(const std::string &title, Rect rect);
-
 
 }
 

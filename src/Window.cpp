@@ -6,42 +6,42 @@ namespace core {
 
 
 Window::Window(const std::string &title, const Rect& rect)
-: title_(title), height_(rect.h), width_(rect.w), position_(rect.position), id_(++win_counter_) {
-    this->position_ = Vector2(rect.position.x, rect.position.y);
-    this->sdl_window_ = SDL_CreateWindow(title.c_str(),
+: title(title), height(rect.h), width(rect.w), position(rect.position), id(++winCounter) {
+    this->position = Vector2(rect.position.x, rect.position.y);
+    this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
                                          0);
 }
 Window::~Window() {
-    SDL_DestroyWindow(sdl_window_);
+    SDL_DestroyWindow(sdlWindow);
 }
 uint32_t Window::GetWindowID() const {
-    return id_;
+    return id;
 }
 uint32_t Window::GetHeight() const {
-    return height_;
+    return height;
 }
 uint32_t Window::GetWidth() const {
-    return width_;
+    return width;
 }
 Vector2 Window::GetPosition() const {
-    return position_;
+    return position;
 }
 std::string Window::GetTitle() const {
-    return title_;
+    return title;
 }
 int Window::SetPosition(Vector2 pos) {
     if (pos.x < 0 || pos.y < 0) {
         LogManager::LogError("Changing window position", WINDOW);
         return -1;
     }
-    position_ = pos;
+    position = pos;
 
     return 0;
 }
 SDL_Window *Window::GetSDLWindowPtr() const {
-    return sdl_window_;
+    return sdlWindow;
 }
 
 }
