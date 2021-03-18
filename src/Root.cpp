@@ -5,8 +5,6 @@ namespace core {
 
 
 Root::Root() {
-    objectsCounter = 1;
-
     logManager = std::make_unique<LogManager>();
     windowManager = std::make_unique<WindowManager>();
     renderManager = std::make_unique<RenderManager>();
