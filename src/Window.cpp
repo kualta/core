@@ -8,7 +8,7 @@ namespace core {
 
 
 Window::Window(const std::string &title, const Rect& rect)
-: title(title), height(rect.h), width(rect.w), position(rect.position), id(++winCounter) {
+: title(title), height(rect.h), width(rect.w), position(rect.position) {
     this->id = Root::GetNewID();
     this->position = Vector2(rect.position.x, rect.position.y);
     this->sdlWindow = SDL_CreateWindow(title.c_str(),

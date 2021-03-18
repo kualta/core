@@ -25,10 +25,7 @@ namespace core {
         int SetPosition(const Vector2& pos);
 
     private:
-        static uint32_t winCounter;
-
         SDL_Window *sdlWindow;
-
         std::string title;
         Vector2 position;
         Context context;
