@@ -1,5 +1,7 @@
 #include <Window.h>
-#include "Utility.h"
+
+#include <Root.h>
+#include <Utility.h>
 
 
 namespace core {
@@ -7,6 +9,7 @@ namespace core {
 
 Window::Window(const std::string &title, const Rect& rect)
 : title(title), height(rect.h), width(rect.w), position(rect.position), id(++winCounter) {
+    this->id = Root::GetNewID();
     this->position = Vector2(rect.position.x, rect.position.y);
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                          rect.position.x, rect.position.y,
@@ -43,5 +46,6 @@ int Window::SetPosition(const Vector2& pos) {
 SDL_Window *Window::GetSdlWindowPtr() const {
     return sdlWindow;
 }
+
 
 }

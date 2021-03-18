@@ -5,6 +5,8 @@ namespace core {
 
 
 Root::Root() {
+    objectsCounter = 1;
+
     logManager = std::make_unique<LogManager>();
     windowManager = std::make_unique<WindowManager>();
     renderManager = std::make_unique<RenderManager>();
@@ -16,7 +18,15 @@ Root::Root() {
 }
 Root::~Root() {
     windowManager->DestroyAll();
-}
 
+    SDL_Quit();
+
+    LogManager::LogInfo("- Core shutdown complete -", INTERNAL);
+}
+uint32_t Root::GetNewID() {
+    objectsCounter++;
+
+    return objectsCounter;
+}
 
 }

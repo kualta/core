@@ -15,6 +15,9 @@ public:
     Root();
     ~Root();
 
+    /// Increments inner counter and returns ID for next object.
+    static uint32_t GetNewID();
+
 protected:
     std::vector<std::shared_ptr<Window>> windowsPool;
 
@@ -26,6 +29,9 @@ protected:
     std::unique_ptr<NetworkManager> networkManager;
 
 private:
+
+    /// Root's ID is always 1
+    static uint32_t objectsCounter;
 };
 
 

@@ -25,7 +25,6 @@ namespace core {
         int SetPosition(const Vector2& pos);
 
     private:
-        // FIXME: Counter shouldn't be in Window class
         static uint32_t winCounter;
 
         SDL_Window *sdlWindow;
