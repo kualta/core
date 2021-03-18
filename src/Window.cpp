@@ -9,7 +9,6 @@ namespace core {
 
 Window::Window(const std::string &title, const Rect& rect)
 : title(title), height(rect.h), width(rect.w), position(rect.position) {
-    this->id = Root::GetNewID();
     this->position = Vector2(rect.position.x, rect.position.y);
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                          rect.position.x, rect.position.y,
@@ -18,9 +17,6 @@ Window::Window(const std::string &title, const Rect& rect)
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
-}
-uint32_t Window::GetWindowID() const {
-    return id;
 }
 uint32_t Window::GetHeight() const {
     return height;

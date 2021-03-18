@@ -17,7 +17,6 @@ namespace core {
         Window(const std::string &title, const core::Rect &rect);
         ~Window();
 
-        uint32_t GetWindowID() const;
         uint32_t GetHeight() const;
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
