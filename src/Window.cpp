@@ -36,7 +36,7 @@ std::string Window::GetTitle() const {
 }
 int Window::SetPosition(Vector2 pos) {
     if (pos.x < 0 || pos.y < 0) {
-        LogManager::GetInstance().Log(ERR, "Changing window position", WINDOW, FAIL);
+        LogManager::LogError("Changing window position", WINDOW);
         return -1;
     }
     position_ = pos;

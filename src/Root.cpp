@@ -15,7 +15,7 @@ Root::Root() {
     LogManager::LogInfo("- Core initialization complete -", INTERNAL);
 }
 Root::~Root() {
-
+    // TODO: Add shutdown sequence
 }
 
 
