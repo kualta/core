@@ -20,6 +20,8 @@ public:
     void AddWindowToPool(const Window& window);
     void AddWindowToPool(const std::shared_ptr<Window>& windowPtr);
 
+    void DestroyAll();
+
 protected:
     std::vector<std::shared_ptr<Window>> windowsPool_;
 

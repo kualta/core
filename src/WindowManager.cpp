@@ -28,5 +28,10 @@ void WindowManager::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
 void WindowManager::AddWindowToPool(const Window &window) {
     windowsPool_.push_back(std::make_shared<Window>(window));
 }
+void WindowManager::DestroyAll() {
+    for (auto const& window: windowsPool_) {
+        delete &window;
+    }
+}
 
 }
