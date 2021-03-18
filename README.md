@@ -1,4 +1,4 @@
-# Core Game Engine
+# Core Engine
 
 > not to be confused with [core game platform](https://en.wikipedia.org/wiki/Core_\(video_game_platform\))
 
