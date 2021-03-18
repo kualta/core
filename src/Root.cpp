@@ -23,10 +23,6 @@ Root::~Root() {
 
     LogManager::LogInfo("- Core shutdown complete -", INTERNAL);
 }
-uint32_t Root::GetNewID() {
-    objectsCounter++;
 
-    return objectsCounter;
-}
 
 }

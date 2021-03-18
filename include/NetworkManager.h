@@ -2,11 +2,13 @@
 #define CORE_NETWORKMANAGER_H
 
 #include "Singleton.h"
+#include "ObjectId.h"
+
 
 namespace core {
 
 // TODO: TO BE IMPLEMENTED
-class NetworkManager : public Singleton<NetworkManager> {
+class NetworkManager : public Singleton<NetworkManager>, public ObjectId {
 public:
 
 protected:

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Singleton.h"
+#include "ObjectId.h"
 
 
 namespace core {
@@ -28,7 +29,7 @@ enum PASS_INFO {
     FAIL,
 };
 
-class LogManager : public Singleton<LogManager> {
+class LogManager : public Singleton<LogManager>, public ObjectId {
 
 public:
     LogManager();

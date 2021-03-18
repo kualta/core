@@ -2,12 +2,13 @@
 #define CORE_SOUNDMANAGER_H
 
 #include "Singleton.h"
+#include "ObjectId.h"
 
 
 namespace core {
 
 // TODO: TO BE IMPLEMENTED
-class SoundManager : public Singleton<SoundManager> {
+class SoundManager : public Singleton<SoundManager>, public ObjectId {
 public:
 
 protected:

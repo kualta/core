@@ -12,7 +12,7 @@ namespace core {
 class ObjectId {
 
 public:
-    static uint32_t objectCounter { 1 };
+    static uint32_t objectCounter { 0 };
     uint32_t id;
 
 protected:

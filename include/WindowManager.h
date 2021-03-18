@@ -3,6 +3,7 @@
 
 #include "Singleton.h"
 #include "Window.h"
+#include "ObjectId.h"
 
 #include <vector>
 #include <memory>
@@ -10,7 +11,7 @@
 
 namespace core {
 
-class WindowManager : public Singleton<WindowManager> {
+class WindowManager : public Singleton<WindowManager>, public ObjectId {
 public:
 
     /// Returns id of the created window on success

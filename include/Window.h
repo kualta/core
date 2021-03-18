@@ -6,11 +6,13 @@
 
 #include "Context.h"
 #include "Geometry.h"
+#include "ObjectId.h"
+
 
 namespace core {
 
 
-    class Window {
+    class Window : public ObjectId {
     public:
         Window(const std::string &title, const core::Rect &rect);
         ~Window();
