@@ -1,40 +1,24 @@
 #ifndef CORE_GEOMETRY_H
 #define CORE_GEOMETRY_H
 
+#include "Vector2.h"
 
 
 namespace core {
 
-// TODO: Extract Vector2 class to separate file
-    class Vector2 {
-    public:
-        Vector2(int x, int y);
-        Vector2(Vector2 *pVector2);
-        ~Vector2();
-        Vector2 operator=(Vector2 other);
 
-        /// Read-only members
-        const int &x;
-        const int &y;
+typedef struct Rect {
+    Rect(int x, int y, int w, int h);
+    Rect(Vector2 pos, int w, int h);
+    Rect(Vector2 pos, Vector2 res);
+    Vector2 position;
+    int w, h;
+} Rect;
 
-    private:
-        int x_;
-        int y_;
-    };
+class Geometry {
 
-    class Geometry {
+};
 
-
-
-    };
-
-    typedef struct Rect {
-        Rect(int x, int y, int w, int h);
-        Rect(Vector2 pos, int w, int h);
-        Rect(Vector2 pos, Vector2 res);
-        Vector2 position;
-        int w, h;
-    } Rect;
 
 }
 
