@@ -13,7 +13,7 @@ namespace core {
     class Window {
 
     public:
-        Window(const std::string &title, core::Rect &rect);
+        Window(const std::string &title, const core::Rect &rect);
         ~Window();
 
         uint32_t GetWindowID() const;

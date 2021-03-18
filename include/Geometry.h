@@ -31,7 +31,7 @@ namespace core {
     typedef struct Rect {
         Rect(int x, int y, int w, int h);
         Rect(Vector2 pos, int w, int h);
-        Rect(Vector2 position, Vector2 resolution);
+        Rect(Vector2 pos, Vector2 res);
         Vector2 position;
         int w, h;
     } Rect;
