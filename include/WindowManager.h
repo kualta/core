@@ -13,6 +13,7 @@ namespace core {
 
 class WindowManager : public Singleton<WindowManager>, public ObjectId {
 public:
+    WindowManager();
 
     /// Returns id of the created window on success
     uint32_t CreateWindow(const std::string& title, const Rect& rect);

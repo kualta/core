@@ -3,13 +3,16 @@
 
 #include "Singleton.h"
 #include "ObjectId.h"
+#include "Window.h"
 
 
 namespace core {
 
-// TODO: TO BE IMPLEMENTED
+
 class RenderManager : public Singleton<RenderManager>, public ObjectId {
 public:
+
+    void CreateRenderer(const Window& window);
 
 protected:
 

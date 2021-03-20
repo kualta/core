@@ -20,7 +20,7 @@ uint32_t WindowManager::CreateWindow(const std::string &title, const Vector2& po
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, Rect(pos, res));
     AddWindowToPool(windowPtr);
 
-    return windowPtr->GetId()
+    return windowPtr->GetId();
 }
 void WindowManager::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
     windowsPool.push_back(windowPtr);
@@ -33,6 +33,9 @@ void WindowManager::DestroyAll() {
         SDL_DestroyWindow(window->GetSdlWindowPtr());
         delete &window;
     }
+}
+WindowManager::WindowManager() {
+    SDL_Init(0);
 }
 
 }

@@ -13,14 +13,14 @@ namespace core {
 class ObjectId {
 
 public:
-    uint32_t GetId() const { return id };
+    uint32_t GetId() const { return id; };
 
 protected:
     // FIXME: Current implementation is not thread-safe
     ObjectId() : id(++objectCounter) {};
 
 private:
-    static uint32_t objectCounter { 0 };
+    static uint32_t objectCounter;
     uint32_t id;
 
 };
