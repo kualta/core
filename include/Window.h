@@ -25,18 +25,18 @@ namespace core {
         uint32_t GetHeight() const;
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
-        SDL_Window *GetSdlWindowPtr() const;
-        WindowInfo GetInfo() const;
+        SDL_Window* GetSdlWindowPtr() const;
+        WindowInfo* GetInfo() const;
         std::string GetTitle() const;
         SDL_SysWMinfo wmi;
 
         int SetPosition(const Vector2& pos);
 
     private:
-        SDL_Window *sdlWindow;
+        SDL_Window* sdlWindow;
         std::string title;
         Vector2 position;
-        WindowInfo info;
+        WindowInfo* info;
         Context context;
         uint32_t height;
         uint32_t width;
