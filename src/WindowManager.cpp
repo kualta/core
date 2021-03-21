@@ -4,19 +4,19 @@
 namespace core {
 
 
-uint32_t WindowManager::CreateWindow(const std::string& title, const Rect& rect) {
+uint32_t WindowManager::AddWindow(const std::string& title, const Rect& rect) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, rect);
     AddWindowToPool(windowPtr);
 
     return windowPtr->GetId();
 }
-uint32_t WindowManager::CreateWindow(const std::string &title, const Vector2& pos, int width, int height) {
+uint32_t WindowManager::AddWindow(const std::string &title, const Vector2& pos, int width, int height) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, Rect(pos, width, height));
     AddWindowToPool(windowPtr);
 
     return windowPtr->GetId();
 }
-uint32_t WindowManager::CreateWindow(const std::string &title, const Vector2& pos, const Vector2& res) {
+uint32_t WindowManager::AddWindow(const std::string &title, const Vector2& pos, const Vector2& res) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, Rect(pos, res));
     AddWindowToPool(windowPtr);
 

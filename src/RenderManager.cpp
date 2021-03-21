@@ -12,6 +12,7 @@ RenderManager::RenderManager() {
     bgfx::init();
 }
 RenderManager::~RenderManager() {
+    bgfx::shutdown();
 }
 bool RenderManager::CreateRenderer(Window &_window) {
 
