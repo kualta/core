@@ -14,6 +14,11 @@ Window::Window(const std::string &title, const Rect& rect)
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
                                          0);
+    /// Initialize info.wmi
+    SDL_VERSION(&info.wmi.version);
+}
+WindowInfo Window::GetInfo() const {
+    return info;
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);

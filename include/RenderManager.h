@@ -12,13 +12,17 @@ namespace core {
 class RenderManager : public Singleton<RenderManager>, public ObjectId {
 public:
 
-    void CreateRenderer(const Window& window);
+    RenderManager();
+    ~RenderManager();
+    bgfx::PlatformData GetPlatformData(Window& window);
+    bool CreateRenderer(Window& window);
 
 protected:
 
 private:
 
 };
+
 
 
 }
