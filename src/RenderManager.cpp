@@ -15,16 +15,10 @@ RenderManager::~RenderManager() {
     bgfx::shutdown();
 }
 bool RenderManager::CreateRenderer(Window &_window) {
-
-    bgfx::Init initObj;
-
-    initObj.platformData = GetPlatformData(_window);
-    initObj.type = bgfx::RendererType::Count; // Automatically choose a renderer.
-    initObj.resolution.width = _window.GetWidth();
-    initObj.resolution.height = _window.GetHeight();
-    initObj.resolution.reset = BGFX_RESET_VSYNC;
-
-    bgfx::init(initObj);
+    if (!InitRenderer(_window)) {
+        LogManager::LogError("Cannot create renderer", INTERNAL);
+        return false;
+    }
 }
 bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
 
@@ -32,7 +26,7 @@ bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
     bgfx::PlatformData platformData;
 
     if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), wmi)) {
-        LogManager::LogError("Error getting window info", RENDER);
+        LogManager::LogError("Error getting window info", INTERNAL);
     }
 
     #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
@@ -54,6 +48,22 @@ bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
     platformData.backBufferDS = NULL;
 
     return platformData;
+}
+bool RenderManager::InitRenderer(Window &_window) {
+
+    bgfx::Init initObj;
+
+    initObj.platformData = GetPlatformData(_window);
+    initObj.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+    initObj.resolution.width = _window.GetWidth();
+    initObj.resolution.height = _window.GetHeight();
+    initObj.resolution.reset = BGFX_RESET_VSYNC;
+
+    if (!bgfx::init(initObj)) {
+        LogManager::LogError("Error initializing renderer, aborting", INTERNAL);
+        return false;
+    }
+    return true;
 }
 
 

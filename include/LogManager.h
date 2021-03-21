@@ -15,12 +15,12 @@ enum LOG_LEVEL {
     ERR,
 };
 enum LOG_TYPE {
-    GENERAL,
+    GENERAL,  // For other logs
     PHYSICS,
     NETWORK,
-    INTERNAL,
-    RENDER,
-    WINDOW,
+    INTERNAL, // For engine logs
+    RENDER,   // For drawing logs
+    WINDOW,   // For window handler logs
     DEBUG,
 };
 enum PASS_INFO {
