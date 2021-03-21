@@ -28,24 +28,25 @@ bool RenderManager::CreateRenderer(Window &_window) {
 }
 bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
 
+    SDL_SysWMinfo* wmi = &_window.GetInfo()->wmi;
     bgfx::PlatformData platformData;
 
-    if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), &_window.GetInfo()->wmi)) {
+    if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), wmi)) {
         LogManager::LogError("Error getting window info", RENDER);
     }
 
     #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
-        platformData.ndt = wmi.info.x11.display;
+        platformData.ndt = wmi->info.x11.display;
         platformData.nwh = (void*)(uintptr_t)wmi.info.x11.window;
     #elif BX_PLATFORM_OSX
         platformData.ndt = NULL;
-        platformData.nwh = wmi.info.cocoa.window;
+        platformData.nwh = wmi->info.cocoa.window;
     #elif BX_PLATFORM_WINDOWS
         platformData.ndt = NULL;
-        platformData.nwh = wmi.info.win.window;
+        platformData.nwh = wmi->info.win.window;
     #elif BX_PLATFORM_STEAMLINK
-        platformData.ndt = wmi.info.vivante.display;
-        platformData.nwh = wmi.info.vivante.window;
+        platformData.ndt = wmi->info.vivante.display;
+        platformData.nwh = wmi->info.vivante.window;
     #endif // BX_PLATFORM_
 
     platformData.context = NULL;
@@ -55,4 +56,5 @@ bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
     return platformData;
 }
 
-}
+
+} // namespace

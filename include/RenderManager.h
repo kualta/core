@@ -14,8 +14,9 @@ public:
 
     RenderManager();
     ~RenderManager();
-    bgfx::PlatformData GetPlatformData(Window& window);
     bool CreateRenderer(Window& window);
+
+    static bgfx::PlatformData GetPlatformData(Window& window);
 
 protected:
 

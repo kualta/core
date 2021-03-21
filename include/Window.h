@@ -28,7 +28,6 @@ namespace core {
         SDL_Window* GetSdlWindowPtr() const;
         WindowInfo* GetInfo() const;
         std::string GetTitle() const;
-        SDL_SysWMinfo wmi;
 
         int SetPosition(const Vector2& pos);
 

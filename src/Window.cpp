@@ -14,7 +14,7 @@ Window::Window(const std::string &title, const Rect& rect)
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
                                          0);
-    /// Initialize info.wmi
+    /// info->wmi must be initialized with version
     SDL_VERSION(&info->wmi.version);
 }
 WindowInfo* Window::GetInfo() const {
