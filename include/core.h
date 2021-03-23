@@ -13,6 +13,7 @@
 #include "Window.h"
 #include "Context.h"
 #include "Geometry.h"
+#include "ObjectId.h"
 #include "LogManager.h"
 #include "InputManager.h"
 #include "NetworkManager.h"

@@ -1,6 +1,3 @@
-///
-/// This is a stand-alone header file, no ObjectId.cpp is presented.
-///
 #ifndef CORE_OBJECTID_H
 #define CORE_OBJECTID_H
 

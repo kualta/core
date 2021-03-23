@@ -1,5 +1,5 @@
 /*
- * This is a single-file singleton class,
+ * This is a stand-alone header file,
  * No Singleton.cpp is presented.
  */
 #ifndef CORE_SINGLETON_H
@@ -27,11 +27,16 @@ public:
     static T* GetInstancePtr() { return singleton; }
 
 protected:
+    /// Implementation below class template
     static T* singleton;
 
 private:
 
 };
+
+// FIXME: Probabably a bad practice?
+template<typename T>
+T* Singleton<T>::singleton{};
 
 
 }
