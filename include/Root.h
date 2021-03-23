@@ -3,9 +3,15 @@
 
 #include <memory>
 #include <vector>
-#include "core.h"
+
 #include "Singleton.h"
 #include "ObjectId.h"
+#include "LogManager.h"
+#include "WindowManager.h"
+#include "RenderManager.h"
+#include "InputManager.h"
+#include "SoundManager.h"
+#include "NetworkManager.h"
 
 
 namespace core {

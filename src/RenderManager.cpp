@@ -19,6 +19,7 @@ bool RenderManager::CreateRenderer(Window &_window) {
         LogManager::LogError("Cannot create renderer", INTERNAL);
         return false;
     }
+    return true;
 }
 bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
 

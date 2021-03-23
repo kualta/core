@@ -9,9 +9,10 @@
 #include <SDL.h>
 #include <SDL_syswm.h>
 
+#include "Root.h"
+#include "Window.h"
 #include "Context.h"
 #include "Geometry.h"
-#include "Window.h"
 #include "LogManager.h"
 #include "InputManager.h"
 #include "NetworkManager.h"

@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "ObjectId.h"
 #include "Window.h"
+#include "bgfx/bgfx.h"
 
 
 namespace core {
