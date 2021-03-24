@@ -13,10 +13,6 @@
 namespace core {
 
 
-    typedef struct WindowInfo {
-        SDL_SysWMinfo wmi;
-    } WindowInfo;
-
     class Window : public ObjectId {
     public:
         Window(const std::string &title, const core::Rect &rect);
@@ -26,16 +22,16 @@ namespace core {
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
         SDL_Window* GetSdlWindowPtr() const;
-        WindowInfo* GetInfo() const;
+        SDL_SysWMinfo GetSdlWmi() const;
         std::string GetTitle() const;
 
         int SetPosition(const Vector2& pos);
 
     private:
         SDL_Window* sdlWindow;
+        SDL_SysWMinfo sdlWmi;
         std::string title;
         Vector2 position;
-        WindowInfo* info;
         Context context;
         uint32_t height;
         uint32_t width;

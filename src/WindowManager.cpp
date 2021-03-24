@@ -1,11 +1,15 @@
 #include "WindowManager.h"
+#include "LogManager.h"
 #include <string>
 
 namespace core {
 
 uint32_t WindowManager::SpawnWindow(const std::string& title, const Rect& rect) {
+    LogManager::LogInfo("Attempt to create window", WINDOW);
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, rect);
     AddWindowToPool(windowPtr);
+
+    LogManager::LogInfo("Created window succesfully", WINDOW);
 
     return windowPtr->GetId();
 }
@@ -13,11 +17,15 @@ uint32_t WindowManager::SpawnWindow(const std::string &title, const Vector2& pos
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, Rect(pos, width, height));
     AddWindowToPool(windowPtr);
 
+    LogManager::LogInfo("Created window succesfully", WINDOW);
+
     return windowPtr->GetId();
 }
 uint32_t WindowManager::SpawnWindow(const std::string &title, const Vector2& pos, const Vector2& res) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, Rect(pos, res));
     AddWindowToPool(windowPtr);
+
+    LogManager::LogInfo("Created window succesfully", WINDOW);
 
     return windowPtr->GetId();
 }
@@ -33,7 +41,7 @@ void WindowManager::DestroyAll() { for (auto const& window: windowsPool) {
     }
 }
 WindowManager::WindowManager() {
-    SDL_Init(0);
+    SDL_Init(SDL_INIT_EVERYTHING);
 }
 
 }

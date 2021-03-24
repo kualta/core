@@ -1,7 +1,5 @@
 #include <Window.h>
-
 #include <Root.h>
-#include <Utility.h>
 
 
 namespace core {
@@ -13,12 +11,10 @@ Window::Window(const std::string &title, const Rect& rect)
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
-                                         0);
+                                       SDL_WINDOW_SHOWN);
+
     /// info->wmi must be initialized with version
-    SDL_VERSION(&info->wmi.version);
-}
-WindowInfo* Window::GetInfo() const {
-    return info;
+    SDL_VERSION(&sdlWmi.version);
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
@@ -47,6 +43,8 @@ int Window::SetPosition(const Vector2& pos) {
 SDL_Window *Window::GetSdlWindowPtr() const {
     return sdlWindow;
 }
-
+SDL_SysWMinfo Window::GetSdlWmi() const {
+    return sdlWmi;
+}
 
 }

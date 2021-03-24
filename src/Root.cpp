@@ -21,6 +21,23 @@ Root::~Root() {
 
     LogManager::LogInfo("- Core shutdown complete -", INTERNAL);
 }
-
+const std::unique_ptr<LogManager> &Root::GetLogManager() const {
+    return logManager;
+}
+const std::unique_ptr<WindowManager> &Root::GetWindowManager() const {
+    return windowManager;
+}
+const std::unique_ptr<RenderManager> &Root::GetRenderManager() const {
+    return renderManager;
+}
+const std::unique_ptr<InputManager> &Root::GetInputManager() const {
+    return inputManager;
+}
+const std::unique_ptr<SoundManager> &Root::GetSoundManager() const {
+    return soundManager;
+}
+const std::unique_ptr<NetworkManager> &Root::GetNetworkManager() const {
+    return networkManager;
+}
 
 }
