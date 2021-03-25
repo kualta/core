@@ -1,6 +1,7 @@
 #include <bgfx/bgfx.h>
 #include <SDL_syswm.h>
 #include <LogManager.h>
+#include <bgfx/platform.h>
 #include "RenderManager.h"
 
 
@@ -15,6 +16,7 @@ RenderManager::~RenderManager() {
     bgfx::shutdown();
 }
 bool RenderManager::CreateRenderer(Window &_window) {
+    bgfx::renderFrame();
     if (!InitRenderer(_window)) {
         LogManager::LogError("Cannot create renderer", INTERNAL);
         return false;
@@ -23,10 +25,10 @@ bool RenderManager::CreateRenderer(Window &_window) {
 }
 bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
 
-    SDL_SysWMinfo wmi = _window.GetSdlWmi();
+    SDL_SysWMinfo* wmi = &_window.GetSdlWmi();
     bgfx::PlatformData platformData;
 
-    if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), &wmi)) {
+    if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), wmi)) {
         LogManager::LogError("Error getting window info", INTERNAL);
     }
 

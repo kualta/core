@@ -22,8 +22,8 @@ namespace core {
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
         SDL_Window* GetSdlWindowPtr() const;
-        SDL_SysWMinfo GetSdlWmi() const;
         std::string GetTitle() const;
+        SDL_SysWMinfo& GetSdlWmi();
 
         int SetPosition(const Vector2& pos);
 

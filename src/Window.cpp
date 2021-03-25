@@ -12,7 +12,6 @@ Window::Window(const std::string &title, const Rect& rect)
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
                                        SDL_WINDOW_SHOWN);
-
     /// info->wmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
 }
@@ -43,7 +42,7 @@ int Window::SetPosition(const Vector2& pos) {
 SDL_Window *Window::GetSdlWindowPtr() const {
     return sdlWindow;
 }
-SDL_SysWMinfo Window::GetSdlWmi() const {
+SDL_SysWMinfo& Window::GetSdlWmi() {
     return sdlWmi;
 }
 
