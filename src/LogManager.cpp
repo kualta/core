@@ -11,7 +11,7 @@ namespace core {
 LogManager::LogManager() {
 }
 void LogManager::LogInfo(const std::string &message, LOG_TYPE logType) {
-    std::cout << TypeText(logType) << " INFO: " << message << std::endl;
+    std::cout << TypeText(logType) << " " << message << std::endl;
 }
 void LogManager::LogWarn(const std::string& message, LOG_TYPE logType) {
     std::cout << TypeText(logType) << " WARN: " << message << std::endl;
@@ -22,7 +22,7 @@ void LogManager::LogError(const std::string& message, LOG_TYPE logType) {
 void LogManager::LogMessage(const std::string &message) {
     std::cout << message << std::endl;
 }
-std::string PassText(PASS_INFO success) {
+std::string LogManager::PassText(PASS_INFO success) {
 
     std::string afterText;
 
@@ -34,7 +34,7 @@ std::string PassText(PASS_INFO success) {
 
     return afterText;
 }
-std::string TypeText(LOG_TYPE log_type) {
+std::string LogManager::TypeText(LOG_TYPE log_type) {
 
     std::string preText;
 

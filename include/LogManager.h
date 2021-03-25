@@ -29,8 +29,6 @@ enum PASS_INFO {
     FAIL,
 };
 
-std::string PassText(PASS_INFO success);
-std::string TypeText(LOG_TYPE log_type);
 
 
 class LogManager : public Singleton<LogManager>, public ObjectId {
@@ -43,6 +41,8 @@ public:
     static void LogError(const std::string& message, LOG_TYPE logType = GENERAL);
     static void LogMessage(const std::string& message);
 
+    static std::string PassText(PASS_INFO success);
+    static std::string TypeText(LOG_TYPE log_type);
 private:
 };
 
