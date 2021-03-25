@@ -12,8 +12,6 @@ Window::Window(const std::string &title, const Rect& rect)
                                        rect.position.x, rect.position.y,
                                        rect.w, rect.h,
                                        SDL_WINDOW_RESIZABLE);
-    int t,z;
-    SDL_GetWindowPosition(sdlWindow, &t, &z);
     /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
     SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);
