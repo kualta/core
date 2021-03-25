@@ -1,14 +1,18 @@
 #include "WindowManager.h"
 #include "LogManager.h"
+#include "RenderManager.h"
 #include <string>
 
 namespace core {
 
+std::vector<std::shared_ptr<Window>> WindowManager::windowsPool {};
+
 uint32_t WindowManager::SpawnWindow(const std::string& title, const Rect& rect) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, rect);
     AddWindowToPool(windowPtr);
-
     LogManager::LogInfo("Created window succesfully", WINDOW);
+
+    core::RenderManager::CreateRenderer(*windowPtr);
 
     return windowPtr->GetId();
 }

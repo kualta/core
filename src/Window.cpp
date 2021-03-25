@@ -11,9 +11,10 @@ Window::Window(const std::string &title, const Rect& rect)
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                          rect.position.x, rect.position.y,
                                          rect.w, rect.h,
-                                       SDL_WINDOW_SHOWN);
-    /// info->wmi must be initialized with version
+                                       SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+    /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
+    SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);

@@ -15,8 +15,8 @@ public:
 
     RenderManager();
     ~RenderManager();
-    bool CreateRenderer(Window& window);
-    bool InitRenderer(Window& window);
+    static bool CreateRenderer(Window& window);
+    static bool InitRenderer(Window& window);
 
     static bgfx::PlatformData GetPlatformData(Window& window);
 

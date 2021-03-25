@@ -16,16 +16,16 @@ public:
     WindowManager();
 
     /// Returns id of the created window on success
-    uint32_t SpawnWindow(const std::string& title, const Rect& rect);
-    uint32_t SpawnWindow(const std::string& title, const Vector2& pos, int width, int height);
-    uint32_t SpawnWindow(const std::string& title, const Vector2& pos, const Vector2& res);
-    void AddWindowToPool(const Window& window);
-    void AddWindowToPool(const std::shared_ptr<Window>& windowPtr);
+    static uint32_t SpawnWindow(const std::string& title, const Rect& rect);
+    static uint32_t SpawnWindow(const std::string& title, const Vector2& pos, int width, int height);
+    static uint32_t SpawnWindow(const std::string& title, const Vector2& pos, const Vector2& res);
+    static void AddWindowToPool(const Window& window);
+    static void AddWindowToPool(const std::shared_ptr<Window>& windowPtr);
 
     void DestroyAll();
 
 protected:
-    std::vector<std::shared_ptr<Window>> windowsPool;
+    static std::vector<std::shared_ptr<Window>> windowsPool;
 
 private:
 

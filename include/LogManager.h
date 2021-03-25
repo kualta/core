@@ -19,7 +19,7 @@ enum LOG_TYPE {
     PHYSICS,
     NETWORK,
     INTERNAL, // For engine logs
-    RENDER,   // For drawing logs
+    RENDER,   // For drawing & rendering logs
     WINDOW,   // For window handler logs
     DEBUG,
 };

@@ -10,7 +10,7 @@ namespace core {
 
 
 RenderManager::RenderManager() {
-    bgfx::init();
+    //bgfx::init();
 }
 RenderManager::~RenderManager() {
     bgfx::shutdown();
@@ -18,19 +18,16 @@ RenderManager::~RenderManager() {
 bool RenderManager::CreateRenderer(Window &_window) {
     bgfx::renderFrame();
     if (!InitRenderer(_window)) {
-        LogManager::LogError("Cannot create renderer", INTERNAL);
+        LogManager::LogError("Cannot create renderer", RENDER);
         return false;
     }
+    LogManager::LogInfo("Created renderer succesfully", RENDER);
     return true;
 }
 bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
 
     SDL_SysWMinfo* wmi = &_window.GetSdlWmi();
     bgfx::PlatformData platformData;
-
-    if (!SDL_GetWindowWMInfo(_window.GetSdlWindowPtr(), wmi)) {
-        LogManager::LogError("Error getting window info", INTERNAL);
-    }
 
     #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
         platformData.ndt = wmi->info.x11.display;
@@ -63,7 +60,7 @@ bool RenderManager::InitRenderer(Window &_window) {
     initObj.resolution.reset = BGFX_RESET_VSYNC;
 
     if (!bgfx::init(initObj)) {
-        LogManager::LogError("Error initializing renderer, aborting", INTERNAL);
+        LogManager::LogError("Cannot initialize renderer, aborting", RENDER);
         return false;
     }
     return true;
