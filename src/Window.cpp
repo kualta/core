@@ -9,9 +9,11 @@ Window::Window(const std::string &title, const Rect& rect)
 : title(title), height(rect.h), width(rect.w), position(rect.position) {
     this->position = Vector2(rect.position.x, rect.position.y);
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
-                                         rect.position.x, rect.position.y,
-                                         rect.w, rect.h,
-                                       SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+                                       rect.position.x, rect.position.y,
+                                       rect.w, rect.h,
+                                       SDL_WINDOW_RESIZABLE);
+    int t,z;
+    SDL_GetWindowPosition(sdlWindow, &t, &z);
     /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
     SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);

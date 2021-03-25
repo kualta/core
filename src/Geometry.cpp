@@ -5,7 +5,7 @@ namespace core {
 
 
 Rect::Rect(int x, int y, int w, int h)
-    : position(Vector2(x, y)), w(w), h(h) {
+    : position(new Vector2(x, y)), w(w), h(h) {
 }
 Rect::Rect(Vector2 pos, int w, int h)
     : position(pos), w(w), h(h) {

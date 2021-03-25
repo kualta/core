@@ -9,7 +9,8 @@ public:
     Vector2(int x, int y);
     Vector2(Vector2 *pVector2);
     ~Vector2();
-    Vector2 operator=(Vector2 other);
+    bool operator==(const Vector2 &other) const;
+    bool operator!=(const Vector2 &rhs) const;
 
     /// Read-only members
     const int &x;
