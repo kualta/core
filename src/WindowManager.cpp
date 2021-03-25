@@ -5,7 +5,6 @@
 namespace core {
 
 uint32_t WindowManager::SpawnWindow(const std::string& title, const Rect& rect) {
-    LogManager::LogInfo("Attempt to create window", WINDOW);
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, rect);
     AddWindowToPool(windowPtr);
 
@@ -43,5 +42,6 @@ void WindowManager::DestroyAll() { for (auto const& window: windowsPool) {
 WindowManager::WindowManager() {
     SDL_Init(SDL_INIT_EVERYTHING);
 }
+
 
 }

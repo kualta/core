@@ -19,7 +19,10 @@ void LogManager::LogWarn(const std::string& message, LOG_TYPE logType) {
 void LogManager::LogError(const std::string& message, LOG_TYPE logType) {
     std::cout << TypeText(logType) << " ERROR! " << message << std::endl;
 }
-std::string LogManager::PassText(PASS_INFO success) {
+void LogManager::LogMessage(const std::string &message) {
+    std::cout << message << std::endl;
+}
+std::string PassText(PASS_INFO success) {
 
     std::string afterText;
 
@@ -31,18 +34,18 @@ std::string LogManager::PassText(PASS_INFO success) {
 
     return afterText;
 }
-std::string LogManager::TypeText(LOG_TYPE log_type) {
+std::string TypeText(LOG_TYPE log_type) {
 
     std::string preText;
 
     switch (log_type) {
-        case GENERAL : preText = "|";
-        case NETWORK : preText = "|NET|";
-        case INTERNAL: preText = "|CORE|";
-        case PHYSICS : preText = "|PHYS|";
-        case DEBUG   : preText = "|DEBUG|";
-        case RENDER  : preText = "|RENDER|";
-        case WINDOW  : preText = "|WINDOW|";
+        case GENERAL : preText = "|"; break;
+        case NETWORK : preText = "|NET|"; break;
+        case INTERNAL: preText = "|CORE|"; break;
+        case PHYSICS : preText = "|PHYS|"; break;
+        case DEBUG   : preText = "|DEBUG|"; break;
+        case WINDOW  : preText = "|WINDOW|"; break;
+        case RENDER  : preText = "|RENDER|"; break;
     }
 
     return preText;
