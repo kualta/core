@@ -26,7 +26,6 @@ public:
     const std::unique_ptr<LogManager> &GetLogManager() const;
     const std::unique_ptr<WindowManager> &GetWindowManager() const;
     const std::unique_ptr<RenderManager> &GetRenderManager() const;
-    const std::unique_ptr<InputManager> &GetInputManager() const;
     const std::unique_ptr<SoundManager> &GetSoundManager() const;
     const std::unique_ptr<NetworkManager> &GetNetworkManager() const;
 
@@ -34,7 +33,6 @@ protected:
     std::unique_ptr<LogManager> logManager;
     std::unique_ptr<WindowManager> windowManager;
     std::unique_ptr<RenderManager> renderManager;
-    std::unique_ptr<InputManager> inputManager;
     std::unique_ptr<SoundManager> soundManager;
     std::unique_ptr<NetworkManager> networkManager;
 

@@ -2,10 +2,9 @@
 #define CORE_WINDOW_H
 
 #include <SDL.h>
-#include <string>
 #include <SDL_syswm.h>
+#include <string>
 
-#include "Context.h"
 #include "Geometry.h"
 #include "ObjectId.h"
 
@@ -32,7 +31,6 @@ namespace core {
         SDL_SysWMinfo sdlWmi;
         std::string title;
         Vector2 position;
-        Context context;
         uint32_t height;
         uint32_t width;
     };

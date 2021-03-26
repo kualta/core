@@ -1,15 +1,11 @@
-#include <string>
-#include "WindowBuilder.h"
-#include "RenderManager.h"
-#include "LogManager.h"
-#include "WindowManager.h"
 #include "WindowPool.h"
+#include "LogManager.h"
 
+#include <list>
 
 namespace core {
 
-
-std::vector<std::shared_ptr<Window>> core::WindowManager::windowsPool {};
+std::list<std::shared_ptr<Window>> core::WindowPool::windowsPool {};
 
 void WindowPool::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
     windowsPool.push_back(windowPtr);
@@ -24,4 +20,4 @@ void WindowPool::DestroyAll() {
     }
 }
 
-}
+} // namespace

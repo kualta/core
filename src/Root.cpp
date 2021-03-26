@@ -5,11 +5,15 @@ namespace core {
 
 
 Root::Root() {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    if (SDL_Init(SDL_INIT_EVERYTHING)) {
+        LogManager::LogInfo("SDL initialized successfully", INTERNAL);
+    } else {
+        LogManager::LogError("SDL initialization failed!", INTERNAL);
+    }
+
     logManager = std::make_unique<LogManager>();
     windowManager = std::make_unique<WindowManager>();
     renderManager = std::make_unique<RenderManager>();
-    inputManager = std::make_unique<InputManager>();
     soundManager = std::make_unique<SoundManager>();
     networkManager = std::make_unique<NetworkManager>();
 
@@ -30,9 +34,6 @@ const std::unique_ptr<WindowManager> &Root::GetWindowManager() const {
 }
 const std::unique_ptr<RenderManager> &Root::GetRenderManager() const {
     return renderManager;
-}
-const std::unique_ptr<InputManager> &Root::GetInputManager() const {
-    return inputManager;
 }
 const std::unique_ptr<SoundManager> &Root::GetSoundManager() const {
     return soundManager;

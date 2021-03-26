@@ -1,17 +1,18 @@
 #ifndef CORE_WINDOWPOOL_H
 #define CORE_WINDOWPOOL_H
 
-#include <vector>
 #include <memory>
+#include <list>
+
 #include "Singleton.h"
-#include "Window.h"
 #include "ObjectId.h"
+#include "Window.h"
 
 
 namespace core {
 
 
-class WindowPool : public Singleton<WindowManager>, public ObjectId {
+class WindowPool : public Singleton<WindowPool>, public ObjectId {
 
 public:
     static void AddWindowToPool(const std::shared_ptr<core::Window>& windowPtr);
@@ -20,7 +21,7 @@ public:
     static void DestroyAll();
 
 protected:
-    static std::vector<std::shared_ptr<Window>> windowsPool;
+    static std::list<std::shared_ptr<Window>> windowsPool;
 };
 
 
