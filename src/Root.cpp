@@ -5,6 +5,7 @@ namespace core {
 
 
 Root::Root() {
+    SDL_Init(SDL_INIT_EVERYTHING);
     logManager = std::make_unique<LogManager>();
     windowManager = std::make_unique<WindowManager>();
     renderManager = std::make_unique<RenderManager>();

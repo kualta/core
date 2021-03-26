@@ -4,6 +4,9 @@
 #include "Window.h"
 
 
+namespace core {
+
+
 class WindowBuilder {
 
 public:
@@ -12,6 +15,9 @@ public:
     static uint32_t SpawnWindow(const std::string& title, const core::Vector2& pos, int width, int height);
     static uint32_t SpawnWindow(const std::string& title, const core::Vector2& pos, const core::Vector2& res);
 };
+
+
+}
 
 
 #endif //CORE_WINDOWBUILDER_H
