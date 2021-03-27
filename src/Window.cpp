@@ -18,6 +18,7 @@ Window::Window(const std::string &title, const Rect& rect)
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
+    LogManager::LogInfo("Destroyed window object successfully", core::WINDOW);
 }
 uint32_t Window::GetHeight() const {
     return height;

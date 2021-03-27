@@ -29,8 +29,6 @@ enum PASS_INFO {
     FAIL,
 };
 
-
-
 class LogManager : public Singleton<LogManager>, public ObjectId {
 
 public:
