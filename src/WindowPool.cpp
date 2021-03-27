@@ -3,6 +3,8 @@
 
 #include <list>
 #include <memory>
+#include <iostream>
+
 
 namespace core {
 
@@ -15,15 +17,8 @@ void WindowPool::AddWindowToPool(const Window &window) {
     windowsPool.push_back(std::make_shared<core::Window>(window));
 }
 void WindowPool::DestroyAll() {
-    for (auto window: windowsPool) {
-        SDL_DestroyWindow(window->GetSdlWindowPtr());
-        LogManager::LogInfo("Destroyed window successfully", WINDOW);
-        if (window.use_count() == 1) {
-            delete &window;
-        } else {
-            LogManager::LogError("Cannot delete window since it has outside pointers to it");
-        }
-    }
+    windowsPool.erase(windowsPool.begin(), windowsPool.end());
+    LogManager::LogInfo("Destroyed all windows successfully", WINDOW);
 }
 
 
