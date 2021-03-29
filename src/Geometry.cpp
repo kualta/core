@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "Geometry.h"
 
 
@@ -14,5 +15,9 @@ Rect::Rect(Vector2 pos, Vector2 res)
     : position(pos), w(res.x), h(res.y){
 }
 
+ColorVertex::ColorVertex(float x, float y, float z, uint32_t abgr)
+    : x(x), y(y), z(z), abgr(abgr) {
 
 }
+
+} // namespace
