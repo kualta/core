@@ -13,8 +13,6 @@ public:
 
     float x;
     float y;
-
-private:
 };
 
 
