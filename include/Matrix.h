@@ -9,7 +9,7 @@ namespace core {
 
 class Matrix {
 public:
-
+    static void Translate(float* mtx, Vector3)
 
 };
 
