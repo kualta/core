@@ -3,9 +3,6 @@
 
 #include "Essential.h"
 
-#include "bgfx/bgfx.h"
-
-
 namespace core {
 
 

@@ -3,7 +3,6 @@
 
 #include "Essential.h"
 
-
 namespace core {
 
 
@@ -14,6 +13,6 @@ public:
 };
 
 
-} // namespace
+} // namespace core
 
 #endif //CORE_MATRIX_H

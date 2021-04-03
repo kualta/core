@@ -1,6 +1,9 @@
 #include <core/Root.h>
 #include <core/WindowPool.h>
+#include "core/LogManager.h"
+#include "core/RenderManager.h"
 
+#include <SDL.h>
 #include <memory>
 
 
@@ -16,8 +19,6 @@ Root::Root() {
 
     logManager = std::make_unique<LogManager>();
     renderManager = std::make_unique<RenderManager>();
-    soundManager = std::make_unique<SoundManager>();
-    networkManager = std::make_unique<NetworkManager>();
 
     windowPool = std::make_unique<WindowPool>();
 
@@ -35,12 +36,6 @@ const std::unique_ptr<LogManager> &Root::GetLogManager() const {
 }
 const std::unique_ptr<RenderManager> &Root::GetRenderManager() const {
     return renderManager;
-}
-const std::unique_ptr<SoundManager> &Root::GetSoundManager() const {
-    return soundManager;
-}
-const std::unique_ptr<NetworkManager> &Root::GetNetworkManager() const {
-    return networkManager;
 }
 
 }

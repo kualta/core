@@ -1,6 +1,5 @@
 #include <core/LogManager.h>
 #include <iostream>
-#include <string>
 
 
 namespace core {

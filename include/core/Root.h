@@ -1,11 +1,7 @@
 #ifndef CORE_ROOT_H
 #define CORE_ROOT_H
 
-#include <memory>
-#include <vector>
-
 #include "Essential.h"
-
 
 namespace core {
 

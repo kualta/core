@@ -1,9 +1,9 @@
-#include <SDL_syswm.h>
+#include "core/RenderManager.h"
+#include <core/LogManager.h>
+
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
-#include <core/LogManager.h>
-#include "core/RenderManager.h"
-
+#include <SDL_syswm.h>
 
 
 namespace core {
@@ -67,4 +67,4 @@ bool RenderManager::InitRenderer(Window &_window) {
 }
 
 
-} // namespace
+} // namespace core

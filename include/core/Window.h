@@ -1,13 +1,7 @@
 #ifndef CORE_WINDOW_H
 #define CORE_WINDOW_H
 
-#include <SDL.h>
-#include <SDL_syswm.h>
-#include <string>
-
-#include "Geometry.h"
-#include "ObjectId.h"
-
+#include "Essential.h"
 
 namespace core {
 

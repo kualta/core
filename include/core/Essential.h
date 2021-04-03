@@ -4,17 +4,18 @@
 #ifndef CORE_ESSENTIAL_H
 #define CORE_ESSENTIAL_H
 
-#include <cassert>
-#include <cstdint>
-#include "Singleton.h"
+#include <string>
 
 namespace core {
 
 
+class Degree;
 class LogManager;
 class Math;
 class Matrix;
 class ObjectId;
+class Radian;
+typedef struct Rect Rect;
 class RenderManager;
 class Root;
 template<typename T> class Singleton;

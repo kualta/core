@@ -1,13 +1,7 @@
 #ifndef CORE_WINDOWPOOL_H
 #define CORE_WINDOWPOOL_H
 
-#include <memory>
-#include <list>
-
-#include "Singleton.h"
-#include "ObjectId.h"
-#include "Window.h"
-
+#include "Essential.h"
 
 namespace core {
 

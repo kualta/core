@@ -5,8 +5,6 @@
 #ifndef CORE_OBJECTID_H
 #define CORE_OBJECTID_H
 
-#include <cstdint>
-
 namespace core {
 
 /**

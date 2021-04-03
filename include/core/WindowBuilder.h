@@ -1,10 +1,7 @@
 #ifndef CORE_WINDOWBUILDER_H
 #define CORE_WINDOWBUILDER_H
 
-#include "Window.h"
-#include "ObjectId.h"
-#include "Singleton.h"
-
+#include "Essential.h"
 
 namespace core {
 

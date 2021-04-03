@@ -1,9 +1,7 @@
 #ifndef CORE_LOGMANAGER_H
 #define CORE_LOGMANAGER_H
 
-#include <string>
 #include "Essential.h"
-
 
 namespace core {
 

@@ -1,9 +1,7 @@
 #ifndef CORE_MATH_H
 #define CORE_MATH_H
 
-#include <ostream>
 #include "Essential.h"
-
 
 namespace core {
 
@@ -21,12 +19,12 @@ public:
     static const float LOG2;
 }; // class Math
 
+
 class Degree {
     float value;
 
 public:
     explicit Degree ( float d=0 ) : value(d) {}
-    Degree ( const Radian& r ) : mDeg(r.valueDegrees()) {}
     Degree (const Degree& d) : value(d.GetValue()) {}
     Degree& operator = ( const float& f ) { value = f; return *this; }
     Degree& operator = ( const Degree& d ) = default;
@@ -101,7 +99,6 @@ public:
         return o;
     }
 };
-
 
 
 } // namespace

@@ -1,5 +1,6 @@
-#include <cmath>
 #include <core/Math.h>
+#include <cmath>
+
 
 namespace core {
 

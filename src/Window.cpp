@@ -1,5 +1,9 @@
 #include <core/Window.h>
-#include <core/Root.h>
+#include "core/LogManager.h"
+#include "core/Geometry.h"
+
+#include <SDL.h>
+#include <SDL_syswm.h>
 
 
 namespace core {

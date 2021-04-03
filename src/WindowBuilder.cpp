@@ -1,12 +1,12 @@
-#include <string>
-#include <memory>
-
+#include <core/WindowBuilder.h>
+#include "core/Window.h"
 #include <core/Vector.h>
 #include <core/RenderManager.h>
-#include <core/WindowBuilder.h>
 #include <core/WindowPool.h>
 #include <core/LogManager.h>
 
+#include <string>
+#include <memory>
 
 namespace core {
 
