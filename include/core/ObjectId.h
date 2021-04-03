@@ -9,8 +9,10 @@
 
 namespace core {
 
-/// Every countable object class _must_ inherit from this. This includes all singleton classes,
-/// since there could be multiple core::Root objects. First core::Root always have id of 1.
+/**
+ * Every countable object class inherits from ObjectId. This includes all singleton classes,
+ *  since there could be multiple core::Root objects. First core::Root always has an id of 1.
+ */
 class ObjectId {
 
 public:

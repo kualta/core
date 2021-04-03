@@ -1,9 +1,8 @@
 #ifndef CORE_RENDERMANAGER_H
 #define CORE_RENDERMANAGER_H
 
-#include "Singleton.h"
-#include "ObjectId.h"
-#include "Window.h"
+#include "Essential.h"
+
 #include "bgfx/bgfx.h"
 
 

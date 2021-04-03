@@ -1,7 +1,7 @@
 #ifndef CORE_VECTOR_H
 #define CORE_VECTOR_H
 
-#include <cassert>
+#include "Essential.h"
 
 
 namespace core {

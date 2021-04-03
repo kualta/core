@@ -1,7 +1,7 @@
 #ifndef CORE_MATRIX_H
 #define CORE_MATRIX_H
 
-#include <cstdint>
+#include "Essential.h"
 
 
 namespace core {

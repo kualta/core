@@ -2,6 +2,7 @@
 #define CORE_MATH_H
 
 #include <ostream>
+#include "Essential.h"
 
 
 namespace core {
