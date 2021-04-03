@@ -5,94 +5,52 @@
 
 namespace core {
 
-template<int dims, typename T>
-class Vector {
+template<int dims, typename T> class Vector {
 public:
-    /// Default constructor is not initialized for efficiency
     Vector() {}
-    Vector(T x, T y)
-    {
-        static_assert(dims > 1, "must have at least 2 dims");
-        value[0] = x;
-        value[1] = y;
-    }
-    Vector(T x, T y, T z)
-    {
-        static_assert(dims > 2, "must have at least 3 dims");
-        value[0] = x;
-        value[1] = y;
-        value[2] = z;
-    }
-    Vector(T x, T y, T z, T w)
-    {
-        static_assert(dims > 3, "must have at least 4 dims");
-        value[0] = x;
-        value[1] = y;
-        value[2] = z;
-        value[3] = w;
-    }
+    Vector(float x, float y) : x(x), y(y) {}
+    Vector(int x, int y) : x(float(x)), y(float(y)) {}
 
-    T* Get() { return value; }
-    const T* Get() const { return value; }
+    float x;
+    float y;
 
-
-    T operator[](size_t i) const
-    {
-        assert(i < dims);
-        return Get()[i];
-    }
-
-    T& operator[](size_t i)
-    {
-        assert(i < dims);
-        return Get()[i];
-    }
-
-    bool operator==(const Vector& v) const
-    {
-        for (int i = 0; i < dims; i++)
-            if (Get()[i] != v[i])
-                return false;
-        return true;
-    }
-
-    bool operator!=(const Vector& v) const { return !(*this == v); }
-
-    /** Returns true if the vector's scalar components are all greater
-        that the ones of the vector it is compared against.
-    */
-    bool operator<(const Vector& rhs) const
-    {
-        for (int i = 0; i < dims; i++)
-            if (!(Get()[i] < rhs[i]))
-                return false;
-        return true;
-    }
-
-    /** Returns true if the vector's scalar components are all smaller
-        that the ones of the vector it is compared against.
-    */
-    bool operator>(const Vector& rhs) const
-    {
-        for (int i = 0; i < dims; i++)
-            if (!(Get()[i] > rhs[i]))
-                return false;
-        return true;
-    }
-
-    /** Get dot product of this vector with other. */
-    T DotProduct(const Vector<dims, T>& other) const
-    {
-        T ret = 0;
-        for (int i = 0; i < dims; i++)
-            ret += Get()[i] * other.Get()[i];
-        return ret;
-    }
-
-public:
-    T value[dims];
+    float* Ptr() { return &x; }
+    const float* Ptr() const { return &x; }
 };
 
+template<> class Vector<2, float> {
+public:
+    Vector() {}
+    Vector(float x, float y) : x(x), y(y) {}
+    Vector(int x, int y) : x(float(x)), y(float(y)) {}
+
+    float x;
+    float y;
+
+    Vector* Ptr() { return this; }
+    const float* Ptr() const { return &x; }
+
+};
+
+template <> struct Vector<2, int> {
+    Vector() {}
+    Vector(int x, int y) : x(x), y(y) {}
+    Vector(float x, float y) : x(int(x)), y(int(y)) {}
+
+    int x;
+    int y;
+
+    int* Ptr() { return &x; }
+    const int* Ptr() const { return &x; }
+};
+
+//template <> struct Vector<3, float> {
+//
+//};
+//
+//template <> struct Vector<3, int> {
+//
+//};
 
 }
 

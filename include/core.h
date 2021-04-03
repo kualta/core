@@ -22,9 +22,9 @@
 //      core
 /// Headers included in dependecy order
 #include "core/Essential.h"
+#include "core/Vector.h"
 #include "core/Singleton.h"
 #include "core/ObjectId.h"
-#include "core/Vector.h"
 #include "core/Geometry.h"
 #include "core/Window.h"
 #include "core/LogManager.h"

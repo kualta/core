@@ -2,6 +2,7 @@
 #define CORE_WINDOWPOOL_H
 
 #include "Essential.h"
+//#include <memory>
 
 namespace core {
 
@@ -9,7 +10,7 @@ namespace core {
 class WindowPool : public Singleton<WindowPool>, public ObjectId {
 
 public:
-    static void AddWindowToPool(const std::shared_ptr<core::Window>& windowPtr);
+    static void AddWindowToPool(const std::shared_ptr<core::Window> &windowPtr);
     static void AddWindowToPool(const core::Window& window);
 
     static void DestroyAll();

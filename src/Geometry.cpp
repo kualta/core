@@ -6,13 +6,13 @@ namespace core {
 
 
 Rect::Rect(int x, int y, int w, int h)
-    : position(new Vector2(x, y)), w(w), h(h) {
+    : position(Vector2(x, y).Ptr()), w(w), h(h) {
 }
 Rect::Rect(Vector2 pos, int w, int h)
-    : position(pos), w(w), h(h) {
+    : position(pos.Ptr()), w(w), h(h) {
 }
 Rect::Rect(Vector2 pos, Vector2 res)
-    : position(pos), w(res.x), h(res.y){
+    : position(pos.Ptr()), w(res.x), h(res.y){
 }
 
 ColorVertex::ColorVertex(float x, float y, float z, uint32_t abgr)
