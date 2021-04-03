@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Specify include dir name
 set(CORE_INCLUDE_DIR include)
 # Get Core's headers and sources
-file( GLOB CORE_SOURCES ${CORE_INCLUDE_DIR}/*.h src/*.cpp )
+file( GLOB CORE_SOURCES ${CORE_INCLUDE_DIR}/core/*.h src/*.cpp )
 # Create core target
 add_library(core STATIC ${CORE_SOURCES})
 # Include Core's headers

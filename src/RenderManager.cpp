@@ -1,8 +1,8 @@
-#include <bgfx/bgfx.h>
 #include <SDL_syswm.h>
-#include <LogManager.h>
+#include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
-#include "RenderManager.h"
+#include <core/LogManager.h>
+#include "core/RenderManager.h"
 
 
 

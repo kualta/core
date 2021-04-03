@@ -1,6 +1,5 @@
-#include "Vector.h"
+#include <core/Vector.h>
 #include <utility>
-#include "LogManager.h"
 
 namespace core {
 

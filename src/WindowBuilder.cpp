@@ -1,11 +1,11 @@
 #include <string>
 #include <memory>
 
-#include "Vector2.h"
-#include "RenderManager.h"
-#include "WindowBuilder.h"
-#include "WindowPool.h"
-#include "LogManager.h"
+#include <core/Vector.h>
+#include <core/RenderManager.h>
+#include <core/WindowBuilder.h>
+#include <core/WindowPool.h>
+#include <core/LogManager.h>
 
 
 namespace core {

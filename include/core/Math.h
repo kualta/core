@@ -7,14 +7,13 @@ namespace core {
 class Math {
 public:
 
-    static inline float DegreesToRadians(float degrees) { return degrees * fDeg2Rad; }
-    static inline float RadiansToDegrees(float radians) { return radians * fRad2Deg; }
+    static inline float DegreesToRadians(float degrees) { return degrees * PI / float(180.0); }
+    static inline float RadiansToDegrees(float radians) { return radians * float(180.0) / PI }
 
     static const float PI;
     static const float TWO_PI;
+    static const float TAU;
     static const float HALF_PI;
-    static const float fDeg2Rad;
-    static const float fRad2Deg;
     static const float LOG2;
 };
 

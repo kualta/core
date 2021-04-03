@@ -1,5 +1,5 @@
-#include "WindowPool.h"
-#include "LogManager.h"
+#include <core/WindowPool.h>
+#include <core/LogManager.h>
 
 #include <list>
 #include <memory>

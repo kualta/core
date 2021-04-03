@@ -1,5 +1,5 @@
-#include "core.h"
-#include <Utility.h>
+#include <core.h>
+#include <core/Utility.h>
 
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>

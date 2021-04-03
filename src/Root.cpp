@@ -1,6 +1,7 @@
-#include "Root.h"
+#include <core/Root.h>
+#include <core/WindowPool.h>
+
 #include <memory>
-#include <WindowPool.h>
 
 
 namespace core {

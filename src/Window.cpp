@@ -1,5 +1,5 @@
-#include <Window.h>
-#include <Root.h>
+#include <core/Window.h>
+#include <core/Root.h>
 
 
 namespace core {

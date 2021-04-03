@@ -9,15 +9,15 @@
 #include <SDL.h>
 #include <SDL_syswm.h>
 
-#include "Root.h"
-#include "Window.h"
-#include "Geometry.h"
-#include "ObjectId.h"
-#include "LogManager.h"
-#include "NetworkManager.h"
-#include "RenderManager.h"
-#include "SoundManager.h"
-#include "WindowBuilder.h"
+#include "core/Root.h"
+#include "core/Window.h"
+#include "core/Geometry.h"
+#include "core/ObjectId.h"
+#include "core/LogManager.h"
+#include "core/NetworkManager.h"
+#include "core/RenderManager.h"
+#include "core/SoundManager.h"
+#include "core/WindowBuilder.h"
 
 
 #endif //CORE_H

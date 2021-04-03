@@ -1,7 +1,7 @@
 #ifndef CORE_GEOMETRY_H
 #define CORE_GEOMETRY_H
 
-#include "Vector2.h"
+#include "Vector.h"
 
 
 namespace core {
