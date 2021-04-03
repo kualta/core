@@ -6,7 +6,7 @@ Inspired by MonoGame, raylib and OGRE.
 **Very early stages of development**
 
 ## Usage
-To init the engine simply `new` an instance of core::Root
+To init the engine simply `new` an instance of `core::Root`
 
 ___
 > not to be confused with [core game platform](https://en.wikipedia.org/wiki/Core_\(video_game_platform\))
