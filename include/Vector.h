@@ -14,27 +14,27 @@ public:
     Vector(T x, T y)
     {
         static_assert(dims > 1, "must have at least 2 dims");
-        vec[0] = x;
-        vec[1] = y;
+        value[0] = x;
+        value[1] = y;
     }
     Vector(T x, T y, T z)
     {
         static_assert(dims > 2, "must have at least 3 dims");
-        vec[0] = x;
-        vec[1] = y;
-        vec[2] = z;
+        value[0] = x;
+        value[1] = y;
+        value[2] = z;
     }
     Vector(T x, T y, T z, T w)
     {
         static_assert(dims > 3, "must have at least 4 dims");
-        vec[0] = x;
-        vec[1] = y;
-        vec[2] = z;
-        vec[3] = w;
+        value[0] = x;
+        value[1] = y;
+        value[2] = z;
+        value[3] = w;
     }
 
-    T* Get() { return vec; }
-    const T* Get() const { return vec; }
+    T* Get() { return value; }
+    const T* Get() const { return value; }
 
 
     T operator[](size_t i) const
@@ -81,7 +81,7 @@ public:
         return true;
     }
 
-    /// Get dot product of this vector with other.
+    /** Get dot product of this vector with other. */
     T DotProduct(const Vector<dims, T>& other) const
     {
         T ret = 0;
@@ -91,7 +91,7 @@ public:
     }
 
 public:
-    T vec[dims];
+    T value[dims];
 };
 
 
