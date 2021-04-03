@@ -1,4 +1,4 @@
-/*
+/**
  * This is a stand-alone header file,
  * No Singleton.cpp is presented.
  */
