@@ -10,6 +10,7 @@
 namespace core {
 
 
+// TODO: refactoring needed
 class RenderManager : public Singleton<RenderManager>, public ObjectId {
 public:
 

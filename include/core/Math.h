@@ -55,7 +55,7 @@ public:
     inline friend std::ostream& operator <<
         ( std::ostream& o, const Degree& v )
     {
-        o << "Degree(" << v.ToDegrees() << ")";
+        o << "Degree(" << v.GetValue() << ")";
         return o;
     }
 }; // class Degree
@@ -72,7 +72,7 @@ public:
     Radian& operator = ( const Radian& r ) = default;
 
     float GetValue() const { return value; }
-    float ToDegrees() const;
+    float ToDegrees() const { return Math::RadiansToDegrees(value); };
 
     const Radian& operator + () const { return *this; }
     Radian operator + ( const Radian& r ) const { return Radian (value + r.value ); }
