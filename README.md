@@ -5,7 +5,7 @@ Inspired by MonoGame, raylib and OGRE.
 
 **Very early stages of development**
 
-##Usage
+## Usage
 To init the engine simply `new` an instance of core::Root
 
 ___
