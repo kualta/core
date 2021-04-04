@@ -25,6 +25,7 @@ typedef Vector<3, float> Vector3;
 typedef Vector<3, int> Vector3i;
 typedef Vector<4, float> Vector4;
 typedef struct Rect Rect;
+typedef struct ColorVertex ColorVertex;
 class Window;
 class WindowBuilder;
 class WindowPool;

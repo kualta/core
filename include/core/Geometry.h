@@ -13,7 +13,6 @@ typedef struct Rect {
 } Rect;
 
 typedef struct ColorVertex {
-    ColorVertex(float x, float y, float z, uint32_t abgr);
     float x;
     float y;
     float z;
