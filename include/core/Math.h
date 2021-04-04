@@ -12,6 +12,7 @@ public:
 
     static inline float DegreesToRadians(float degrees) { return degrees * PI / float(180.0); }
     static inline float RadiansToDegrees(float radians) { return radians * float(180.0) / PI; }
+    static Matrix4 TranslationMatrix(const Vector3 &vec);
 
     static const float PI;
     static const float TWO_PI;
