@@ -2,7 +2,6 @@
 #define CORE_GEOMETRY_H
 
 #include "Essential.h"
-//#include "Vector.h"
 
 
 namespace core {
@@ -10,9 +9,10 @@ namespace core {
 
 typedef struct Rect {
     Rect(int x, int y, int w, int h);
-    Rect(Vector2 pos, int w, int h);
-    Rect(Vector2 pos, Vector2 res);
-    const Vector2 *position;
+    Rect(const Vector2 &pos, int w, int h);
+    Rect(const Vector2 *pos, int w, int h);
+    Rect(const Vector2 &pos, const Vector2 &res);
+    int x, y;
     int w, h;
 } Rect;
 

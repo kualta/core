@@ -28,7 +28,7 @@ public:
     float y;
 
     Vector* Ptr() { return this; }
-    const float* Ptr() const { return &x; }
+    const Vector* Ptr() const { return &x; }
 
 };
 
