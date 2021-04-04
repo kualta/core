@@ -2,6 +2,8 @@
 #define CORE_LOGMANAGER_H
 
 #include "Essential.h"
+#include "ObjectId.h"
+#include "Singleton.h"
 
 namespace core {
 

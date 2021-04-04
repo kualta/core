@@ -12,7 +12,11 @@ namespace core {
 class Degree;
 class LogManager;
 class Math;
-class Matrix;
+template<int cols, int rows, typename T> class Matrix;
+typedef Matrix<3, 3, float> Matrix3;
+typedef Matrix<3, 3, int> Matrix3i;
+typedef Matrix<4, 4, float> Matrix4;
+typedef Matrix<4, 4, int> Matrix4i;
 class ObjectId;
 class Radian;
 class RenderManager;

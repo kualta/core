@@ -3,7 +3,6 @@
 
 #include "Essential.h"
 
-
 namespace core {
 
 

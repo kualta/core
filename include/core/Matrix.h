@@ -6,11 +6,29 @@
 namespace core {
 
 
-class Matrix {
+template<int cols, int rows, typename T> class Matrix {
 public:
-    static void Translate(float* mtx, Vector3)
+    static Matrix3 Translate(const Vector3 &v);
+    static Matrix4 Translate(const Vector4 &v);
 
+protected:
+    T mtx[cols][rows];
 };
+
+template<> class Matrix<3, 3, float> {
+public:
+
+protected:
+    float mtx[3][3];
+};
+
+template<> class Matrix<4, 4, float> {
+public:
+
+protected:
+    float mtx[3][3];
+};
+
 
 
 } // namespace core
