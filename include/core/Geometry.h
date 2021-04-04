@@ -8,10 +8,6 @@ namespace core {
 
 
 typedef struct Rect {
-    Rect(int x, int y, int w, int h);
-    Rect(const Vector2 &pos, int w, int h);
-    Rect(const Vector2 *pos, int w, int h);
-    Rect(const Vector2 &pos, const Vector2 &res);
     int x, y;
     int w, h;
 } Rect;

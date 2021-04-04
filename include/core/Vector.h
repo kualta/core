@@ -28,8 +28,7 @@ public:
     float y;
 
     Vector* Ptr() { return this; }
-    const Vector* Ptr() const { return &x; }
-
+    const Vector* Ptr() const { return this; }
 };
 
 template <> struct Vector<2, int> {
