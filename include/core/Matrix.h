@@ -5,11 +5,10 @@
 
 namespace core {
 
-
 template<int cols, int rows, typename T> class Matrix {
 public:
-    static Matrix3 Translate(const Vector3 &v);
-    static Matrix4 Translate(const Vector4 &v);
+    static Matrix3 Translate(const Vector3 &vec);
+    static Matrix4 Translate(const Vector4 &vec);
 
 protected:
     T mtx[cols][rows];
@@ -25,6 +24,13 @@ public:
         mtx[0][0] = m00; mtx[0][1] = m01; mtx[0][2] = m02;
         mtx[1][0] = m10; mtx[1][1] = m11; mtx[1][2] = m12;
         mtx[2][0] = m20; mtx[2][1] = m21; mtx[2][2] = m22;
+    }
+
+    const float* operator[] (int row) const {
+        return mtx[row];
+    }
+    float* operator[] (int row) {
+        return mtx[row];
     }
 
     static const Matrix3 zero;
@@ -45,6 +51,13 @@ public:
         mtx[1][0] = m10; mtx[1][1] = m11; mtx[1][2] = m12; mtx[1][3] = m13;
         mtx[2][0] = m20; mtx[2][1] = m21; mtx[2][2] = m22; mtx[2][3] = m23;
         mtx[3][0] = m30; mtx[3][1] = m31; mtx[3][2] = m32; mtx[3][3] = m33;
+    }
+
+    const float* operator[] (int row) const {
+        return mtx[row];
+    }
+    float* operator[] (int row) {
+        return mtx[row];
     }
 
     static const Matrix4 zero;
