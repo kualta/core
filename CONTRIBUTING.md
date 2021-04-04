@@ -38,43 +38,43 @@ God bless tab character. __Use spaces__
 ## Files & Structure 
 
 - C++ source files go to `src/` folder and use `.cpp` extention
-- C++ header files go to `include/` folder and use `.h` extention
+- C++ header files go to `include/core/` folder and use `.h` extention
 - Headers and source files use `PascalCase` for names, with one exception: `core.h` and `core.cpp`
 - Every source file __must__ have corresponding header file. 
-- Header file might go alone, without source file. In this case this has to be specified at the beginning of the file.
+- Header file might be stand-alone. In this case this has to be specified in comment before header guard.
 
 
 ## Code Example 
 ```c++
-// file: include/MyClass.h
+// file: include/core/MyClass.h
 #ifndef CORE_MYCLASS_H
 #define CORE_MYCLASS_H
 
-#include "core.h"
+#include "Essential.h"
 #include "Singleton.h"
 
 #include <string>
 
-
 namespace core {
 
-/// Use triple slash for documentation comment
+/** 
+ * My shiny class
+ */
 class MyClass {
 
 public:
     MyClass();
     ~Myclass();
 
-    virtual Foo *getSelf() { return Foo::getSelf(); }
+    MyClass* *Ptr() { return this; }
 
 private:
-    void innerFunc();
+    void InnerFunc();
     std::string var;
     int anotherVarExample;
 };
 
-
-}
+} // namespace core
 
 
 #endif //CORE_MYCLASS_H
