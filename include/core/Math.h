@@ -13,8 +13,8 @@ public:
     static inline float DegreesToRadians(float degrees) { return degrees * PI / float(180.0); }
     static inline float RadiansToDegrees(float radians) { return radians * float(180.0) / PI; }
     static Matrix4 MatrixTranslation(const Vector3 &vec);
-    static Matrix4 MatrixRotationXYZ(const Vector3 &vec);
-    static Matrix4 MatrixScale(const Vector3 &vec);
+    static Matrix4 MatrixRotationXYZ(const float rotX, const float rotY, const float rotZ);
+    static Matrix4 MatrixScale(const float scaleBy);
 
     static const float PI;
     static const float TWO_PI;

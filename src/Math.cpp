@@ -24,16 +24,16 @@ Matrix4 Math::MatrixTranslation(const Vector3 &vec) {
     return mat;
 }
 
-Matrix4 Math::MatrixRotationXYZ(const Vector3 &vec) {
+Matrix4 Math::MatrixRotationXYZ(float rotX, float rotY, float rotZ) {
 
     Matrix4 mat = Matrix4::zero;
 
-    const float sx = sin(vec.x);
-    const float cx = cos(vec.x);
-    const float sy = sin(vec.y);
-    const float cy = cos(vec.y);
-    const float sz = sin(vec.z);
-    const float cz = cos(vec.z);
+    const float sx = sin(rotX);
+    const float cx = cos(rotX);
+    const float sy = sin(rotY);
+    const float cy = cos(rotY);
+    const float sz = sin(rotZ);
+    const float cz = cos(rotZ);
 
     mat[0][0] = cy*cz;
     mat[0][1] = -cy*sz;

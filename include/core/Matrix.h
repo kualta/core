@@ -11,7 +11,7 @@ public:
     static Matrix4 Translate(const Vector4 &vec);
 
 protected:
-    T mtx[rows][rows];
+    T mtx[rows][cols];
 };
 
 template<> class Matrix<3, 3, float> {
