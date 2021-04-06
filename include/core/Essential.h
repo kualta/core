@@ -8,6 +8,7 @@
 
 namespace core {
 
+typedef struct Cube Cube;
 class Degree;
 class LogManager;
 class Math;
@@ -17,6 +18,7 @@ typedef Matrix<3, 3, int> Matrix3i;
 typedef Matrix<4, 4, float> Matrix4;
 typedef Matrix<4, 4, int> Matrix4i;
 class ObjectId;
+class Primitive;
 class Radian;
 class RenderManager;
 class Root;

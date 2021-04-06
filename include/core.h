@@ -26,6 +26,7 @@
 #include "core/Singleton.h"
 #include "core/ObjectId.h"
 #include "core/Geometry.h"
+#include "core/Primitive.h"
 #include "core/Window.h"
 #include "core/LogManager.h"
 #include "core/Math.h"
