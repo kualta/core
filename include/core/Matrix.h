@@ -5,13 +5,13 @@
 
 namespace core {
 
-template<int cols, int rows, typename T> class Matrix {
+template<int rows, int cols, typename T> class Matrix {
 public:
     static Matrix3 Translate(const Vector3 &vec);
     static Matrix4 Translate(const Vector4 &vec);
 
 protected:
-    T mtx[cols][rows];
+    T mtx[rows][rows];
 };
 
 template<> class Matrix<3, 3, float> {
