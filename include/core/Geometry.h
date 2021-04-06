@@ -18,10 +18,6 @@ typedef struct ColorVertex {
     uint32_t abgr;
 } ColorVertex;
 
-class Geometry {
-
-};
-
 
 }
 
