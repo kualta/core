@@ -12,19 +12,19 @@ const float Math::TAU = 2.0f * PI;
 const float Math::HALF_PI = 0.5f * PI;
 const float Math::LOG2 = std::log(2.0f);
 
-Matrix4 Math::MatrixTranslation(const Vector3 &vec) {
+Matrix4 Math::TranslationMatrix(const Vector3 &pos) {
 
     Matrix4 mat = Matrix4::identity;
 
-    mat[0][3] = vec.x;
-    mat[1][3] = vec.y;
-    mat[2][3] = vec.z;
+    mat[0][3] = pos.x;
+    mat[1][3] = pos.y;
+    mat[2][3] = pos.z;
     mat[3][3] = 1.0f;
 
     return mat;
 }
 
-Matrix4 Math::MatrixRotationXYZ(float rotX, float rotY, float rotZ) {
+Matrix4 Math::RotationMatrixXYZ(const float rotX, const float rotY, const float rotZ) {
 
     Matrix4 mat = Matrix4::zero;
 
@@ -47,6 +47,18 @@ Matrix4 Math::MatrixRotationXYZ(float rotX, float rotY, float rotZ) {
     mat[2][1] = cz*sx + cx*sy*sz;
     mat[2][2] = cx*cy;
 
+    mat[3][3] = 1.0f;
+
+    return mat;
+}
+
+Matrix4 Math::ScaleMatrix(float x, float y, float z) {
+
+    Matrix4 mat = Matrix4::zero;
+
+    mat[0][0] = x;
+    mat[1][1] = y;
+    mat[2][2] = z;
     mat[3][3] = 1.0f;
 
     return mat;
