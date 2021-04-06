@@ -41,6 +41,7 @@ protected:
 
 template<> class Matrix<4, 4, float> {
 public:
+    Matrix() {}
     Matrix(
         float m00, float m01, float m02, float m03,
         float m10, float m11, float m12, float m13,
@@ -52,6 +53,13 @@ public:
         mtx[2][0] = m20; mtx[2][1] = m21; mtx[2][2] = m22; mtx[2][3] = m23;
         mtx[3][0] = m30; mtx[3][1] = m31; mtx[3][2] = m32; mtx[3][3] = m33;
     }
+    Matrix(float m) {
+        mtx[0][0] = m; mtx[0][1] = m; mtx[0][2] = m; mtx[0][3] = m;
+        mtx[1][0] = m; mtx[1][1] = m; mtx[1][2] = m; mtx[1][3] = m;
+        mtx[2][0] = m; mtx[2][1] = m; mtx[2][2] = m; mtx[2][3] = m;
+        mtx[3][0] = m; mtx[3][1] = m; mtx[3][2] = m; mtx[3][3] = m;
+    }
+
 
     const float* operator[] (int row) const {
         return mtx[row];
@@ -60,11 +68,17 @@ public:
         return mtx[row];
     }
 
+    float* GetPtr() {
+        return &mtx[0][0];
+    }
+
     static const Matrix4 zero;
     static const Matrix4 identity;
 protected:
     float mtx[4][4];
 };
+
+Matrix4 operator*(const Matrix4 &lhs, const Matrix4 &rhs);
 
 
 } // namespace core

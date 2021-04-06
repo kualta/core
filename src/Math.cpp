@@ -16,10 +16,9 @@ Matrix4 Math::TranslationMatrix(const Vector3 &pos) {
 
     Matrix4 mat = Matrix4::identity;
 
-    mat[0][3] = pos.x;
-    mat[1][3] = pos.y;
-    mat[2][3] = pos.z;
-    mat[3][3] = 1.0f;
+    mat[3][0] = pos.x;
+    mat[3][1] = pos.y;
+    mat[3][2] = pos.z;
 
     return mat;
 }
