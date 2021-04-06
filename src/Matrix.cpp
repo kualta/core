@@ -4,7 +4,6 @@
 
 namespace core {
 
-// FIXME: Probably has to be in core::Math
 template<int cols, int rows, typename T>
 Matrix3 Matrix<cols, rows, T>::Translate(const Vector3 &vec) {
 

@@ -1,9 +1,10 @@
-#include "core/RenderManager.h"
+#include <core/RenderManager.h>
 #include <core/LogManager.h>
+#include <core/Window.h>
 
+#include <SDL_syswm.h>
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
-#include <SDL_syswm.h>
 
 
 namespace core {
@@ -24,9 +25,9 @@ bool RenderManager::CreateRenderer(Window &_window) {
     LogManager::LogInfo("Created renderer succesfully", RENDER);
     return true;
 }
-bgfx::PlatformData RenderManager::GetPlatformData(Window& _window) {
+bgfx::PlatformData RenderManager::GetPlatformData(const Window& _window) {
 
-    SDL_SysWMinfo* wmi = &_window.GetSdlWmi();
+    SDL_SysWMinfo *wmi = _window.GetSdlWmiPtr();
     bgfx::PlatformData platformData;
 
     #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD

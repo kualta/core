@@ -1,9 +1,7 @@
-/**
- * This is a stand-alone header file,
- * No Singleton.cpp is presented.
- */
 #ifndef CORE_OBJECTID_H
 #define CORE_OBJECTID_H
+
+#include <cstdint>
 
 namespace core {
 
@@ -25,9 +23,6 @@ private:
     uint32_t id;
 
 };
-
-uint32_t ObjectId::objectCounter = 0;
-
 
 }
 #endif //CORE_OBJECTID_H

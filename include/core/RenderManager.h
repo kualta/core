@@ -2,6 +2,8 @@
 #define CORE_RENDERMANAGER_H
 
 #include "Essential.h"
+#include "Singleton.h"
+#include "ObjectId.h"
 
 namespace core {
 
@@ -15,7 +17,7 @@ public:
     static bool CreateRenderer(Window& window);
     static bool InitRenderer(Window& window);
 
-    static bgfx::PlatformData GetPlatformData(Window& window);
+    static bgfx::PlatformData GetPlatformData(const Window &window);
 
 protected:
 

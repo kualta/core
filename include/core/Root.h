@@ -2,6 +2,10 @@
 #define CORE_ROOT_H
 
 #include "Essential.h"
+#include "Singleton.h"
+#include "ObjectId.h"
+
+#include <memory>
 
 namespace core {
 

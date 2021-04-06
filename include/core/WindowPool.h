@@ -2,7 +2,10 @@
 #define CORE_WINDOWPOOL_H
 
 #include "Essential.h"
-//#include <memory>
+#include "Singleton.h"
+#include "ObjectId.h"
+#include <memory>
+#include <list>
 
 namespace core {
 

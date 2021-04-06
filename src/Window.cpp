@@ -10,10 +10,10 @@ namespace core {
 
 
 Window::Window(const std::string &title, const Rect& rect)
-: title(title), height(rect.h), width(rect.w), position(rect.position) {
-    this->position = Vector2(rect.position.x, rect.position.y);
+: title(title), height(rect.h), width(rect.w), position(rect.x, rect.y), sdlWmi() {
+    this->position = Vector2(rect.x, rect.y);
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
-                                       rect.position.x, rect.position.y,
+                                       rect.x, rect.y,
                                        rect.w, rect.h,
                                        SDL_WINDOW_RESIZABLE);
     /// sdlWmi must be initialized with version
@@ -45,11 +45,11 @@ int Window::SetPosition(const Vector2& pos) {
 
     return 0;
 }
-SDL_Window *Window::GetSdlWindowPtr() const {
+SDL_Window* Window::GetSdlWindowPtr() const {
     return sdlWindow;
 }
-SDL_SysWMinfo& Window::GetSdlWmi() {
-    return sdlWmi;
+SDL_SysWMinfo* Window::GetSdlWmiPtr() const {
+    return const_cast<SDL_SysWMinfo *>(&sdlWmi);
 }
 
 }

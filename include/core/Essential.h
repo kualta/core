@@ -1,5 +1,5 @@
 /**
- * This header contains forward-declarations for core classes
+ * This header contains forward-declarations for core and bgfx classes
  */
 #ifndef CORE_ESSENTIAL_H
 #define CORE_ESSENTIAL_H
@@ -7,7 +7,6 @@
 #include <string>
 
 namespace core {
-
 
 class Degree;
 class LogManager;
@@ -34,8 +33,13 @@ class Window;
 class WindowBuilder;
 class WindowPool;
 
-
 } // namespace core
 
+
+namespace bgfx {
+
+class PlatformData;
+
+} // namespace bgfx
 
 #endif //CORE_ESSENTIAL_H

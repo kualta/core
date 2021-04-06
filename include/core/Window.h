@@ -2,6 +2,10 @@
 #define CORE_WINDOW_H
 
 #include "Essential.h"
+#include "ObjectId.h"
+#include "Vector.h"
+
+#include <SDL_syswm.h>
 
 namespace core {
 
@@ -15,13 +19,13 @@ namespace core {
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
         SDL_Window* GetSdlWindowPtr() const;
+        SDL_SysWMinfo* GetSdlWmiPtr() const;
         std::string GetTitle() const;
-        SDL_SysWMinfo& GetSdlWmi();
 
         int SetPosition(const Vector2& pos);
 
     private:
-        SDL_Window* sdlWindow;
+        SDL_Window *sdlWindow;
         SDL_SysWMinfo sdlWmi;
         std::string title;
         Vector2 position;
