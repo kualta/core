@@ -80,7 +80,6 @@ protected:
 
 Matrix4 operator*(const Matrix4 &lhs, const Matrix4 &rhs);
 
-
 } // namespace core
 
 #endif //CORE_MATRIX_H
