@@ -20,6 +20,8 @@ typedef Matrix<3, 3, int> Matrix3i;
 typedef Matrix<4, 4, float> Matrix4;
 typedef Matrix<4, 4, int> Matrix4i;
 class Object;
+class Entity;
+class Component;
 class Primitive;
 class Radian;
 class RenderManager;
@@ -50,9 +52,10 @@ class PlatformData;
 
 /// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
 #ifdef CORE_HEAVY_ESSENTIALS
-    #include "Matrix.h"
-    #include "Vector.h"
-    #include "Object.h"
+#include "Matrix.h"
+#include "Vector.h"
+#include "Object.h"
+#include "Singleton.h"
 #endif
 
 
