@@ -5,7 +5,7 @@
 #include "Singleton.h"
 #include "Object.h"
 #include <memory>
-#include <list>
+#include <vector>
 
 namespace core {
 
@@ -19,7 +19,7 @@ public:
     static void DestroyAll();
 
 protected:
-    static std::list<std::shared_ptr<Window>> windowsPool;
+    static std::vector<std::shared_ptr<Window>> windowsPool;
 };
 
 

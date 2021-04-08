@@ -2,15 +2,13 @@
 #include <core/LogManager.h>
 #include <core/Window.h>
 
-#include <list>
 #include <memory>
-#include <iostream>
 
 
 namespace core {
 
 // FIXME: inlcude memory in header to work
-std::list<std::shared_ptr<Window>> WindowPool::windowsPool;
+std::vector<std::shared_ptr<Window>> WindowPool::windowsPool;
 
 void WindowPool::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
     windowsPool.push_back(windowPtr);
