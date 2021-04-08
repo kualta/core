@@ -13,9 +13,12 @@ class Object {
 
 public:
     string name;
-    uint32_t GetId() const { return id; };
 
+    uint32_t GetId() const;
     static void Destroy(Object obj);
+
+    bool operator==(const Object &rhs) const;
+    bool operator!=(const Object &rhs) const;
 
 protected:
     // FIXME: Current implementation is not thread-safe
