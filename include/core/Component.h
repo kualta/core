@@ -1,5 +1,5 @@
-#ifndef INTERFACERS_COMPONENT_H
-#define INTERFACERS_COMPONENT_H
+#ifndef CORE_COMPONENT_H
+#define CORE_COMPONENT_H
 
 
 namespace core {
@@ -12,4 +12,4 @@ private:
 
 } // namespace core
 
-#endif //INTERFACERS_COMPONENT_H
+#endif //CORE_COMPONENT_H
