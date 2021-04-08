@@ -2,7 +2,7 @@
 #define CORE_WINDOW_H
 
 #include "Essential.h"
-#include "ObjectId.h"
+#include "Object.h"
 #include "Vector.h"
 
 #include <SDL_syswm.h>
@@ -10,7 +10,7 @@
 namespace core {
 
 
-    class Window : public ObjectId {
+    class Window : public Object {
     public:
         Window(const std::string &title, const core::Rect &rect);
         ~Window();

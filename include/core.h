@@ -24,7 +24,7 @@
 #include "core/Essential.h"
 #include "core/Vector.h"
 #include "core/Singleton.h"
-#include "core/ObjectId.h"
+#include "core/Object.h"
 #include "core/Geometry.h"
 #include "core/Matrix.h"
 #include "core/Primitive.h"

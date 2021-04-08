@@ -2,6 +2,7 @@
 #define CORE_MATRIX_H
 
 #include "Essential.h"
+#include <ostream>
 
 namespace core {
 
@@ -33,10 +34,11 @@ public:
         return mtx[row];
     }
 
-    static const Matrix3 zero;
-    static const Matrix3 identity;
 protected:
     float mtx[3][3];
+
+    static const Matrix3 zero;
+    static const Matrix3 identity;
 };
 
 template<> class Matrix<4, 4, float> {
@@ -72,6 +74,7 @@ public:
         return &mtx[0][0];
     }
 
+
     static const Matrix4 zero;
     static const Matrix4 identity;
 protected:
@@ -79,6 +82,25 @@ protected:
 };
 
 Matrix4 operator*(const Matrix4 &lhs, const Matrix4 &rhs);
+
+inline std::ostream& operator<<(std::ostream& o, const Matrix4 &mat)
+{
+    o << "Matrix4x4(" << std::endl;
+    for (size_t i = 0; i < 4; ++i)
+    {
+        for (size_t j = 0; j < 4; ++j)
+        {
+            o << mat[i][j];
+            if(j != 3)
+                o << ", ";
+        }
+
+        if(i != 3)
+            o << std::endl;
+    }
+    o << ")";
+    return o;
+}
 
 } // namespace core
 

@@ -3,14 +3,14 @@
 
 #include "Essential.h"
 #include "Singleton.h"
-#include "ObjectId.h"
+#include "Object.h"
 #include <memory>
 #include <list>
 
 namespace core {
 
 
-class WindowPool : public Singleton<WindowPool>, public ObjectId {
+class WindowPool : public Singleton<WindowPool>, public Object {
 
 public:
     static void AddWindowToPool(const std::shared_ptr<core::Window> &windowPtr);

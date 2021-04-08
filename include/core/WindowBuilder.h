@@ -2,12 +2,12 @@
 #define CORE_WINDOWBUILDER_H
 
 #include "Essential.h"
-#include "ObjectId.h"
+#include "Object.h"
 #include "Singleton.h"
 
 namespace core {
 
-class WindowBuilder : public ObjectId, public Singleton<WindowBuilder> {
+class WindowBuilder : public Object, public Singleton<WindowBuilder> {
 
 public:
     /// Returns id of the created window on success

@@ -6,17 +6,17 @@
 namespace core {
 
 /**
- * Every countable object class inherits from ObjectId. This includes all singleton classes,
+ * Every countable object class inherits from Object. This includes all singleton classes,
  *  since there could be multiple core::Root objects. First core::Root always has an id of 1.
  */
-class ObjectId {
+class Object {
 
 public:
     uint32_t GetId() const { return id; };
 
 protected:
     // FIXME: Current implementation is not thread-safe
-    ObjectId() : id(++objectCounter) {};
+    Object() : id(++objectCounter) {};
 
 private:
     static uint32_t objectCounter;

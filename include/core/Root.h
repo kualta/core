@@ -3,14 +3,14 @@
 
 #include "Essential.h"
 #include "Singleton.h"
-#include "ObjectId.h"
+#include "Object.h"
 
 #include <memory>
 
 namespace core {
 
 
-class Root : public Singleton<Root>, public ObjectId {
+class Root : public Singleton<Root>, public Object {
 
 public:
     Root();

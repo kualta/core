@@ -2,6 +2,7 @@
 #define CORE_PRIMITIVE_H
 
 #include "Essential.h"
+#include "Geometry.h"
 
 namespace core {
 

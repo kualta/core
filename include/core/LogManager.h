@@ -2,7 +2,7 @@
 #define CORE_LOGMANAGER_H
 
 #include "Essential.h"
-#include "ObjectId.h"
+#include "Object.h"
 #include "Singleton.h"
 
 namespace core {
@@ -28,7 +28,7 @@ enum PASS_INFO {
     FAIL,
 };
 
-class LogManager : public Singleton<LogManager>, public ObjectId {
+class LogManager : public Singleton<LogManager>, public Object {
 
 public:
     LogManager();

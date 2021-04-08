@@ -3,13 +3,13 @@
 
 #include "Essential.h"
 #include "Singleton.h"
-#include "ObjectId.h"
+#include "Object.h"
 
 namespace core {
 
 
 // TODO: refactoring needed
-class RenderManager : public Singleton<RenderManager>, public ObjectId {
+class RenderManager : public Singleton<RenderManager>, public Object {
 public:
 
     RenderManager();
