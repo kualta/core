@@ -7,10 +7,6 @@
 #include <string>
 #include <cstdint>
 
-// Basic types and
-#include "Matrix.h"
-#include "Vector.h"
-#include "Object.h"
 
 namespace core {
 
@@ -50,5 +46,14 @@ namespace bgfx {
 class PlatformData;
 
 } // namespace bgfx
+
+
+/// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
+#ifdef CORE_HEAVY_ESSENTIALS
+    #include "Matrix.h"
+    #include "Vector.h"
+    #include "Object.h"
+#endif
+
 
 #endif //CORE_ESSENTIAL_H

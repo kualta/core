@@ -4,16 +4,26 @@ project(Core VERSION 0.1.0 DESCRIPTION "Core engine")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#       Build options
 
-#      core
+# Reduces amount of includes in client-side code by cost of slightly increased build time.
+# Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
+option( CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  ON )
+
+
+#       core
 # Specify include dir name
-set(CORE_INCLUDE_DIR include)
+set( CORE_INCLUDE_DIR include )
 # Get Core's headers and sources
 file( GLOB CORE_SOURCES ${CORE_INCLUDE_DIR}/core/*.h src/*.cpp )
 # Create core target
-add_library(core STATIC ${CORE_SOURCES})
+add_library( core STATIC ${CORE_SOURCES} )
 # Include Core's headers
-target_include_directories(core PUBLIC ${CORE_INCLUDE_DIR})
+target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
+# Specify compile definitions
+if ( CORE_HEAVY_ESSENTIALS )
+    target_compile_definitions( core PRIVATE CORE_HEAVY_ESSENTIALS )
+endif()
 
 
 #       bgfx
