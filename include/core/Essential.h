@@ -5,6 +5,7 @@
 #define CORE_ESSENTIAL_H
 
 #include <string>
+#include <cstdint>
 
 namespace core {
 
