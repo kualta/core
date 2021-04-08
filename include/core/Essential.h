@@ -7,6 +7,11 @@
 #include <string>
 #include <cstdint>
 
+// Basic types and
+#include "Matrix.h"
+#include "Vector.h"
+#include "Object.h"
+
 namespace core {
 
 typedef struct Cube Cube;
