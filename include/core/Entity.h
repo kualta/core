@@ -19,7 +19,14 @@ public:
     Entity() {}
     Entity(std::vector<std::shared_ptr<Component>> c) : components(std::move(c)) {}
 
-    int16_t AddComponent(std::shared_ptr<Component> c);
+    /// Returns ID of new component in this entity; -1 if component of this type already exists
+    int16_t AddComponent(const std::shared_ptr<Component> &component);
+
+    /// Returns ID of new child in this entity
+    int32_t AddChild(const std::shared_ptr<Entity> &child);
+
+    void SetParent(const std::weak_ptr<Entity> &parent);
+
     void Spawn();
     void Despawn();
 
