@@ -15,6 +15,7 @@ public:
     string name;
 
     uint32_t GetId() const;
+    void Destroy();
     static void Destroy(Object obj);
 
     bool operator==(const Object &rhs) const;

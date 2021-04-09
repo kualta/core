@@ -8,6 +8,9 @@
 
 namespace core {
 
+/**
+ *  Base class for attachments to Entity class
+ */
 class Component : public Object {
 public:
 

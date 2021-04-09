@@ -10,18 +10,23 @@
 
 namespace core {
 
+
+/**
+ *  Base class for every object appearing on the scene.
+ */
 class Entity : public Object {
 public:
     Entity() {}
-    Entity(std::vector<std::unique_ptr<Component>> c) : components(std::move(c)) {}
+    Entity(std::vector<std::shared_ptr<Component>> c) : components(std::move(c)) {}
 
-    int16_t AddComponent(std::unique_ptr<Component> c);
+    int16_t AddComponent(std::shared_ptr<Component> c);
     void Spawn();
-    void Destroy();
-
+    void Despawn();
 
 protected:
-    std::vector<std::unique_ptr<Component>> components;
+    std::weak_ptr<Entity> parent;
+    std::vector<std::shared_ptr<Entity>> children;
+    std::vector<std::shared_ptr<Component>> components;
 
 private:
 };
