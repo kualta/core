@@ -2,7 +2,6 @@
 #define CORE_NODE_H
 
 #include "Essential.h"
-#include <algorithm>
 
 namespace core {
 

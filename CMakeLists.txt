@@ -12,11 +12,11 @@ option( CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  ON )
 
 
 #       core
-# Specify include dir name
 set( CORE_INCLUDE_DIR include )
 set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/components/*.h )
+set( CORE_HEADERS ${CORE_INCLUDE_DIR}/core/*.h ${CORE_INCLUDE_DIR}/core/*.tpp ${CORE_COMPONENTS_RES} )
 # Get Core's headers and sources
-file( GLOB CORE_SOURCES ${CORE_INCLUDE_DIR}/core/*.h ${CORE_COMPONENTS_RES} src/*.cpp )
+file( GLOB CORE_SOURCES ${CORE_HEADERS} src/*.cpp )
 # Create core target
 add_library( core STATIC ${CORE_SOURCES} )
 # Include Core's headers

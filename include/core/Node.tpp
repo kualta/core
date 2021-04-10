@@ -1,7 +1,6 @@
 /**
  *  core::Node template function implementations file
  */
-#include <core/Node.h>
 #include <algorithm>
 
 namespace core {
@@ -9,10 +8,10 @@ namespace core {
 template<typename T>
 void Node<T>::SetParent(T *newParent) {
     if (parent) {
-        parent->DeleteChild(this);
+        parent->DeleteChild(static_cast<T*>(this));
     }
     parent = newParent;
-    newParent->AddChild(this);
+    newParent->AddChild(static_cast<T*>(this));
 }
 template<typename T>
 T *Node<T>::GetChild(int32_t index) {

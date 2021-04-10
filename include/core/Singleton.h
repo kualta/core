@@ -8,7 +8,6 @@
 
 namespace core {
 
-
 template <typename T> class Singleton {
 public:
 
@@ -35,12 +34,10 @@ private:
 
 };
 
-// FIXME: Probabably a bad practice?
-template<typename T>
-T* Singleton<T>::singleton {  };
+} // namespace core
 
 
-}
+#include "Singleton.tpp"
 
 
 #endif //CORE_SINGLETON_H
