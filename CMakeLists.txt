@@ -41,3 +41,4 @@ find_package(SDL2 REQUIRED)
 target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
 # Link SDL2 libs
 target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
+
