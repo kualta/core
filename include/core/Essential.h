@@ -5,6 +5,7 @@
 #define CORE_ESSENTIAL_H
 
 #include <string>
+#include <vector>
 #include <cstdint>
 
 
@@ -19,6 +20,7 @@ typedef Matrix<3, 3, float> Matrix3;
 typedef Matrix<3, 3, int> Matrix3i;
 typedef Matrix<4, 4, float> Matrix4;
 typedef Matrix<4, 4, int> Matrix4i;
+class Node;
 class Object;
 class Entity;
 class Component;
