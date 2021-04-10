@@ -20,7 +20,7 @@ typedef Matrix<3, 3, float> Matrix3;
 typedef Matrix<3, 3, int> Matrix3i;
 typedef Matrix<4, 4, float> Matrix4;
 typedef Matrix<4, 4, int> Matrix4i;
-class Node;
+template<typename T> class Node;
 class Object;
 class Entity;
 class Component;

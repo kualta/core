@@ -2,28 +2,30 @@
 #define CORE_NODE_H
 
 #include "Essential.h"
+#include <algorithm>
 
 namespace core {
 
-class Node {
+template <typename T> class Node {
 public:
     Node() : parent(nullptr) {}
-    Node(Node* parent) : parent(parent) {}
+    Node(T* parent) : parent(parent) {}
 
-    void SetParent(Node *newParent);
-    Node* GetChild(int32_t index);
+    void SetParent(T* newParent);
+    T* GetChild(int32_t index);
 
 protected:
-    uint32_t AddChild(Node *c);
-    void  DeleteChild(Node *c);
+    uint32_t AddChild(T *c);
+    void  DeleteChild(T *c);
 
 private:
-    Node *parent { nullptr };
-    std::vector<Node *> children {  };
+    T* parent { nullptr };
+    std::vector<T*> children {  };
 };
 
-
-
 }
+
+#include "Node.tpp"
+
 
 #endif //CORE_NODE_H

@@ -15,7 +15,7 @@ namespace core {
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node {
+class Entity : public Object, public Node<Entity> {
 public:
     Entity() {}
     Entity(std::vector<std::shared_ptr<Component>> c) {}

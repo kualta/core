@@ -29,7 +29,6 @@ public:
     static T* GetInstancePtr() { return singleton; }
 
 protected:
-    /// Implementation below class template
     static T* singleton;
 
 private:
@@ -38,7 +37,7 @@ private:
 
 // FIXME: Probabably a bad practice?
 template<typename T>
-T* Singleton<T>::singleton{};
+T* Singleton<T>::singleton {  };
 
 
 }
