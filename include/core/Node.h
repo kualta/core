@@ -1,3 +1,7 @@
+/**
+ * This is a stand-alone header file,
+ * No Node.cpp is presented. Check Node.tpp for template implementations
+ */
 #ifndef CORE_NODE_H
 #define CORE_NODE_H
 
@@ -7,18 +11,26 @@ namespace core {
 
 template <typename T> class Node {
 public:
-    Node() : parent(nullptr) {}
+    Node() {}
     Node(T* parent) : parent(parent) {}
 
     void SetParent(T* newParent);
-    T* GetChild(int32_t index);
+
+    /**
+     *  @brief Get child by index
+     *  @note Children indexes are not consistent
+     */
+    T* GetChild(int32_t i);
+    static void SetRoot(Node<T> *r);
 
 protected:
-    uint32_t AddChild(T *c);
-    void  DeleteChild(T *c);
+    T* AddChild(T* c);
+    void  DeleteChild(T* c);
+
+    static Node<T>* root;
 
 private:
-    T* parent { nullptr };
+    Node<T>* parent { root };
     std::vector<T*> children {  };
 };
 

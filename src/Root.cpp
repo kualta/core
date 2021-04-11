@@ -1,7 +1,9 @@
 #include <core/Root.h>
 #include <core/WindowPool.h>
-#include "core/LogManager.h"
-#include "core/RenderManager.h"
+#include <core/LogManager.h>
+#include <core/RenderManager.h>
+#include <core/Entity.h>
+#include <core/Node.h>
 
 #include <SDL.h>
 #include <memory>
@@ -11,15 +13,17 @@ namespace core {
 
 
 Root::Root() {
-    if (!SDL_Init(SDL_INIT_EVERYTHING)) {
+    if ( !SDL_Init(SDL_INIT_EVERYTHING) ) {
         LogManager::LogInfo("SDL initialized successfully", INTERNAL);
     } else {
         LogManager::LogError("SDL initialization failed!", INTERNAL);
     }
 
+    Node<Entity>* rootEntity = new Node<Entity>(nullptr);
+    Node<Entity>::SetRoot(rootEntity);
+
     logManager = std::make_unique<LogManager>();
     renderManager = std::make_unique<RenderManager>();
-
     windowPool = std::make_unique<WindowPool>();
 
     LogManager::LogInfo("- Core initialization complete -", INTERNAL);

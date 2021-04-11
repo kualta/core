@@ -13,7 +13,13 @@ namespace core {
 class Root : public Singleton<Root>, public Object {
 
 public:
+    /**
+     *  Initializes the engine
+     */
     Root();
+    /**
+     *  Uninitializes the engine
+     */
     ~Root();
 
     const std::unique_ptr<LogManager> &GetLogManager() const;

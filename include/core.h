@@ -7,6 +7,7 @@
 
 //      std
 #include <memory>
+#include <string>
 #include <list>
 #include <ostream>
 #include <cassert>

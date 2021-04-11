@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Reduces amount of includes in client-side code by cost of slightly increased build time.
 # Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
-option( CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  ON )
+option( CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF )
 
 
 #       core
