@@ -9,13 +9,6 @@ namespace core {
 
 template<typename T> T* Node<T>::root { nullptr };
 
-//template<typename T>
-//void Node<T>::SetParent(T* newParent) {
-//    if ( parent ) parent->DeleteChild(this);
-//    if ( newParent ) newParent->AddChild(this);
-//
-//    parent = newParent;
-//}
 template<typename T>
 T* Node<T>::GetChild(int32_t index) {
     return children[index];

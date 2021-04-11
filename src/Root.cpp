@@ -3,7 +3,6 @@
 #include <core/LogManager.h>
 #include <core/RenderManager.h>
 #include <core/Entity.h>
-#include <core/Node.h>
 
 #include <SDL.h>
 #include <memory>
