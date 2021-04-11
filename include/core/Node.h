@@ -11,12 +11,7 @@ namespace core {
 
 template <typename T> class Node {
 public:
-    Node() {
-        SetParent(root);
-    }
-    Node(Node<T>* parent) {
-        SetParent(parent);
-    }
+    Node() { }
 
     /**
      *  @brief Get child by index
@@ -24,22 +19,21 @@ public:
      */
     T* GetChild(int32_t i);
 
-    void SetParent(Node<T>* newParent);
-    static void SetRoot(Node<T> *r);
+    virtual void SetParent(T* newParent) = 0;
+    static void SetRoot(T* r);
 
 protected:
-    void AddChild(Node<T>* c);
-    void DeleteChild(Node<T>* c);
+    void AddChild(T* c);
+    void DeleteChild(T* c);
 
     /**
      *  Pointer to root node.
      *  @warning Initialized in core::Root constructor, before that is nullptr.
      */
-    static Node<T>* root;
+    static T* root;
 
-private:
-    Node<T>* parent { nullptr };
-    std::vector<Node<T>*> children {  };
+    T* parent { nullptr };
+    std::vector<T*> children {  };
 };
 
 }

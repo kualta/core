@@ -17,11 +17,13 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity> {
 public:
-    Entity() {}
-    Entity(std::vector<std::shared_ptr<Component>> c) {}
+    Entity() { SetParent(root); }
+    Entity(std::vector<std::shared_ptr<Component>> c)  { SetParent(root); }
+    Entity(Entity* parent, std::vector<std::shared_ptr<Component>> c)  { SetParent(parent); }
 
     void Spawn();
     void Despawn();
+    void SetParent(Entity* newParent) override;
 
 protected:
 
