@@ -11,6 +11,8 @@ namespace core {
 
 // FIXME: Refactoring needed, this smells big time!
 template <typename T> class Node {
+//static_assert(std::is_base_of<Node, T>::value, "Class type T doesn't inherit from Node<T>");
+
 public:
     Node() { }
 
@@ -20,12 +22,12 @@ public:
      */
     T* GetChild(int32_t i);
 
-    virtual void SetParent(T* newParent) = 0;
+    void SetParent(T* newParent);
     static void SetRoot(T* r);
 
 protected:
-    void AddChild(T* c);
-    void DeleteChild(T* c);
+    void AddChild(Node<T>* c);
+    void DeleteChild(Node<T>* c);
 
     /**
      *  Pointer to root node.
@@ -34,7 +36,7 @@ protected:
     static T* root;
 
     T* parent { nullptr };
-    std::vector<T*> children {  };
+    std::vector<Node<T>*> children {  };
 };
 
 }

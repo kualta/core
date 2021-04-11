@@ -23,7 +23,6 @@ public:
 
     void Spawn();
     void Despawn();
-    void SetParent(Entity* newParent) override;
 
 protected:
 
