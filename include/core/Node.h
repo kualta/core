@@ -9,6 +9,7 @@
 
 namespace core {
 
+// FIXME: Refactoring needed, this smells big time!
 template <typename T> class Node {
 public:
     Node() { }
