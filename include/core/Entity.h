@@ -17,9 +17,9 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity> {
 public:
-    Entity() { SetParent(root); }
-    Entity(std::vector<std::shared_ptr<Component>> c)  { SetParent(root); }
-    Entity(Entity* parent, std::vector<std::shared_ptr<Component>> c)  { SetParent(parent); }
+    Entity() : Node<Entity>(root) { }
+    Entity(std::vector<std::shared_ptr<Component>> c) : Node<Entity>(root) { }
+    Entity(Entity* parent, std::vector<std::shared_ptr<Component>> c) : Node<Entity>(parent) { }
 
     void Spawn();
     void Despawn();

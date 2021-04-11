@@ -9,12 +9,12 @@
 
 namespace core {
 
-// FIXME: Refactoring needed, this smells big time!
 template <typename T> class Node {
-//static_assert(std::is_base_of<Node, T>::value, "Class type T doesn't inherit from Node<T>");
-
 public:
-    Node() { }
+    Node(T* parent) {
+        static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
+        SetParent(parent);
+    }
 
     /**
      *  @brief Get child by index
@@ -39,7 +39,7 @@ protected:
     std::vector<Node<T>*> children {  };
 };
 
-}
+} // namespace core
 
 #include "Node.tpp"
 

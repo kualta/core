@@ -5,13 +5,20 @@
 #include "Object.h"
 #include "Singleton.h"
 
+#include <ostream>
+#include <sstream>
+#include <chrono>
+
 namespace core {
 
 
 enum LOG_LEVEL {
-    INFO,
-    WARN,
     ERR,
+    WARN,
+    INFO,
+    DEBUG1,
+    DEBUG2,
+    DEBUG3,
 };
 enum LOG_TYPE {
     GENERAL,  // For other logs
@@ -27,6 +34,7 @@ enum PASS_INFO {
     NO_INFO,
     FAIL,
 };
+
 
 class Logger : public Singleton<Logger>, public Object {
 
