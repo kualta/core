@@ -1,5 +1,5 @@
 #include <core/RenderManager.h>
-#include <core/LogManager.h>
+#include <core/Logger.h>
 #include <core/Window.h>
 
 #include <SDL_syswm.h>
@@ -19,10 +19,10 @@ RenderManager::~RenderManager() {
 bool RenderManager::CreateRenderer(Window &_window) {
     bgfx::renderFrame();
     if (!InitRenderer(_window)) {
-        LogManager::LogError("Cannot create renderer", RENDER);
+        Logger::LogError("Cannot create renderer", RENDER);
         return false;
     }
-    LogManager::LogInfo("Created renderer succesfully", RENDER);
+    Logger::LogInfo("Created renderer succesfully", RENDER);
     return true;
 }
 bgfx::PlatformData RenderManager::GetPlatformData(const Window& _window) {
@@ -61,7 +61,7 @@ bool RenderManager::InitRenderer(Window &_window) {
     initObj.resolution.reset = BGFX_RESET_VSYNC;
 
     if (!bgfx::init(initObj)) {
-        LogManager::LogError("Cannot initialize renderer, aborting", RENDER);
+        Logger::LogError("Cannot initialize renderer, aborting", RENDER);
         return false;
     }
     return true;

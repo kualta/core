@@ -13,7 +13,7 @@ namespace core {
 
 class Degree;
 class Entity;
-class LogManager;
+class Logger;
 class Math;
 class Object;
 class Component;

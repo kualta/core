@@ -1,5 +1,5 @@
 #include <core/WindowPool.h>
-#include <core/LogManager.h>
+#include <core/Logger.h>
 #include <core/Window.h>
 
 #include <memory>
@@ -18,7 +18,7 @@ void WindowPool::AddWindowToPool(const Window &window) {
 }
 void WindowPool::DestroyAll() {
     windowsPool.erase(windowsPool.begin(), windowsPool.end());
-    LogManager::LogInfo("Destroyed all windows successfully", WINDOW);
+    Logger::LogInfo("Destroyed all windows successfully", WINDOW);
 }
 
 

@@ -1,5 +1,5 @@
 #include <core/Window.h>
-#include "core/LogManager.h"
+#include "core/Logger.h"
 #include "core/Geometry.h"
 
 #include <SDL.h>
@@ -22,7 +22,7 @@ Window::Window(const std::string &title, const Rect& rect)
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
-    LogManager::LogInfo("Destroyed window object successfully", core::WINDOW);
+    Logger::LogInfo("Destroyed window object successfully", core::WINDOW);
 }
 uint32_t Window::GetHeight() const {
     return height;
@@ -38,7 +38,7 @@ std::string Window::GetTitle() const {
 }
 int Window::SetPosition(const Vector2& pos) {
     if (pos.x < 0 || pos.y < 0) {
-        LogManager::LogError("Changing window position failed", WINDOW);
+        Logger::LogError("Changing window position failed", WINDOW);
         return -1;
     }
     position = pos;

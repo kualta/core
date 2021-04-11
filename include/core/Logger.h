@@ -1,5 +1,5 @@
-#ifndef CORE_LOGMANAGER_H
-#define CORE_LOGMANAGER_H
+#ifndef CORE_LOGGER_H
+#define CORE_LOGGER_H
 
 #include "Essential.h"
 #include "Object.h"
@@ -28,10 +28,10 @@ enum PASS_INFO {
     FAIL,
 };
 
-class LogManager : public Singleton<LogManager>, public Object {
+class Logger : public Singleton<Logger>, public Object {
 
 public:
-    LogManager();
+    Logger();
 
     static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL);
     static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL);
@@ -46,4 +46,4 @@ private:
 
 }
 
-#endif //CORE_LOGMANAGER_H
+#endif //CORE_LOGGER_H

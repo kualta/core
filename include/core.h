@@ -32,7 +32,7 @@
 #include "core/Matrix.h"
 #include "core/Primitive.h"
 #include "core/Window.h"
-#include "core/LogManager.h"
+#include "core/Logger.h"
 #include "core/Math.h"
 #include "core/RenderManager.h"
 #include "core/WindowBuilder.h"

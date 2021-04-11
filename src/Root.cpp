@@ -1,6 +1,6 @@
 #include <core/Root.h>
 #include <core/WindowPool.h>
-#include <core/LogManager.h>
+#include <core/Logger.h>
 #include <core/RenderManager.h>
 #include <core/Entity.h>
 
@@ -13,28 +13,28 @@ namespace core {
 
 Root::Root() {
     if ( !SDL_Init(SDL_INIT_EVERYTHING) ) {
-        LogManager::LogInfo("SDL initialized successfully", INTERNAL);
+        Logger::LogInfo("SDL initialized successfully", INTERNAL);
     } else {
-        LogManager::LogError("SDL initialization failed!", INTERNAL);
+        Logger::LogError("SDL initialization failed!", INTERNAL);
     }
 
     Entity* rootEntity = new Entity();
     Entity::SetRoot(rootEntity);
 
-    logManager = std::make_unique<LogManager>();
+    logManager = std::make_unique<Logger>();
     renderManager = std::make_unique<RenderManager>();
     windowPool = std::make_unique<WindowPool>();
 
-    LogManager::LogInfo("- Core initialization complete -", INTERNAL);
+    Logger::LogInfo("- Core initialization complete -", INTERNAL);
 }
 Root::~Root() {
     windowPool->DestroyAll();
 
     SDL_Quit();
 
-    LogManager::LogInfo("- Core shutdown complete -", INTERNAL);
+    Logger::LogInfo("- Core shutdown complete -", INTERNAL);
 }
-const std::unique_ptr<LogManager> &Root::GetLogManager() const {
+const std::unique_ptr<Logger> &Root::GetLogManager() const {
     return logManager;
 }
 const std::unique_ptr<RenderManager> &Root::GetRenderManager() const {

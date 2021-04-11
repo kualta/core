@@ -1,4 +1,4 @@
-#include <core/LogManager.h>
+#include <core/Logger.h>
 #include <iostream>
 
 
@@ -7,21 +7,21 @@ namespace core {
 
 // TODO: Simplify logging syntax
 // TODO: Add time/date stamps to logs
-LogManager::LogManager() {
+Logger::Logger() {
 }
-void LogManager::LogInfo(const std::string &message, LOG_TYPE logType) {
+void Logger::LogInfo(const std::string &message, LOG_TYPE logType) {
     std::cout << TypeText(logType) << " " << message << std::endl;
 }
-void LogManager::LogWarn(const std::string& message, LOG_TYPE logType) {
+void Logger::LogWarn(const std::string& message, LOG_TYPE logType) {
     std::cout << TypeText(logType) << " WARN: " << message << std::endl;
 }
-void LogManager::LogError(const std::string& message, LOG_TYPE logType) {
+void Logger::LogError(const std::string& message, LOG_TYPE logType) {
     std::cout << TypeText(logType) << " ERROR! " << message << std::endl;
 }
-void LogManager::LogMessage(const std::string &message) {
+void Logger::LogMessage(const std::string &message) {
     std::cout << message << std::endl;
 }
-std::string LogManager::PassText(PASS_INFO success) {
+std::string Logger::PassText(PASS_INFO success) {
 
     std::string afterText;
 
@@ -33,7 +33,7 @@ std::string LogManager::PassText(PASS_INFO success) {
 
     return afterText;
 }
-std::string LogManager::TypeText(LOG_TYPE log_type) {
+std::string Logger::TypeText(LOG_TYPE log_type) {
 
     std::string preText;
 

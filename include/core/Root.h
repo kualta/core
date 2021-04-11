@@ -22,11 +22,11 @@ public:
      */
     ~Root();
 
-    const std::unique_ptr<LogManager> &GetLogManager() const;
+    const std::unique_ptr<Logger> &GetLogManager() const;
     const std::unique_ptr<RenderManager> &GetRenderManager() const;
 
 protected:
-    std::unique_ptr<LogManager> logManager;
+    std::unique_ptr<Logger> logManager;
     std::unique_ptr<WindowPool> windowPool;
     std::unique_ptr<RenderManager> renderManager;
 
