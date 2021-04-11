@@ -1,5 +1,4 @@
 /**
- * This is a stand-alone header file,
  * No Node.cpp is presented. Check Node.tpp for template implementations
  */
 #ifndef CORE_NODE_H
@@ -11,7 +10,8 @@ namespace core {
 
 template <typename T> class Node {
 public:
-    Node(T* parent) {
+    explicit Node(T* parent) {
+        // This assertion is necessary because of downcast in Node<T>::GetChild()
         static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
         SetParent(parent);
     }

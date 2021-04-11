@@ -5,7 +5,6 @@
 
 namespace core {
 
-
 typedef struct Rect {
     int x, y;
     int w, h;
@@ -15,9 +14,8 @@ typedef struct ColorVertex {
     float x;
     float y;
     float z;
-    uint32_t abgr;
+    abgr abgr;
 } ColorVertex;
-
 
 }
 

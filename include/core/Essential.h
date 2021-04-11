@@ -11,6 +11,10 @@
 
 namespace core {
 
+struct RgbaColor;
+struct AbgrColor;
+
+class Color;
 class Degree;
 class Entity;
 class Logger;
@@ -33,6 +37,8 @@ template<typename T> class Singleton;
 
 
 typedef std::string string;
+typedef uint32_t rgba;
+typedef uint32_t abgr;
 
 typedef struct Cube Cube;
 typedef struct Rect Rect;

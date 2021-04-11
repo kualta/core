@@ -12,9 +12,11 @@ It's mostly Google's convention, with several changes.
 | Macro | SCREAMING_SNAKE_CASE |
 | Enumerator | SCREAMING_SNAKE_CASE |
 | Namespace | snake_case |
-| Struct Member Field | camelCase |
 | Global Function | PascalCase |
 | Memeber Function | PascalCase |
+| Struct name | PascalCase |
+| Class name | PascalCase |
+| Struct Member Field | camelCase |
 | Parameter | camelCase |
 | Local Variable | camelCase |
 | Global Variable | don't | 
