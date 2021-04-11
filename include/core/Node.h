@@ -29,11 +29,30 @@ public:
      */
     T* GetParent();
 
+    /**
+     * Change node's parent to newParent
+     * @note Method is called at Node<T> constructor to init parent field
+     * @param newParent - pointer to new parent object. Must inherit from Node<T>
+     */
     void SetParent(T* newParent);
-    static void SetRoot(T* r);
+
+    /**
+     * Change hierarchy's root to newRoot
+     * @note For core::Entity hierarchy method is called at core::Root constructor
+     */
+    static void SetRoot(T* newRoot);
 
 protected:
+
+    /**
+     * Adds child to Node's children.
+     */
     void AddChild(Node<T>* c);
+
+    /**
+     * Removes child from Node's children.
+     * @note Cmpares pointer c to all children pointers.
+     */
     void DeleteChild(Node<T>* c);
 
     /**
