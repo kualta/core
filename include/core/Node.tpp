@@ -32,6 +32,10 @@ void Node<T>::SetParent(T *newParent) {
 
     parent = newParent;
 }
+template<typename T>
+T *Node<T>::GetParent() {
+    return parent;
+}
 
 
 } // namespace core

@@ -26,7 +26,7 @@ public:
     const std::unique_ptr<RenderManager> &GetRenderManager() const;
 
 protected:
-    std::unique_ptr<Logger> logManager;
+    std::unique_ptr<Logger> logger;
     std::unique_ptr<WindowPool> windowPool;
     std::unique_ptr<RenderManager> renderManager;
 

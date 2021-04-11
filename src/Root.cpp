@@ -18,10 +18,12 @@ Root::Root() {
         Logger::LogError("SDL initialization failed!", INTERNAL);
     }
 
+    // Note: rootEntity is not the same as singleton core::Root object!
+    // It is only used as Entity hierarchy root.
     Entity* rootEntity = new Entity();
     Entity::SetRoot(rootEntity);
 
-    logManager = std::make_unique<Logger>();
+    logger = std::make_unique<Logger>();
     renderManager = std::make_unique<RenderManager>();
     windowPool = std::make_unique<WindowPool>();
 
@@ -35,7 +37,7 @@ Root::~Root() {
     Logger::LogInfo("- Core shutdown complete -", INTERNAL);
 }
 const std::unique_ptr<Logger> &Root::GetLogManager() const {
-    return logManager;
+    return logger;
 }
 const std::unique_ptr<RenderManager> &Root::GetRenderManager() const {
     return renderManager;

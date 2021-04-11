@@ -17,10 +17,17 @@ public:
     }
 
     /**
-     *  @brief Get child by index
+     *  Get child by index
      *  @note Children indexes are not consistent
+     *  @return Pointer to child at index i
      */
     T* GetChild(int32_t i);
+
+    /**
+     * Get parent of this node
+     * @return Pointer to parent
+     */
+    T* GetParent();
 
     void SetParent(T* newParent);
     static void SetRoot(T* r);
@@ -35,6 +42,10 @@ protected:
      */
     static T* root;
 
+    /**
+     *  Pointer to parent node.
+     *  @warning Initialized in core::Node constructor, before that is nullptr.
+     */
     T* parent { nullptr };
     std::vector<Node<T>*> children {  };
 };
