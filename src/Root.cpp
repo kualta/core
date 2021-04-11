@@ -19,7 +19,7 @@ Root::Root() {
         LogManager::LogError("SDL initialization failed!", INTERNAL);
     }
 
-    Node<Entity>* rootEntity = new Node<Entity>(nullptr);
+    Node<Entity>* rootEntity = new Node<Entity>();
     Node<Entity>::SetRoot(rootEntity);
 
     logManager = std::make_unique<LogManager>();
