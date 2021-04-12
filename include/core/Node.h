@@ -1,5 +1,5 @@
 /**
- * No Node.cpp is presented. Check Node.tpp for template implementations
+ * No Node.cpp is presented. Check Node.tpp for template definitions
  */
 #ifndef CORE_NODE_H
 #define CORE_NODE_H

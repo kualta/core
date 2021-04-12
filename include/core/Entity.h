@@ -1,3 +1,6 @@
+/**
+ *  Check Entity.tpp for template definitions
+ */
 #ifndef INTERFACERS_ENTITY_H
 #define INTERFACERS_ENTITY_H
 
@@ -84,6 +87,8 @@ protected:
 
 } // namespace core
 
+
+#include "Entity.tpp"
 
 
 #endif //INTERFACERS_ENTITY_H

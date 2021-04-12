@@ -8,7 +8,7 @@ namespace core {
 
 class Transform : public Component {
 public:
-    Transform() {}
+    Transform() { }
 
 protected:
 

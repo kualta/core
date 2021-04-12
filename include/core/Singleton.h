@@ -1,6 +1,6 @@
 /**
  * This is a stand-alone header file,
- * No Singleton.cpp is presented. Check Singleton.tpp for template implementations
+ * No Singleton.cpp is presented. Check Singleton.tpp for template definitions
  */
 #ifndef CORE_SINGLETON_H
 #define CORE_SINGLETON_H
