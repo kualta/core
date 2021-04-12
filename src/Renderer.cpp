@@ -1,4 +1,4 @@
-#include <core/RendererBuilder.h>
+#include <core/Renderer.h>
 #include <core/Logger.h>
 #include <core/Window.h>
 
@@ -9,22 +9,20 @@
 
 namespace core {
 
-
-RendererBuilder::RendererBuilder() {
-}
-RendererBuilder::~RendererBuilder() {
-    bgfx::shutdown();
-}
-bool RendererBuilder::CreateRenderer(Window &_window) {
+bool Renderer::AddRenderer(Window &window) {
     bgfx::renderFrame();
-    if (!Init(_window)) {
+    if (!InitWindow(window)) {
         Logger::LogError("Couldn't create renderer", RENDER);
         return false;
+    } else {
+        Logger::LogInfo("Created renderer succesfully", RENDER);
+        return true;
     }
-    Logger::LogInfo("Created renderer succesfully", RENDER);
-    return true;
 }
-bgfx::PlatformData RendererBuilder::GetPlatformData(const Window& _window) {
+void Renderer::DestroyAll() {
+    bgfx::shutdown();
+}
+bgfx::PlatformData Renderer::GetPlatformData(const Window& _window) {
 
     SDL_SysWMinfo *wmi = _window.GetSdlWmiPtr();
     bgfx::PlatformData platformData;
@@ -49,7 +47,7 @@ bgfx::PlatformData RendererBuilder::GetPlatformData(const Window& _window) {
 
     return platformData;
 }
-bool RendererBuilder::Init(Window &window) {
+bool Renderer::InitWindow(Window &window) {
 
     bgfx::Init initObj;
 

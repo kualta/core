@@ -1,7 +1,7 @@
 #include <core/Root.h>
 #include <core/WindowPool.h>
 #include <core/Logger.h>
-#include <core/RendererBuilder.h>
+#include <core/Renderer.h>
 #include <core/Entity.h>
 
 #include <SDL.h>
@@ -24,19 +24,19 @@ Root::Root() {
     Entity::SetRoot(rootEntity);
 
     logger = std::make_unique<Logger>();
+    renderer = std::make_unique<Renderer>();
     windowPool = std::make_unique<WindowPool>();
 
     Logger::LogInfo("- Core initialization complete -", INTERNAL);
 }
 Root::~Root() {
     windowPool->DestroyAll();
+    renderer->DestroyAll();
+    renderer->Destroy();
 
     SDL_Quit();
 
     Logger::LogInfo("- Core shutdown complete -", INTERNAL);
-}
-const std::unique_ptr<Logger> &Root::GetLogManager() const {
-    return logger;
 }
 
 }

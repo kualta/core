@@ -35,7 +35,7 @@
 #include "core/Window.h"
 #include "core/Logger.h"
 #include "core/Math.h"
-#include "core/RendererBuilder.h"
+#include "core/Renderer.h"
 #include "core/WindowBuilder.h"
 #include "core/WindowPool.h"
 #include "core/Root.h"
