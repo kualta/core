@@ -26,7 +26,16 @@ public:
 
     ~Entity();
 
+    /**
+     * Activates entity
+     * @note Entity is active by default, no need to call this after creation
+     */
     void Spawn();
+
+    /**
+     * Deactivates entity
+     * @note This method doesn't destroy entity
+     */
     void Despawn();
 
     /**
@@ -49,7 +58,7 @@ public:
      * Creates new Component of type T and adds it to Entity
      * @tparam T - new component typename
      * @return Reference to this Entity
-     * @warning T must inherit from core::Component
+     * @warning returns *this even if component already exists
      * @note Method chaining is possible
      */
     template<typename T> Entity& AddComponent();
@@ -58,7 +67,7 @@ public:
      * Adds existing Component c to Entity
      * @tparam T - component typename
      * @return Reference to this Entity
-     * @warning T must inherit from core::Component
+     * @warning returns *this even if component already exists
      * @note Method chaining is possible
      */
     template<typename T> Entity& AddComponent(T c);
@@ -70,6 +79,7 @@ public:
 
 protected:
     std::vector<Component*> components;
+    bool isActive { true };
 };
 
 } // namespace core

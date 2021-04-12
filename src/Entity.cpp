@@ -6,10 +6,10 @@ Entity::~Entity() {
     DestroyAllComponents();
 }
 void Entity::Spawn() {
-
+    isActive = true;
 }
 void Entity::Despawn() {
-
+    isActive = false;
 }
 template<typename T>
 Entity& Entity::AddComponent() {
