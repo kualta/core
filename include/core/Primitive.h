@@ -1,3 +1,6 @@
+/**
+ * Header defines 3D primitive types
+ */
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
 
@@ -5,7 +8,6 @@
 #include "Geometry.h"
 
 namespace core {
-
 
 class Primitive {
     ColorVertex vertices[0];

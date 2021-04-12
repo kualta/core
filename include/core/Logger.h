@@ -11,7 +11,6 @@
 
 namespace core {
 
-
 enum LOG_LEVEL {
     ERR,
     WARN,
@@ -35,7 +34,6 @@ enum PASS_INFO {
     FAIL,
 };
 
-
 class Logger : public Singleton<Logger>, public Object {
 
 public:
@@ -48,7 +46,6 @@ public:
 
     static std::string PassText(PASS_INFO success);
     static std::string TypeText(LOG_TYPE log_type);
-private:
 };
 
 

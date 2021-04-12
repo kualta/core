@@ -1,11 +1,9 @@
 #include <core/WindowBuilder.h>
-#include <core/Window.h>
-#include <core/Geometry.h>
-#include <core/Vector.h>
-#include <core/Renderer.h>
 #include <core/WindowPool.h>
+#include <core/Window.h>
+#include <core/Renderer.h>
+#include <core/Geometry.h>
 #include <core/Logger.h>
-#include <core/Essential.h>
 
 #include <string>
 #include <memory>
@@ -18,7 +16,8 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     WindowPool::AddWindowToPool(windowPtr);
     core::Logger::LogInfo("Created window succesfully", core::WINDOW);
 
-    core::Renderer::CreateRenderer(*windowPtr);
+    // FIXME: Renderer initialization goes out of the scope of this function
+    core::Renderer::InitWindow(*windowPtr);
 
     return windowPtr->GetId();
 }

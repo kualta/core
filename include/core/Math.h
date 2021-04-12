@@ -13,9 +13,29 @@ public:
     static inline float DegreesToRadians(float degrees) { return degrees * PI / float(180.0); }
     static inline float RadiansToDegrees(float radians) { return radians * float(180.0) / PI; }
 
-    /// Matrix methods
+    /**
+     * Generates new translation matrix to vector
+     * @param pos - position translate to
+     * @return Matrix4 translation matrix
+     */
     static Matrix4 TranslationMatrix(const Vector3 &pos);
+
+    /**
+     * Generates new rotation matrix around X, Y and Z axis
+     * @param rotX - Rotation around X axis
+     * @param rotY - Rotation around Y axis
+     * @param rotZ - Rotation around Z axis
+     * @return Matrix4 rotation matrix
+     */
     static Matrix4 RotationMatrixXYZ(float rotX, float rotY, float rotZ);
+
+    /**
+     * Generates new scale matrix
+     * @param x - scale by X axis
+     * @param y - scale by Y axis
+     * @param z - scale by Z axis
+     * @return Matrix4 scale matrix
+     */
     static Matrix4 ScaleMatrix(float x, float y, float z);
 
     static const float PI;
@@ -32,13 +52,12 @@ class Degree {
 public:
     explicit Degree ( float d=0 ) : value(d) {}
     Degree (const Degree& d) : value(d.GetValue()) {}
-    Degree& operator = ( const float& f ) { value = f; return *this; }
-    Degree& operator = ( const Degree& d ) = default;
 
     float GetValue() const { return value; };
     float ToRadians() const { return Math::DegreesToRadians(value); };
 
-    const Degree& operator + () const { return *this; }
+    Degree& operator = ( const float& f ) { value = f; return *this; }
+    Degree& operator = ( const Degree& d ) = default;
     Degree operator + ( const Degree& d ) const { return Degree (value + d.value ); }
     Degree& operator += ( const Degree& d ) { value += d.value; return *this; }
     Degree operator - () const { return Degree(-value); }
@@ -66,20 +85,18 @@ public:
 }; // class Degree
 
 
-
 class Radian {
     float value;
 
 public:
     explicit Radian ( float r=0 ) : value(r) {}
     Radian (const Radian& other) : value(other.GetValue()) {}
-    Radian& operator = ( const float& f ) { value = f; return *this; }
-    Radian& operator = ( const Radian& r ) = default;
 
     float GetValue() const { return value; }
     float ToDegrees() const { return Math::RadiansToDegrees(value); };
 
-    const Radian& operator + () const { return *this; }
+    Radian& operator = ( const float& f ) { value = f; return *this; }
+    Radian& operator = ( const Radian& r ) = default;
     Radian operator + ( const Radian& r ) const { return Radian (value + r.value ); }
     Radian& operator += ( const Radian& r ) { value += r.value; return *this; }
     Radian operator - () const { return Radian(-value); }

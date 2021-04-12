@@ -7,7 +7,6 @@
 
 namespace core {
 
-// FIXME: inlcude memory in header to work
 std::vector<std::shared_ptr<Window>> WindowPool::windowsPool;
 
 void WindowPool::AddWindowToPool(const std::shared_ptr<Window>& windowPtr) {
