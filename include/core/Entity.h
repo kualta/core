@@ -67,6 +67,15 @@ public:
     template<typename T> Entity& AddComponent();
 
     /**
+     * Adds existing Component c to Entity
+     * @tparam T - component typename
+     * @return Reference to this Entity
+     * @warning returns *this even if component already exists
+     * @note Method chaining is possible
+     */
+    template<typename T> Entity& AddComponent(T c);
+
+    /**
      * Destroys all Components in this Entity
      */
     void DestroyAllComponents();
