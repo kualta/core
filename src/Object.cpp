@@ -4,12 +4,11 @@ namespace core {
 
 uint32_t Object::objectCounter { 0 };
 
-
 uint32_t Object::GetId() const {
     return id;
 }
 void Object::Destroy() {
-
+    this->~Object();
 }
 void Object::Destroy(Object obj) {
     obj.Destroy();

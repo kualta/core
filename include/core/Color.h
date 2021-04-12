@@ -33,7 +33,7 @@ struct AbgrColor {
     static const uint32_t green = 0xff00ff00;
     static const uint32_t blue = 0xffff0000;
     static const uint32_t yellow = 0xff00ffff;
-    static const uint32_t cyan = 0xffffffff00;
+    static const uint32_t cyan = 0xffffff00;
     static const uint32_t pink = 0xffcbc0ff;
     static const uint32_t corePurple = 0xff784278;
 };

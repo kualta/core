@@ -7,10 +7,6 @@
 namespace core {
 
 template<int rows, int cols, typename T> class Matrix {
-public:
-    static Matrix3 Translate(const Vector3 &vec);
-    static Matrix4 Translate(const Vector4 &vec);
-
 protected:
     T mtx[rows][cols];
 };
@@ -55,13 +51,6 @@ public:
         mtx[2][0] = m20; mtx[2][1] = m21; mtx[2][2] = m22; mtx[2][3] = m23;
         mtx[3][0] = m30; mtx[3][1] = m31; mtx[3][2] = m32; mtx[3][3] = m33;
     }
-    Matrix(float m) {
-        mtx[0][0] = m; mtx[0][1] = m; mtx[0][2] = m; mtx[0][3] = m;
-        mtx[1][0] = m; mtx[1][1] = m; mtx[1][2] = m; mtx[1][3] = m;
-        mtx[2][0] = m; mtx[2][1] = m; mtx[2][2] = m; mtx[2][3] = m;
-        mtx[3][0] = m; mtx[3][1] = m; mtx[3][2] = m; mtx[3][3] = m;
-    }
-
 
     const float* operator[] (int row) const {
         return mtx[row];
@@ -70,6 +59,9 @@ public:
         return mtx[row];
     }
 
+    /**
+     * @return pointer to first element of first row of matrix
+     */
     float* GetPtr() {
         return &mtx[0][0];
     }
@@ -96,7 +88,7 @@ inline std::ostream& operator<<(std::ostream& o, const Matrix4 &mat)
         }
 
         if(i != 3)
-            o << std::endl;
+            o << "; ";
     }
     o << ")";
     return o;
