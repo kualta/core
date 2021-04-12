@@ -2,7 +2,7 @@
 #include <core/Window.h>
 #include <core/Geometry.h>
 #include <core/Vector.h>
-#include <core/RenderManager.h>
+#include <core/RendererBuilder.h>
 #include <core/WindowPool.h>
 #include <core/Logger.h>
 #include <core/Essential.h>
@@ -18,7 +18,7 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     WindowPool::AddWindowToPool(windowPtr);
     core::Logger::LogInfo("Created window succesfully", core::WINDOW);
 
-    core::RenderManager::CreateRenderer(*windowPtr);
+    core::RendererBuilder::CreateRenderer(*windowPtr);
 
     return windowPtr->GetId();
 }

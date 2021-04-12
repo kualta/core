@@ -23,12 +23,10 @@ public:
     ~Root();
 
     const std::unique_ptr<Logger> &GetLogManager() const;
-    const std::unique_ptr<RenderManager> &GetRenderManager() const;
 
 protected:
     std::unique_ptr<Logger> logger;
     std::unique_ptr<WindowPool> windowPool;
-    std::unique_ptr<RenderManager> renderManager;
 
 private:
 };

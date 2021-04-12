@@ -1,4 +1,4 @@
-#include <core/RenderManager.h>
+#include <core/RendererBuilder.h>
 #include <core/Logger.h>
 #include <core/Window.h>
 
@@ -10,22 +10,21 @@
 namespace core {
 
 
-RenderManager::RenderManager() {
-    //bgfx::init();
+RendererBuilder::RendererBuilder() {
 }
-RenderManager::~RenderManager() {
+RendererBuilder::~RendererBuilder() {
     bgfx::shutdown();
 }
-bool RenderManager::CreateRenderer(Window &_window) {
+bool RendererBuilder::CreateRenderer(Window &_window) {
     bgfx::renderFrame();
-    if (!InitRenderer(_window)) {
-        Logger::LogError("Cannot create renderer", RENDER);
+    if (!Init(_window)) {
+        Logger::LogError("Couldn't create renderer", RENDER);
         return false;
     }
     Logger::LogInfo("Created renderer succesfully", RENDER);
     return true;
 }
-bgfx::PlatformData RenderManager::GetPlatformData(const Window& _window) {
+bgfx::PlatformData RendererBuilder::GetPlatformData(const Window& _window) {
 
     SDL_SysWMinfo *wmi = _window.GetSdlWmiPtr();
     bgfx::PlatformData platformData;
@@ -50,14 +49,14 @@ bgfx::PlatformData RenderManager::GetPlatformData(const Window& _window) {
 
     return platformData;
 }
-bool RenderManager::InitRenderer(Window &_window) {
+bool RendererBuilder::Init(Window &window) {
 
     bgfx::Init initObj;
 
-    initObj.platformData = GetPlatformData(_window);
+    initObj.platformData = GetPlatformData(window);
     initObj.type = bgfx::RendererType::Count; // Automatically choose a renderer.
-    initObj.resolution.width = _window.GetWidth();
-    initObj.resolution.height = _window.GetHeight();
+    initObj.resolution.width = window.GetWidth();
+    initObj.resolution.height = window.GetHeight();
     initObj.resolution.reset = BGFX_RESET_VSYNC;
 
     if (!bgfx::init(initObj)) {
