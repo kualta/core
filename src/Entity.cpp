@@ -2,7 +2,9 @@
 
 namespace core {
 
-
+Entity::~Entity() {
+    DestroyAllComponents();
+}
 void Entity::Spawn() {
 
 }
@@ -54,6 +56,9 @@ bool Entity::HasComponent() {
     } else {
         return false;
     }
+}
+void Entity::DestroyAllComponents() {
+    for (auto c: components) { delete c; }
 }
 
 } // namespace core

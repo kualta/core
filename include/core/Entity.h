@@ -17,11 +17,14 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity> {
 public:
-    Entity() : Node<Entity>(root) { }
+    Entity()
+        : Node<Entity>(root) { }
     Entity(std::vector<Component*> c)
         : Node<Entity>(root), components(std::move(c)) { }
     Entity(Entity* parent, std::vector<Component*> c)
         : Node<Entity>(parent), components(std::move(c)) { }
+
+    ~Entity();
 
     void Spawn();
     void Despawn();
@@ -29,7 +32,8 @@ public:
     /**
      * Get attached to this entity component
      * @tparam T - component typename
-     * @return Reference to component
+     * @return Reference to component if it exists in Entity, nullptr otherwise
+     * @note Use Entity::HasComponent<T>() to make sure component exists
      */
     template<typename T> T& GetComponent();
 
@@ -58,6 +62,11 @@ public:
      * @note Method chaining is possible
      */
     template<typename T> Entity& AddComponent(T c);
+
+    /**
+     * Destroys all Components in this Entity
+     */
+    void DestroyAllComponents();
 
 protected:
     std::vector<Component*> components;
