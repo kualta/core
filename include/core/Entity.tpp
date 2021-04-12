@@ -22,18 +22,6 @@ Entity& Entity::AddComponent() {
     return *this;
 }
 template<typename T>
-Entity& Entity::AddComponent(T c) {
-    static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
-
-    if ( this->HasComponent<T>() ) {
-        Logger::LogError("Entity already has this component!", DEBUG);
-        return *this;
-    }
-
-    components.push_back(c);
-    return *this;
-}
-template<typename T>
 T& Entity::GetComponent() {
     for (auto c: components) {
         if (typeid(c) == typeid(T)) {
