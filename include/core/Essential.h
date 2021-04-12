@@ -66,6 +66,8 @@ class PlatformData;
 } // namespace bgfx
 
 
+#include "Logger.h"
+
 /// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
 #ifdef CORE_HEAVY_ESSENTIALS
 #include "Matrix.h"

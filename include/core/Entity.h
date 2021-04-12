@@ -28,8 +28,9 @@ public:
 
 
     template<typename T> T* GetComponent();
-    template<typename T> void AddComponent();
-    template<typename T> void AddComponent(T c);
+    template<typename T> bool HasComponent();
+    template<typename T> Entity& AddComponent();
+    template<typename T> Entity& AddComponent(T c);
 
 protected:
     std::vector<Component*> components;
