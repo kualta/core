@@ -36,10 +36,10 @@ Entity& Entity::AddComponent(T c) {
     return *this;
 }
 template<typename T>
-T* Entity::GetComponent() {
+T& Entity::GetComponent() {
     for (auto c: components) {
        if (typeid(c) == typeid(T)) {
-            return c;
+            return *c;
        }
     }
     return nullptr;

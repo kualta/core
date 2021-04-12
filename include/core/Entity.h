@@ -26,10 +26,37 @@ public:
     void Spawn();
     void Despawn();
 
+    /**
+     * Get attached to this entity component
+     * @tparam T - component typename
+     * @return Reference to component
+     */
+    template<typename T> T& GetComponent();
 
-    template<typename T> T* GetComponent();
+    /**
+     * Does entity have this component?
+     * @tparam T - component typename
+     * @return true if Entity contains component
+     * @return false if Entity doesn't contain component
+     */
     template<typename T> bool HasComponent();
+
+    /**
+     * Creates new Component of type T and adds it to Entity
+     * @tparam T - new component typename
+     * @return Reference to this Entity
+     * @warning T must inherit from core::Component
+     * @note Method chaining is possible
+     */
     template<typename T> Entity& AddComponent();
+
+    /**
+     * Adds existing Component c to Entity
+     * @tparam T - component typename
+     * @return Reference to this Entity
+     * @warning T must inherit from core::Component
+     * @note Method chaining is possible
+     */
     template<typename T> Entity& AddComponent(T c);
 
 protected:
