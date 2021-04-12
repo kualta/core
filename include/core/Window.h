@@ -9,7 +9,6 @@
 
 namespace core {
 
-
     class Window : public Object {
     public:
         Window(const std::string &title, const core::Rect &rect);
@@ -18,11 +17,11 @@ namespace core {
         uint32_t GetHeight() const;
         uint32_t GetWidth() const;
         Vector2 GetPosition() const;
-        SDL_Window* GetSdlWindowPtr() const;
-        SDL_SysWMinfo* GetSdlWmiPtr() const;
+        SDL_Window* GetSdlWindow() const;
+        SDL_SysWMinfo* GetSdlWmi() const;
         std::string GetTitle() const;
 
-        int SetPosition(const Vector2& pos);
+        void SetPosition(const Vector2& pos);
 
     private:
         SDL_Window *sdlWindow;
@@ -33,8 +32,6 @@ namespace core {
         uint32_t width;
     };
 
-
-
-}
+} // namespace core
 
 #endif //CORE_WINDOW_H

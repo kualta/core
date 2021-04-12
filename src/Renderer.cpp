@@ -24,7 +24,7 @@ void Renderer::DestroyAll() {
 }
 bgfx::PlatformData Renderer::GetPlatformData(const Window& _window) {
 
-    SDL_SysWMinfo *wmi = _window.GetSdlWmiPtr();
+    SDL_SysWMinfo *wmi = _window.GetSdlWmi();
     bgfx::PlatformData platformData;
 
     #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD

@@ -18,15 +18,21 @@ namespace core {
 class Entity : public Object, public Node<Entity> {
 public:
     Entity() : Node<Entity>(root) { }
-    Entity(std::vector<std::shared_ptr<Component>> c) : Node<Entity>(root) { }
-    Entity(Entity* parent, std::vector<std::shared_ptr<Component>> c) : Node<Entity>(parent) { }
+    Entity(std::vector<Component*> c)
+        : Node<Entity>(root), components(std::move(c)) { }
+    Entity(Entity* parent, std::vector<Component*> c)
+        : Node<Entity>(parent), components(std::move(c)) { }
 
     void Spawn();
     void Despawn();
 
-protected:
 
-private:
+    template<typename T> T* GetComponent();
+    template<typename T> void AddComponent();
+    template<typename T> void AddComponent(T c);
+
+protected:
+    std::vector<Component*> components;
 };
 
 } // namespace core
