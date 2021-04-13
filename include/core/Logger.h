@@ -33,6 +33,42 @@ enum PASS_INFO {
     NO_INFO,
     FAIL,
 };
+class Log {
+public:
+    Log();
+    virtual ~Log();
+    std::ostringstream& Get(LOG_LEVEL level = INFO);
+    static string GetTime();
+
+protected:
+    std::ostringstream os;
+
+private:
+    Log(const Log&);
+    Log& operator =(const Log&);
+    LOG_LEVEL messageLevel;
+};
+std::ostringstream& Log::Get(LOG_LEVEL level)
+{
+//    os << "- " << GetTime();
+    os << " " << (level) << ": ";
+    os << std::string(level > DEBUG1 ? 0 : level - DEBUG1, '\t');
+    messageLevel = level;
+    return os;
+}
+//Log::~Log()
+//{
+//    if (messageLevel >= Log::ReportingLevel())
+//    {
+//        os << std::endl;
+//        fprintf(stderr, "%s", os.str().c_str());
+//        fflush(stderr);
+//    }
+//}
+string Log::GetTime() {
+    // TODO: implement timestamp
+    auto now = std::chrono::system_clock::now();
+}
 
 class Logger : public Singleton<Logger>, public Object {
 

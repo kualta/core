@@ -12,6 +12,10 @@ namespace core {
  */
 class Object {
 public:
+    Object() { }
+    virtual ~Object() { }
+
+
     string name;
 
     /**
@@ -31,6 +35,7 @@ public:
 
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;
+
 
 protected:
     // FIXME: Current implementation is not thread-safe

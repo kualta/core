@@ -13,6 +13,7 @@ namespace core {
  */
 class Component : public Object {
 public:
+    virtual ~Component() { }
 
     /// Entity object this component is attached to
     std::weak_ptr<Entity> entity;
