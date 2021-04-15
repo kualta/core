@@ -9,7 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Reduces amount of includes in client-side code by cost of slightly increased build time.
 # Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
 option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
-option(CORE_LOG_DATE              "Adds month and date to each log entry"  OFF)
+
+# HH:MM:SS:ms -> YY/MM/DD HH:MM:SS.ms
+option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
 
 #       core

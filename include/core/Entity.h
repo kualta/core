@@ -24,8 +24,8 @@ public:
         : Node<Entity>(root) { }
     Entity(std::vector<Component*> c)
         : Node<Entity>(root), components(std::move(c)) { }
-    Entity(Entity* parent, std::vector<Component*> c)
-        : Node<Entity>(parent), components(std::move(c)) { }
+    Entity(Entity& parent, std::vector<Component*> c)
+        : Node<Entity>(&parent), components(std::move(c)) { }
 
     ~Entity();
 
@@ -40,6 +40,9 @@ public:
      * @note This method doesn't destroy entity
      */
     void Despawn();
+
+    bool operator==(const Entity &rhs) const;
+    bool operator!=(const Entity &rhs) const;
 
     /**
      * Get attached to this entity component

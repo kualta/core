@@ -13,7 +13,9 @@ public:
     explicit Node(T* parent) {
         // This assertion is necessary because of downcast in Node<T>::GetChild()
         static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
-        SetParent(parent);
+        if ( parent ) {
+            SetParent(*parent);
+        }
     }
 
     /**
@@ -21,39 +23,42 @@ public:
      *  @note Children indexes are not consistent
      *  @return Pointer to child at index i
      */
-    T* GetChild(int32_t i);
+    T GetChild(int32_t i);
 
     /**
      * Get parent of this node
      * @return Pointer to parent
      */
-    T* GetParent();
+    T& GetParent();
+
+    bool operator==(const Node &rhs) const;
+    bool operator!=(const Node &rhs) const;
 
     /**
      * Change node's parent to newParent
      * @note Method is called at Node<T> constructor to init parent field
      * @param newParent - pointer to new parent object. Must inherit from Node<T>
      */
-    void SetParent(T* newParent);
+    void SetParent(T& newParent);
 
     /**
      * Change hierarchy's root to newRoot
      * @note For core::Entity hierarchy method is called at core::Root constructor
      */
-    static void SetRoot(T* newRoot);
+    static void SetRoot(T& newRoot);
 
 protected:
 
     /**
      * Adds child to Node's children.
      */
-    void AddChild(Node<T>* c);
+    void AddChild(Node<T>& c);
 
     /**
      * Removes child from Node's children.
      * @note Cmpares pointer c to all children pointers.
      */
-    void DeleteChild(Node<T>* c);
+    void DeleteChild(Node<T>& c);
 
     /**
      *  Pointer to root node.
@@ -66,6 +71,10 @@ protected:
      *  @warning Initialized in core::Node constructor, before that is nullptr.
      */
     T* parent { nullptr };
+
+    /**
+     * Vector of children nodes
+     */
     std::vector<Node<T>*> children {  };
 };
 

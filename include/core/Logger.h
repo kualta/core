@@ -34,11 +34,15 @@ enum PASS_INFO {
 class Logger : public Singleton<Logger>, public Object {
 public:
 
+    /**
+     * Creates a Log entry
+     */
     static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
 
     /**
      * Adds current time stamp to string stream
      * @note Format: HH.MM.SS.ms
+     * @note CORE_LOG_DATE defined macro changes format to YY/MM/DD HH:MM:SS.ms
      */
     static std::stringstream& AddTimeStamp(std::stringstream& stream);
 
