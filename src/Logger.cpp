@@ -10,6 +10,7 @@ Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
         case  INFO: return core::Log(std::cout, INFO, type);
         case DEBUG: return core::Log(std::cout, DEBUG, type);
     }
+    return core::Log(std::cout, ERR, INTERNAL);
 }
 string Logger::GetLogEntryText(LOG_TYPE type, LOG_LEVEL level) {
     return "- " + TimeNow() + " " + TypeText(type) + " " + LevelText(level);

@@ -13,9 +13,9 @@ namespace core {
 
 Root::Root() {
     if ( !SDL_Init(SDL_INIT_EVERYTHING) ) {
-        Logger::LogInfo("SDL initialized successfully", INTERNAL);
+        Logger::Log(INFO, INTERNAL) << "SDL initialized successfully";
     } else {
-        Logger::LogError("SDL initialization failed!", INTERNAL);
+        Logger::Log(ERR, INTERNAL) << "SDL initialization failed!";
     }
 
     // Note: rootEntity is not the same as singleton core::Root object!
@@ -27,7 +27,7 @@ Root::Root() {
     renderer = std::make_unique<Renderer>();
     windowPool = std::make_unique<WindowPool>();
 
-    Logger::LogInfo("- Core initialization complete -", INTERNAL);
+    Logger::Log(INFO, INTERNAL) << "- Core initialization complete -";
 }
 Root::~Root() {
     windowPool->DestroyAll();
@@ -36,7 +36,7 @@ Root::~Root() {
 
     SDL_Quit();
 
-    Logger::LogInfo("- Core shutdown complete -", INTERNAL);
+    Logger::Log(INFO, INTERNAL) << "- Core shutdown complete -";
 }
 
 }

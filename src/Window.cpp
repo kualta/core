@@ -22,7 +22,7 @@ Window::Window(const std::string &title, const Rect& rect)
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
-    Logger::LogInfo("Destroyed window object successfully", core::WINDOW);
+    Logger::Log(INFO, WINDOW) << "Destroyed window object successfully";
 }
 uint32_t Window::GetHeight() const {
     return height;
@@ -38,7 +38,7 @@ std::string Window::GetTitle() const {
 }
 void Window::SetPosition(const Vector2& pos) {
     if (pos.x < 0 || pos.y < 0) {
-        Logger::LogError("Changing window position failed", WINDOW);
+        Logger::Log(ERR, WINDOW) << "Changing window position failed";
         return;
     }
     position = pos;

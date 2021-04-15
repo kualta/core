@@ -14,7 +14,7 @@ namespace core {
 uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) {
     std::shared_ptr<Window> windowPtr = std::make_shared<Window>(title, rect);
     WindowPool::AddWindowToPool(windowPtr);
-    core::Logger::LogInfo("Created window succesfully", core::WINDOW);
+    Logger::Log(INFO, WINDOW) << "Created window succesfully";
 
     // FIXME: Renderer initialization goes out of the scope of this function
     core::Renderer::InitWindow(*windowPtr);

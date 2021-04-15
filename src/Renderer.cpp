@@ -6,16 +6,15 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
 
-
 namespace core {
 
 bool Renderer::AddRenderer(Window &window) {
     bgfx::renderFrame();
     if (!InitWindow(window)) {
-        Logger::LogError("Couldn't create renderer", RENDER);
+        Logger::Log(ERR, RENDER) << "Couldn't create renderer";
         return false;
     } else {
-        Logger::LogInfo("Created renderer succesfully", RENDER);
+        Logger::Log(INFO, RENDER) << "Created renderer succesfully";
         return true;
     }
 }
@@ -58,7 +57,7 @@ bool Renderer::InitWindow(Window &window) {
     initObj.resolution.reset = BGFX_RESET_VSYNC;
 
     if (!bgfx::init(initObj)) {
-        Logger::LogError("Cannot initialize renderer, aborting", RENDER);
+        Logger::Log(ERR, RENDER) << "Cannot initialize renderer, aborting";
         return false;
     }
     return true;

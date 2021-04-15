@@ -17,7 +17,7 @@ void WindowPool::AddWindowToPool(const Window &window) {
 }
 void WindowPool::DestroyAll() {
     windowsPool.erase(windowsPool.begin(), windowsPool.end());
-    Logger::LogInfo("Destroyed all windows successfully", WINDOW);
+    Logger::Log(INFO, WINDOW) << "Destroyed all windows successfully";
 }
 
 
