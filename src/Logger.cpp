@@ -1,5 +1,6 @@
 #include <core/Logger.h>
 #include <iostream>
+#include <ctime>
 
 namespace core {
 
@@ -13,7 +14,7 @@ Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
     return core::Log(std::cout, ERR, INTERNAL);
 }
 string Logger::GetLogEntryText(LOG_TYPE type, LOG_LEVEL level) {
-    return "- " + TimeNow() + " " + TypeText(type) + " " + LevelText(level);
+    return TypeText(type) + " " + LevelText(level);
 }
 string Logger::PassText(PASS_INFO success) {
    string afterText;
@@ -52,9 +53,18 @@ string Logger::TypeText(LOG_TYPE log_type) {
 
     return preText;
 }
-string Logger::TimeNow() {
-    // TODO: Implement timestamp
-    return "23:23:23.141";
+std::stringstream& Logger::AddTimeStamp(std::stringstream& out) {
+    auto now = std::chrono::system_clock::now();
+
+    auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
+    auto fraction = now - seconds;
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
+
+    const std::time_t cnow = std::chrono::system_clock::to_time_t(now);
+    const std::tm localTime = *std::localtime(std::addressof(cnow) );
+
+    out << localTime.tm_hour << ":" << localTime.tm_min << ":" << localTime.tm_sec << "." << milliseconds.count();
+    return out;
 }
 
 } // namespace core

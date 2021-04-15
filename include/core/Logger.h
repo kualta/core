@@ -30,24 +30,27 @@ enum PASS_INFO {
     NO_INFO,
     FAIL,
 };
+
 class Logger : public Singleton<Logger>, public Object {
 public:
     Logger() = default;
 
     static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
-
     static string GetLogEntryText(LOG_TYPE type, LOG_LEVEL level);
-private:
-    static string PassText(PASS_INFO success);
-    static string LevelText(LOG_LEVEL level);
+    static std::stringstream& AddTimeStamp(std::stringstream& out);
+
     static string TypeText(LOG_TYPE log_type);
-    static string TimeNow();
+    static string LevelText(LOG_LEVEL level);
+    static string PassText(PASS_INFO success);
 }; // class Logger
 
 class Log {
 public:
     Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL) : output(out) {
-        stream << Logger::GetLogEntryText(type, level);
+        stream << "- ";
+        Logger::AddTimeStamp(stream) << " ";
+        stream << Logger::TypeText(type) << " ";
+        stream << Logger::LevelText(level);
     }
     ~Log() {
         stream << "\n";
@@ -56,13 +59,15 @@ public:
     }
 
     template <class T>
-    Log& operator<<(const T& thing) { stream << thing; return *this; }
+    Log& operator<<(const T& thing) {
+        stream << thing;
+        return *this;
+    }
 
 private:
     std::stringstream stream;
     std::ostream& output;
-};
-
+}; // class Log
 
 }
 
