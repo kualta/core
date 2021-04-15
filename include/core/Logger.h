@@ -30,24 +30,44 @@ enum PASS_INFO {
     NO_INFO,
     FAIL,
 };
-
-
 class Logger : public Singleton<Logger>, public Object {
 public:
-    Logger();
+    Logger() { };
+    virtual ~Logger();
 
-    static std::ostringstream& Log(LOG_LEVEL level = INFO);
+    static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
 
+    static string GetLogEntryText(LOG_TYPE type, LOG_LEVEL level);
+
+    static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL);
+    static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL);
+    static void LogError(const std::string& message, LOG_TYPE logType = GENERAL);
+    static void LogMessage(const std::string& message);
+
+private:
     static string PassText(PASS_INFO success);
     static string LevelText(LOG_LEVEL level);
     static string TypeText(LOG_TYPE log_type);
     static string TimeNow();
+}; // class Logger
 
+class Log {
+public:
+    Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL) : output(out) {
+        stream << Logger::GetLogEntryText(type, level);
+    }
+    ~Log() {
+        stream << "\n";
+        output << stream.rdbuf();
+        output.flush();
+    }
 
-protected:
-    // FIXME: current implementation is not thread-safe!
-    static std::ostringstream os;
+    template <class T>
+    Log& operator<<(const T& thing) { stream << thing; return *this; }
 
+private:
+    std::stringstream stream;
+    std::ostream& output;
 };
 
 

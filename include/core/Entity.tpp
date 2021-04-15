@@ -12,7 +12,7 @@ Entity& Entity::AddComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::LogError("Entity already has this component!", DEBUG);
+        Logger::LogError("Entity already has this component!", INTERNAL);
         return *this;
     }
 
@@ -26,7 +26,7 @@ Entity& Entity::AddComponent(T c) {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::LogError("Entity already has this component!", DEBUG);
+        Logger::LogError("Entity already has this component!", INTERNAL);
         return *this;
     }
 

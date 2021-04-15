@@ -18,6 +18,7 @@ class Color;
 class Degree;
 class Entity;
 class Logger;
+class Log;
 class Math;
 class Object;
 class Component;

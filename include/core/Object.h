@@ -12,7 +12,6 @@ namespace core {
  */
 class Object {
 public:
-    Object() { }
     virtual ~Object() { }
 
 
