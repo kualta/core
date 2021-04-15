@@ -32,18 +32,11 @@ enum PASS_INFO {
 };
 class Logger : public Singleton<Logger>, public Object {
 public:
-    Logger() { };
-    virtual ~Logger();
+    Logger() = default;
 
     static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
 
     static string GetLogEntryText(LOG_TYPE type, LOG_LEVEL level);
-
-    static void LogInfo(const std::string& message, LOG_TYPE logType = GENERAL);
-    static void LogWarn(const std::string& message, LOG_TYPE logType = GENERAL);
-    static void LogError(const std::string& message, LOG_TYPE logType = GENERAL);
-    static void LogMessage(const std::string& message);
-
 private:
     static string PassText(PASS_INFO success);
     static string LevelText(LOG_LEVEL level);
