@@ -33,15 +33,19 @@ enum PASS_INFO {
 
 class Logger : public Singleton<Logger>, public Object {
 public:
-    Logger() = default;
 
     static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
-    static string GetLogEntryText(LOG_TYPE type, LOG_LEVEL level);
-    static std::stringstream& AddTimeStamp(std::stringstream& out);
 
-    static string TypeText(LOG_TYPE log_type);
-    static string LevelText(LOG_LEVEL level);
-    static string PassText(PASS_INFO success);
+    /**
+     * Adds current time stamp to string stream
+     * @note Format: HH.MM.SS.ms
+     */
+    static std::stringstream& AddTimeStamp(std::stringstream& stream);
+
+    static string GetLogTypeText(LOG_TYPE log_type);
+    static string GetLogLevelText(LOG_LEVEL level);
+    static string GetPassText(PASS_INFO success);
+
 }; // class Logger
 
 class Log {
@@ -49,8 +53,8 @@ public:
     Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL) : output(out) {
         stream << "- ";
         Logger::AddTimeStamp(stream) << " ";
-        stream << Logger::TypeText(type) << " ";
-        stream << Logger::LevelText(level);
+        stream << Logger::GetLogTypeText(type) << " ";
+        stream << Logger::GetLogLevelText(level);
     }
     ~Log() {
         stream << "\n";

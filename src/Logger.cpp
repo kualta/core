@@ -13,10 +13,7 @@ Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
     }
     return core::Log(std::cout, ERR, INTERNAL);
 }
-string Logger::GetLogEntryText(LOG_TYPE type, LOG_LEVEL level) {
-    return TypeText(type) + " " + LevelText(level);
-}
-string Logger::PassText(PASS_INFO success) {
+string Logger::GetPassText(PASS_INFO success) {
    string afterText;
 
     switch (success) {
@@ -27,7 +24,7 @@ string Logger::PassText(PASS_INFO success) {
 
     return afterText;
 }
-string Logger::LevelText(LOG_LEVEL level) {
+string Logger::GetLogLevelText(LOG_LEVEL level) {
     string afterText;
 
     switch (level) {
@@ -39,7 +36,7 @@ string Logger::LevelText(LOG_LEVEL level) {
 
     return afterText;
 }
-string Logger::TypeText(LOG_TYPE log_type) {
+string Logger::GetLogTypeText(LOG_TYPE log_type) {
     string preText;
 
     switch (log_type) {
@@ -53,7 +50,7 @@ string Logger::TypeText(LOG_TYPE log_type) {
 
     return preText;
 }
-std::stringstream& Logger::AddTimeStamp(std::stringstream& out) {
+std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
     auto now = std::chrono::system_clock::now();
 
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
@@ -63,8 +60,13 @@ std::stringstream& Logger::AddTimeStamp(std::stringstream& out) {
     const std::time_t cnow = std::chrono::system_clock::to_time_t(now);
     const std::tm localTime = *std::localtime(std::addressof(cnow) );
 
-    out << localTime.tm_hour << ":" << localTime.tm_min << ":" << localTime.tm_sec << "." << milliseconds.count();
-    return out;
+    // Macro is defined by CORE_LOG_DATE option in CMake
+    #ifdef CORE_LOG_DATE
+        stream << localTime.tm_year + 1900 << "/" << localTime.tm_mon + 1 << "/" << localTime.tm_mday << " ";
+    #endif
+
+    stream << localTime.tm_hour << ":" << localTime.tm_min << ":" << localTime.tm_sec << "." << milliseconds.count();
+    return stream;
 }
 
 } // namespace core
