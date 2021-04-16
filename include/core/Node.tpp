@@ -19,8 +19,9 @@ Node<T>::Node(T *parent) {
 }
 template<typename T>
 Node<T>::~Node() {
-    if ( parent ) parent->DeleteChild(*this);
-    if ( !children.empty() ) children.erase(children.begin(), children.end());
+//    if ( parent ) parent->DeleteChild(*this);
+//    for ( auto c: children ) { delete c; }
+//    if ( !children.empty() ) children.erase(children.begin(), children.end());
 }
 template<typename T>
 T Node<T>::GetChild(int32_t index) {

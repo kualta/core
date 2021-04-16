@@ -19,14 +19,15 @@ public:
     uint32_t GetId() const;
 
     /**
-     * Destroys object
+     * Destroys this object
      */
-    void Destroy();
+    virtual void Destroy();
 
     /**
-     * Destroy object obj
+     * Destroys object
+     * @param obj - Object to destroy
      */
-    static void Destroy(Object obj);
+    static void Destroy(Object& obj);
 
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;

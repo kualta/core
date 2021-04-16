@@ -41,8 +41,6 @@ public:
      */
     void Despawn();
 
-    bool operator==(const Entity &rhs) const;
-    bool operator!=(const Entity &rhs) const;
 
     /**
      * Get attached to this entity component
@@ -82,6 +80,19 @@ public:
      * Destroys all Components in this Entity
      */
     void DestroyAllComponents();
+
+    /**
+     * Destroys this entity
+     */
+    virtual void Destroy();
+
+    /**
+     * Destroys entity
+     */
+    static void Destroy(Entity& entity);
+
+    bool operator==(const Entity &rhs) const;
+    bool operator!=(const Entity &rhs) const;
 
 protected:
     std::vector<Component*> components;

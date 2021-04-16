@@ -10,7 +10,7 @@ uint32_t Object::GetId() const {
 void Object::Destroy() {
     this->~Object();
 }
-void Object::Destroy(Object obj) {
+void Object::Destroy(Object& obj) {
     obj.Destroy();
 }
 bool Object::operator==(const Object &rhs) const {
