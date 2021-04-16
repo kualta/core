@@ -9,7 +9,6 @@
 namespace core {
 
 bool Renderer::AddRenderer(Window &window) {
-    bgfx::renderFrame();
     if (!InitWindow(window)) {
         Logger::Log(ERR, RENDER) << "Couldn't create renderer";
         return false;

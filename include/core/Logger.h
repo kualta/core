@@ -36,6 +36,8 @@ public:
 
     /**
      * Creates a Log entry
+     * @warning At every Log object destruction the stream flushes. Might cause
+     * performance issues
      */
     static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
 
@@ -55,25 +57,25 @@ public:
 class Log {
 public:
     Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL) : output(out) {
-        stream << "- ";
-        Logger::AddTimeStamp(stream) << " ";
-        stream << Logger::GetLogTypeText(type) << " ";
-        stream << Logger::GetLogLevelText(level);
+        logStream << "- ";
+        Logger::AddTimeStamp(logStream) << " ";
+        logStream << Logger::GetLogTypeText(type) << " ";
+        logStream << Logger::GetLogLevelText(level);
     }
     ~Log() {
-        stream << "\n";
-        output << stream.rdbuf();
+        logStream << "\n";
+        output << logStream.rdbuf();
         output.flush();
     }
 
     template <class T>
     Log& operator<<(const T& thing) {
-        stream << thing;
+        logStream << thing;
         return *this;
     }
 
 private:
-    std::stringstream stream;
+    std::stringstream logStream;
     std::ostream& output;
 }; // class Log
 

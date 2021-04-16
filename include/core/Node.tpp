@@ -9,6 +9,19 @@ namespace core {
 
 template<typename T> T* Node<T>::root { nullptr };
 
+
+template<typename T>
+Node<T>::Node(T *parent) {
+    // This assertion is necessary because of downcast in Node<T>::GetChild()
+    static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
+
+    if ( parent ) SetParent(*parent);
+}
+template<typename T>
+Node<T>::~Node() {
+    if ( parent ) parent->DeleteChild(*this);
+    if ( !children.empty() ) children.erase(children.begin(), children.end());
+}
 template<typename T>
 T Node<T>::GetChild(int32_t index) {
     return static_cast<T&>(*children[index]);

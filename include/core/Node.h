@@ -10,13 +10,8 @@ namespace core {
 
 template <typename T> class Node {
 public:
-    explicit Node(T* parent) {
-        // This assertion is necessary because of downcast in Node<T>::GetChild()
-        static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
-        if ( parent ) {
-            SetParent(*parent);
-        }
-    }
+    explicit Node(T* parent);
+    virtual ~Node();
 
     /**
      *  Get child by index

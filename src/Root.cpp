@@ -32,7 +32,6 @@ Root::Root() {
 Root::~Root() {
     windowPool->DestroyAll();
     renderer->DestroyAll();
-    renderer->Destroy();
 
     SDL_Quit();
 

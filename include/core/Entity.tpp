@@ -30,6 +30,7 @@ Entity& Entity::AddComponent(T c) {
         return *this;
     }
 
+    // Create a copy of provided component, so that all children of Entitiy are allocated on heap.
     T* component = new T(c);
 
     components.push_back(component);

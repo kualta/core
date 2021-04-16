@@ -12,10 +12,6 @@ namespace core {
  */
 class Object {
 public:
-    virtual ~Object() { }
-
-
-    string name;
 
     /**
      * @return uint32_t ID of an object
@@ -35,10 +31,12 @@ public:
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;
 
+    string name;
 
 protected:
     // FIXME: Current implementation is not thread-safe
     Object() : id(++objectCounter) {  };
+    virtual ~Object() {  };
 
 private:
     static uint32_t objectCounter;
