@@ -24,7 +24,7 @@ public:
      * Get parent of this node
      * @return Pointer to parent
      */
-    T& GetParent();
+    T GetParent();
 
     /**
      * Change node's parent to newParent
@@ -61,7 +61,7 @@ protected:
      * Removes child from Node's children.
      * @note Cmpares pointer c to all children pointers.
      */
-    void DeleteChild(T& c);
+    void DeleteChild(T* c);
 
     /**
      *  Pointer to root node.
@@ -73,7 +73,7 @@ protected:
      *  Pointer to parent node.
      *  @warning Initialized in core::Node constructor, before that is nullptr.
      */
-    std::weak_ptr<T> parent { nullptr };
+    std::weak_ptr<T> parent;
 
     /**
      * Vector of children nodes

@@ -22,18 +22,17 @@ class Entity : public Object, public Node<Entity> {
 public:
     Entity()
         : Node<Entity>(*root.lock()) { }
-    Entity(std::vector<Component*> c)
+    Entity(std::vector<std::shared_ptr<Component>> c)
         : Node<Entity>(*root.lock()), components(std::move(c)) { }
-    Entity(Entity& parent, std::vector<Component*> c)
+    Entity(Entity& parent, std::vector<std::shared_ptr<Component>> c)
         : Node<Entity>(parent), components(std::move(c)) { }
-
 
     /**
      * @warning This overload is for internal use only.
      */
     Entity(Entity* parent);
 
-    ~Entity();
+    ~Entity() {  };
 
     /**
      * Activates entity
@@ -85,7 +84,7 @@ public:
     /**
      * Destroys all Components in this Entity
      */
-    void DestroyAllComponents();
+//    void DestroyAllComponents();
 
     /**
      * Destroys this entity
@@ -102,7 +101,7 @@ public:
 
 protected:
 
-    std::vector<Component*> components;
+    std::vector<std::shared_ptr<Component>> components;
     bool isActive { true };
 
 };

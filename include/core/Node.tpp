@@ -8,13 +8,13 @@
 
 namespace core {
 
-
+template<typename T>
+std::weak_ptr<T> Node<T>::root {  };
 
 template<typename T>
 Node<T>::Node(T& parent) {
-    // This assertion is necessary because of downcast in Node<T>::GetChild()
-//    static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
-    SetParent(*parent);
+    static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
+    SetParent(parent);
 }
 template<typename T>
 Node<T>::Node(T *parent) {
@@ -23,39 +23,40 @@ Node<T>::Node(T *parent) {
     // since it cannot have parent. After root has been set assert won't allow use of this.
 }
 template<typename T>
-Node<T>::~Node() {
-//    if ( parent ) parent->DeleteChild(*this);
-//    for ( auto c: children ) { delete c; }
-//    if ( !children.empty() ) children.erase(children.begin(), children.end());
-}
+Node<T>::~Node() {  }
 template<typename T>
 T& Node<T>::GetChild(int32_t index) {
     return *children[index];
 }
 template<typename T>
-T& Node<T>::GetParent() {
-    return *parent.lock();
+T Node<T>::GetParent() {
+    if( !parent.expired() ) {
+        return *parent.lock();
+    } else {
+        Logger::Log(ERR, INTERNAL) << "Parent has not been assigned or has been deleted!";
+        return nullptr;
+    }
 }
 template<typename T>
 void Node<T>::SetParent(T& newParent) {
-    if (*this == *root.lock()) {
+    if (*static_cast<T*>(this) == *root.lock()) {
         Logger::Log(ERR, INTERNAL) << "Cannot set parent for root node!";
         return;
     }
-    // TODO: fix implementation \/
-    if ( !parent.expired() ) parent->DeleteChild(*this);
-    newParent.AddChild(std::make_shared<T>(*this));
+    // TODO: Fix Entity forwarding
+    if ( !parent.expired() ) parent.lock()->DeleteChild(static_cast<T*>(this));
+    newParent.AddChild(std::make_shared<T>(std::forward<T>(static_cast<T*>(this))));
 
-    parent = &newParent;
+    parent = std::make_shared<T>(std::forward<T>(newParent));
 }
 template<typename T>
 void Node<T>::AddChild(std::shared_ptr<T> c) {
     children.push_back(std::move(c));
 }
 template<typename T>
-void Node<T>::DeleteChild(T& c) {
+void Node<T>::DeleteChild(T* c) {
     auto child = std::find_if(children.begin(), children.end(), [&](std::shared_ptr<Node<T>> const& p) {
-        return *p == c;
+        return *p == *c;
     });
     if ( child != children.end() ) {
         children.erase(child);
@@ -77,7 +78,7 @@ std::shared_ptr<T> Node<T>::CreateRoot() {
 }
 template<typename T>
 bool Node<T>::operator==(const Node &rhs) const {
-    return parent == rhs.parent &&
+    return *parent.lock() == *rhs.parent.lock() &&
            children == rhs.children;
 }
 template<typename T>

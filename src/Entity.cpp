@@ -3,9 +3,6 @@
 
 namespace core {
 
-Entity::~Entity() {
-    DestroyAllComponents();
-}
 Entity::Entity(Entity *parent) : Node(parent) {
     // This constructor takes Entity* expecting nullptr on its place. Only used to initialize root node,
     // since it cannot have parent. After root has been set assert won't allow use of this.
@@ -16,9 +13,6 @@ void Entity::Spawn() {
 }
 void Entity::Despawn() {
     isActive = false;
-}
-void Entity::DestroyAllComponents() {
-    for (auto c: components) { delete c; }
 }
 bool Entity::operator==(const Entity &rhs) const {
     return static_cast<const core::Object&>(*this) == static_cast<const core::Object&>(rhs) &&
