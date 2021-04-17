@@ -23,7 +23,7 @@ Node<T>::Node(T *parent) {
     // since it cannot have parent. After root has been set assert won't allow use of this.
 }
 template<typename T>
-T& Node<T>::GetChild(int32_t index) {
+T& Node<T>::GetChild(uint32_t index) {
     return *children[index];
 }
 template<typename T>
@@ -42,12 +42,12 @@ void Node<T>::SetParent(T& newParent) {
         return;
     }
     if ( !parent.expired() ) parent.lock()->DeleteChild(static_cast<T*>(this));
-    newParent.AddChild(*static_cast<T*>(this));
+    newParent.AddChild(static_cast<T*>(this));
 
     parent = std::make_shared<T>(std::move(newParent));
 }
 template<typename T>
-void Node<T>::AddChild(T& c) {
+void Node<T>::AddChild(T* c) {
     children.push_back(std::make_shared<T>(std::move(c)));
 }
 template<typename T>

@@ -17,7 +17,7 @@ public:
      *  @note Children indexes are not consistent
      *  @return Pointer to child at index i
      */
-    T& GetChild(int32_t i);
+    T& GetChild(uint32_t i);
 
     /**
      * Get parent of this node
@@ -54,7 +54,7 @@ protected:
     /**
      * Adds child to Node's children.
      */
-    void AddChild(T& c);
+    void AddChild(T* c);
 
     /**
      * Removes child from Node's children.
