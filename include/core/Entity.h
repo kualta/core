@@ -21,11 +21,17 @@ namespace core {
 class Entity : public Object, public Node<Entity> {
 public:
     Entity()
-        : Node<Entity>(root) { }
+        : Node<Entity>(*root.lock()) { }
     Entity(std::vector<Component*> c)
-        : Node<Entity>(root), components(std::move(c)) { }
+        : Node<Entity>(*root.lock()), components(std::move(c)) { }
     Entity(Entity& parent, std::vector<Component*> c)
-        : Node<Entity>(&parent), components(std::move(c)) { }
+        : Node<Entity>(parent), components(std::move(c)) { }
+
+
+    /**
+     * @warning This overload is for internal use only.
+     */
+    Entity(Entity* parent);
 
     ~Entity();
 
@@ -95,8 +101,10 @@ public:
     bool operator!=(const Entity &rhs) const;
 
 protected:
+
     std::vector<Component*> components;
     bool isActive { true };
+
 };
 
 } // namespace core
