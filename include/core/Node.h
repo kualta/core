@@ -11,7 +11,6 @@ namespace core {
 template <typename T> class Node {
 public:
     explicit Node(T& parent);
-    virtual ~Node();
 
     /**
      *  Get child by index
@@ -55,7 +54,7 @@ protected:
     /**
      * Adds child to Node's children.
      */
-    void AddChild(std::shared_ptr<T> c);
+    void AddChild(T& c);
 
     /**
      * Removes child from Node's children.

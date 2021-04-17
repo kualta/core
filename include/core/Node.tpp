@@ -23,8 +23,6 @@ Node<T>::Node(T *parent) {
     // since it cannot have parent. After root has been set assert won't allow use of this.
 }
 template<typename T>
-Node<T>::~Node() {  }
-template<typename T>
 T& Node<T>::GetChild(int32_t index) {
     return *children[index];
 }
@@ -43,15 +41,14 @@ void Node<T>::SetParent(T& newParent) {
         Logger::Log(ERR, INTERNAL) << "Cannot set parent for root node!";
         return;
     }
-    // TODO: Fix Entity forwarding
     if ( !parent.expired() ) parent.lock()->DeleteChild(static_cast<T*>(this));
-    newParent.AddChild(std::make_shared<T>(std::forward<T>(static_cast<T*>(this))));
+    newParent.AddChild(*static_cast<T*>(this));
 
-    parent = std::make_shared<T>(std::forward<T>(newParent));
+    parent = std::make_shared<T>(std::move(newParent));
 }
 template<typename T>
-void Node<T>::AddChild(std::shared_ptr<T> c) {
-    children.push_back(std::move(c));
+void Node<T>::AddChild(T& c) {
+    children.push_back(std::make_shared<T>(std::move(c)));
 }
 template<typename T>
 void Node<T>::DeleteChild(T* c) {

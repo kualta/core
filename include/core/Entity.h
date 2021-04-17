@@ -21,18 +21,17 @@ namespace core {
 class Entity : public Object, public Node<Entity> {
 public:
     Entity()
-        : Node<Entity>(*root.lock()) { }
+        : Node<Entity>(*root.lock()) { };
     Entity(std::vector<std::shared_ptr<Component>> c)
-        : Node<Entity>(*root.lock()), components(std::move(c)) { }
+        : Node<Entity>(*root.lock()), components(std::move(c)) { };
     Entity(Entity& parent, std::vector<std::shared_ptr<Component>> c)
-        : Node<Entity>(parent), components(std::move(c)) { }
+        : Node<Entity>(parent), components(std::move(c)) { };
+
 
     /**
      * @warning This overload is for internal use only.
      */
     Entity(Entity* parent);
-
-    ~Entity() {  };
 
     /**
      * Activates entity
@@ -82,14 +81,9 @@ public:
     template<typename T> Entity& AddComponent(T c);
 
     /**
-     * Destroys all Components in this Entity
-     */
-//    void DestroyAllComponents();
-
-    /**
      * Destroys this entity
      */
-    virtual void Destroy();
+    void Destroy() override;
 
     /**
      * Destroys entity
