@@ -33,12 +33,6 @@ public:
     void SetParent(T& newParent);
 
     /**
-     * Change hierarchy's root to newRoot
-     * @note For core::Entity hierarchy method is called at core::Root constructor
-     */
-    static void SetRoot(std::weak_ptr<T> newRoot);
-
-    /**
      * Creates new root of the hierarchy
      * @return std::shared_ptr to new root object
      */
@@ -61,6 +55,12 @@ protected:
      * @note Cmpares pointer c to all children pointers.
      */
     void DeleteChild(T* c);
+
+    /**
+     * Change hierarchy's root to newRoot
+     * @note For core::Entity hierarchy method is called at core::Root constructor
+     */
+    static void SetRoot(std::weak_ptr<T> newRoot);
 
     /**
      *  Pointer to root node.
