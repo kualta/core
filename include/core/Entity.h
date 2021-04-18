@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+
 #include "Essential.h"
 #include "Component.h"
 #include "Object.h"
@@ -20,8 +21,8 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity>, std::enable_shared_from_this<Entity> {
 public:
-    Entity(Entity* parent = root,
-           std::vector<Component*> c = { } );
+    Entity(std::weak_ptr<Entity>&& parent = std::move(root),
+           std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
     void Update();

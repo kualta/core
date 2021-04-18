@@ -8,29 +8,28 @@
 
 namespace core {
 
-template <typename T> class Node {
+template <typename T> class Node : public std::enable_shared_from_this<Node<T>> {
 public:
-    explicit Node(T& parent);
 
     /**
      *  Get child by index
      *  @note Children indexes are not consistent
      *  @return Pointer to child at index i
      */
-    T& GetChild(uint32_t i);
+    std::shared_ptr<T> GetChild(uint32_t i);
 
     /**
      * Get parent of this node
      * @return Pointer to parent
      */
-    T GetParent();
+    std::weak_ptr<T> GetParent();
 
     /**
      * Change node's parent to newParent
      * @note Method is called at Node<T> constructor to init parent field
      * @param newParent - pointer to new parent object. Must inherit from Node<T>
      */
-    void SetParent(T& newParent);
+    void SetParent(std::weak_ptr<T> newParent);
 
     /**
      * Creates new root of the hierarchy
@@ -43,18 +42,18 @@ public:
 
 protected:
 
-    explicit Node(T* parent);
+    explicit Node(std::weak_ptr<T> parent);
 
     /**
      * Adds child to Node's children.
      */
-    void AddChild(T* c);
+    void AddChild(std::shared_ptr<T>&& c);
 
     /**
      * Removes child from Node's children.
      * @note Cmpares pointer c to all children pointers.
      */
-    void DeleteChild(T* c);
+    void DeleteChild(std::shared_ptr<T> c);
 
     /**
      * Change hierarchy's root to newRoot

@@ -2,10 +2,13 @@
 #include <core/EntityPool.h>
 #include <core/Logger.h>
 
+#include <utility>
+
 namespace core {
 
-Entity::Entity(Entity *parent, std::vector<Component *> c)
-        : Node<Entity>(parent), components(std::move(c)) {
+Entity::Entity(std::weak_ptr<Entity>&& parent, std::vector<std::shared_ptr<Component>> c)
+    : Node<Entity>(std::move(parent)), components(std::move(c)) {
+
 }
 Entity::~Entity() {
 }

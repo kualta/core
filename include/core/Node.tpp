@@ -12,46 +12,37 @@ template<typename T>
 std::weak_ptr<T> Node<T>::root {  };
 
 template<typename T>
-Node<T>::Node(T& parent) {
-    static_assert(std::is_base_of<Node<T>, T>::value, "Type T must inherit from Node<T>");
-    SetParent(parent);
+Node<T>::Node(std::weak_ptr<T> parent) {
+
 }
 template<typename T>
-Node<T>::Node(T *parent) {
-    assert((!root.expired(), "This constructor must only be used if root has not been set yet!"));
-    // This constructor takes T* expecting nullptr on its place. Only used to create root node,
-    // since it cannot have parent. After root has been set assert won't allow use of this.
+std::shared_ptr<T> Node<T>::GetChild(uint32_t index) {
+    return children[index];
 }
 template<typename T>
-T& Node<T>::GetChild(uint32_t index) {
-    return *children[index];
-}
-template<typename T>
-T Node<T>::GetParent() {
-    if( !parent.expired() ) {
-        return *parent.lock();
-    } else {
+std::weak_ptr<T> Node<T>::GetParent() {
+    if( parent.expired() ) {
         Logger::Log(ERR, INTERNAL) << "Parent has not been assigned or has been deleted!";
-        return nullptr;
     }
+    return parent;
 }
 template<typename T>
-void Node<T>::SetParent(T& newParent) {
+void Node<T>::SetParent(std::weak_ptr<T> newParent) {
     if (*static_cast<T*>(this) == *root.lock()) {
         Logger::Log(ERR, INTERNAL) << "Cannot set parent for root node!";
         return;
     }
-    if ( !parent.expired() ) parent.lock()->DeleteChild(static_cast<T*>(this));
-    newParent.AddChild(static_cast<T*>(this));
+    if ( !parent.expired() ) parent.lock()->DeleteChild( this->shared_from_this() );
+    newParent.AddChild( this->shared_from_this() );
 
-    parent = std::make_shared<T>(std::move(newParent));
+    parent = std::move(newParent);
 }
 template<typename T>
-void Node<T>::AddChild(T* c) {
-    children.push_back(std::make_shared<T>(std::move(c)));
+void Node<T>::AddChild(std::shared_ptr<T>&& c) {
+    children.push_back(std::move(c));
 }
 template<typename T>
-void Node<T>::DeleteChild(T* c) {
+void Node<T>::DeleteChild(std::shared_ptr<T> c) {
     auto child = std::find_if(children.begin(), children.end(), [&](std::shared_ptr<Node<T>> const& p) {
         return *p == *c;
     });
@@ -68,7 +59,7 @@ std::shared_ptr<T> Node<T>::CreateRoot() {
     if ( !root.expired() ) {
         Logger::Log(ERR, INTERNAL) << "Root node already exists!";
     }
-    std::shared_ptr<T> rootObj = std::make_shared<T>( nullptr );
+    std::shared_ptr<T> rootObj = std::make_shared<T>( );
     T::SetRoot(rootObj);
 
     return rootObj;
