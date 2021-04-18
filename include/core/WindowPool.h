@@ -19,11 +19,6 @@ public:
      */
     static void RegisterWindow(const std::shared_ptr<core::Window> &windowPtr);
 
-    /**
-     * Creates a pointer to the window and adds it to the windows pool
-     */
-    static void RegisterWindow(const core::Window& window);
-
 protected:
     static std::vector<std::shared_ptr<Window>> windowPool;
 };
