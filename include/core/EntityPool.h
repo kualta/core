@@ -2,6 +2,8 @@
 #define CORE_ENTITYPOOL_H
 
 #include "Essential.h"
+#include "Object.h"
+
 #include <memory>
 
 namespace core {
@@ -15,7 +17,7 @@ public:
 protected:
 
     static void UpdateAll();
-
+    static void DrawAll();
 
     static std::vector<std::shared_ptr<Entity>> entityPool;
 

@@ -1,4 +1,5 @@
 #include <core/Entity.h>
+#include <core/EntityPool.h>
 #include <core/Logger.h>
 
 namespace core {
@@ -35,6 +36,9 @@ void Entity::Update() {
 }
 void Entity::Draw() {
 
+}
+Entity::Entity() : Node<Entity>(root) {
+    EntityPool::RegisterEntity( shared_from_this() );
 }
 
 } // namespace core

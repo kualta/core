@@ -18,10 +18,9 @@ namespace core {
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node<Entity> {
+class Entity : public Object, public Node<Entity>, std::enable_shared_from_this<Entity> {
 public:
-    Entity()
-        : Node<Entity>(root) { }
+    Entity();
     Entity(std::vector<Component*> c)
         : Node<Entity>(root), components(std::move(c)) { }
     Entity(Entity& parent, std::vector<Component*> c)

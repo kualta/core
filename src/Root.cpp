@@ -1,5 +1,6 @@
 #include <core/Root.h>
 #include <core/WindowPool.h>
+#include <core/EntityPool.h>
 #include <core/Logger.h>
 #include <core/Renderer.h>
 #include <core/Entity.h>
@@ -30,7 +31,6 @@ Root::Root() {
     Logger::Log(INFO, INTERNAL) << "- Core initialization complete -";
 }
 Root::~Root() {
-    windowPool->DestroyAll();
     renderer->DestroyAll();
 
     SDL_Quit();
