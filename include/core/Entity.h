@@ -75,14 +75,9 @@ public:
     template<typename T> Entity& AddComponent(T c);
 
     /**
-     * Destroys all Components in this Entity
-     */
-    void DestroyAllComponents();
-
-    /**
      * Destroys this entity
      */
-    virtual void Destroy();
+    void Destroy() override;
 
     /**
      * Destroys entity
@@ -93,7 +88,8 @@ public:
     bool operator!=(const Entity &rhs) const;
 
 protected:
-    std::vector<Component*> components;
+
+    std::vector<std::shared_ptr<Component>> components;
     bool isActive { true };
 };
 

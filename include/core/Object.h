@@ -37,7 +37,6 @@ public:
 protected:
     // FIXME: Current implementation is not thread-safe
     Object() : id(++objectCounter) {  };
-    virtual ~Object() {  };
 
 private:
     static uint32_t objectCounter;

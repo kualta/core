@@ -21,8 +21,8 @@ Root::Root() {
 
     // Note: rootEntity is not the same as singleton core::Root object!
     // It is only used as Entity hierarchy root.
-    Entity rootEntity = Entity();
-    Entity::SetRoot(rootEntity);
+    rootEntity = Entity::CreateRoot();
+
 
     logger = std::make_unique<Logger>();
     renderer = std::make_unique<Renderer>();

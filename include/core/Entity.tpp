@@ -12,12 +12,12 @@ Entity& Entity::AddComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(ERR, INTERNAL) << "Entity already has this component!";
+        Logger::Log(WARN, INTERNAL) << "Entity already has this component!";
         return *this;
     }
 
-    T* component = new T();
-    components.push_back(component);
+    std::shared_ptr<T> component = std::make_shared<T>();
+    components.push_back(std::move(component));
 
     return *this;
 }
@@ -26,30 +26,33 @@ Entity& Entity::AddComponent(T c) {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(ERR, INTERNAL) << "Entity already has this component!";
+        Logger::Log(WARN, INTERNAL) << "Entity already has this component!";
         return *this;
     }
 
     // Create a copy of provided component, so that all children of Entitiy are allocated on heap.
-    T* component = new T(c);
+    std::shared_ptr<T> component = std::make_shared<T>(c);
 
-    components.push_back(component);
+    components.push_back(std::move(component));
     return *this;
 }
 template<typename T>
 T& Entity::GetComponent() {
-    for (auto c: components) {
-        if (typeid(c) == typeid(T)) {
-            return *c;
-        }
+    auto const& it = std::find_if(components.begin(), components.end(), [&](std::shared_ptr<T>& p)
+    {
+        return typeid(p) == typeid(T);
+    });
+    if ( it != components.back() ) {
+        return *it;
+    } else {
+        return nullptr;
     }
-    return nullptr;
 }
 template<typename T>
 bool Entity::HasComponent() {
     if ( std::any_of(components.begin(),
                      components.end(),
-                     [](auto &c){ return typeid(c) == typeid(T); }) )
+                     [&](std::shared_ptr<Component> &c){ return typeid(c) == typeid(T); }) )
     {
         return true;
     } else {
