@@ -29,6 +29,10 @@ public:
 
     ~Entity();
 
+    void Update();
+
+    void Draw();
+
     /**
      * Activates entity
      * @note Entity is active by default, no need to call this after creation

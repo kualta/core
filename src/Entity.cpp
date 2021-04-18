@@ -30,5 +30,11 @@ void Entity::Destroy() {
 void Entity::Destroy(Entity& entity) {
     entity.Destroy();
 }
+void Entity::Update() {
+
+}
+void Entity::Draw() {
+
+}
 
 } // namespace core
