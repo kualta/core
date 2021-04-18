@@ -41,7 +41,6 @@ public:
      */
     void Despawn();
 
-
     /**
      * Get attached to this entity component
      * @tparam T - component typename

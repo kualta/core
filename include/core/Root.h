@@ -27,6 +27,7 @@ public:
     std::unique_ptr<Logger> logger;
     std::unique_ptr<Renderer> renderer;
     std::unique_ptr<WindowPool> windowPool;
+    std::unique_ptr<EntityPool> entityPool;
 };
 
 

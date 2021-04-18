@@ -17,6 +17,7 @@ struct AbgrColor;
 class Color;
 class Degree;
 class Entity;
+class EntityPool;
 class Logger;
 class Log;
 class Math;
