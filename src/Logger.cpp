@@ -17,9 +17,9 @@ string Logger::GetPassText(PASS_INFO success) {
    string afterText;
 
     switch (success) {
-        case NO_INFO : afterText = ""; break;
-        case FAIL    : afterText = "- failed"; break;
-        case SUCCESS : afterText = "- success"; break;
+        case NO_INFO: afterText = ""; break;
+        case    FAIL: afterText = "- failed"; break;
+        case SUCCESS: afterText = "- success"; break;
     }
 
     return afterText;
@@ -28,10 +28,10 @@ string Logger::GetLogLevelText(LOG_LEVEL level) {
     string afterText;
 
     switch (level) {
-        case ERR : afterText = "ERROR! "; break;
-        case WARN : afterText = "WARN: "; break;
-        case INFO : afterText = ""; break;
-        case DEBUG : afterText = ""; break;
+        case   ERR: afterText = "ERROR! "; break;
+        case  WARN: afterText = "WARN: "; break;
+        case  INFO: afterText = ""; break;
+        case DEBUG: afterText = ""; break;
     }
 
     return afterText;
@@ -40,12 +40,12 @@ string Logger::GetLogTypeText(LOG_TYPE log_type) {
     string preText;
 
     switch (log_type) {
-        case GENERAL : preText = "        "; break;
-        case NETWORK : preText = "|NET|   "; break;
+        case  GENERAL: preText = "        "; break;
+        case  NETWORK: preText = "|NET|   "; break;
         case INTERNAL: preText = "|CORE|  "; break;
-        case PHYSICS : preText = "|PHYS|  "; break;
-        case WINDOW  : preText = "|WINDOW|"; break;
-        case RENDER  : preText = "|RENDER|"; break;
+        case  PHYSICS: preText = "|PHYS|  "; break;
+        case   WINDOW: preText = "|WINDOW|"; break;
+        case   RENDER: preText = "|RENDER|"; break;
     }
 
     return preText;

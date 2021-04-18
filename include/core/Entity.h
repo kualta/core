@@ -20,12 +20,8 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity>, std::enable_shared_from_this<Entity> {
 public:
-    Entity();
-    Entity(std::vector<Component*> c)
-        : Node<Entity>(root), components(std::move(c)) { }
-    Entity(Entity& parent, std::vector<Component*> c)
-        : Node<Entity>(&parent), components(std::move(c)) { }
-
+    Entity(Entity* parent = root,
+           std::vector<Component*> c = { } );
     ~Entity();
 
     void Update();

@@ -37,8 +37,8 @@ void Entity::Update() {
 void Entity::Draw() {
 
 }
-Entity::Entity() : Node<Entity>(root) {
-    EntityPool::RegisterEntity( shared_from_this() );
+Entity::Entity(Entity *parent, std::vector<Component *> c)
+    : Node<Entity>(parent), components(std::move(c)) {
 }
 
 } // namespace core
