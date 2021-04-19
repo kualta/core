@@ -24,7 +24,7 @@ public:
      */
     ~Root();
 
-    std::shared_ptr<Entity> rootEntity;
+    std::weak_ptr<Entity> rootEntity;
     std::unique_ptr<Logger> logger;
     std::unique_ptr<Renderer> renderer;
     std::unique_ptr<WindowPool> windowPool;

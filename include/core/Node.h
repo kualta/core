@@ -8,6 +8,7 @@
 
 namespace core {
 
+// TODO: Make Node component
 template <typename T> class Node : public std::enable_shared_from_this<Node<T>> {
 public:
 
@@ -35,7 +36,7 @@ public:
      * Creates new root of the hierarchy
      * @return std::shared_ptr to new root object
      */
-    static std::shared_ptr<T> CreateRoot();
+    static std::weak_ptr<T> CreateRoot();
 
     bool operator==(const Node &rhs) const;
     bool operator!=(const Node &rhs) const;

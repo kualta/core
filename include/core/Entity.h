@@ -21,7 +21,7 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity>, std::enable_shared_from_this<Entity> {
 public:
-    Entity(std::weak_ptr<Entity>&& parent = std::move(root),
+    Entity(std::weak_ptr<Entity>& parent = root,
            std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
