@@ -22,14 +22,12 @@ Root::Root() : Object("Root") {
     windowPool = std::make_unique<Pool<Window>>("Windows pool");
     entityPool = std::make_unique<Pool<Entity>>("Entity pool");
 
-    Logger::Log(INFO, INTERNAL) << "* Inner initialization complete *";
+    Logger::Log(INFO, INTERNAL) << "* Core initialization complete *";
 }
 Root::~Root() {
     renderer->DestroyAll();
 
     SDL_Quit();
-
-    Logger::Log(INFO, INTERNAL) << "* Inner shutdown complete *";
 }
 
 }

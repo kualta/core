@@ -10,14 +10,13 @@ template <typename T>
 class Pool : public Object {
 public:
     explicit Pool(string poolName = "Unnamed pool");
-    ~Pool();
 
-    static void Register(const std::shared_ptr<T>& objectPtr);
-    static void Unregister(const std::shared_ptr<T>& objectPtr);
+    void Register(std::unique_ptr<T>&& objectPtr);
+    void Unregister(std::unique_ptr<T>& objectPtr);
 
 protected:
 
-    static std::vector<std::shared_ptr<T>> pool;
+    std::vector<std::unique_ptr<T>> pool { };
 };
 
 }
