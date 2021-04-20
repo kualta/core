@@ -58,17 +58,8 @@ public:
 
 class Log {
 public:
-    Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL) : output(out) {
-        logStream << "- ";
-        Logger::AddTimeStamp(logStream) << " ";
-        logStream << Logger::GetLogTypeText(type) << " ";
-        logStream << Logger::GetLogLevelText(level);
-    }
-    ~Log() {
-        logStream << "\n";
-        output << logStream.rdbuf();
-        output.flush();
-    }
+    Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL);
+    ~Log();
 
     template <class T>
     Log& operator<<(const T& thing) {

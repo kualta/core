@@ -1,5 +1,6 @@
 #include <core/Logger.h>
 #include <iostream>
+#include <iomanip>
 #include <ctime>
 
 namespace core {
@@ -72,4 +73,15 @@ std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
     return stream;
 }
 
+Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
+    logStream << "- ";
+    Logger::AddTimeStamp(logStream) << " ";
+    logStream << Logger::GetLogTypeText(type) << " ";
+    logStream << Logger::GetLogLevelText(level);
+}
+Log::~Log() {
+    logStream << "\n";
+    output << logStream.rdbuf();
+    output.flush();
+}
 } // namespace core
