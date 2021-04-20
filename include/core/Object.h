@@ -1,6 +1,8 @@
 #ifndef CORE_OBJECTID_H
 #define CORE_OBJECTID_H
 
+#include <utility>
+
 #include "Essential.h"
 
 namespace core {
@@ -35,8 +37,8 @@ public:
     string name;
 
 protected:
-    // FIXME: Current implementation is not thread-safe
-    Object() : id(++objectCounter) {  };
+    // FIXME: Current id implementation is not thread-safe
+    explicit Object(string name = "") : id(++objectCounter), name(std::move(name)) {  };
 
 private:
     static uint32_t objectCounter;

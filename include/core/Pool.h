@@ -19,7 +19,9 @@ protected:
     static std::vector<std::shared_ptr<T>> pool;
 };
 
-
 }
+
+#include "Pool.tpp"
+
 
 #endif //CORE_POOL_H

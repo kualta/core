@@ -35,6 +35,7 @@ class WindowPool;
 
 template<int cols, int rows, typename T> class Matrix;
 template<int dims, typename T> class Vector;
+template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
 

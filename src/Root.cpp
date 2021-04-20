@@ -26,7 +26,7 @@ Root::Root() {
 
     logger = std::make_unique<Logger>();
     renderer = std::make_unique<Renderer>();
-    windowPool = std::make_unique<WindowPool>();
+    windowPool = std::make_unique<Pool<Window>>();
 
     Logger::Log(INFO, INTERNAL) << "- Core initialization complete -";
 }

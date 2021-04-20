@@ -1,7 +1,8 @@
-#include <core/Pool.h>
 #include <core/Logger.h>
+#include <core/Window.h>
 
 #include <algorithm>
+
 
 namespace core {
 
@@ -19,5 +20,6 @@ template<typename T>
 Pool<T>::~Pool() {
     Logger::Log(INFO, INTERNAL) << "Destroyed " << typeid(T).name() << " pool";
 }
+
 
 }

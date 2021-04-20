@@ -4,6 +4,7 @@
 #include "Essential.h"
 #include "Singleton.h"
 #include "Object.h"
+#include "Pool.h"
 
 #include <memory>
 
@@ -27,7 +28,7 @@ public:
     std::weak_ptr<Entity> rootEntity;
     std::unique_ptr<Logger> logger;
     std::unique_ptr<Renderer> renderer;
-    std::unique_ptr<WindowPool> windowPool;
+    std::unique_ptr<Pool<Window>> windowPool;
     std::unique_ptr<EntityPool> entityPool;
 };
 

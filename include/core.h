@@ -26,6 +26,7 @@
 #include "core/Vector.h"
 #include "core/Singleton.h"
 #include "core/Node.h"
+#include "core/Pool.h"
 #include "core/Entity.h"
 #include "core/EntityPool.h"
 #include "core/Object.h"
