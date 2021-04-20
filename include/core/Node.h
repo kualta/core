@@ -9,7 +9,8 @@
 namespace core {
 
 // TODO: Make Node component
-template <typename T> class Node : public std::enable_shared_from_this<Node<T>> {
+template <typename T>
+class Node : public std::enable_shared_from_this<Node<T>> {
 public:
 
     /**
