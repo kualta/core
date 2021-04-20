@@ -7,8 +7,9 @@
 namespace core {
 
 template <typename T>
-class Pool {
+class Pool : public Object {
 public:
+    explicit Pool(string poolName = "Unnamed pool");
     ~Pool();
 
     static void Register(const std::shared_ptr<T>& objectPtr);
