@@ -33,6 +33,7 @@ enum PASS_INFO {
 
 class Logger : public Singleton<Logger>, public Object {
 public:
+    Logger();
 
     /**
      * Creates a Log entry
@@ -51,6 +52,7 @@ public:
     static string GetLogTypeText(LOG_TYPE log_type);
     static string GetLogLevelText(LOG_LEVEL level);
     static string GetPassText(PASS_INFO success);
+
 
 }; // class Logger
 

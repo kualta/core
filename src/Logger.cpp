@@ -4,6 +4,9 @@
 
 namespace core {
 
+Logger::Logger() : Object("Logger") {
+
+}
 Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
     switch (level) {
         case   ERR: return core::Log(std::cout, ERR, type);

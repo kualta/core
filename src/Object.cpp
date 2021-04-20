@@ -1,9 +1,17 @@
 #include <core/Object.h>
+#include <core/Logger.h>
+
 
 namespace core {
 
 uint32_t Object::objectCounter { 0 };
 
+Object::Object(string name): id(++objectCounter), name(std::move(name)) {
+
+}
+Object::~Object() {
+    Logger::Log(INFO, INTERNAL) << "Destroyed " << name << " object";
+}
 uint32_t Object::GetId() const {
     return id;
 }

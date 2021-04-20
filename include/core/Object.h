@@ -38,7 +38,8 @@ public:
 
 protected:
     // FIXME: Current id implementation is not thread-safe
-    explicit Object(string name = "") : id(++objectCounter), name(std::move(name)) {  };
+    explicit Object(string name = "");
+    ~Object();
 
 private:
     static uint32_t objectCounter;

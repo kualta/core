@@ -12,7 +12,7 @@
 namespace core {
 
 
-Root::Root() {
+Root::Root() : Object("Root") {
     if ( !SDL_Init(SDL_INIT_EVERYTHING) ) {
         Logger::Log(INFO, INTERNAL) << "SDL initialized successfully";
     } else {
@@ -34,8 +34,6 @@ Root::~Root() {
     renderer->DestroyAll();
 
     SDL_Quit();
-
-    Logger::Log(INFO, INTERNAL) << "- Core shutdown complete -";
 }
 
 }

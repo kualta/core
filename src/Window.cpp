@@ -10,8 +10,8 @@ namespace core {
 
 
 Window::Window(const std::string &title, const Rect& rect)
-: title(title), height(rect.h), width(rect.w), position(rect.x, rect.y), sdlWmi() {
-    this->position = Vector2(rect.x, rect.y);
+  : title(title), height(rect.h), width(rect.w),
+    position(rect.x, rect.y), sdlWmi(), Object(title + " Window") {
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                        rect.x, rect.y,
                                        rect.w, rect.h,
@@ -22,7 +22,6 @@ Window::Window(const std::string &title, const Rect& rect)
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
-    Logger::Log(INFO, WINDOW) << "Destroyed window object successfully";
 }
 uint32_t Window::GetHeight() const {
     return height;
