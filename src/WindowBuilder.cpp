@@ -20,7 +20,7 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     // FIXME: Renderer initialization is out of the scope of this method, refactoring needed
     core::Renderer::InitWindow(*windowPtr);
 
-    Root::GetInstancePtr()->windowPool->Register(std::move(windowPtr));
+    Root::Get()->windowPool->Register(std::move(windowPtr));
 
 
     return windowId;
