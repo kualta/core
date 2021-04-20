@@ -49,6 +49,15 @@ public:
      */
     static std::stringstream& AddTimeStamp(std::stringstream& stream);
 
+    /**
+     * Sets width and fill char for next value in stream
+     * @param stream - stream to set values to
+     * @param ch - char to fill the width with
+     * @param width - width of filling
+     * @return std::stringstream&
+     */
+    static std::stringstream& FillWidth(std::stringstream& stream, const char& ch, const int8_t& width);
+
     static string GetLogTypeText(LOG_TYPE log_type);
     static string GetLogLevelText(LOG_LEVEL level);
     static string GetPassText(PASS_INFO success);

@@ -69,10 +69,26 @@ std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
         stream << localTime.tm_year + 1900 << "/" << localTime.tm_mon + 1 << "/" << localTime.tm_mday << " ";
     #endif
 
-    stream << localTime.tm_hour << ":" << localTime.tm_min << ":" << localTime.tm_sec << "." << milliseconds.count();
+    FillWidth(stream, '0', 2);
+    stream << localTime.tm_hour << ":";
+
+    FillWidth(stream, '0', 2);
+    stream << localTime.tm_min << ":";
+
+    FillWidth(stream, '0', 2);
+    stream << localTime.tm_sec << ".";
+
+    FillWidth(stream, '0', 3);
+    stream << milliseconds.count();
+
     return stream;
 }
+std::stringstream &Logger::FillWidth(std::stringstream &stream, const char& ch, const int8_t& width) {
+    stream.fill(ch);
+    stream.width(width);
 
+    return stream;
+}
 Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
     logStream << "- ";
     Logger::AddTimeStamp(logStream) << " ";
