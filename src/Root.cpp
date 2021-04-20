@@ -1,5 +1,4 @@
 #include <core/Root.h>
-#include <core/EntityPool.h>
 #include <core/Renderer.h>
 #include <core/Entity.h>
 

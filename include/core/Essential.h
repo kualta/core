@@ -18,7 +18,6 @@ struct AbgrColor;
 class Color;
 class Degree;
 class Entity;
-class EntityPool;
 class Logger;
 class Log;
 class Math;
@@ -30,7 +29,6 @@ class Renderer;
 class Root;
 class Window;
 class WindowBuilder;
-class WindowPool;
 
 
 template<int cols, int rows, typename T> class Matrix;

@@ -23,7 +23,6 @@ enum LOG_TYPE {
     NETWORK,
     INTERNAL, // For engine logs
     RENDER,   // For drawing & rendering logs
-    WINDOW,   // For window handler logs
 };
 enum PASS_INFO {
     SUCCESS,

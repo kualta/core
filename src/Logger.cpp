@@ -48,7 +48,6 @@ string Logger::GetLogTypeText(LOG_TYPE log_type) {
         case  NETWORK: preText = "|NET|   "; break;
         case INTERNAL: preText = "|CORE|  "; break;
         case  PHYSICS: preText = "|PHYS|  "; break;
-        case   WINDOW: preText = "|WINDOW|"; break;
         case   RENDER: preText = "|RENDER|"; break;
     }
 

@@ -1,5 +1,4 @@
 #include <core/Entity.h>
-#include <core/EntityPool.h>
 #include <core/Logger.h>
 
 #include <utility>

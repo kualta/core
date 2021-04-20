@@ -2,7 +2,6 @@
 #include "core/Logger.h"
 #include "core/Geometry.h"
 
-#include <SDL.h>
 #include <SDL_syswm.h>
 
 
@@ -37,7 +36,7 @@ std::string Window::GetTitle() const {
 }
 void Window::SetPosition(const Vector2& pos) {
     if (pos.x < 0 || pos.y < 0) {
-        Logger::Log(ERR, WINDOW) << "Changing window position failed";
+        Logger::Log(ERR, INTERNAL) << "Changing window position failed";
         return;
     }
     position = pos;

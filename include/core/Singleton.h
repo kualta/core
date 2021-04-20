@@ -20,8 +20,8 @@ public:
     ~Singleton() {
         singleton = nullptr;
     }
-    static T& GetInstance();
     static T* Get();
+    static T& GetInstance();
 
 protected:
     static T* singleton;

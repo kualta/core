@@ -28,7 +28,6 @@
 #include "core/Node.h"
 #include "core/Pool.h"
 #include "core/Entity.h"
-#include "core/EntityPool.h"
 #include "core/Object.h"
 #include "core/Color.h"
 #include "core/Geometry.h"
@@ -39,7 +38,6 @@
 #include "core/Math.h"
 #include "core/Renderer.h"
 #include "core/WindowBuilder.h"
-#include "core/WindowPool.h"
 #include "core/Root.h"
 
 #endif //CORE_H
