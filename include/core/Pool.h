@@ -9,8 +9,10 @@ namespace core {
 template <typename T>
 class Pool {
 public:
+    ~Pool();
 
     static void Register(const std::shared_ptr<T>& objectPtr);
+    static void Unregister(const std::shared_ptr<T>& objectPtr);
 
 protected:
 
