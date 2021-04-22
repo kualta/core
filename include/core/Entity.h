@@ -19,9 +19,10 @@ namespace core {
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node<Entity>, std::enable_shared_from_this<Entity> {
+class Entity : public Object, public Node<Entity> {
 public:
-    Entity(std::weak_ptr<Entity>& parent = root,
+    Entity(string name = "entity",
+           std::weak_ptr<Entity>& parent = root,
            std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
@@ -91,7 +92,8 @@ public:
 protected:
 
     std::vector<std::shared_ptr<Component>> components;
-    bool isActive { true };
+    static std::vector<Entity*>             instances;
+    bool                                    isActive { true };
 };
 
 } // namespace core

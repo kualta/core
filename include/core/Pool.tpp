@@ -21,6 +21,10 @@ void Pool<T>::Unregister(std::unique_ptr<T> &objectPtr) {
         return *p == *objectPtr;
     }));
 }
+template<typename T>
+void Pool<T>::Invoke(void (&f)() ) {
+    std::for_each(pool.begin(), pool.end(), &f);
+}
 
 
 }

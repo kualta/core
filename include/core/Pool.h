@@ -13,6 +13,7 @@ public:
 
     void Register(std::unique_ptr<T>&& objectPtr);
     void Unregister(std::unique_ptr<T>& objectPtr);
+    void Invoke(void (&f)());
 
 protected:
 

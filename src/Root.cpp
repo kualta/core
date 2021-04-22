@@ -19,7 +19,6 @@ Root::Root() : Object("Root") {
     logger = std::make_unique<Logger>();
     renderer = std::make_unique<Renderer>();
     windowPool = std::make_unique<Pool<Window>>("Windows pool");
-    entityPool = std::make_unique<Pool<Entity>>("Entity pool");
 
     Logger::Log(INFO, INTERNAL) << "* Core initialization complete *";
 }
