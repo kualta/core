@@ -1,7 +1,6 @@
 #include <core/WindowBuilder.h>
-#include <core/Window.h>
 #include <core/WindowRenderer.h>
-#include <core/Geometry.h>
+#include <core/Window.h>
 #include <core/Logger.h>
 #include <core/Root.h>
 
@@ -14,10 +13,11 @@ namespace core {
 uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) {
     std::unique_ptr<Window> windowPtr = std::move(std::make_unique<Window>(title, rect));
     Logger::Log(INFO, INTERNAL) << "Created window \"" << title << "\" ";
-    uint32_t windowId = windowPtr->GetId();
 
-    // FIXME: Renderer initialization is out of the scope of this method, refactoring needed
+    // Pass new window to intialize renderer
     WindowRenderer::InitWindow(*windowPtr);
+
+    uint32_t windowId = windowPtr->GetId();
 
     Root::Get()->windowPool->Register(std::move(windowPtr));
 

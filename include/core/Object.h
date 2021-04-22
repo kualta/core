@@ -9,8 +9,7 @@ namespace core {
 
 /**
  *  Base class of every countable class
- *  @details All singleton classes inherit from this as well, since there could be multiple core::Root objects.
- *  @details First core::Root always has an id of 1.
+ *  @note All singleton classes inherit from this as well.
  */
 class Object {
 public:

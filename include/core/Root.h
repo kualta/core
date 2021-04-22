@@ -10,7 +10,6 @@
 
 namespace core {
 
-
 class Root : public Singleton<Root>, public Object {
 public:
 
@@ -24,10 +23,8 @@ public:
      */
     ~Root();
 
-    std::unique_ptr<Logger> logger;
     std::unique_ptr<Pool<Window>> windowPool;
 };
-
 
 }
 

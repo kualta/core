@@ -15,7 +15,6 @@ Root::Root() : Object("Root") {
         Logger::Log(ERR, INTERNAL) << "SDL initialization failed!";
     }
 
-    logger = std::make_unique<Logger>();
     windowPool = std::make_unique<Pool<Window>>("Windows pool");
 
     Logger::Log(INFO, INTERNAL) << "* Core initialization complete *";
