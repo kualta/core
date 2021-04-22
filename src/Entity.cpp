@@ -35,10 +35,7 @@ void Entity::Draw() {
 
 }
 bool Entity::operator==(const Entity &rhs) const {
-    return static_cast<const core::Object&>(*this) == static_cast<const core::Object&>(rhs) &&
-           static_cast<const core::Node<core::Entity>&>(*this) == static_cast<const core::Node<core::Entity>&>(rhs) &&
-           components == rhs.components &&
-           isActive == rhs.isActive;
+    return static_cast<const core::Object&>(*this).GetId() == static_cast<const core::Object&>(rhs).GetId();
 }
 
 } // namespace core

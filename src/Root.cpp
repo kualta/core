@@ -1,6 +1,5 @@
 #include <core/Root.h>
 #include <core/Renderer.h>
-#include <core/Entity.h>
 
 #include <SDL.h>
 #include <memory>

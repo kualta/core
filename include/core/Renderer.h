@@ -10,9 +10,6 @@ namespace core {
 class Renderer : public Singleton<Renderer>, public Object {
 public:
 
-    Renderer() = default;
-    ~Renderer() = default;
-
     /**
      * Creates renderer for specific window
      */

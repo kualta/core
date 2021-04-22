@@ -12,7 +12,6 @@ namespace core {
 
 
 class Root : public Singleton<Root>, public Object {
-
 public:
 
     /**

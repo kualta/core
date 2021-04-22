@@ -55,11 +55,15 @@ bool Renderer::InitWindow(Window &window) {
     initObj.resolution.height = window.GetHeight();
     initObj.resolution.reset = BGFX_RESET_VSYNC;
 
-    if (!bgfx::init(initObj)) {
+    bool success = bgfx::init(initObj);
+
+    if (!success) {
         Logger::Log(ERR, RENDER) << "Cannot initialize renderer, aborting";
         return false;
+    } else {
+        Logger::Log(INFO, RENDER) << "Initialized renderer for window \"" << window.GetTitle() << "\" ";
+        return true;
     }
-    return true;
 }
 
 
