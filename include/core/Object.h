@@ -1,9 +1,9 @@
 #ifndef CORE_OBJECTID_H
 #define CORE_OBJECTID_H
 
-#include <utility>
-
 #include "Essential.h"
+
+#include <utility>
 
 namespace core {
 

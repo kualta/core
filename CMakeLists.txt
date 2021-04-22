@@ -16,10 +16,20 @@ option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
 #       core
 set( CORE_INCLUDE_DIR include )
-set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/components/*.h )
-set( CORE_HEADERS ${CORE_INCLUDE_DIR}/core/*.h ${CORE_INCLUDE_DIR}/core/*.tpp ${CORE_COMPONENTS_RES} )
+set( CORE_SRC_DIR     src )
+
+set( CORE_ENGINE_RES     ${CORE_INCLUDE_DIR}/core/*.h            ${CORE_SRC_DIR}/*.cpp )
+set( CORE_MODULES_RES    ${CORE_INCLUDE_DIR}/core/Modules/*.h    ${CORE_SRC_DIR}/Modules/*.cpp )
+set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/Components/*.h ${CORE_SRC_DIR}/Components/*.cpp )
+
+set( CORE_FILES
+        ${CORE_ENGINE_RES}
+        ${CORE_MODULES_RES}
+        ${CORE_COMPONENTS_RES}
+   )
+
 # Get Core's headers and sources
-file( GLOB CORE_SOURCES ${CORE_HEADERS} src/*.cpp )
+file( GLOB CORE_SOURCES ${CORE_FILES} )
 # Create core target
 add_library( core STATIC ${CORE_SOURCES} )
 # Include Core's headers
