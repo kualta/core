@@ -25,7 +25,6 @@ public:
     ~Root();
 
     std::unique_ptr<Logger> logger;
-    std::unique_ptr<Renderer> renderer;
     std::unique_ptr<Pool<Window>> windowPool;
 };
 

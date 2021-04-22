@@ -1,6 +1,6 @@
 #include <core/WindowBuilder.h>
 #include <core/Window.h>
-#include <core/Renderer.h>
+#include <core/WindowRenderer.h>
 #include <core/Geometry.h>
 #include <core/Logger.h>
 #include <core/Root.h>
@@ -17,7 +17,7 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     uint32_t windowId = windowPtr->GetId();
 
     // FIXME: Renderer initialization is out of the scope of this method, refactoring needed
-    core::Renderer::InitWindow(*windowPtr);
+    WindowRenderer::InitWindow(*windowPtr);
 
     Root::Get()->windowPool->Register(std::move(windowPtr));
 

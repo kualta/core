@@ -1,4 +1,4 @@
-#include <core/Renderer.h>
+#include <core/WindowRenderer.h>
 #include <core/Logger.h>
 #include <core/Window.h>
 
@@ -8,7 +8,7 @@
 
 namespace core {
 
-bool Renderer::AddRenderer(Window &window) {
+bool WindowRenderer::AddRenderer(Window &window) {
     if (!InitWindow(window)) {
         Logger::Log(ERR, RENDER) << "Couldn't create renderer";
         return false;
@@ -17,10 +17,7 @@ bool Renderer::AddRenderer(Window &window) {
         return true;
     }
 }
-void Renderer::DestroyAll() {
-    bgfx::shutdown();
-}
-bgfx::PlatformData Renderer::GetPlatformData(const Window& _window) {
+bgfx::PlatformData WindowRenderer::GetPlatformData(const Window& _window) {
 
     SDL_SysWMinfo *wmi = _window.GetSdlWmi();
     bgfx::PlatformData platformData;
@@ -45,7 +42,7 @@ bgfx::PlatformData Renderer::GetPlatformData(const Window& _window) {
 
     return platformData;
 }
-bool Renderer::InitWindow(Window &window) {
+bool WindowRenderer::InitWindow(Window &window) {
 
     bgfx::Init initObj;
 
@@ -57,12 +54,12 @@ bool Renderer::InitWindow(Window &window) {
 
     bool success = bgfx::init(initObj);
 
-    if (!success) {
-        Logger::Log(ERR, RENDER) << "Cannot initialize renderer, aborting";
-        return false;
-    } else {
+    if (success) {
         Logger::Log(INFO, RENDER) << "Initialized renderer for window \"" << window.GetTitle() << "\" ";
         return true;
+    } else {
+        Logger::Log(ERR, RENDER) << "Cannot initialize renderer, aborting";
+        return false;
     }
 }
 

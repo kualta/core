@@ -1,5 +1,5 @@
-#ifndef CORE_RENDERER_H
-#define CORE_RENDERER_H
+#ifndef CORE_WINDOWRENDERER_H
+#define CORE_WINDOWRENDERER_H
 
 #include "Essential.h"
 #include "Singleton.h"
@@ -7,18 +7,13 @@
 
 namespace core {
 
-class Renderer : public Singleton<Renderer>, public Object {
+class WindowRenderer : public Singleton<WindowRenderer>, public Object {
 public:
 
     /**
      * Creates renderer for specific window
      */
     static bool AddRenderer(Window& window);
-
-    /**
-     *  Shuts down inner renderer
-     */
-    static void DestroyAll();
 
     /**
      * Initializes rederer for given window
@@ -35,4 +30,4 @@ public:
 
 } // namespace core
 
-#endif //CORE_RENDERER_H
+#endif //CORE_WINDOWRENDERER_H

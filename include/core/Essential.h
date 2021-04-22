@@ -25,7 +25,7 @@ class Object;
 class Component;
 class Primitive;
 class Radian;
-class Renderer;
+class WindowRenderer;
 class Root;
 class Window;
 class WindowBuilder;

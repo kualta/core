@@ -1,6 +1,6 @@
 #include <core/Root.h>
-#include <core/Renderer.h>
 
+#include <bgfx/bgfx.h>
 #include <SDL.h>
 #include <memory>
 
@@ -16,15 +16,16 @@ Root::Root() : Object("Root") {
     }
 
     logger = std::make_unique<Logger>();
-    renderer = std::make_unique<Renderer>();
     windowPool = std::make_unique<Pool<Window>>("Windows pool");
 
     Logger::Log(INFO, INTERNAL) << "* Core initialization complete *";
 }
 Root::~Root() {
-    renderer->DestroyAll();
+    bgfx::shutdown();
+    Logger::Log(INFO, INTERNAL) << "Shut down renderer";
 
     SDL_Quit();
+    Logger::Log(INFO, INTERNAL) << "Shut down SDL";
 }
 
 }
