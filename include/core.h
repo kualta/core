@@ -1,6 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+// FIXME: DEPRECATED HEADER, TO BE DELETED
+
 //      defines
 #define SDL_MAIN_HANDLED
 #define NULL 0
@@ -39,5 +41,7 @@
 #include "core/WindowRenderer.h"
 #include "core/WindowBuilder.h"
 #include "core/Root.h"
+
+// FIXME: DEPRECATED HEADER, TO BE DELETED
 
 #endif //CORE_H

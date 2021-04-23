@@ -23,7 +23,6 @@ public:
      */
     ~Root();
 
-    std::unique_ptr<Pool<Window>> windowPool;
 };
 
 }
