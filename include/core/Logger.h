@@ -2,8 +2,8 @@
 #define CORE_LOGGER_H
 
 #include "Essential.h"
-#include "Object.h"
 #include "Singleton.h"
+#include "Object.h"
 
 #include <ostream>
 #include <sstream>
@@ -20,7 +20,8 @@ enum LOG_LEVEL {
 enum LOG_TYPE {
     GENERAL,  // For other logs
     PHYSICS,
-    NETWORK,
+    NETWORK,  // NetworkModule logs
+    WINDOW,   // WindowModule logs
     INTERNAL, // For engine logs
     RENDER,   // For drawing & rendering logs
 };

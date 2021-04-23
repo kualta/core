@@ -3,12 +3,21 @@
 
 namespace core {
 
+enum MODULE_STATUS {
+
+};
+
 class Module {
 public:
+
 
 protected:
 
 };
+
+MODULE_STATUS StartModule() {
+    // Ummm? TBI
+}
 
 }
 

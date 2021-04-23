@@ -1,13 +1,21 @@
 #ifndef CORE_MODULE_WINDOW_H
 #define CORE_MODULE_WINDOW_H
 
+#include <core/Module.h>
+#include <core/Pool.h>
+#include <core/Window.h>
+#include <core/WindowBuilder.h>
+#include <core/WindowRenderer.h>
+
+#include <memory>
+
 namespace core {
 
 class WindowModule : public Module {
 
     WindowModule();
 
-    std::unique_ptr<Pool<Window>> windowPool;
+    std::unique_ptr<Pool<Window>> windowPool { };
 };
 
 }
