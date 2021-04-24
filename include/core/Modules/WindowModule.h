@@ -1,7 +1,7 @@
 #ifndef CORE_MODULE_WINDOW_H
 #define CORE_MODULE_WINDOW_H
 
-#include <core/Module.h>
+#include <core/IModule.h>
 #include <core/Pool.h>
 #include <core/Window.h>
 #include <core/WindowBuilder.h>
@@ -11,7 +11,7 @@
 
 namespace core {
 
-class WindowModule : public Module {
+class WindowModule : public IModule {
 
     WindowModule();
 
