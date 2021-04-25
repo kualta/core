@@ -12,8 +12,6 @@
 
 namespace core {
 
-struct RgbaColor;
-struct AbgrColor;
 
 class Color;
 class Degree;
@@ -21,6 +19,7 @@ class Entity;
 class Logger;
 class Log;
 class Math;
+class abstract_instance_container;
 class Object;
 class Component;
 class Primitive;
@@ -30,13 +29,20 @@ class Root;
 class Window;
 class WindowBuilder;
 
+// Interfaces classes
+class IModule;
+
+struct StatusDesc;
+struct RgbaColor;
+struct AbgrColor;
 
 template<int cols, int rows, typename T> class Matrix;
 template<int dims, typename T> class Vector;
 template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
-
+template<typename T> class type_map;
+template <class T, class D> class instance_container;
 
 typedef std::string string;
 typedef uint32_t rgba;
