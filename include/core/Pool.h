@@ -2,6 +2,8 @@
 #define CORE_POOL_H
 
 #include "Essential.h"
+#include "Object.h"
+
 #include <memory>
 
 namespace core {
