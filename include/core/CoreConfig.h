@@ -14,7 +14,7 @@ namespace core {
 class CoreConfig {
 public:
     template <class InstanceType, class Deleter, class ...Deps>
-    void Add(ModuleFactory<InstanceType, Deleter, Deps...> core);
+    void Add(ModuleFactory<InstanceType, Deleter, Deps...> moduleFactory);
 
     Core Build();
 

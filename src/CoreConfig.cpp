@@ -13,7 +13,7 @@ void CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) 
     nodeInfo &newNodeInfo = graph[moduleTypeId];
     newNodeInfo.initializer = [moduleFactory](Core &core) {
                 auto instance = WrapIntoModuleContainer(core.Inject(moduleFactory));
-                core.moduleMap.put<ModuleType>(std::move(instance));
+                core.moduleMap.Put<ModuleType>(std::move(instance));
     };
     newNodeInfo.hasIniliatizer = true;
     newNodeInfo.typeName = typeid(typename std::remove_const<ModuleType>::type).name();

@@ -37,7 +37,7 @@ public:
     const_iterator find() const { return container.find(typeId<Key>()); }
 
     template <class Key>
-    void put(ValueType &&value) {
+    void Put(ValueType &&value) {
         container[typeId<Key>()] = std::forward<ValueType>(value);
     }
 
