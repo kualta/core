@@ -12,45 +12,53 @@
 
 namespace core {
 
-// Maps types to objects of ValueType
+/**
+ * Maps types to objects of ValueType
+ */
 template <class ValueType>
-class type_map {
+class TypeMap {
     using Container = std::unordered_map<int, ValueType>;
 
 public:
     using iterator = typename Container::iterator;
     using const_iterator = typename Container::const_iterator;
 
-    iterator begin() { return container_.begin(); }
-    iterator end() { return container_.end(); }
-    const_iterator begin() const { return container_.begin(); }
-    const_iterator end() const { return container_.end(); }
-    const_iterator cbegin() const { return container_.cbegin(); }
-    const_iterator cend() const { return container_.cend(); }
+    iterator begin() { return container.begin(); }
+    iterator end() { return container.end(); }
+    const_iterator begin() const { return container.begin(); }
+    const_iterator end() const { return container.end(); }
+    const_iterator cbegin() const { return container.cbegin(); }
+    const_iterator cend() const { return container.cend(); }
 
     template <class Key>
-    iterator find() { return container_.find(type_id<Key>()); }
+    iterator find() { return container.find(typeId<Key>()); }
+
     template <class Key>
-    const_iterator find() const { return container_.find(type_id<Key>()); }
+    const_iterator find() const { return container.find(typeId<Key>()); }
+
     template <class Key>
     void put(ValueType &&value) {
-        container_[type_id<Key>()] = std::forward<ValueType>(value);
+        container[typeId<Key>()] = std::forward<ValueType>(value);
     }
 
     template <class Key>
-    static int type_id() {
-        static int id = ++last_type_id_;
+    static int typeId() {
+        static int id = ++typeIdCounter;
         return id;
     }
 
 private:
-    static std::atomic<int> last_type_id_;
-    Container container_;
+    static std::atomic<int> typeIdCounter;
+    Container container;
 };
 
+/**
+ * Wraps unique_ptr<T> into unique_ptr<ModuleContainer>
+ * @return unique_ptr<ModuleContainer>
+ */
 template <class T, class Deleter>
-std::unique_ptr<abstract_instance_container> wrap_into_instance_container( std::unique_ptr<T, Deleter> &&ptr) {
-    return std::make_unique<instance_container<T, Deleter>>(std::move(ptr));
+std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Deleter> &&ptr) {
+    return std::make_unique<ModuleContainer<T, Deleter>>(std::move(ptr));
 }
 
 

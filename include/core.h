@@ -40,7 +40,7 @@
 #include "core/Math.h"
 #include "core/WindowRenderer.h"
 #include "core/WindowBuilder.h"
-#include "core/Root.h"
+#include "core/Core.h"
 
 // FIXME: DEPRECATED HEADER, TO BE DELETED
 

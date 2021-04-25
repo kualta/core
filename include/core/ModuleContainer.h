@@ -1,61 +1,75 @@
+/*
+ * This is a stand-alone header file, no ModuleContainer.cpp is presented
+ */
 #ifndef CORE_MODULECONTAINER_H
 #define CORE_MODULECONTAINER_H
 
 #include "Essential.h"
 
+#include <memory>
+
 namespace core {
 
+template<class InstanceType, class Deleter, class ...Deps>
+using ModuleFactory = std::unique_ptr<InstanceType, Deleter>(*)(Deps*...);
 
-class abstract_instance_container {
+/**
+ * Stores raw ptr to module of an arbitrary class.
+ */
+class IModuleContainer {
 public:
-    virtual ~abstract_instance_container() = default;
+    virtual ~IModuleContainer() = default;
 
-    // The type_map holding the instance container has the
-    // type information, so we'll be able to safely convert
-    // the pointer from void* back to its original type.
-    void* get() { return raw_ptr_; }
+    void* Get() { return rawPtr; }
 
-    abstract_instance_container(abstract_instance_container &&other) {
+    IModuleContainer(IModuleContainer &&other) noexcept {
         *this = std::move(other);
     }
 
-    abstract_instance_container& operator=(abstract_instance_container &&other) {
-        raw_ptr_ = other.raw_ptr_;
-        other.raw_ptr_ = nullptr;
+    IModuleContainer& operator=(IModuleContainer &&other) noexcept {
+        rawPtr = other.rawPtr;
+        other.rawPtr = nullptr;
         return *this;
     }
 
 protected:
-    explicit abstract_instance_container(void *raw_ptr)
-            : raw_ptr_(raw_ptr) {}
+    explicit IModuleContainer(void *rawPtr) : rawPtr(rawPtr) { }
 
 private:
-    void *raw_ptr_;
+    void *rawPtr { };
 };
 
 
+/**
+ * Stores ptr to module of an arbitrary class and manages its lifetime
+ */
 template <class T, class Deleter>
-class instance_container : public abstract_instance_container {
+class ModuleContainer : public IModuleContainer {
 public:
-    ~instance_container() override = default;
+    ~ModuleContainer() override = default;
 
-    explicit instance_container(std::unique_ptr<T, Deleter> &&p) :
-            abstract_instance_container(p.get()),
-            pointer_(std::move(p)) {}
+    explicit ModuleContainer(std::unique_ptr<T, Deleter> &&p) :
+            IModuleContainer(p.get()),
+            ptr(std::move(p)) {}
 
-    instance_container(instance_container &&other) {
+    ModuleContainer(ModuleContainer &&other) {
         *this = std::move(other);
     }
 
-    instance_container& operator=(instance_container &&other) {
-        pointer_ = std::move(other);
-        abstract_instance_container::operator=(std::move(other));
+    ModuleContainer& operator=(ModuleContainer &&other) noexcept {
+        ptr = std::move(other);
+        IModuleContainer::operator=(std::move(other));
         return *this;
     }
 
 private:
-    std::unique_ptr<T, Deleter> pointer_;
+    std::unique_ptr<T, Deleter> ptr;
 };
+
+template <class InstanceType, class ...Deps>
+std::unique_ptr<InstanceType> NewModuleFactory(Deps*... deps) {
+    return std::make_unique<InstanceType>(deps...);
+}
 
 
 }

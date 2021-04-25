@@ -14,14 +14,16 @@ namespace core {
 
 
 class Color;
+class Component;
+class Core;
+class CoreConfig;
 class Degree;
 class Entity;
 class Logger;
 class Log;
 class Math;
-class abstract_instance_container;
+class IModuleContainer;
 class Object;
-class Component;
 class Primitive;
 class Radian;
 class WindowRenderer;
@@ -41,8 +43,8 @@ template<int dims, typename T> class Vector;
 template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
-template<typename T> class type_map;
-template <class T, class D> class instance_container;
+template<typename T> class TypeMap;
+template <class T, class D> class ModuleContainer;
 
 typedef std::string string;
 typedef uint32_t rgba;
