@@ -3,6 +3,7 @@
 
 #include <core/IModule.h>
 #include <core/Pool.h>
+
 #include <core/Window.h>
 #include <core/WindowBuilder.h>
 #include <core/WindowRenderer.h>
@@ -12,8 +13,9 @@
 namespace core {
 
 class WindowModule : public IModule {
-
+public:
     WindowModule();
+    ~WindowModule();
 
     std::unique_ptr<Pool<Window>> windowPool { };
 };

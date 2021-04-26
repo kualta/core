@@ -12,6 +12,7 @@
 
 namespace core {
 
+class WindowModule;
 
 class Color;
 class Component;

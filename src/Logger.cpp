@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime>
+#include <utility>
 
 namespace core {
 
@@ -49,6 +50,7 @@ string Logger::GetLogTypeText(LOG_TYPE log_type) {
         case INTERNAL: preText = "|CORE|  "; break;
         case  PHYSICS: preText = "|PHYS|  "; break;
         case   RENDER: preText = "|RENDER|"; break;
+        case   WINDOW: preText = "|WINDOW|"; break;
     }
 
     return preText;
@@ -94,9 +96,21 @@ Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
     logStream << Logger::GetLogTypeText(type) << " ";
     logStream << Logger::GetLogLevelText(level);
 }
+Log::Log(std::ostream &out, LOG_LEVEL level, string moduleName) : output(out) {
+    logStream << "- ";
+    Logger::AddTimeStamp(logStream) << " ";
+    logStream << "|" << ToUpper(std::move(moduleName)) << "| ";
+    logStream << Logger::GetLogLevelText(level);
+
+}
 Log::~Log() {
     logStream << "\n";
     output << logStream.rdbuf();
     output.flush();
+}
+template<class T>
+Log &Log::operator<<(const T &thing) {
+    logStream << thing;
+    return *this;
 }
 } // namespace core

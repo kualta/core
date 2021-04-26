@@ -8,6 +8,7 @@
 #include <ostream>
 #include <sstream>
 #include <chrono>
+#include <algorithm>
 
 namespace core {
 
@@ -19,11 +20,11 @@ enum LOG_LEVEL {
 };
 enum LOG_TYPE {
     GENERAL,  // For other logs
-    PHYSICS,
-    NETWORK,  // NetworkModule logs
-    WINDOW,   // WindowModule logs
     INTERNAL, // For engine logs
-    RENDER,   // For drawing & rendering logs
+    WINDOW,   // Window module logs
+    RENDER,   // Rendering module logs
+    PHYSICS,  // Physics module logs
+    NETWORK,  // Network module logs
 };
 enum PASS_INFO {
     SUCCESS,
@@ -68,18 +69,21 @@ public:
 class Log {
 public:
     Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL);
+    Log(std::ostream& out, LOG_LEVEL level, string moduleName);
     ~Log();
 
-    template <class T>
-    Log& operator<<(const T& thing) {
-        logStream << thing;
-        return *this;
-    }
+    template<class T>
+    Log& operator<<(const T& thing);
 
 private:
     std::stringstream logStream;
     std::ostream& output;
 }; // class Log
+
+string ToUpper(string str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    return std::move(str);
+}
 
 }
 

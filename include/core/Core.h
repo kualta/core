@@ -13,7 +13,7 @@
 
 namespace core {
 
-class Core {
+class Core : public Singleton<Core>, public Object {
     friend class CoreConfig;
     using ModuleMap = TypeMap<std::unique_ptr<IModuleContainer>>;
 public:
@@ -21,7 +21,7 @@ public:
     Core& operator=(Core &&other) noexcept;
 
     template<class T, class Dependent = std::nullptr_t>
-    T* GetModule() const;
+    static T* GetModule();
 
     template<class ModuleType, class Deleter, class ...Deps>
     std::unique_ptr<ModuleType, Deleter> Inject(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) const;
@@ -29,7 +29,7 @@ public:
 private:
     Core() = default;
 
-    ModuleMap moduleMap;
+    static ModuleMap moduleMap;
 };
 
 }
