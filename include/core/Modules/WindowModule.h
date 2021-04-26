@@ -17,7 +17,7 @@ public:
     WindowModule();
     ~WindowModule();
 
-    std::unique_ptr<Pool<Window>> windowPool { };
+    Pool<Window> windowPool { };
 };
 
 }

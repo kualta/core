@@ -1,3 +1,7 @@
+/*
+ * Both CoreConfig.cpp and CoreConfig.tpp are presented.
+ * Check second for template implementations.
+ */
 #ifndef CORE_CORECONFIG_H
 #define CORE_CORECONFIG_H
 
@@ -54,5 +58,8 @@ private:
 };
 
 }
+
+#include "CoreConfig.tpp"
+
 
 #endif //CORE_CORECONFIG_H
