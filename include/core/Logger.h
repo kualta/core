@@ -62,28 +62,26 @@ public:
     static string GetLogTypeText(LOG_TYPE log_type);
     static string GetLogLevelText(LOG_LEVEL level);
     static string GetPassText(PASS_INFO success);
-
+    static string ToUpper(string str);
 
 }; // class Logger
 
 class Log {
 public:
+    // Must be implemented in header
     Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL);
-    Log(std::ostream& out, LOG_LEVEL level, string moduleName);
     ~Log();
 
     template<class T>
-    Log& operator<<(const T& thing);
+    Log& operator<<(const T& thing) {
+        logStream << thing;
+        return *this;
+    };
 
 private:
     std::stringstream logStream;
     std::ostream& output;
 }; // class Log
-
-string ToUpper(string str) {
-    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
-    return std::move(str);
-}
 
 }
 

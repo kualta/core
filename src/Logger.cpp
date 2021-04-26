@@ -90,27 +90,19 @@ std::stringstream &Logger::FillWidth(std::stringstream &stream, const char& ch, 
 
     return stream;
 }
-Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
-    logStream << "- ";
-    Logger::AddTimeStamp(logStream) << " ";
-    logStream << Logger::GetLogTypeText(type) << " ";
-    logStream << Logger::GetLogLevelText(level);
-}
-Log::Log(std::ostream &out, LOG_LEVEL level, string moduleName) : output(out) {
-    logStream << "- ";
-    Logger::AddTimeStamp(logStream) << " ";
-    logStream << "|" << ToUpper(std::move(moduleName)) << "| ";
-    logStream << Logger::GetLogLevelText(level);
-
+string Logger::ToUpper(string str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    return std::move(str);
 }
 Log::~Log() {
     logStream << "\n";
     output << logStream.rdbuf();
     output.flush();
 }
-template<class T>
-Log &Log::operator<<(const T &thing) {
-    logStream << thing;
-    return *this;
+Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
+    logStream << "- ";
+    Logger::AddTimeStamp(logStream) << " ";
+    logStream << Logger::GetLogTypeText(type) << " ";
+    logStream << Logger::GetLogLevelText(level);
 }
 } // namespace core

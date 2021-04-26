@@ -1,3 +1,7 @@
+/*
+ * Both Core.cpp and Core.tpp are presented.
+ * Check second for template implementations.
+ */
 #ifndef CORE_CORE_H
 #define CORE_CORE_H
 
@@ -33,6 +37,8 @@ private:
 };
 
 }
+
+#include "Core.tpp"
 
 
 #endif //CORE_CORE_H

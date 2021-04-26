@@ -12,6 +12,16 @@
 
 namespace core {
 
+
+/**
+ * Wraps unique_ptr<T> into unique_ptr<ModuleContainer>
+ * @return unique_ptr<ModuleContainer>
+ */
+template <class T, class Deleter>
+std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Deleter> &&ptr) {
+    return std::make_unique<ModuleContainer<T, Deleter>>(std::move(ptr));
+}
+
 /**
  * Maps types to objects of ValueType
  */
@@ -52,16 +62,9 @@ private:
     Container container;
 };
 
-/**
- * Wraps unique_ptr<T> into unique_ptr<ModuleContainer>
- * @return unique_ptr<ModuleContainer>
- */
-template <class T, class Deleter>
-std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Deleter> &&ptr) {
-    return std::make_unique<ModuleContainer<T, Deleter>>(std::move(ptr));
 }
 
+#include "TypeMap.tpp"
 
-}
 
 #endif //CORE_TYPEMAP_H

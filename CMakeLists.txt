@@ -18,7 +18,8 @@ option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 set( CORE_INCLUDE_DIR include )
 set( CORE_SRC_DIR     src )
 
-set( CORE_ENGINE_RES     ${CORE_INCLUDE_DIR}/core/*.h            ${CORE_SRC_DIR}/*.cpp )
+set( CORE_ENGINE_RES     ${CORE_INCLUDE_DIR}/core/*.h            ${CORE_SRC_DIR}/*.cpp
+                         ${CORE_INCLUDE_DIR}/core/*.tpp )
 set( CORE_MODULES_RES    ${CORE_INCLUDE_DIR}/core/Modules/*.h    ${CORE_SRC_DIR}/Modules/*.cpp )
 set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/Components/*.h ${CORE_SRC_DIR}/Components/*.cpp )
 
