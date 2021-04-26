@@ -1,3 +1,4 @@
+#include <core/Modules/WindowModule.h>
 #include <core/WindowBuilder.h>
 #include <core/WindowRenderer.h>
 #include <core/Window.h>
@@ -19,7 +20,7 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
 
     uint32_t windowId = windowPtr->GetId();
 
-//    Root::Get()->windowPool->Register(std::move(windowPtr));
+    Core::Get()->GetModule<WindowModule>()->windowPool->Register(std::move(windowPtr));
 
 
     return windowId;

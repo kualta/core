@@ -3,10 +3,11 @@
 
 namespace core {
 
-
-WindowModule::WindowModule() {
-
-    Logger::Log(INFO, WINDOW) << "|MODULE| Initialized Window Module";
+WindowModule::WindowModule() : IModule("Window") {
+    Logger::Log(INFO, WINDOW) << "Initialized Window module";
+}
+WindowModule::~WindowModule() {
+    Logger::Log(INFO, WINDOW) << "Destroyed Window module";
 }
 
 }
