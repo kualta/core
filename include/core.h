@@ -19,8 +19,8 @@
 #include <bgfx/platform.h>
 
 //      SDL
-#include <SDL.h>
-#include <SDL_syswm.h>
+//#include <SDL.h>
+//#include <SDL_syswm.h>
 
 //      core
 /// Headers included in dependecy order
