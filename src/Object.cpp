@@ -10,7 +10,7 @@ Object::Object(string name): id(++objectCounter), name(std::move(name)) {
 
 }
 Object::~Object() {
-    Logger::Log(INFO, INTERNAL) << "Destroyed " << name << " object";
+    Logger::Log(INFO) << "Destroyed " << name << " object";
 }
 uint32_t Object::GetId() const {
     return id;

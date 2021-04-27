@@ -50,7 +50,7 @@ private:
     };
 
     /**
-     * Graph of all dependencies of every module
+     * Graph of all dependencies for every module
      */
     std::unordered_map<int, nodeInfo> graph;
 

@@ -23,6 +23,7 @@ class Core : public Singleton<Core>, public Object {
 public:
     Core(Core &&other);
     Core& operator=(Core &&other) noexcept;
+    ~Core();
 
     template<class T, class Dependent = std::nullptr_t>
     static T* GetModule();
@@ -31,7 +32,7 @@ public:
     std::unique_ptr<ModuleType, Deleter> Inject(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) const;
 
 private:
-    Core() = default;
+    Core() : Object("Core") { };
 
     static ModuleMap moduleMap;
 };

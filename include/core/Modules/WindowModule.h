@@ -17,7 +17,7 @@ public:
     WindowModule();
     ~WindowModule();
 
-    Pool<Window> windowPool { };
+    Pool<Window> windowPool;
 };
 
 }

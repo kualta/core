@@ -3,7 +3,7 @@
 
 namespace core {
 
-WindowModule::WindowModule() : IModule("Window") {
+WindowModule::WindowModule() : IModule("Window"), windowPool("Window pool") {
     Logger::Log(INFO, WINDOW) << "Initialized Window module";
 }
 WindowModule::~WindowModule() {

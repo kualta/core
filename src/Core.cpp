@@ -13,5 +13,8 @@ Core::Core(Core &&other) {
 Core &Core::operator=(Core &&other) noexcept {
     return *this;
 }
+Core::~Core() {
+    Logger::Log(INFO, INTERNAL) << "* Core destruction started *";
+}
 
 }
