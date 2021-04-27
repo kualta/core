@@ -19,12 +19,13 @@ enum LOG_LEVEL {
     DEBUG,
 };
 enum LOG_TYPE {
-    GENERAL,  // For other logs
     INTERNAL, // For engine logs
+    GENERAL,  // For other logs
+    NETWORK,  // Network module logs
+    PHYSICS,  // Physics module logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
-    PHYSICS,  // Physics module logs
-    NETWORK,  // Network module logs
+    SCENE,    // Scene module logs
 };
 enum PASS_INFO {
     SUCCESS,

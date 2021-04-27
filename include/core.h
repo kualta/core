@@ -35,11 +35,8 @@
 #include "core/Geometry.h"
 #include "core/Matrix.h"
 #include "core/Primitive.h"
-#include "core/Window.h"
 #include "core/Logger.h"
 #include "core/Math.h"
-#include "core/WindowRenderer.h"
-#include "core/WindowBuilder.h"
 #include "core/Core.h"
 
 // FIXME: DEPRECATED HEADER, TO BE DELETED

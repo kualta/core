@@ -21,7 +21,8 @@ Core CoreConfig::Build() {
         (*initializers.top())(core);
         initializers.pop();
     }
-    return std::move(core);
+    Logger::Log(INFO, INTERNAL) << "* Core build finished * ";
+    return core;
 }
 
 void CoreConfig::VisitNode(

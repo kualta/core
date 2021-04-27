@@ -89,10 +89,12 @@ public:
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
 
+
+    static std::vector<Entity*> instances;
+
 protected:
 
     std::vector<std::shared_ptr<Component>> components;
-    static std::vector<Entity*>             instances;
     bool                                    isActive { true };
 };
 
