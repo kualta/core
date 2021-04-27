@@ -1,6 +1,6 @@
 # <center> Core Engine </center>
 
-Engine built on top of [SDL](https://www.libsdl.org/) and [bgfx](https://github.com/bkaradzic/bgfx). An attempt to bring ease and flexibility to С++ game development.  
+Engine built on top of [SDL](https://github.com/libsdl-org/SDL) and [bgfx](https://github.com/bkaradzic/bgfx). An attempt to bring ease and flexibility to С++ game development.  
 Inspired by MonoGame, raylib and OGRE.  
 <br>
 **Early stages of development**
