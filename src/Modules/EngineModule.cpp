@@ -11,8 +11,9 @@ EngineModule::~EngineModule() {
 int32_t EngineModule::Main() {
 
     // Main engine loop
-    mainLoop.Start();
+    mainLoop->Enter();
 
+    return 0;
 }
 
 }

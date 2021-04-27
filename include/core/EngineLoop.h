@@ -15,9 +15,14 @@ public:
      */
     int32_t Enter();
 
+    /**
+     * Stops main engine loop after current frame.
+     */
+    void Stop();
+
 protected:
 
-    bool exitRequested { false };
+    bool isRunning { true };
 
 };
 
