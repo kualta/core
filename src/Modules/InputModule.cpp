@@ -13,6 +13,17 @@ InputModule::~InputModule() {
 bool InputModule::GetAnyKey() {
     return false;
 }
+void InputModule::Update() {
+    PollEvents();
+}
+void InputModule::PollEvents() {
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            exitRequested = true;
+        }
+    }
+
+}
 
 
 }

@@ -3,6 +3,7 @@
 
 #include <core/IModule.h>
 
+#include <SDL_events.h>
 #include <memory>
 
 namespace core {
@@ -13,11 +14,15 @@ public:
     InputModule();
     ~InputModule();
 
+    void Update();
+
     bool GetAnyKey();
 
     bool exitRequested { false };
 
 protected:
+    SDL_Event event;
+    void PollEvents();
 
 private:
 

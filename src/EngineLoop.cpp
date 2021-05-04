@@ -8,14 +8,7 @@ namespace core {
 
 int32_t EngineLoop::Enter() {
 
-    SDL_Event event;
     while ( isRunning ) {
-
-        // TO BE MOVED TO InputModule
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-            }
-        }
 
         if ( Input->exitRequested ) {
             EngineLoop::Stop();
