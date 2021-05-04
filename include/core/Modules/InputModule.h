@@ -13,9 +13,12 @@ public:
     InputModule();
     ~InputModule();
 
+    bool GetAnyKey();
+
+    bool exitRequested { false };
+
 protected:
 
-    bool exitRequested;
 private:
 
 };
