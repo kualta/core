@@ -43,7 +43,7 @@ void CoreConfig::VisitNode(
 
         /*
          * if hasInitializer is false, it means someone depends on this
-         * node, but an module factory for this node has not been provided.
+         * node, but a module factory for this node has not been provided.
          * This will result in an injection error later.
          */
         if (info.hasIniliatizer) {
