@@ -1,4 +1,5 @@
 #include <core/Modules/InputModule.h>
+#include "SDL_keyboard.h"
 
 namespace core {
 
@@ -15,12 +16,21 @@ bool InputModule::GetAnyKey() {
 }
 void InputModule::Update() {
     PollEvents();
+    keystate = SDL_GetKeyboardState(nullptr);
 }
 void InputModule::PollEvents() {
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            exitRequested = true;
+        switch (event.type)
+        {
+            case SDL_QUIT:
+                exitRequested = true;
+            break;
+            case SDL_KEYDOWN:
+                if ( event.key.keysym.sym == SDLK_ESCAPE ) exitRequested = true;
+            break;
+
         }
+
     }
 
 }

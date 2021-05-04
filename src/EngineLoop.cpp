@@ -8,13 +8,13 @@ namespace core {
 
 int32_t EngineLoop::Enter() {
 
+    Input->Update();
+
     while ( isRunning ) {
 
         if ( Input->exitRequested ) {
             EngineLoop::Stop();
         }
-
-
 
     }
 

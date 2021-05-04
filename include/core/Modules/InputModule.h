@@ -3,7 +3,7 @@
 
 #include <core/IModule.h>
 
-#include <SDL_events.h>
+#include <SDL.h>
 #include <memory>
 
 namespace core {
@@ -21,7 +21,9 @@ public:
     bool exitRequested { false };
 
 protected:
-    SDL_Event event;
+    SDL_Event       event;
+    const uint8_t*  keystate;
+
     void PollEvents();
 
 private:
