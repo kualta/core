@@ -11,10 +11,9 @@ public:
     SceneModule();
     ~SceneModule();
 
-    void Update();
+    void Update() override;
 
 };
-
 
 }
 

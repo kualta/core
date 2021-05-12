@@ -19,8 +19,14 @@ class IModule {
 public:
     string moduleName;
 
+    virtual void Update() = 0;
+
+    static std::vector<IModule*> instances;
+
 protected:
-    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") { };
+    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") {
+        instances.push_back(this);
+    };
 
 };
 

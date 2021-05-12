@@ -9,5 +9,8 @@ WindowModule::WindowModule() : IModule("Window"), windowPool("Window pool") {
 WindowModule::~WindowModule() {
     Logger::Log(INFO, WINDOW) << "Destroyed Window module";
 }
+void WindowModule::Update() {
+
+}
 
 }

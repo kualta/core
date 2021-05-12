@@ -5,6 +5,7 @@
 #include "Logger.h"
 
 #include "Modules/InputModule.h"
+#include <forward_list>
 
 namespace core {
 
@@ -22,13 +23,17 @@ public:
      */
     void Stop();
 
+    /**
+     * Ticks every module in tickedModules list
+     */
+    void TickAll();
+
 protected:
 
-    bool         isRunning { true };
-    InputModule* Input;
+    bool                        isRunning { true };
+    InputModule*                Input;
 
 };
-
 
 }
 
