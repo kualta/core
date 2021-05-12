@@ -4,11 +4,13 @@
 #include "Essential.h"
 #include "Logger.h"
 
+#include "Modules/InputModule.h"
 
 namespace core {
 
 class EngineLoop {
 public:
+    explicit EngineLoop(InputModule* inputModule);
 
     /**
      * Function which contains main engine loop.
@@ -22,7 +24,8 @@ public:
 
 protected:
 
-    bool isRunning { true };
+    bool         isRunning { true };
+    InputModule* Input;
 
 };
 

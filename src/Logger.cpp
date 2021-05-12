@@ -35,7 +35,7 @@ string Logger::GetLogLevelText(LOG_LEVEL level) {
     switch (level) {
         case   ERR: afterText = "ERROR! "; break;
         case  WARN: afterText = "WARN: "; break;
-        case  INFO: afterText = ""; break;
+        case  INFO:
         case DEBUG: afterText = ""; break;
     }
 
@@ -49,6 +49,7 @@ string Logger::GetLogTypeText(LOG_TYPE log_type) {
         case  NETWORK: preText = "|NET|   "; break;
         case INTERNAL: preText = "|CORE|  "; break;
         case  PHYSICS: preText = "|PHYS|  "; break;
+        case    INPUT: preText = "|INPUT| "; break;
         case    SCENE: preText = "|SCENE| "; break;
         case   RENDER: preText = "|RENDER|"; break;
         case   WINDOW: preText = "|WINDOW|"; break;

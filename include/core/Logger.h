@@ -26,6 +26,7 @@ enum LOG_TYPE {
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
     SCENE,    // Scene module logs
+    INPUT,    // Scene module logs
 };
 enum PASS_INFO {
     SUCCESS,
