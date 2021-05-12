@@ -7,10 +7,9 @@ namespace core {
 
 
 int32_t EngineLoop::Enter() {
-
-    Input->Update();
-
     while ( isRunning ) {
+
+        Input->Update();
 
         if ( Input->exitRequested ) {
             EngineLoop::Stop();

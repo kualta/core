@@ -10,7 +10,7 @@ namespace core {
 
 class EngineModule : public IModule {
 public:
-    EngineModule();
+    explicit EngineModule(InputModule* input);
     ~EngineModule();
 
     int32_t Main();
@@ -18,6 +18,7 @@ public:
 protected:
 
     std::unique_ptr<EngineLoop> mainLoop;
+    InputModule*                Input;
 private:
 
 };

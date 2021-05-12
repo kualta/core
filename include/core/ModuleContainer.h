@@ -66,8 +66,15 @@ private:
     std::unique_ptr<T, Deleter> ptr;
 };
 
+/**
+ * Helper factory function that creates instance of module
+ * and passes all parameters to its constructor.
+ * @tparam InstanceType - Moduletype to create
+ * @tparam Deps - Parameters to pass to new module (dependencies)
+ * @return std::unique_ptr<InstanceType>
+ */
 template <class InstanceType, class ...Deps>
-std::unique_ptr<InstanceType> NewModuleFactory(Deps*... deps) {
+std::unique_ptr<InstanceType> NewModule(Deps*... deps) {
     return std::make_unique<InstanceType>(deps...);
 }
 

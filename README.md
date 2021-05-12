@@ -12,7 +12,7 @@ and then call `CoreConfig::Build()` to build your `Core` object, like this:
 
 ```c++
 CoreConfig cfg;
-cfg.Add(NewModuleFactory<WindowModule>);
+cfg.Add(NewModule<WindowModule>);
 
 Core core = cfg.Build();
 ```

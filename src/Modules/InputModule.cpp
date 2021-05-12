@@ -9,7 +9,6 @@ InputModule::InputModule() {
 }
 InputModule::~InputModule() {
     Logger::Log(INFO, INPUT) << "Destroyed Input module";
-
 }
 bool InputModule::GetAnyKey() {
     return false;
@@ -28,12 +27,8 @@ void InputModule::PollEvents() {
             case SDL_KEYDOWN:
                 if ( event.key.keysym.sym == SDLK_ESCAPE ) exitRequested = true;
             break;
-
         }
-
     }
-
 }
-
 
 }
