@@ -2,8 +2,10 @@
 #define CORE_SHADER_H
 
 #include "Essential.h"
+#include "FileSystem.h"
 
 #include <string>
+#include <fstream>
 #include <bgfx/bgfx.h>
 
 namespace core {
@@ -20,15 +22,10 @@ public:
     void SetShader(shaderType type, string path);
 
 protected:
-    bgfx::ShaderHandle LoadShader(string path);
-
-    static string ShadersPathFromRenderer();
-
+    bgfx::ShaderHandle LoadShader(const string& path);
 
     bgfx::ShaderHandle vertexShader;
     bgfx::ShaderHandle fragmentShader;
-
-    static string shadersPath;
 
 };
 
