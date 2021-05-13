@@ -9,16 +9,16 @@ namespace core {
 Logger::Logger() : Object("Logger") {
 
 }
-Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
+Log Logger::Log(logLevel level, moduleTag tag) {
     switch (level) {
-        case   ERR: return core::Log(std::cout, ERR, type);
-        case  WARN: return core::Log(std::cout, WARN, type);
-        case  INFO: return core::Log(std::cout, INFO, type);
-        case DEBUG: return core::Log(std::cout, DEBUG, type);
+        case   ERR: return core::Log(std::cout, ERR, tag);
+        case  WARN: return core::Log(std::cout, WARN, tag);
+        case  INFO: return core::Log(std::cout, INFO, tag);
+        case DEBUG: return core::Log(std::cout, DEBUG, tag);
     }
     return core::Log(std::cout, ERR, INTERNAL);
 }
-string Logger::GetPassText(PASS_INFO success) {
+string Logger::GetPassText(passInfo success) {
    string afterText;
 
     switch (success) {
@@ -29,7 +29,7 @@ string Logger::GetPassText(PASS_INFO success) {
 
     return afterText;
 }
-string Logger::GetLogLevelText(LOG_LEVEL level) {
+string Logger::GetLogLevelText(logLevel level) {
     string afterText;
 
     switch (level) {
@@ -41,10 +41,10 @@ string Logger::GetLogLevelText(LOG_LEVEL level) {
 
     return afterText;
 }
-string Logger::GetLogTypeText(LOG_TYPE log_type) {
+string Logger::GetLogTypeText(moduleTag tag) {
     string preText;
 
-    switch (log_type) {
+    switch (tag) {
         case  GENERAL: preText = "        "; break;
         case  NETWORK: preText = "|NET|   "; break;
         case INTERNAL: preText = "|CORE|  "; break;
@@ -101,10 +101,10 @@ Log::~Log() {
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
+Log::Log(std::ostream &out, logLevel level, moduleTag tag) : output(out) {
     logStream << "- ";
     Logger::AddTimeStamp(logStream) << " ";
-    logStream << Logger::GetLogTypeText(type) << " ";
+    logStream << Logger::GetLogTypeText(tag) << " ";
     logStream << Logger::GetLogLevelText(level);
 }
 } // namespace core

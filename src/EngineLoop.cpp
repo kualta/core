@@ -9,6 +9,11 @@ namespace core {
 int32_t EngineLoop::Enter() {
     while ( isRunning ) {
 
+        /*
+         * This will call Update() function on every module added to the core.
+         * The modules lower in the dependency hierarchy are guaranteed to be updated before
+         * their dependants.
+         */
         this->UpdateModules();
 
         if ( Input->exitRequested ) {

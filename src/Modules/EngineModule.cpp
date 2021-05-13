@@ -2,7 +2,9 @@
 
 namespace core {
 
-EngineModule::EngineModule(InputModule* input) : Input(input), mainLoop(std::make_unique<EngineLoop>(input)) {
+EngineModule::EngineModule(InputModule* input)
+: IModule("Engine"), Input(input), mainLoop(std::make_unique<EngineLoop>(input)) {
+
     Logger::Log(INFO, INTERNAL) << "Initialized Engline module";
 }
 EngineModule::~EngineModule() {

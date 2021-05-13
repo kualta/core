@@ -16,14 +16,13 @@ enum M_STATUS {
     C_ERR_INVALID_INPUT,
 };
 
-class IModule : public Instantiable<IModule> {
+class IModule : public Instantiable<IModule>, public Object {
 public:
-    string moduleName;
 
     virtual void Update() = 0;
 
 protected:
-    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") { };
+    explicit IModule(string name = "Unnamed") : Object(std::move(name) + " module") { };
 
 };
 
