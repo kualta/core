@@ -3,11 +3,11 @@
 
 namespace core {
 
-WindowModule::WindowModule() : IModule("Window"), windowPool("Window pool") {
-    Logger::Log(INFO, WINDOW) << "Initialized Window module";
+WindowModule::WindowModule() : IModule("Window", WINDOW), windowPool("Window pool") {
+
 }
 WindowModule::~WindowModule() {
-    Logger::Log(INFO, WINDOW) << "Destroyed Window module";
+
 }
 void WindowModule::Update() {
 

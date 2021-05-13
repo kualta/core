@@ -4,11 +4,11 @@
 namespace core {
 
 
-InputModule::InputModule() {
-    Logger::Log(INFO, INPUT) << "Initialized Input module";
+InputModule::InputModule() : IModule("Input", INPUT) {
+
 }
 InputModule::~InputModule() {
-    Logger::Log(INFO, INPUT) << "Destroyed Input module";
+
 }
 bool InputModule::GetAnyKey() {
     return false;

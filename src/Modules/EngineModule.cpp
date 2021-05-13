@@ -3,12 +3,11 @@
 namespace core {
 
 EngineModule::EngineModule(InputModule* input)
-: IModule("Engine"), Input(input), mainLoop(std::make_unique<EngineLoop>(input)) {
+: IModule("Engine", INTERNAL), Input(input), mainLoop(std::make_unique<EngineLoop>(input)) {
 
-    Logger::Log(INFO, INTERNAL) << "Initialized Engline module";
 }
 EngineModule::~EngineModule() {
-    Logger::Log(INFO, INTERNAL) << "Destroyed Engline module";
+
 }
 int32_t EngineModule::Main() {
 

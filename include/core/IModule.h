@@ -21,8 +21,16 @@ public:
 
     virtual void Update() = 0;
 
+    moduleTag tag { GENERAL };
+
 protected:
-    explicit IModule(string name = "Unnamed") : Object(std::move(name) + " module") { };
+    explicit IModule(string _name = "Unnamed", moduleTag _tag = GENERAL)
+    : Object(std::move(_name) + " module"), tag(_tag) {
+        Logger::Log(INFO, tag) << "Initialized " << name;
+    };
+    ~IModule() {
+        Logger::Log(INFO, tag) << "Destroyed " << name;
+    }
 
 };
 
