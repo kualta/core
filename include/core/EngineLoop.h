@@ -26,7 +26,7 @@ public:
     /**
      * Ticks every module in tickedModules list
      */
-    void TickAll();
+    void UpdateModules();
 
 protected:
 

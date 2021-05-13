@@ -44,6 +44,7 @@ template<int dims, typename T> class Vector;
 template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
+template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 

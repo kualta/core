@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Essential.h"
+#include "Instantiable.h"
 #include "Component.h"
 #include "Object.h"
 #include "Node.h"
@@ -19,7 +20,7 @@ namespace core {
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node<Entity> {
+class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
 public:
     Entity(string name = "entity",
            std::weak_ptr<Entity>& parent = root,
@@ -88,9 +89,6 @@ public:
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
-
-
-    static std::vector<Entity*> instances;
 
 protected:
 

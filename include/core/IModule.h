@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "Essential.h"
+#include "Instantiable.h"
 #include "Logger.h"
 
 namespace core {
@@ -15,20 +16,17 @@ enum M_STATUS {
     C_ERR_INVALID_INPUT,
 };
 
-class IModule {
+class IModule : public Instantiable<IModule> {
 public:
     string moduleName;
 
     virtual void Update() = 0;
 
-    static std::vector<IModule*> instances;
-
 protected:
-    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") {
-        instances.push_back(this);
-    };
+    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") { };
 
 };
+
 
 }
 
