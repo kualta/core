@@ -6,6 +6,7 @@
 #include <core/Components/Renderer.h>
 
 #include <algorithm>
+#include <bgfx/bgfx.h>
 
 namespace core {
 

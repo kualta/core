@@ -1,8 +1,6 @@
 #include <core/Entity.h>
 #include <core/Logger.h>
 
-#include <utility>
-
 namespace core {
 
 Entity::Entity(string name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<Component>> c)

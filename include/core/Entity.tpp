@@ -17,6 +17,9 @@ Entity& Entity::AddComponent() {
     }
 
     std::shared_ptr<T> component = std::make_shared<T>();
+
+    assertStandardComponents<T>(component.get());
+
     components.push_back(std::move(component));
 
     return *this;
@@ -32,6 +35,8 @@ Entity& Entity::AddComponent(T c) {
 
     // Create a copy of provided component, so that all children of Entitiy are allocated on heap.
     std::shared_ptr<T> component = std::make_shared<T>(c);
+
+    assertStandardComponents<T>(component.get());
 
     components.push_back(std::move(component));
     return *this;
@@ -57,6 +62,15 @@ bool Entity::HasComponent() {
         return true;
     } else {
         return false;
+    }
+}
+template<typename T>
+void Entity::assertStandardComponents(T* component) {
+    if (typeid(T) == typeid(Transform)) {
+        transform = component;
+    }
+    if (typeid(T) == typeid(Renderer)) {
+        renderer = component;
     }
 }
 
