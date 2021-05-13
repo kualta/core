@@ -1,3 +1,6 @@
+/*
+ * This is a stand-alone header file, no IModule.cpp is presented.
+ */
 #ifndef CORE_IMODULE_H
 #define CORE_IMODULE_H
 
@@ -24,8 +27,8 @@ public:
     objectTag tag { GENERAL };
 
 protected:
-    explicit IModule(string _name = "Unnamed", objectTag _tag = GENERAL)
-    : Object(std::move(_name) + " module"), tag(_tag) {
+    explicit IModule(string moduleName = "Unnamed", objectTag moduleTag = GENERAL)
+    : Object(std::move(moduleName) + " module"), tag(moduleTag) {
         Logger::Log(INFO, tag) << "Initialized " << name;
     };
     ~IModule() {
