@@ -21,10 +21,10 @@ public:
 
     virtual void Update() = 0;
 
-    moduleTag tag { GENERAL };
+    objectTag tag { GENERAL };
 
 protected:
-    explicit IModule(string _name = "Unnamed", moduleTag _tag = GENERAL)
+    explicit IModule(string _name = "Unnamed", objectTag _tag = GENERAL)
     : Object(std::move(_name) + " module"), tag(_tag) {
         Logger::Log(INFO, tag) << "Initialized " << name;
     };

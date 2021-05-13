@@ -18,11 +18,12 @@ enum logLevel {
     INFO,
     DEBUG,
 };
-enum moduleTag {
+enum objectTag {
     INTERNAL, // For engine logs
     GENERAL,  // For other logs
     NETWORK,  // Network module logs
     PHYSICS,  // Physics module logs
+    OBJECT,   // Objects logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
     SCENE,    // Scene module logs
@@ -43,7 +44,7 @@ public:
      * @warning At every Log object destruction the stream flushes. Might cause
      * performance issues
      */
-    static Log Log(logLevel level, moduleTag tag = GENERAL);
+    static Log Log(logLevel level, objectTag tag = GENERAL);
 
     /**
      * Adds current time stamp to string stream
@@ -61,7 +62,7 @@ public:
      */
     static std::stringstream& FillWidth(std::stringstream& stream, const char& ch, const int8_t& width);
 
-    static string GetLogTypeText(moduleTag tag);
+    static string GetLogTypeText(objectTag tag);
     static string GetLogLevelText(logLevel level);
     static string GetPassText(passInfo success);
     static string ToUpper(string str);
@@ -71,7 +72,7 @@ public:
 class Log {
 public:
     // Must be implemented in header
-    Log(std::ostream& out, logLevel level, moduleTag tag = GENERAL);
+    Log(std::ostream& out, logLevel level, objectTag tag = GENERAL);
     ~Log();
 
     template<class T>
