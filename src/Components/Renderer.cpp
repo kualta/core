@@ -4,6 +4,7 @@ namespace core {
 
 void Renderer::Draw() {
 
+    bgfx::submit(viewId,vfProgram);
 }
 
 }
