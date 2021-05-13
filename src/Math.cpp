@@ -23,7 +23,6 @@ Matrix4 Math::TranslationMatrix(const Vector3 &pos) {
 
     return mat;
 }
-
 Matrix4 Math::RotationMatrixXYZ(const float rotX, const float rotY, const float rotZ) {
 
     Matrix4 mat = Matrix4::zero;
@@ -51,14 +50,13 @@ Matrix4 Math::RotationMatrixXYZ(const float rotX, const float rotY, const float 
 
     return mat;
 }
-
-Matrix4 Math::ScaleMatrix(float x, float y, float z) {
+Matrix4 Math::ScaleMatrix(Vector3 scale) {
 
     Matrix4 mat = Matrix4::zero;
 
-    mat[0][0] = x;
-    mat[1][1] = y;
-    mat[2][2] = z;
+    mat[0][0] = scale.x;
+    mat[1][1] = scale.y;
+    mat[2][2] = scale.z;
     mat[3][3] = 1.0f;
 
     return mat;

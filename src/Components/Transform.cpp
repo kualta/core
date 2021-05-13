@@ -6,10 +6,11 @@ void Transform::Update() {
     UpdateTransform();
 }
 void Transform::UpdateTransform() {
-    transform *= Math::TranslationMatrix(position);
-    transform *= Math::RotationMatrixXYZ(rotatiton);
-    transform *= Math::ScaleMatrix(scale);
-}
+    transform = Matrix4::identity;
 
+    transform *= Math::ScaleMatrix(scale);
+    transform *= Math::RotationMatrixXYZ(rotatiton.x, rotatiton.y, rotatiton.z);
+    transform *= Math::TranslationMatrix(position);
+}
 
 }
