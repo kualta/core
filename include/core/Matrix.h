@@ -30,11 +30,12 @@ public:
         return mtx[row];
     }
 
+    static const Matrix3 zero;
+    static const Matrix3 identity;
+
 protected:
     float mtx[3][3];
 
-    static const Matrix3 zero;
-    static const Matrix3 identity;
 };
 
 template<> class Matrix<4, 4, float> {
@@ -66,14 +67,17 @@ public:
         return &mtx[0][0];
     }
 
-
     static const Matrix4 zero;
     static const Matrix4 identity;
+
 protected:
     float mtx[4][4];
+
 };
 
 Matrix4 operator*(const Matrix4 &lhs, const Matrix4 &rhs);
+Matrix4 operator*=(const Matrix4 &lhs, const Matrix4 &rhs);
+
 
 inline std::ostream& operator<<(std::ostream& o, const Matrix4 &mat)
 {
