@@ -12,7 +12,7 @@ public:
 
     static int64_t GetFileSize(const string& path);
 
-    static const bgfx::Memory* ReadFileToMemory(const string& path, int32_t size);
+    static const bgfx::Memory* ReadFileToMemory(const string& path, int64_t size);
 
 protected:
 

@@ -10,22 +10,21 @@
 
 namespace core {
 
-enum shaderType {
-    VERTEX,
-    FRAGMENT
-};
-
 class Shader {
 public:
-    Shader(bgfx::ShaderHandle handle);
+    Shader(const string& vShaderPath, const string& fShaderPath);
 
-    void SetShader(shaderType type, string path);
+    void SetVertexShader(const string& path);
+    void SetFragmentShader(const string& path);
+    void UpdateShader();
+    bool IsValid();
 
 protected:
-    bgfx::ShaderHandle LoadShader(const string& path);
+    static bgfx::ShaderHandle LoadShader(const string& path);
 
-    bgfx::ShaderHandle vertexShader;
-    bgfx::ShaderHandle fragmentShader;
+    bgfx::ShaderHandle vertexShader { bgfx::kInvalidHandle };
+    bgfx::ShaderHandle fragmentShader { bgfx::kInvalidHandle };
+    bgfx::ProgramHandle program { bgfx::kInvalidHandle };
 
 };
 
