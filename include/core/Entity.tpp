@@ -12,11 +12,11 @@ Entity& Entity::AddComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(WARN, INTERNAL) << "Entity already has this component!";
+        Logger::Log(WARN, INTERNAL) << "Entity \"" << name << "\" (ID " << GetId() << ") already has this component!";
         return *this;
     }
 
-    std::shared_ptr<T> component = std::make_shared<T>();
+    std::shared_ptr<T> component = std::make_shared<T>(this);
 
     assertStandardComponents<T>(component.get());
 

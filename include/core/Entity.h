@@ -102,6 +102,8 @@ public:
      */
     static void Destroy(Entity& entity);
 
+    string GetInfo();
+
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
 

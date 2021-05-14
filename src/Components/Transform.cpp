@@ -3,14 +3,14 @@
 namespace core {
 
 void Transform::Update() {
-    UpdateTransform();
+    UpdateMatrix();
 }
-void Transform::UpdateTransform() {
-    transform = Matrix4::identity;
+void Transform::UpdateMatrix() {
+    matrix = Matrix4::identity;
 
-    transform *= Math::ScaleMatrix(scale);
-    transform *= Math::RotationMatrixXYZ(rotatiton.x, rotatiton.y, rotatiton.z);
-    transform *= Math::TranslationMatrix(position);
+    matrix *= Math::ScaleMatrix(scale);
+    matrix *= Math::RotationMatrixXYZ(rotatiton.x, rotatiton.y, rotatiton.z);
+    matrix *= Math::TranslationMatrix(position);
 }
 
 }

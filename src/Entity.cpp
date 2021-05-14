@@ -34,4 +34,8 @@ bool Entity::operator==(const Entity &rhs) const {
     return static_cast<const core::Object&>(*this).GetId() == static_cast<const core::Object&>(rhs).GetId();
 }
 
+string Entity::GetInfo() {
+    return name + " ID(" + std::to_string(GetId()) + ")";
+}
+
 } // namespace core

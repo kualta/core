@@ -15,9 +15,14 @@ public:
 
     void Update();
 
-    Matrix4 transform { Matrix4::identity };
+    /**
+     * Transform matrix that describes current position, rotation and scale of entity
+     */
+    Matrix4 matrix { Matrix4::identity };
+
 protected:
-    void UpdateTransform();
+
+    void UpdateMatrix();
 
 private:
 
