@@ -16,6 +16,8 @@ class WindowModule;
 
 class Color;
 class Component;
+class Transform;
+class Renderer;
 class Core;
 class CoreConfig;
 class Degree;
@@ -34,6 +36,12 @@ class WindowBuilder;
 
 // Interfaces classes
 class IModule;
+
+
+class WindowModule;
+class EngineModule;
+class InputModule;
+class RenderModule;
 
 struct StatusDesc;
 struct RgbaColor;

@@ -2,6 +2,8 @@
 #define CORE_MATH_H
 
 #include "Essential.h"
+#include "Vector.h"
+#include "Matrix.h"
 #include <ostream>
 
 namespace core {

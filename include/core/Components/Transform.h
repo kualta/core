@@ -1,17 +1,15 @@
 #ifndef CORE_COMPONENT_TRANSFORM_H
 #define CORE_COMPONENT_TRANSFORM_H
 
-#include "core/Essential.h"
-#include "core/Component.h"
+#include <core/Essential.h>
+#include <core/Component.h>
 #include <core/Math.h>
-#include <core/Vector.h>
-#include <core/Matrix.h>
 
 namespace core {
 
 class Transform : public Component {
 public:
-    Transform() { }
+    Transform(Entity& parent);
 
     void Update();
 

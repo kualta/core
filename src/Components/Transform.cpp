@@ -13,4 +13,8 @@ void Transform::UpdateMatrix() {
     matrix *= Math::TranslationMatrix(position);
 }
 
+Transform::Transform(Entity &parent) : Component(parent) {
+
+}
+
 }

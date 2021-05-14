@@ -10,7 +10,6 @@
 
 namespace core {
 
-
 class RenderModule : public IModule {
 public:
 

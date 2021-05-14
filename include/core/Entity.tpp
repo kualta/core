@@ -16,7 +16,7 @@ Entity& Entity::AddComponent() {
         return *this;
     }
 
-    std::shared_ptr<T> component = std::make_shared<T>(this);
+    std::shared_ptr<T> component = std::make_shared<T>(*this);
 
     assertStandardComponents<T>(component.get());
 

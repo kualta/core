@@ -2,7 +2,6 @@
 #define CORE_COMPONENT_H
 
 #include "Essential.h"
-#include "Entity.h"
 #include "Object.h"
 
 #include <memory>
