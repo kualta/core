@@ -4,7 +4,7 @@ namespace core {
 
 Shader::Shader(const string& vShaderPath, const string& fShaderPath)
 : vertexShader(LoadShader(vShaderPath)), fragmentShader(LoadShader(fShaderPath)) {
-
+    UpdateShader();
 }
 void Shader::SetVertexShader(const string& path) {
     vertexShader = LoadShader(path);
@@ -13,7 +13,7 @@ void Shader::SetFragmentShader(const string& path) {
     fragmentShader = LoadShader(path);
 }
 void Shader::UpdateShader() {
-    if (IsValid(vertexShader) && IsValid(fragmentShader)) {
+    if (isValid(vertexShader) && isValid(fragmentShader)) {
         program = bgfx::createProgram(vertexShader, fragmentShader, true);
     }
 }

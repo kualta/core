@@ -15,11 +15,11 @@ public:
 
     void Update();
 
+    Matrix4 transform { Matrix4::identity };
 protected:
     void UpdateTransform();
 
 private:
-    Matrix4 transform { Matrix4::identity };
 
     Vector3 position { 0, 0, 0 };
     Vector3 rotatiton { 0, 0, 0 };

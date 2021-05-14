@@ -2,6 +2,7 @@
 #define CORE_COMPONENT_H
 
 #include "Essential.h"
+#include "Entity.h"
 #include "Object.h"
 
 #include <memory>
@@ -16,7 +17,7 @@ public:
     virtual ~Component() { }
 
     /// Entity object this component is attached to
-    std::weak_ptr<Entity> entity;
+    Entity* entity;
 
 protected:
 

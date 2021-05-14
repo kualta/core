@@ -18,7 +18,7 @@ public:
 protected:
     uint16_t           viewId { 0 };
     std::vector<float> vertices { };
-    core::Shader shader;
+    core::Shader*      shader;
 
 };
 

@@ -19,13 +19,13 @@ public:
     void UpdateShader();
     bool IsValid();
 
+    bgfx::ProgramHandle program { bgfx::kInvalidHandle };
+
 protected:
     static bgfx::ShaderHandle LoadShader(const string& path);
 
-    bgfx::ShaderHandle vertexShader { bgfx::kInvalidHandle };
-    bgfx::ShaderHandle fragmentShader { bgfx::kInvalidHandle };
-    bgfx::ProgramHandle program { bgfx::kInvalidHandle };
-
+    bgfx::ShaderHandle  vertexShader   { bgfx::kInvalidHandle };
+    bgfx::ShaderHandle  fragmentShader { bgfx::kInvalidHandle };
 };
 
 }

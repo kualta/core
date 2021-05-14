@@ -105,12 +105,13 @@ public:
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
 
+    Transform*                              transform { nullptr };
+    Renderer*                               renderer  { nullptr };
+
 protected:
 
     std::vector<std::shared_ptr<Component>> components;
     bool                                    isActive { true };
-    Transform*                              transform;
-    Renderer*                               renderer;
 };
 
 } // namespace core

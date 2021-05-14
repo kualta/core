@@ -33,7 +33,7 @@ Entity& Entity::AddComponent(T c) {
         return *this;
     }
 
-    // Create a copy of provided component, so that all children of Entitiy are allocated on heap.
+    // Create a copy of provided component, to ensure heap allocation of all children
     std::shared_ptr<T> component = std::make_shared<T>(c);
 
     assertStandardComponents<T>(component.get());

@@ -3,8 +3,8 @@
 namespace core {
 
 void Renderer::Draw() {
-
-//    bgfx::submit(viewId,vfProgram);
+    bgfx::setTransform(&entity->transform->transform);
+    bgfx::submit(viewId, shader->program);
 }
 
 }
