@@ -5,8 +5,8 @@
 
 namespace core {
 
-Renderer::Renderer(Entity& parent, Shader* shaderPtr, uint16_t viewId, ColorVertex* verBuf, uint16_t* triBuf)
-: Component(parent), viewId(viewId), verticesBuf(verBuf), trianglesBuf(triBuf), shader(shaderPtr) {
+Renderer::Renderer(Entity& parent, Shader* shaderPtr, Geometry* geometryPtr, uint16_t viewId)
+: Component(parent), viewId(viewId), shader(shaderPtr), geometry(geometryPtr) {
     if (!this->entity->HasComponent<Transform>()) {
         Logger::Log(WARN, OBJECT) << "Entity " << entity->GetInfo()
                                             << " does not have Transform component attached, but has Renderer!"

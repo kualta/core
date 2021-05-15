@@ -7,6 +7,7 @@
 #include <core/Shader.h>
 
 #include <bgfx/bgfx.h>
+#include <core/Geometry.h>
 
 namespace core {
 
@@ -15,16 +16,14 @@ public:
     // TODO: Add default shader so it could be defaulted
     Renderer(Entity& parent,
              Shader* shaderPtr,
-             uint16_t viewId = 0,
-             ColorVertex* verBuf = nullptr,
-             uint16_t* triBuf = nullptr);
+             Geometry* geometryPtr,
+             uint16_t viewId = 0);
 
     void Draw();
 
 protected:
     uint16_t        viewId       { 0 };
-    ColorVertex*    verticesBuf  { nullptr }; // TODO: Make separate Geometry class for geometry buffers
-    uint16_t*       trianglesBuf { nullptr };
+    Geometry*       geometry     { };
     core::Shader*   shader       { nullptr };
 
 };
