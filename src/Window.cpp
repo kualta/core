@@ -1,6 +1,4 @@
 #include <core/Window.h>
-#include "core/Logger.h"
-#include "core/Geometry.h"
 
 #include <SDL_syswm.h>
 

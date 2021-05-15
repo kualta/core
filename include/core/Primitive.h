@@ -22,7 +22,7 @@ typedef struct ColorVertex {
 
 class Primitive {
     ColorVertex vertices[0];
-    uint16_t triangles[0];
+    uint64_t triangles[0];
 };
 
 struct Cube : public Primitive {
@@ -36,7 +36,7 @@ struct Cube : public Primitive {
     {-1.0f, -1.0f, -1.0f, 0xffffff00 },
     { 1.0f, -1.0f, -1.0f, 0xffffffff }
     };
-    uint16_t triangles[3 * 12] { 0, 1, 2,
+    uint64_t triangles[3 * 12] { 0, 1, 2,
                                  1, 3, 2,
                                  4, 6, 5,
                                  5, 6, 7,

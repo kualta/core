@@ -92,6 +92,13 @@ public:
     template<typename T>
     void assertStandardComponents(Component* cPtr);
 
+    /**
+     * Checks for incomatible components being added
+     * @tparam T - Type of component
+     * @param cPtr - ptr to component
+     */
+    template<typename T>
+    void assertIncompatibleComponents(Component* cPtr);
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
