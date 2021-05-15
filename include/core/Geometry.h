@@ -5,17 +5,12 @@
 
 namespace core {
 
-typedef struct Rect {
-    int x, y;
-    int w, h;
-} Rect;
+class Geometry {
+public:
 
-typedef struct ColorVertex {
-    float x;
-    float y;
-    float z;
-    abgr abgr;
-} ColorVertex;
+protected:
+
+};
 
 }
 

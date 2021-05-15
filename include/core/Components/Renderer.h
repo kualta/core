@@ -16,14 +16,16 @@ public:
     Renderer(Entity& parent,
              Shader* shaderPtr,
              uint16_t viewId = 0,
-             float* buf = nullptr);
+             ColorVertex* verBuf = nullptr,
+             uint16_t* triBuf = nullptr);
 
     void Draw();
 
 protected:
-    uint16_t        viewId      { 0 };
-    float*          verticesBuf { nullptr };
-    core::Shader*   shader      { nullptr };
+    uint16_t        viewId       { 0 };
+    ColorVertex*    verticesBuf  { nullptr }; // TODO: Make separate Geometry class for geometry buffers
+    uint16_t*       trianglesBuf { nullptr };
+    core::Shader*   shader       { nullptr };
 
 };
 

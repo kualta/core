@@ -1,5 +1,5 @@
 /**
- * Header defines 3D primitive types
+ * Header defines primitive geometry types
  */
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
@@ -9,11 +9,22 @@
 
 namespace core {
 
+typedef struct Rect {
+    int x, y;
+    int w, h;
+} Rect;
+
+typedef struct ColorVertex {
+    float x;
+    float y;
+    float z;
+    abgr abgr;
+} ColorVertex;
+
 class Primitive {
     ColorVertex vertices[0];
     uint16_t triangles[0];
 };
-
 
 struct Cube : public Primitive {
     ColorVertex vertices[8] {
@@ -39,7 +50,6 @@ struct Cube : public Primitive {
                                  2, 3, 6,
                                  6, 3, 7 };
 };
-
 
 }
 
