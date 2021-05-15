@@ -12,12 +12,12 @@ namespace core {
 
 class RenderModule : public IModule {
 public:
+    RenderModule();
+    ~RenderModule();
 
     void Update() override;
 
 protected:
-    RenderModule();
-    ~RenderModule();
 
 };
 

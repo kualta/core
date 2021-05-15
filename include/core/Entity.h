@@ -92,16 +92,6 @@ public:
     template<typename T>
     void assertStandardComponents(Component* cPtr);
 
-    /**
-     * Destroys this entity
-     */
-    void Destroy() override;
-
-    /**
-     * Destroys entity
-     */
-    static void Destroy(Entity& entity);
-
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;

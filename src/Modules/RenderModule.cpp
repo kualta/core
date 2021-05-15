@@ -10,10 +10,10 @@ void RenderModule::Update() {
 
     bgfx::frame();
 }
-RenderModule::~RenderModule() {
+RenderModule::RenderModule() : IModule("Render", RENDER) {
 
 }
-RenderModule::RenderModule() : IModule("Render", RENDER) {
+RenderModule::~RenderModule() {
 
 }
 

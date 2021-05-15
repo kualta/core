@@ -18,12 +18,6 @@ void Entity::Despawn() {
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
 }
-void Entity::Destroy() {
-    this->~Entity();
-}
-void Entity::Destroy(Entity& entity) {
-    entity.Destroy();
-}
 void Entity::Update() {
 
 }
