@@ -11,7 +11,7 @@ class Transform : public Component {
 public:
     Transform(Entity& parent);
 
-    void Update();
+    void Update() override;
 
     /**
      * Transform matrix that describes current position, rotation and scale of entity
