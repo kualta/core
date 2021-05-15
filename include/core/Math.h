@@ -2,6 +2,8 @@
 #define CORE_MATH_H
 
 #include "Essential.h"
+#include "Vector.h"
+#include "Matrix.h"
 #include <ostream>
 
 namespace core {
@@ -36,7 +38,7 @@ public:
      * @param z - scale by Z axis
      * @return Matrix4 scale matrix
      */
-    static Matrix4 ScaleMatrix(float x, float y, float z);
+    static Matrix4 ScaleMatrix(Vector3 scale);
 
     static const float PI;
     static const float TWO_PI;

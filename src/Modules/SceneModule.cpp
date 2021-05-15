@@ -2,11 +2,11 @@
 
 namespace core {
 
-SceneModule::SceneModule() : IModule("Scene") {
-    Logger::Log(INFO, SCENE) << "Initialized Scene module";
+SceneModule::SceneModule() : IModule("Scene", SCENE) {
+
 }
 SceneModule::~SceneModule() {
-    Logger::Log(INFO, SCENE) << "Initialized Scene module";
+
 }
 void SceneModule::Update() {
     std::for_each(Entity::instances.begin(),

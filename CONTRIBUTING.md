@@ -10,12 +10,12 @@ It's mostly Google's convention, with several changes.
 | Entity Kind | Naming Convention |
 | :--- | --- |
 | Macro | SCREAMING_SNAKE_CASE |
-| Enumerator | SCREAMING_SNAKE_CASE |
 | Namespace | snake_case |
 | Global Function | PascalCase |
 | Memeber Function | PascalCase |
 | Struct name | PascalCase |
 | Class name | PascalCase |
+| Enumerator | camelCase |
 | Struct Member Field | camelCase |
 | Parameter | camelCase |
 | Local Variable | camelCase |

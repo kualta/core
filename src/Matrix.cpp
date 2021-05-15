@@ -14,8 +14,6 @@ const Matrix3 Matrix3::identity(
     0, 1, 0,
     0, 0, 1
     );
-
-
 const Matrix4 Matrix4::zero(
         0, 0, 0, 0,
         0, 0, 0, 0,
@@ -56,4 +54,7 @@ core::Matrix4 core::operator*(const core::Matrix4 &m, const core::Matrix4 &m2)
     r[3][3] = m[3][0] * m2[0][3] + m[3][1] * m2[1][3] + m[3][2] * m2[2][3] + m[3][3] * m2[3][3];
 
     return r;
+}
+core::Matrix4 core::operator*=(const core::Matrix4 &lhs, const core::Matrix4 &rhs) {
+    return lhs * rhs;
 }

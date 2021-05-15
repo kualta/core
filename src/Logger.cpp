@@ -9,53 +9,54 @@ namespace core {
 Logger::Logger() : Object("Logger") {
 
 }
-Log Logger::Log(LOG_LEVEL level, LOG_TYPE type) {
+Log Logger::Log(logLevel level, objectTag tag) {
     switch (level) {
-        case   ERR: return core::Log(std::cout, ERR, type);
-        case  WARN: return core::Log(std::cout, WARN, type);
-        case  INFO: return core::Log(std::cout, INFO, type);
-        case DEBUG: return core::Log(std::cout, DEBUG, type);
+        case   ERR: return core::Log(std::cout, ERR, tag);
+        case  WARN: return core::Log(std::cout, WARN, tag);
+        case  INFO: return core::Log(std::cout, INFO, tag);
+        case DEBUG: return core::Log(std::cout, DEBUG, tag);
     }
     return core::Log(std::cout, ERR, INTERNAL);
 }
-string Logger::GetPassText(PASS_INFO success) {
-   string afterText;
+string Logger::GetPassText(passInfo success) {
+   string text;
 
     switch (success) {
-        case NO_INFO: afterText = ""; break;
-        case    FAIL: afterText = "- failed"; break;
-        case SUCCESS: afterText = "- success"; break;
+        case NO_INFO: text = ""; break;
+        case    FAIL: text = "- failed"; break;
+        case SUCCESS: text = "- success"; break;
     }
 
-    return afterText;
+    return text;
 }
-string Logger::GetLogLevelText(LOG_LEVEL level) {
-    string afterText;
+string Logger::GetLogLevelText(logLevel level) {
+    string text;
 
     switch (level) {
-        case   ERR: afterText = "ERROR! "; break;
-        case  WARN: afterText = "WARN: "; break;
+        case   ERR: text = "ERROR! "; break;
+        case  WARN: text = "WARN: "; break;
         case  INFO:
-        case DEBUG: afterText = ""; break;
+        case DEBUG: text = ""; break;
     }
 
-    return afterText;
+    return text;
 }
-string Logger::GetLogTypeText(LOG_TYPE log_type) {
-    string preText;
+string Logger::GetLogTypeText(objectTag tag) {
+    string text;
 
-    switch (log_type) {
-        case  GENERAL: preText = "        "; break;
-        case  NETWORK: preText = "|NET|   "; break;
-        case INTERNAL: preText = "|CORE|  "; break;
-        case  PHYSICS: preText = "|PHYS|  "; break;
-        case    INPUT: preText = "|INPUT| "; break;
-        case    SCENE: preText = "|SCENE| "; break;
-        case   RENDER: preText = "|RENDER|"; break;
-        case   WINDOW: preText = "|WINDOW|"; break;
+    switch (tag) {
+        case  GENERAL: text = "        "; break;
+        case   OBJECT: text = "       >"; break;
+        case  NETWORK: text = "   |NET|"; break;
+        case INTERNAL: text = "  |CORE|"; break;
+        case  PHYSICS: text = "  |PHYS|"; break;
+        case    INPUT: text = " |INPUT|"; break;
+        case    SCENE: text = " |SCENE|"; break;
+        case   RENDER: text = "|RENDER|"; break;
+        case   WINDOW: text = "|WINDOW|"; break;
     }
 
-    return preText;
+    return text;
 }
 std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
     auto now = std::chrono::system_clock::now();
@@ -101,10 +102,10 @@ Log::~Log() {
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, LOG_LEVEL level, LOG_TYPE type) : output(out) {
+Log::Log(std::ostream &out, logLevel level, objectTag tag) : output(out) {
     logStream << "- ";
     Logger::AddTimeStamp(logStream) << " ";
-    logStream << Logger::GetLogTypeText(type) << " ";
+    logStream << Logger::GetLogTypeText(tag) << " ";
     logStream << Logger::GetLogLevelText(level);
 }
 } // namespace core

@@ -17,6 +17,8 @@ public:
     WindowModule();
     ~WindowModule();
 
+    void Update() override;
+
     Pool<Window> windowPool;
 };
 

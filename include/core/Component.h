@@ -13,10 +13,11 @@ namespace core {
  */
 class Component : public Object {
 public:
-    virtual ~Component() { }
+    explicit Component(Entity& parent);
+    virtual ~Component();
 
     /// Entity object this component is attached to
-    std::weak_ptr<Entity> entity;
+    Entity* entity { nullptr };
 
 protected:
 

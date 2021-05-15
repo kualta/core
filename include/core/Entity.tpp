@@ -12,11 +12,14 @@ Entity& Entity::AddComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(WARN, INTERNAL) << "Entity already has this component!";
+        Logger::Log(WARN, INTERNAL) << "Entity " << this->GetInfo() << ") already has this component!";
         return *this;
     }
 
-    std::shared_ptr<T> component = std::make_shared<T>();
+    std::shared_ptr<T> component = std::make_shared<T>(*this);
+
+    assertStandardComponents<T>(component.get());
+
     components.push_back(std::move(component));
 
     return *this;
@@ -30,8 +33,10 @@ Entity& Entity::AddComponent(T c) {
         return *this;
     }
 
-    // Create a copy of provided component, so that all children of Entitiy are allocated on heap.
+    // Create a copy of provided component, to ensure heap allocation of all children
     std::shared_ptr<T> component = std::make_shared<T>(c);
+
+    assertStandardComponents<T>(component.get());
 
     components.push_back(std::move(component));
     return *this;
@@ -50,13 +55,18 @@ T& Entity::GetComponent() {
 }
 template<typename T>
 bool Entity::HasComponent() {
-    if ( std::any_of(components.begin(),
-                     components.end(),
-                     [&](std::shared_ptr<Component> &c){ return typeid(c) == typeid(T); }) )
-    {
-        return true;
-    } else {
-        return false;
+    return std::any_of(components.begin(),
+                       components.end(),
+                       [&](std::shared_ptr<Component> &c) { return typeid(*c).hash_code() == typeid(T).hash_code(); }
+                       );
+}
+template<typename T>
+void Entity::assertStandardComponents(Component* cPtr) {
+    if (typeid(T) == typeid(Transform)) {
+        transform = dynamic_cast<Transform*>(cPtr);
+    }
+    if (typeid(T) == typeid(Renderer)) {
+        renderer = dynamic_cast<Renderer*>(cPtr);
     }
 }
 

@@ -9,7 +9,12 @@ namespace core {
 int32_t EngineLoop::Enter() {
     while ( isRunning ) {
 
-        Input->Update();
+        /*
+         * This will call Update() function on every module added to the core.
+         * The modules lower in the dependency hierarchy are guaranteed to be updated before
+         * their dependants.
+         */
+        this->UpdateModules();
 
         if ( Input->exitRequested ) {
             EngineLoop::Stop();
@@ -19,6 +24,11 @@ int32_t EngineLoop::Enter() {
 
     Logger::Log(INFO, INTERNAL) << "Main loop exit requested: quitting.";
     return 0;
+}
+void EngineLoop::UpdateModules() {
+    std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
+        module->Update();
+    });
 }
 void EngineLoop::Stop() {
     isRunning = false;

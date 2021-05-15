@@ -5,6 +5,7 @@
 #define CORE_NODE_H
 
 #include "Essential.h"
+#include <memory>
 
 namespace core {
 

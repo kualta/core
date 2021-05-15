@@ -12,23 +12,24 @@
 
 namespace core {
 
-enum LOG_LEVEL {
+enum logLevel {
     ERR,
     WARN,
     INFO,
     DEBUG,
 };
-enum LOG_TYPE {
+enum objectTag {
     INTERNAL, // For engine logs
     GENERAL,  // For other logs
     NETWORK,  // Network module logs
     PHYSICS,  // Physics module logs
+    OBJECT,   // Objects logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
     SCENE,    // Scene module logs
     INPUT,    // Scene module logs
 };
-enum PASS_INFO {
+enum passInfo {
     SUCCESS,
     NO_INFO,
     FAIL,
@@ -43,7 +44,7 @@ public:
      * @warning At every Log object destruction the stream flushes. Might cause
      * performance issues
      */
-    static Log Log(LOG_LEVEL level, LOG_TYPE type = GENERAL);
+    static Log Log(logLevel level, objectTag tag = GENERAL);
 
     /**
      * Adds current time stamp to string stream
@@ -61,9 +62,9 @@ public:
      */
     static std::stringstream& FillWidth(std::stringstream& stream, const char& ch, const int8_t& width);
 
-    static string GetLogTypeText(LOG_TYPE log_type);
-    static string GetLogLevelText(LOG_LEVEL level);
-    static string GetPassText(PASS_INFO success);
+    static string GetLogTypeText(objectTag tag);
+    static string GetLogLevelText(logLevel level);
+    static string GetPassText(passInfo success);
     static string ToUpper(string str);
 
 }; // class Logger
@@ -71,7 +72,7 @@ public:
 class Log {
 public:
     // Must be implemented in header
-    Log(std::ostream& out, LOG_LEVEL level, LOG_TYPE type = GENERAL);
+    Log(std::ostream& out, logLevel level, objectTag tag = GENERAL);
     ~Log();
 
     template<class T>

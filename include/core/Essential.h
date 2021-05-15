@@ -16,6 +16,8 @@ class WindowModule;
 
 class Color;
 class Component;
+class Transform;
+class Renderer;
 class Core;
 class CoreConfig;
 class Degree;
@@ -35,6 +37,12 @@ class WindowBuilder;
 // Interfaces classes
 class IModule;
 
+
+class WindowModule;
+class EngineModule;
+class InputModule;
+class RenderModule;
+
 struct StatusDesc;
 struct RgbaColor;
 struct AbgrColor;
@@ -44,6 +52,7 @@ template<int dims, typename T> class Vector;
 template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
+template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 

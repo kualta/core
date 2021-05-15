@@ -1,9 +1,13 @@
+/*
+ * This is a stand-alone header file, no IModule.cpp is presented.
+ */
 #ifndef CORE_IMODULE_H
 #define CORE_IMODULE_H
 
 #include <utility>
 
 #include "Essential.h"
+#include "Instantiable.h"
 #include "Logger.h"
 
 namespace core {
@@ -15,14 +19,24 @@ enum M_STATUS {
     C_ERR_INVALID_INPUT,
 };
 
-class IModule {
+class IModule : public Instantiable<IModule>, public Object {
 public:
-    string moduleName;
+
+    virtual void Update() = 0;
+
+    objectTag tag { GENERAL };
 
 protected:
-    explicit IModule(string name = "Unnamed") : moduleName(std::move(name) + "module") { };
+    explicit IModule(string moduleName = "Unnamed", objectTag moduleTag = GENERAL)
+    : Object(std::move(moduleName) + " module"), tag(moduleTag) {
+        Logger::Log(INFO, tag) << "Initialized " << name;
+    };
+    ~IModule() {
+        Logger::Log(INFO, tag) << "Destroyed " << name;
+    }
 
 };
+
 
 }
 
