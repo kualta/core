@@ -87,10 +87,10 @@ public:
      * Checks if component is of any standard components type
      * i.e. Transform or Renderer, if so sets member pointer to this component
      * @tparam T - Type of component
-     * @param c - ptr to component
+     * @param cPtr - ptr to component
      */
     template<typename T>
-    void assertStandardComponents(T* c);
+    void assertStandardComponents(Component* cPtr);
 
     /**
      * Destroys this entity
@@ -102,18 +102,17 @@ public:
      */
     static void Destroy(Entity& entity);
 
-    string GetInfo();
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
 
-    Transform*                              transform { nullptr };
-    Renderer*                               renderer  { nullptr };
+    Transform*  transform { nullptr };
+    Renderer*   renderer  { nullptr };
 
 protected:
 
     std::vector<std::shared_ptr<Component>> components;
-    bool                                    isActive { true };
+    bool  isActive { true };
 };
 
 } // namespace core

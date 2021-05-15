@@ -9,8 +9,8 @@ Renderer::Renderer(Entity& parent, uint16_t viewId, float* buf, Shader* shader)
 : Component(parent), viewId(viewId), verticesBuf(buf), shader(shader) {
     if (!this->entity->HasComponent<Transform>()) {
         Logger::Log(WARN, OBJECT) << "Entity \"" << entity->GetInfo()
-                                            << " does not have Transform component attached,"
-                                            << " but has Renderer! Draw calls will result in error";
+                                            << " does not have Transform component attached, but has Renderer!\n"
+                                            << "Draw calls will result in error";
     }
 }
 void Renderer::Draw() {

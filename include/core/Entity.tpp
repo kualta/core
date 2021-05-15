@@ -12,7 +12,7 @@ Entity& Entity::AddComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(WARN, INTERNAL) << "Entity \"" << name << "\" (ID " << GetId() << ") already has this component!";
+        Logger::Log(WARN, INTERNAL) << "Entity " << this->GetInfo() << ") already has this component!";
         return *this;
     }
 
@@ -55,22 +55,18 @@ T& Entity::GetComponent() {
 }
 template<typename T>
 bool Entity::HasComponent() {
-    if ( std::any_of(components.begin(),
-                     components.end(),
-                     [&](std::shared_ptr<Component> &c){ return typeid(c) == typeid(T); }) )
-    {
-        return true;
-    } else {
-        return false;
-    }
+    return std::any_of(components.begin(),
+                       components.end(),
+                       [&](std::shared_ptr<Component> &c) { return typeid(*c).hash_code() == typeid(T).hash_code(); }
+                       );
 }
 template<typename T>
-void Entity::assertStandardComponents(T* component) {
+void Entity::assertStandardComponents(Component* cPtr) {
     if (typeid(T) == typeid(Transform)) {
-        transform = component;
+        transform = dynamic_cast<Transform*>(cPtr);
     }
     if (typeid(T) == typeid(Renderer)) {
-        renderer = component;
+        renderer = dynamic_cast<Renderer*>(cPtr);
     }
 }
 
