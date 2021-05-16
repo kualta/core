@@ -1,27 +1,29 @@
 #ifndef CORE_GEOMETRY_H
 #define CORE_GEOMETRY_H
 
-#include <bgfx/bgfx.h>
 #include "Essential.h"
+#include "Primitive.h"
+
+#include <bgfx/bgfx.h>
+#include <cstring>
 
 namespace core {
 
 class Geometry {
 public:
-    Geometry();
-    Geometry(ColorVertex* verBuf, uint16_t verBufSize, uint64_t* triBuf, uint16_t triBufSize);
+    Geometry(std::vector<ColorVertex> vb, std::vector<uint16_t> ib);
 
-    bgfx::VertexBufferHandle vbh { bgfx::kInvalidHandle };
-    bgfx::IndexBufferHandle ibh  { bgfx::kInvalidHandle };
-    bgfx::VertexLayout vertexLayout;
+    bgfx::VertexBufferHandle CreateVertexBuffer(const std::vector<ColorVertex>& vb) const;
+    bgfx::IndexBufferHandle CreateIndexBuffer(const std::vector<uint16_t>& ib) const;
+
+    bgfx::VertexBufferHandle vertexBufferHandle { bgfx::kInvalidHandle };
+    bgfx::IndexBufferHandle  indexBufferHandle  { bgfx::kInvalidHandle };
+    bgfx::VertexLayout       vertexLayout;
 
 protected:
 
-    ColorVertex*    verticesBuf  { nullptr };
-    uint64_t*       trianglesBuf { nullptr };
-    uint16_t        vBufSize     { 0 };
-    uint16_t        tBufSize     { 0 };
-
+    std::vector<ColorVertex> verticesBuf;
+    std::vector<uint16_t>    trianglesBuf;
 };
 
 }

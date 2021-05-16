@@ -1,21 +1,34 @@
 #include <core/Geometry.h>
-#include <core/Primitive.h>
 
 namespace core {
 
-Geometry::Geometry() {
-
-}
-Geometry::Geometry(ColorVertex* verBuf, uint16_t verBufSize, uint64_t *triBuf, uint16_t triBufSize)
-: verticesBuf(verBuf), trianglesBuf(triBuf), vBufSize(verBufSize), tBufSize(triBufSize) {
+Geometry::Geometry(std::vector<ColorVertex> vb, std::vector<uint16_t> ib)
+: verticesBuf(std::move(vb)), trianglesBuf(std::move(ib)) {
 
     vertexLayout.begin()
             .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
             .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
             .end();
 
-    vbh = bgfx::createVertexBuffer(bgfx::makeRef(verticesBuf, vBufSize), vertexLayout);
-    ibh = bgfx::createIndexBuffer(bgfx::makeRef(trianglesBuf, tBufSize));
+    vertexBufferHandle = CreateVertexBuffer(verticesBuf);
+    indexBufferHandle = CreateIndexBuffer(trianglesBuf);
+}
+bgfx::VertexBufferHandle Geometry::CreateVertexBuffer(const std::vector<ColorVertex>& vb) const {
+    size_t vecBytesSize = vb.size() * sizeof(ColorVertex);
+
+    const bgfx::Memory* mem = bgfx::alloc(vecBytesSize);
+    std::memcpy(mem->data, vb.data(), vecBytesSize);
+
+    return bgfx::createVertexBuffer(mem, vertexLayout);
+}
+bgfx::IndexBufferHandle Geometry::CreateIndexBuffer(const std::vector<uint16_t>& ib) const {
+    size_t vecBytesSize = ib.size() * sizeof(uint16_t);
+
+    const bgfx::Memory* mem = bgfx::alloc(vecBytesSize);
+    std::memcpy(mem->data, ib.data(), vecBytesSize);
+
+    return bgfx::createIndexBuffer(mem);
+
 }
 
 } // namespace

@@ -19,6 +19,7 @@ void RenderModule::Update() {
         renderer->Draw();
     });
 
+
     bgfx::frame();
 }
 RenderModule::RenderModule() : IModule("Render", RENDER) {

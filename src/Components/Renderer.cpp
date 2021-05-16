@@ -1,4 +1,5 @@
 #include <core/Components/Renderer.h>
+#include <core/Essential.h>
 #include <core/Entity.h>
 
 #include <utility>
@@ -10,9 +11,9 @@ Renderer::Renderer(Entity& parent, Shader* shaderPtr, Geometry* geometryPtr, uin
 
 }
 void Renderer::Draw() {
-    bgfx::setVertexBuffer(0, geometry->vbh);
-    bgfx::setIndexBuffer(geometry->ibh);
-    bgfx::setTransform(&entity->transform->matrix.data);
+    bgfx::setVertexBuffer(viewId, geometry->vertexBufferHandle);
+    bgfx::setIndexBuffer(geometry->indexBufferHandle);
+    bgfx::setTransform(&entity->transform->matrix);
 
     bgfx::submit(viewId, shader->program);
 }

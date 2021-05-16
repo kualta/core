@@ -22,9 +22,9 @@ public:
     void Draw();
 
 protected:
-    uint16_t        viewId       { 0 };
-    Geometry*       geometry     { };
-    core::Shader*   shader       { nullptr };
+    uint16_t         viewId    { 0 };
+    core::Geometry*  geometry  { };
+    core::Shader*    shader    { nullptr };
 
 };
 
