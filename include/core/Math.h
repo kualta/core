@@ -69,7 +69,7 @@ public:
      */
     static Matrix4 LookAtMatrix(const Vector3& pos,
                                 const Vector3& lookAt,
-                                const Vector3& worldUp = Vector3(Vector3::up));
+                                const Vector3& worldUp = Vector3::up);
 
     /**
      * Generates new translation matrix to vector

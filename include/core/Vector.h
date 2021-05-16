@@ -2,7 +2,6 @@
 #define CORE_VECTOR_H
 
 #include "Essential.h"
-#include "Math.h"
 
 namespace core {
 

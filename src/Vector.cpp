@@ -1,4 +1,5 @@
 #include <core/Vector.h>
+#include <core/Math.h>
 
 namespace core {
 

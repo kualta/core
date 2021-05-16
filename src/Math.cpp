@@ -1,9 +1,9 @@
 #include <core/Math.h>
+#include <core/Primitive.h>
 #include <core/Vector.h>
 #include <core/Matrix.h>
 
 #include <cmath>
-#include <core/Primitive.h>
 
 
 namespace core {
@@ -83,7 +83,7 @@ Vector3 Math::Normalize(const Vector3& vec) {
 }
 Vector3 Math::Normalize(const Vector3&& vec) {
     const float invLen = 1.0f / vec.Length();
-    return vec * invLen;
+    return invLen == std::numeric_limits<float>::infinity() ? Vector3::zero : vec * invLen;
 }
 Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vector3 &worldUp) {
 
@@ -94,23 +94,12 @@ Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vect
 
     Matrix4 mtx = Matrix4::zero;
 
-    mtx[0][0] = right.x;
-    mtx[0][1] = forward.x;
-    mtx[0][2] = up.x;
+    mtx[0][0] = right.x;                mtx[0][1] = up.x;                mtx[0][2] = forward.x;
+    mtx[1][0] = right.y;                mtx[1][1] = up.y;                mtx[1][2] = forward.y;
+    mtx[2][0] = right.z;                mtx[2][1] = up.z;                mtx[2][2] = forward.z;
+    mtx[3][0] = -Math::Dot(right, pos); mtx[3][1] = -Math::Dot(up, pos); mtx[3][2] = -Math::Dot(forward, pos);
 
-    mtx[1][0] = right.y;
-    mtx[1][1] = forward.y;
-    mtx[1][2] = up.y;
-
-    mtx[2][0] = right.z;
-    mtx[2][1] = forward.z;
-    mtx[2][2] = up.z;
-
-    mtx[3][0] = -Math::Dot(right, pos);
-    mtx[3][1] = -Math::Dot(forward, pos);
-    mtx[3][2] = -Math::Dot(up, pos);
-
-    mtx[3][3] = 1.0f;
+                                                                                                    mtx[3][3] = 1.0f;
 
     /*
       *   [         right.x          forward.x          up.x  0 ]
@@ -130,9 +119,10 @@ Matrix4 Math::ProjectionMatrix(float top, float bottom, float left, float right,
     return ProjectionMatrix(Rect{ x, y, width, height }, near, far, hmgNdc);
 }
 Matrix4 Math::ProjectionMatrix(float fovY, float aspect, float near, float far, bool hmgNdc) {
-    const float height = 1.0f / Math::Tan(Math::DegreesToRadians(fovY * 0.5f));
+    const float height = 1.0f / Math::Tan(Math::DegreesToRadians(Degree(fovY * 0.5f)));
     const float width  = height * 1.0f / aspect;
-    ProjectionMatrix(Rect { 0.0f, 0.0f, width, height }, near, far, hmgNdc);
+    return ProjectionMatrix(Rect { 0.0f, 0.0f, width, height }, near, far, hmgNdc);
+
 }
 Matrix4 Math::ProjectionMatrix(Rect rect, float near, float far, bool hmgNdc) {
     const float diff = far - near;
