@@ -39,6 +39,34 @@ public:
     static inline Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
 
     /**
+     * Calculates normalized version of vector
+     * @details magnitude of normalized vector is 1
+     * @param vec - lvalue ref Vector to normalize
+     * @return Vector3 normalized vector
+     */
+    static Vector3 Normalize(const Vector3& vec);
+
+    /**
+     * Calculates normalized version of vector
+     * @details magnitude of normalized vector is 1
+     * @param vec - rvalue ref Vector to normalize
+     * @return Vector3 normalized vector
+     */
+    static Vector3 Normalize(const Vector3&& vec);
+
+    /**
+     * Calculates matrix that represents transformation
+     * from pos to lookAt
+     * @param pos - position of transform
+     * @param lookAt - point transform looks at
+     * @param worldUp - world up vector (default = {0, 0, 1})
+     * @return Matrix4 transform matrix
+     */
+    static Matrix4 LookAtMatrix(const Vector3& pos,
+                                const Vector3& lookAt,
+                                const Vector3& worldUp = Vector3::up);
+
+    /**
      * Generates new translation matrix to vector
      * @param pos - position translate to
      * @return Matrix4 translation matrix
@@ -63,13 +91,15 @@ public:
      */
     static Matrix4 ScaleMatrix(Vector3 scale);
 
+
+    static float Sqrt(float num);
+
+
     static const float PI;
     static const float TWO_PI;
     static const float TAU;
     static const float HALF_PI;
     static const float LOG2;
-
-    static float Sqrt(float num);
 }; // class Math
 
 

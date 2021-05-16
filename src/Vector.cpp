@@ -3,11 +3,6 @@
 namespace core {
 
 // --------------- Vector3 ------------------
-Vector3 Vector<3, float>::Normalize() {
-    const float invLen = 1.0f / Length();
-    return *this * invLen;
-}
-
 float Vector<3, float>::Length() {
     return Math::Sqrt(Math::Dot(*this, *this));
 }
@@ -22,6 +17,15 @@ Vector3 operator-(const Vector3 &lhs, const Vector3 &rhs) {
             lhs.y - rhs.y,
             lhs.z - rhs.z);
 }
+const Vector3 Vector3::up       (0.0f, 0.0f, 1.0f);
+const Vector3 Vector3::down     (0.0f, 0.0f, -1.0f);
+const Vector3 Vector3::forward  (0.0f, 1.0f, 0.0f);
+const Vector3 Vector3::back     (0.0f, -1.0f, 0.0f);
+const Vector3 Vector3::right    (1.0f, 0.0f, 0.0f);
+const Vector3 Vector3::left     (-1.0f, 0.0f, 0.0f);
+
+const Vector3 Vector3::zero     (0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::one     (1.0f, 1.0f, 1.0f);
 // --------------- Vector3 ------------------
 
 

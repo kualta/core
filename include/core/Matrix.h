@@ -6,11 +6,23 @@
 
 namespace core {
 
+/**
+ * Template Matrix class to represent rowsxcols matrices
+ *
+ * @details Matrices are row-major
+ * @tparam rows - int amount of rows in matrix
+ * @tparam cols - int amount of columns in matrix
+ * @tparam T - type of elements of the matrix
+ */
 template<int rows, int cols, typename T> class Matrix {
 protected:
     T data[rows][cols];
 };
 
+/**
+ * 3x3 matrix of float
+ * @details Matrix is row-major
+ */
 template<> class Matrix<3, 3, float> {
 public:
     Matrix(
@@ -38,6 +50,10 @@ protected:
 
 };
 
+/**
+ * 4x4 matrix of float
+ * @details Matrix is row-major
+ */
 template<> class Matrix<4, 4, float> {
 public:
     Matrix() {}

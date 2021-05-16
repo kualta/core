@@ -73,5 +73,47 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
 float Math::Sqrt(float num) {
     return std::sqrt(num);
 }
+Vector3 Math::Normalize(const Vector3& vec) {
+    const float invLen = 1.0f / vec.Length();
+    return vec * invLen;
+}
+Vector3 Math::Normalize(const Vector3&& vec) {
+    const float invLen = 1.0f / vec.Length();
+    return vec * invLen;
+}
+Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vector3 &worldUp) {
+
+    // Core uses left-handed coordinate system
+    const Vector3 forward = Math::Normalize(lookAt - pos);
+    const Vector3 right   = Math::Normalize(Math::Cross(worldUp, forward));
+    const Vector3 up      = Math::Cross(forward, right);
+
+    Matrix4 result = Matrix4::zero;
+
+    result[0][0] = right.x;
+    result[0][1] = forward.x;
+    result[0][2] = up.x;
+
+    result[1][0] = right.y;
+    result[1][1] = forward.y;
+    result[1][2] = up.y;
+
+    result[2][0] = right.z;
+    result[2][1] = forward.z;
+    result[2][2] = up.z;
+
+    result[3][0] = -Math::Dot(right, pos);
+    result[3][1] = -Math::Dot(forward, pos);
+    result[3][2] = -Math::Dot(up, pos);
+
+    result[3][3] = 1.0f;
+
+    /*
+      *   [         right.x          forward.x          up.x  0 ]
+      *   [         right.y          forward.y          up.y  0 ]
+      *   [         right.z          forward.z          up.z  0 ]
+      *   [ dot(right,-eye)  dot(forward,-eye)  dot(up,-eye)  1 ]
+     */
+}
 
 } // namespace
