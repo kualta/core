@@ -37,6 +37,7 @@ Entity& Entity::AddComponent(T c) {
     std::shared_ptr<T> component = std::make_shared<T>(c);
 
     assertStandardComponents<T>(component.get());
+    assertIncompatibleComponents<T>(component.get());
 
     components.push_back(std::move(component));
     return *this;
@@ -67,6 +68,16 @@ void Entity::assertStandardComponents(Component* cPtr) {
     }
     if (typeid(T) == typeid(Renderer)) {
         renderer = dynamic_cast<Renderer*>(cPtr);
+    }
+}
+template<typename T>
+void Entity::assertIncompatibleComponents(Component *cPtr) {
+    if (typeid(T) == typeid(Renderer)) {
+        if (!this->HasComponent<Transform>()) {
+            Logger::Log(WARN, OBJECT) << "Entity " << GetInfo()
+                                      << " does not have Transform component attached, but has Renderer!"
+                                      << " Draw calls will result in error";
+        }
     }
 }
 

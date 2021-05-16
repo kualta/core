@@ -2,8 +2,10 @@
 #define CORE_WINDOW_H
 
 #include "Essential.h"
+#include "Primitive.h"
 #include "Object.h"
 #include "Vector.h"
+#include "Logger.h"
 
 #include <SDL_syswm.h>
 

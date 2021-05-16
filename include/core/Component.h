@@ -16,14 +16,10 @@ public:
     explicit Component(Entity& parent);
     virtual ~Component();
 
+    virtual void Update();
+
     /// Entity object this component is attached to
     Entity* entity { nullptr };
-
-protected:
-
-private:
-
-
 };
 
 } // namespace core
