@@ -2,6 +2,7 @@
 #define CORE_VECTOR_H
 
 #include "Essential.h"
+#include "Math.h"
 
 namespace core {
 
@@ -27,12 +28,18 @@ public:
 template<> struct Vector<3, float> {
 public:
     Vector() { }
-    Vector(float x, float y, float z) : x(x), y(y), z(z) {}
+    Vector(float x, float y, float z) : x(x), y(y), z(z) { }
+
+    Vector3 Normalize();
+    float Length();
 
     float x;
     float y;
     float z;
 };
+Vector3 operator*(const Vector3 &vec, const float &num);
+Vector3 operator-(const Vector3 &lhs, const Vector3 &rhs);
+
 template<> struct Vector<3, int> {
 public:
     Vector() { }

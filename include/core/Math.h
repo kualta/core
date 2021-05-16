@@ -16,6 +16,29 @@ public:
     static inline float RadiansToDegrees(float radians) { return radians * float(180.0) / PI; }
 
     /**
+     * Calculates dot product of two Vectors
+     * @details dot product = first.x * second.x
+     *                      + first.y * second.y
+     *                      + first.z * second.z;
+     * @param lhs - first Vector
+     * @param rhs - second Vector
+     * @return dot product between lhs and rhs
+     */
+    static inline float Dot(const Vector3& lhs, const Vector3& rhs);
+
+    /**
+     * Calculates cross product between two vectors
+     * @details cross product = (
+                first.y * second.z - first.z * second.y,
+                first.z * second.x - first.x * second.z,
+                first.x * second.y - first.y * second.x)
+     * @param lhs - first Vector
+     * @param rhs - second Vector
+     * @return Vector3 cross product between lhs and rhs
+     */
+    static inline Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
+
+    /**
      * Generates new translation matrix to vector
      * @param pos - position translate to
      * @return Matrix4 translation matrix
@@ -45,6 +68,8 @@ public:
     static const float TAU;
     static const float HALF_PI;
     static const float LOG2;
+
+    static float Sqrt(float num);
 }; // class Math
 
 
@@ -86,7 +111,6 @@ public:
     }
 }; // class Degree
 
-
 class Radian {
     float value;
 
@@ -123,7 +147,7 @@ public:
         o << "Radian(" << v.GetValue() << ")";
         return o;
     }
-};
+}; // class Radian
 
 
 } // namespace

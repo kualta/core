@@ -61,7 +61,7 @@ public:
     }
 
     /**
-     * @return pointer to first element of first row of matrix
+     * @return pointer to first element of the matrix
      */
     float* GetPtr() {
         return &data[0][0];

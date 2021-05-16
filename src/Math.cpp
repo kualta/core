@@ -61,5 +61,17 @@ Matrix4 Math::ScaleMatrix(Vector3 scale) {
 
     return mat;
 }
+float Math::Dot(const Vector3 &lhs, const Vector3 &rhs) {
+    return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+}
+Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
+    return Vector3 (
+                lhs.y*rhs.z - lhs.z*rhs.y,
+                lhs.z*rhs.x - lhs.x*rhs.z,
+                lhs.x*rhs.y - lhs.y*rhs.x);
+}
+float Math::Sqrt(float num) {
+    return std::sqrt(num);
+}
 
 } // namespace
