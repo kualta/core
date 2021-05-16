@@ -9,8 +9,8 @@
 namespace core {
 
 typedef struct Rect {
-    int x, y;
-    int w, h;
+    float x, y;
+    float w, h;
 } Rect;
 
 typedef struct ColorVertex {

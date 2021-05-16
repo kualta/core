@@ -27,12 +27,27 @@ public:
 template<> struct Vector<3, float> {
 public:
     Vector() { }
-    Vector(float x, float y, float z) : x(x), y(y), z(z) {}
+    Vector(float x, float y, float z) : x(x), y(y), z(z) { }
+
+    float Length() const;
 
     float x;
     float y;
     float z;
+
+    static const Vector3 up;
+    static const Vector3 down;
+    static const Vector3 forward;
+    static const Vector3 back;
+    static const Vector3 right;
+    static const Vector3 left;
+
+    static const Vector3 zero;
+    static const Vector3 one;
 };
+Vector3 operator*(const Vector3 &vec, const float &num);
+Vector3 operator-(const Vector3 &lhs, const Vector3 &rhs);
+
 template<> struct Vector<3, int> {
 public:
     Vector() { }
