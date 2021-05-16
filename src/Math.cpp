@@ -3,6 +3,7 @@
 #include <core/Matrix.h>
 
 #include <cmath>
+#include <core/Primitive.h>
 
 
 namespace core {
@@ -23,7 +24,7 @@ Matrix4 Math::TranslationMatrix(const Vector3 &pos) {
 
     return mat;
 }
-Matrix4 Math::RotationMatrixXYZ(const float rotX, const float rotY, const float rotZ) {
+Matrix4 Math::RotationAxisMatrix(const float rotX, const float rotY, const float rotZ) {
 
     Matrix4 mat = Matrix4::zero;
 
@@ -52,14 +53,14 @@ Matrix4 Math::RotationMatrixXYZ(const float rotX, const float rotY, const float 
 }
 Matrix4 Math::ScaleMatrix(Vector3 scale) {
 
-    Matrix4 mat = Matrix4::zero;
+    Matrix4 mtx = Matrix4::zero;
 
-    mat[0][0] = scale.x;
-    mat[1][1] = scale.y;
-    mat[2][2] = scale.z;
-    mat[3][3] = 1.0f;
+    mtx[0][0] = scale.x;
+    mtx[1][1] = scale.y;
+    mtx[2][2] = scale.z;
+    mtx[3][3] = 1.0f;
 
-    return mat;
+    return mtx;
 }
 float Math::Dot(const Vector3 &lhs, const Vector3 &rhs) {
     return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
@@ -72,6 +73,9 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
 }
 float Math::Sqrt(float num) {
     return std::sqrt(num);
+}
+float Math::Tan(const Radian& rad) {
+    return std::tan(rad.GetValue());
 }
 Vector3 Math::Normalize(const Vector3& vec) {
     const float invLen = 1.0f / vec.Length();
@@ -88,25 +92,25 @@ Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vect
     const Vector3 right   = Math::Normalize(Math::Cross(worldUp, forward));
     const Vector3 up      = Math::Cross(forward, right);
 
-    Matrix4 result = Matrix4::zero;
+    Matrix4 mtx = Matrix4::zero;
 
-    result[0][0] = right.x;
-    result[0][1] = forward.x;
-    result[0][2] = up.x;
+    mtx[0][0] = right.x;
+    mtx[0][1] = forward.x;
+    mtx[0][2] = up.x;
 
-    result[1][0] = right.y;
-    result[1][1] = forward.y;
-    result[1][2] = up.y;
+    mtx[1][0] = right.y;
+    mtx[1][1] = forward.y;
+    mtx[1][2] = up.y;
 
-    result[2][0] = right.z;
-    result[2][1] = forward.z;
-    result[2][2] = up.z;
+    mtx[2][0] = right.z;
+    mtx[2][1] = forward.z;
+    mtx[2][2] = up.z;
 
-    result[3][0] = -Math::Dot(right, pos);
-    result[3][1] = -Math::Dot(forward, pos);
-    result[3][2] = -Math::Dot(up, pos);
+    mtx[3][0] = -Math::Dot(right, pos);
+    mtx[3][1] = -Math::Dot(forward, pos);
+    mtx[3][2] = -Math::Dot(up, pos);
 
-    result[3][3] = 1.0f;
+    mtx[3][3] = 1.0f;
 
     /*
       *   [         right.x          forward.x          up.x  0 ]
@@ -114,6 +118,38 @@ Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vect
       *   [         right.z          forward.z          up.z  0 ]
       *   [ dot(right,-eye)  dot(forward,-eye)  dot(up,-eye)  1 ]
      */
+    return mtx;
+}
+Matrix4 Math::ProjectionMatrix(float top, float bottom, float left, float right, float near, float far, bool hmgNdc) {
+    const float invDiffRl = 1.0f / (right - left);
+    const float invDiffTb = 1.0f / (top - bottom);
+    const float width  = 2.0f * near * invDiffRl;
+    const float height = 2.0f * near * invDiffTb;
+    const float x      = (right + left) * invDiffRl;
+    const float y      = (top + bottom) * invDiffTb;
+    return ProjectionMatrix(Rect{ x, y, width, height }, near, far, hmgNdc);
+}
+Matrix4 Math::ProjectionMatrix(float fovY, float aspect, float near, float far, bool hmgNdc) {
+    const float height = 1.0f / Math::Tan(Math::DegreesToRadians(fovY * 0.5f));
+    const float width  = height * 1.0f / aspect;
+    ProjectionMatrix(Rect { 0.0f, 0.0f, width, height }, near, far, hmgNdc);
+}
+Matrix4 Math::ProjectionMatrix(Rect rect, float near, float far, bool hmgNdc) {
+    const float diff = far - near;
+    const float a = hmgNdc ? (far + near) / diff : far / diff;
+    const float b = hmgNdc ? (2.0f * far * near) / diff : near * a;
+
+    Matrix4 mtx = Matrix4::zero;
+
+    mtx[0][0] = rect.w;
+    mtx[1][1] = rect.h;
+    mtx[2][0] = -rect.x;
+    mtx[2][1] = -rect.y;
+    mtx[2][2] = a;
+    mtx[2][3] = 1.0f;
+    mtx[3][2] = -b;
+
+    return mtx;
 }
 
 } // namespace

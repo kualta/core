@@ -15,6 +15,9 @@ public:
 
     void Update() override;
 
+    Matrix4 view;
+    Matrix4 proj;
+
 protected:
 
 };

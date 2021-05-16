@@ -3,7 +3,7 @@
 namespace core {
 
 // --------------- Vector3 ------------------
-float Vector<3, float>::Length() {
+float Vector3::Length() const {
     return Math::Sqrt(Math::Dot(*this, *this));
 }
 Vector3 operator*(const Vector3 &vec, const float &num) {
