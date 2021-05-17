@@ -43,7 +43,7 @@ God bless tab character. __Use spaces__
 - C++ source files go to `src/` folder and use `.cpp` extention
 - C++ header files go to `include/core/` folder and use `.h` extention
 - C++ template implementations go to same folder as `.h` file they belong to and use `.tpp` extention
-- Headers and source files use `PascalCase` for names, with one exception: `core.h` and `core.cpp`
+- Headers and source files use `PascalCase` for names
 - Every source file __must__ have corresponding header file. 
 - Header file might be stand-alone. In this case this has to be specified in comment before header guard.
 
