@@ -1,5 +1,6 @@
 ## Contributing
-- __Don't__ use emoji in PRs, commits, or code comments.  
+- **[Wiki](https://github.com/lectroMathew/Core/wiki)** is open for anyone to contribute to. You're welcome to add new pages to it, but please be responsible.
+- _Don't_ use emoji in PRs, commits, or code comments.  
 
 
 ## C++ Naming Convention 
@@ -48,37 +49,47 @@ God bless tab character. __Use spaces__
 
 
 ## Code Example 
-```c++
-// file: include/core/MyClass.h
-#ifndef CORE_MYCLASS_H
-#define CORE_MYCLASS_H
+```cpp
+// file: core/EngineLoop.h
+#ifndef CORE_ENGINELOOP_H
+#define CORE_ENGINELOOP_H
 
 #include "Essential.h"
-#include "Singleton.h"
+#include "Logger.h"
 
-#include <string>
+#include "Modules/InputModule.h"
+#include <forward_list>
 
 namespace core {
 
-/** 
- * My shiny class
- */
-class MyClass {
-
+class EngineLoop {
 public:
-    MyClass();
-    ~Myclass();
+    explicit EngineLoop(InputModule* inputModule);
 
-    MyClass* *Ptr() { return this; }
+    /**
+     * Function which contains main engine loop.
+     */
+    int32_t Enter();
 
-private:
-    void InnerFunc();
-    std::string var;
-    int anotherVarExample;
+    /**
+     * Stops main engine loop after current frame.
+     */
+    void Stop();
+
+    /**
+     * Ticks every module in tickedModules list
+     */
+    void UpdateModules();
+
+protected:
+
+    bool                        isRunning { true };
+    InputModule*                Input;
+
 };
 
-} // namespace core
+}
 
+#endif //CORE_ENGINELOOP_H
 
-#endif //CORE_MYCLASS_H
 ```
