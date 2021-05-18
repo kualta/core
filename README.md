@@ -1,27 +1,20 @@
-# <center> Core Engine </center>
+# Core Engine
+### Game Engine focused on performance and flexibility 
+**Inspired by MonoGame, raylib and OGRE.**  
 
-Engine built on top of [SDL](https://github.com/libsdl-org/SDL) and [bgfx](https://github.com/bkaradzic/bgfx). An attempt to bring ease and flexibility to С++ game development.  
-Inspired by MonoGame, raylib and OGRE.  
-<br>
-**Early stages of development**
+_Early stages of development_
 
 ## Usage
-To init the engine create `core::CoreConfig` object and declare dependencies with `CoreConfig::Add()` 
-and then call `CoreConfig::Build()` to build your `Core` object, like this:
 
+* **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine
+* **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers
 
-```c++
-CoreConfig cfg;
-cfg.Add(NewModule<WindowModule>);
-
-Core core = cfg.Build();
-```
-For more information, check engine wiki page 
+Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information
 
 ## Contributing 
-Check naming convensions and contributing guidelines [here](https://github.com/lectroMathew/Core/blob/master/CONTRIBUTING.md)
+* **[Contributing](https://github.com/lectroMathew/Core/blob/master/CONTRIBUTING.md)** guidelines
 
 <br>
 <br>
-  
-> not to be confused with [core game platform](https://en.wikipedia.org/wiki/Core_\(video_game_platform\))
+
+> not to be confused with [Core (game platform)](https://en.wikipedia.org/wiki/Core_\(video_game_platform\))
