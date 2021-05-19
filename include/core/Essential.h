@@ -4,6 +4,16 @@
 #ifndef CORE_ESSENTIAL_H
 #define CORE_ESSENTIAL_H
 
+//   Core defines
+#ifndef SDL_MAIN_HANDLED
+#   define SDL_MAIN_HANDLED
+#endif
+
+#ifndef NULL
+#   define NULL 0
+#endif
+
+
 #include <string>
 #include <vector>
 #include <cstdint>
