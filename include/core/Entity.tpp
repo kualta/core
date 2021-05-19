@@ -42,6 +42,26 @@ Entity& Entity::AddComponent(T c) {
     components.push_back(std::move(component));
     return *this;
 }
+template<typename T, typename... Args>
+Entity &Entity::AddComponent(Args... args) {
+    static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
+
+    if ( this->HasComponent<T>() ) {
+        Logger::Log(WARN, INTERNAL) << "Entity already has this component!";
+        return *this;
+    }
+
+    // Create a copy of provided component, to ensure heap allocation of all children
+    std::shared_ptr<T> component = std::make_shared<T>(args...);
+
+    assertStandardComponents<T>(component.get());
+    assertIncompatibleComponents<T>(component.get());
+
+    components.push_back(std::move(component));
+    return *this;
+
+}
+
 template<typename T>
 T& Entity::GetComponent() {
     auto const& it = std::find_if(components.begin(), components.end(), [&](std::shared_ptr<T>& p)

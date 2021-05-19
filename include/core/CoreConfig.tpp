@@ -2,10 +2,10 @@ namespace core {
 
 
 // Needed for the parameter pack below
-template <class ...Args>
+template <typename ...Args>
 inline void pass(Args... args) {  }
 
-template <class ModuleType, class Deleter, class ...Deps>
+template <typename ModuleType, typename Deleter, typename ...Deps>
 CoreConfig& CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) {
     int moduleTypeId = TypeMap<nodeInfo>::typeId<typename std::remove_const<ModuleType>::type>();
     nodeInfo &newNodeInfo = graph[moduleTypeId];

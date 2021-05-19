@@ -84,6 +84,17 @@ public:
     Entity& AddComponent(T c);
 
     /**
+     * Creates new Component c and adds it to Entity,
+     * passing additional arguments to the component's constructor
+     * @details Method chaining is possible
+     * @tparam T - component typename
+     * @tparam Args - additional arguments
+     * @return Reference to this Entity
+     */
+    template<typename T, typename ...Args>
+    Entity& AddComponent(Args... args);
+
+    /**
      * Checks if component is of any standard components type
      * i.e. Transform or Renderer, if so sets member pointer to this component
      * @tparam T - Type of component

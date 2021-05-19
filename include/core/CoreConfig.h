@@ -17,18 +17,30 @@ namespace core {
 
 class CoreConfig {
 public:
+    /**
+     * Adds module to CoreConfig
+     * @details Method chaining is available
+     * @tparam InstanceType - Type of module to add
+     * @tparam Deleter - Deleter to use
+     * @tparam Deps - Dependencies of the module
+     * @return reference to this CoreConfig
+     */
     template <class InstanceType, class Deleter, class ...Deps>
     CoreConfig& Add(ModuleFactory<InstanceType, Deleter, Deps...> moduleFactory);
 
+    /**
+     * Creates new Core object from this config
+     * @return core::Core object
+     */
     Core Build();
 
 private:
     using initializer_fn = std::function<void(Core &)>;
 
     struct nodeInfo {
-        enum class MARK { UNMARKED, TEMP, PERM };
+        enum class mark { UNMARKED, TEMP, PERM };
 
-        MARK mark;
+        mark nodeMark;
 
         /**
          * Used for providing type name in debug messages
@@ -50,7 +62,7 @@ private:
     };
 
     /**
-     * Graph of all dependencies for every module
+     * Graph of dependencies for every module
      */
     std::unordered_map<int, nodeInfo> graph;
 
