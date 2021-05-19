@@ -62,9 +62,6 @@ Matrix4 Math::ScaleMatrix(Vector3 scale) {
 
     return mtx;
 }
-float Math::Dot(const Vector3 &lhs, const Vector3 &rhs) {
-    return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
-}
 Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
     return Vector3 (
                 lhs.y*rhs.z - lhs.z*rhs.y,

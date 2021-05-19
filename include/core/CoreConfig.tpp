@@ -6,7 +6,7 @@ template <class ...Args>
 inline void pass(Args... args) {  }
 
 template <class ModuleType, class Deleter, class ...Deps>
-void CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) {
+CoreConfig& CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) {
     int moduleTypeId = TypeMap<nodeInfo>::typeId<typename std::remove_const<ModuleType>::type>();
     nodeInfo &newNodeInfo = graph[moduleTypeId];
     newNodeInfo.initializer = [moduleFactory](Core &core) {
@@ -18,6 +18,7 @@ void CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) 
     pass(graph[TypeMap<nodeInfo>::typeId<typename std::remove_const<Deps>::type>()]
                  .dependents
                  .insert(moduleTypeId)...);
+    return *this;
 }
 
 
