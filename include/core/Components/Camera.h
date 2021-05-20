@@ -11,13 +11,14 @@ namespace core {
 
 class Camera : public Component {
 public:
-    Camera(Entity& parent,
+    Camera(Entity* parent = nullptr,
            float fovY = 90.0f,
            float width = 600.0f,
            float height = 400.0f,
            float near = 0.1f,
            float far = 100.0f,
-           bool hmgDepth = bgfx::getCaps()->homogeneousDepth);
+           bool hmgDepth = bgfx::getCaps()->homogeneousDepth,
+           const string& name = "Camera");
 
     void Start();
 

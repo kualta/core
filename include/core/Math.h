@@ -29,7 +29,9 @@ public:
      * @param rhs - second Vector
      * @return dot product between lhs and rhs
      */
-    static inline float Dot(const Vector3& lhs, const Vector3& rhs);
+    static inline float Dot(const Vector3& lhs, const Vector3& rhs) {
+        return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+    };
 
     /**
      * Calculates cross product between two vectors
@@ -41,7 +43,7 @@ public:
      * @param rhs - second Vector
      * @return Vector3 cross product between lhs and rhs
      */
-    static inline Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
+    static Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
 
     /**
      * Calculates normalized version of vector

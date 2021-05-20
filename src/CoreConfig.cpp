@@ -10,7 +10,7 @@ Core CoreConfig::Build() {
 
     std::unordered_set<int> unmarkedNodes;
     for (auto &node : graph) {
-        node.second.mark = nodeInfo::MARK::UNMARKED;
+        node.second.nodeMark = nodeInfo::mark::UNMARKED;
         unmarkedNodes.insert(node.first);
     }
     while ( !unmarkedNodes.empty() ) {
@@ -31,15 +31,15 @@ void CoreConfig::VisitNode(
         std::stack <CoreConfig::initializer_fn*> *output)
 {
     nodeInfo &info = graph[nodeId];
-    if (info.mark == nodeInfo::MARK::TEMP) {
+    if (info.nodeMark == nodeInfo::mark::TEMP) {
         Logger::Log(ERR, INTERNAL) << info.typeName << " appears to be part of a cycle";
-    } else if (info.mark == nodeInfo::MARK::UNMARKED) {
+    } else if (info.nodeMark == nodeInfo::mark::UNMARKED) {
         unmarkedNodes->erase(nodeId);
-        info.mark = nodeInfo::MARK::TEMP;
+        info.nodeMark = nodeInfo::mark::TEMP;
         for (int dependent : info.dependents) {
             VisitNode(dependent, unmarkedNodes, output);
         }
-        info.mark = nodeInfo::MARK::PERM;
+        info.nodeMark = nodeInfo::mark::PERM;
 
         /*
          * if hasInitializer is false, it means someone depends on this

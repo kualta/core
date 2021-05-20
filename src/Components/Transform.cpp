@@ -2,6 +2,9 @@
 
 namespace core {
 
+Transform::Transform(Entity *parent, const string& name) : Component(parent, name) {
+
+}
 void Transform::Update() {
     UpdateMatrix();
 }
@@ -11,10 +14,6 @@ void Transform::UpdateMatrix() {
     matrix *= Math::TranslationMatrix(Vector3(position.x * 1.1f, position.y * 1.1f, position.z * 1.1f));
     matrix *= Math::ScaleMatrix(scale);
     matrix *= Math::TranslationMatrix(position);
-}
-
-Transform::Transform(Entity &parent) : Component(parent) {
-
 }
 void Transform::SetPosition(const Vector3 &vec) {
     position = vec;
