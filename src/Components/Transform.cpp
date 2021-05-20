@@ -1,9 +1,11 @@
 #include <core/Components/Transform.h>
+#include <core/Entity.h>
 
 namespace core {
 
-Transform::Transform(Entity *parent, const string& name) : Component(parent, name) {
-
+Transform::Transform(Entity& parent, const string& name) : Component(parent, name) {
+    parent.assertExistingComponent<Transform>();
+    parent.transform = this;
 }
 void Transform::Update() {
     UpdateMatrix();

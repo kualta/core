@@ -6,16 +6,28 @@
 
 namespace core {
 
-Renderer::Renderer(Entity *parent, Shader *shaderPtr, Geometry *geometryPtr, uint16_t viewId, string name)
-: Component(parent, name), viewId(viewId), shader(shaderPtr), geometry(geometryPtr) {
-
+Renderer::Renderer(
+        Entity& parent,
+        Shader& shader,
+        Geometry& geometry,
+        uint16_t viewId,
+        const string& name)
+:   Component(parent, name),
+    viewId(viewId),
+    shader(shader),
+    geometry(geometry)
+{
+    parent.assertRequiredComponent<Transform>(this);
+    parent.renderer = this;
 }
 void Renderer::Draw() {
-    bgfx::setVertexBuffer(viewId, geometry->vertexBufferHandle);
-    bgfx::setIndexBuffer(geometry->indexBufferHandle);
-    bgfx::setTransform(&entity->transform->matrix);
+    bgfx::setVertexBuffer(viewId, geometry.vertexBufferHandle);
+    bgfx::setIndexBuffer(geometry.indexBufferHandle);
+    bgfx::setTransform(&parent->transform->matrix);
 
-    bgfx::submit(viewId, shader->program);
+    bgfx::submit(viewId, shader.program);
+    static int counter = 0;
+    Logger::Log(INFO) << ++counter;
 }
 void Renderer::Update() {
 

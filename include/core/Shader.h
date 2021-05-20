@@ -12,7 +12,6 @@ namespace core {
 
 class Shader {
 public:
-    Shader();
     Shader(const string& vertexShaderPath, const string& fragmentShaderPath);
 
     void SetVertexShader(const string& path);

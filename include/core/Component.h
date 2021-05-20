@@ -1,6 +1,3 @@
-/*
- * This is a stand-alone header file. No Component.cpp is presented.
- */
 #ifndef CORE_COMPONENT_H
 #define CORE_COMPONENT_H
 
@@ -16,14 +13,14 @@ namespace core {
  */
 class Component : public Object {
 public:
-    explicit Component(Entity* parent = nullptr, const string& name = "Unnamed")
-                : Object(name + " component"), entity(parent) { };
-    virtual ~Component() { };
+    explicit Component(Entity& parent, const string& name = "Unnamed");
+    virtual ~Component();
 
     virtual void Update() = 0;
 
+
     /// Entity object this component is attached to
-    Entity* entity { nullptr };
+    Entity* parent { nullptr };
 };
 
 } // namespace core

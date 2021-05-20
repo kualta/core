@@ -3,15 +3,29 @@
 
 namespace core {
 
-Camera::Camera(Entity* parent, float fovY, float width, float height, float near, float far, bool hmgDepth,
-               const string& name)
-: Component(parent, name), fov(fovY), aspectRatio(width/height), width(width), height(height),
-  nearPlane(near), farPlane(far), homogeneousDepth(hmgDepth) {
-
-    this->Start();
+Camera::Camera(
+        Entity& parent,
+        float fovY,
+        float width,
+        float height,
+        float near,
+        float far,
+        bool hmgDepth,
+        const string& name)
+:   Component(parent, name),
+    fov(fovY),
+    aspectRatio(width/height),
+    width(width),
+    height(height),
+    nearPlane(near),
+    farPlane(far),
+    homogeneousDepth(hmgDepth)
+{
+    parent.assertRequiredComponent<Transform>(this);
+    Start();
 }
 void Camera::Update() {
-    viewMatrix = Math::LookAtMatrix(entity->transform->position, lookAt,Vector3(0, 1, 0));
+    viewMatrix = Math::LookAtMatrix(parent->transform->position, lookAt, Vector3(0, 1, 0));
 
     projectionMatrix = Math::ProjectionMatrix(60.0f, float(600) / float(400), 0.1f, 100.0f, homogeneousDepth);
 
