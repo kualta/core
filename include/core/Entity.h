@@ -81,7 +81,7 @@ public:
      * @note Method chaining is possible
      */
     template<typename T>
-    Entity& AddComponent(T c);
+    Entity& AddComponent(T* c);
 
     /**
      * Creates new Component c and adds it to Entity,

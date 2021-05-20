@@ -6,8 +6,8 @@
 
 namespace core {
 
-Renderer::Renderer(Entity& parent, Shader* shaderPtr, Geometry* geometryPtr, uint16_t viewId)
-: Component(parent), viewId(viewId), shader(shaderPtr), geometry(geometryPtr) {
+Renderer::Renderer(Entity *parent, Shader *shaderPtr, Geometry *geometryPtr, uint16_t viewId, string name)
+: Component(parent, name), viewId(viewId), shader(shaderPtr), geometry(geometryPtr) {
 
 }
 void Renderer::Draw() {

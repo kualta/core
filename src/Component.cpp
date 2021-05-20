@@ -2,7 +2,7 @@
 
 namespace core {
 
-Component::Component(Entity &entity) : entity(&entity) {
+Component::Component(Entity *parent, const string& name) : Object(name + " component"), entity(parent) {
 
 }
 Component::~Component() {

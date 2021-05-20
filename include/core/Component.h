@@ -13,7 +13,8 @@ namespace core {
  */
 class Component : public Object {
 public:
-    explicit Component(Entity& parent);
+    explicit Component(Entity* parent = nullptr,
+                       const string& name = "Unnamed");
     virtual ~Component();
 
     virtual void Update();

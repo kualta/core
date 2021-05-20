@@ -3,8 +3,9 @@
 
 namespace core {
 
-Camera::Camera(Entity &parent, float fovY, float width, float height, float near, float far, bool hmgDepth)
-: Component(parent), fov(fovY), aspectRatio(width/height), width(width), height(height),
+Camera::Camera(Entity* parent, float fovY, float width, float height, float near, float far, bool hmgDepth,
+               const string& name)
+: Component(parent, name), fov(fovY), aspectRatio(width/height), width(width), height(height),
   nearPlane(near), farPlane(far), homogeneousDepth(hmgDepth) {
 
     this->Start();

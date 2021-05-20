@@ -16,7 +16,7 @@ Entity& Entity::AddComponent() {
         return *this;
     }
 
-    std::shared_ptr<T> component = std::make_shared<T>(*this);
+    std::shared_ptr<T> component = std::make_shared<T>(this);
 
     assertStandardComponents<T>(component.get());
 
@@ -25,7 +25,7 @@ Entity& Entity::AddComponent() {
     return *this;
 }
 template<typename T>
-Entity& Entity::AddComponent(T c) {
+Entity& Entity::AddComponent(T* c) {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
@@ -52,14 +52,13 @@ Entity &Entity::AddComponent(Args... args) {
     }
 
     // Create a copy of provided component, to ensure heap allocation of all children
-    std::shared_ptr<T> component = std::make_shared<T>(args...);
+    std::shared_ptr<T> component = std::make_shared<T>(this, args...);
 
     assertStandardComponents<T>(component.get());
     assertIncompatibleComponents<T>(component.get());
 
     components.push_back(std::move(component));
     return *this;
-
 }
 
 template<typename T>
