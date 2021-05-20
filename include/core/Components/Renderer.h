@@ -22,6 +22,8 @@ public:
 
     void Draw();
 
+    void Update() override;
+
 protected:
     uint16_t         viewId    { 0 };
     core::Geometry*  geometry  { };

@@ -14,13 +14,40 @@ public:
 
     void Update() override;
 
+    /**
+     * Sets current position of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetPosition(const Vector3& vec);
+
+    /**
+     * Sets current position of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetPosition(const Vector3&& vec);
 
+    /**
+     * Sets current rotation of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetRotation(const Vector3& vec);
+
+    /**
+     * Sets current rotation of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetRotation(const Vector3&& vec);
 
+    /**
+     * Sets current scale of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetScale(const Vector3& vec);
+
+    /**
+     * Sets current scale of transform to vec
+     * @note new position will not take effect until next update cycle
+     */
     void SetScale(const Vector3&& vec);
 
     /**

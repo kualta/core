@@ -17,5 +17,8 @@ void Renderer::Draw() {
 
     bgfx::submit(viewId, shader->program);
 }
+void Renderer::Update() {
+
+}
 
 }

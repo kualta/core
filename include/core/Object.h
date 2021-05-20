@@ -4,6 +4,7 @@
 #include "Essential.h"
 
 #include <utility>
+#include <atomic>
 
 namespace core {
 
@@ -31,12 +32,11 @@ public:
     string name;
 
 protected:
-    // FIXME: Current id implementation is not thread-safe
     explicit Object(string name = "");
-    ~Object();
+    virtual ~Object();
 
 private:
-    static uint32_t objectCounter;
+    static std::atomic<uint32_t> objectCounter;
     uint32_t id;
 };
 
