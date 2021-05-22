@@ -14,7 +14,7 @@ public:
     InputModule();
     ~InputModule();
 
-    void Update() override;
+    void Tick() override;
 
     bool GetAnyKey();
 

@@ -11,6 +11,9 @@ Renderer::Renderer(Entity& parent, Shader* shaderPtr, Geometry* geometryPtr, uin
     parent.assertRequiredComponent<Transform>(this);
     parent.renderer = this;
 }
+void Renderer::Tick() {
+    Draw();
+}
 void Renderer::Draw() {
     bgfx::setVertexBuffer(viewId, geometry->vertexBufferHandle);
     bgfx::setIndexBuffer(geometry->indexBufferHandle);

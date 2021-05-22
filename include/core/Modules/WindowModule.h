@@ -17,7 +17,7 @@ public:
     WindowModule();
     ~WindowModule();
 
-    void Update() override;
+    void Tick() override;
 
     Pool<Window> windowPool;
 };

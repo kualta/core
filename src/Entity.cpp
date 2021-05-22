@@ -22,7 +22,7 @@ void Entity::Update() {
     std::for_each(components.begin(),
                   components.end(),
                   [&](std::shared_ptr<Component> &c) {
-        c->Update();
+        c->Tick();
     });
 }
 void Entity::Draw() {

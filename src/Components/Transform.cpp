@@ -7,7 +7,7 @@ Transform::Transform(Entity& parent, const string& name) : Component(parent, nam
     parent.assertExistingComponent<Transform>();
     parent.transform = this;
 }
-void Transform::Update() {
+void Transform::Tick() {
     UpdateMatrix();
 }
 void Transform::UpdateMatrix() {

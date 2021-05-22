@@ -27,7 +27,7 @@ int32_t EngineLoop::Enter() {
 }
 void EngineLoop::UpdateModules() {
     std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
-        module->Update();
+        module->Tick();
     });
 }
 void EngineLoop::Stop() {

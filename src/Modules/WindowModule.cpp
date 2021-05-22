@@ -9,7 +9,7 @@ WindowModule::WindowModule() : IModule("Window", WINDOW), windowPool("Window poo
 WindowModule::~WindowModule() {
 
 }
-void WindowModule::Update() {
+void WindowModule::Tick() {
 
 }
 

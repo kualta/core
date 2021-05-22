@@ -13,7 +13,7 @@ InputModule::~InputModule() {
 bool InputModule::GetAnyKey() {
     return false;
 }
-void InputModule::Update() {
+void InputModule::Tick() {
     PollEvents();
     keystate = SDL_GetKeyboardState(nullptr);
 }

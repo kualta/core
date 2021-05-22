@@ -13,7 +13,7 @@ public:
     explicit EngineModule(InputModule* input);
     ~EngineModule();
 
-    void Update() override;
+    void Tick() override;
 
     int32_t Main();
 

@@ -8,7 +8,7 @@ SceneModule::SceneModule() : IModule("Scene", SCENE) {
 SceneModule::~SceneModule() {
 
 }
-void SceneModule::Update() {
+void SceneModule::Tick() {
     std::for_each(Entity::instances.begin(),
                   Entity::instances.end(),
                   [&] (Entity* e) { e->Update(); } );

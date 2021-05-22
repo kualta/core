@@ -4,11 +4,12 @@
 #ifndef CORE_IMODULE_H
 #define CORE_IMODULE_H
 
-#include <utility>
-
 #include "Essential.h"
 #include "Instantiable.h"
+#include "ITicker.h"
 #include "Logger.h"
+
+#include <utility>
 
 namespace core {
 
@@ -19,10 +20,8 @@ enum M_STATUS {
     C_ERR_INVALID_INPUT,
 };
 
-class IModule : public Instantiable<IModule>, public Object {
+class IModule : public Instantiable<IModule>, public Object, public ITicker {
 public:
-
-    virtual void Update() = 0;
 
     objectTag tag { GENERAL };
 
