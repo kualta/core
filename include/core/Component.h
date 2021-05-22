@@ -14,12 +14,15 @@ namespace core {
  */
 class Component : public Object, public ITicker {
 public:
-    explicit Component(Entity& parent,
-                       const string& name = "Unnamed");
-    virtual ~Component();
+
+    bool isActive = true;
 
     /// Entity object this component is attached to
     Entity* entity { nullptr };
+protected:
+    explicit Component(Entity& parent, const string& name = "Unnamed");
+    virtual ~Component();
+
 };
 
 } // namespace core

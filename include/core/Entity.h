@@ -29,9 +29,10 @@ public:
                     std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
-    void Update();
-
-    void Draw();
+    /**
+     * Updated all components of this entity
+     */
+    void Tick();
 
     /**
      * Activates entity

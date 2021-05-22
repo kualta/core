@@ -11,7 +11,7 @@ SceneModule::~SceneModule() {
 void SceneModule::Tick() {
     std::for_each(Entity::instances.begin(),
                   Entity::instances.end(),
-                  [&] (Entity* e) { e->Update(); } );
+                  [&] (Entity* e) { e->Tick(); } );
 }
 
 }
