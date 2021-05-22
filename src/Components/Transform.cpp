@@ -12,13 +12,9 @@ void Transform::Update() {
 void Transform::UpdateMatrix() {
     matrix = Matrix4::identity;
 
-    matrix *= Math::TranslationMatrix(Vector3(position.x * 1.1f, position.y * 1.1f, position.z * 1.1f));
-    matrix *= Math::ScaleMatrix(scale);
-    matrix *= Math::TranslationMatrix(position);
-}
-
-Transform::Transform(Entity &parent) : Component(parent) {
-
+    matrix = matrix * Math::ScaleMatrix(scale);
+    matrix = matrix * Math::RotationAxisMatrix(position.x, position.y, position.z);
+    matrix = matrix * Math::TranslationMatrix(position);
 }
 void Transform::SetPosition(const Vector3 &vec) {
     position = vec;
