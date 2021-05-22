@@ -46,24 +46,6 @@ public:
     void Despawn();
 
     /**
-     * Get attached to this entity component
-     * @tparam T - component typename
-     * @return Reference to component if it exists in Entity, nullptr otherwise
-     * @note Use Entity::HasComponent<T>() to make sure component exists
-     */
-    template<typename T>
-    T& GetComponent();
-
-    /**
-     * Does entity have this component?
-     * @tparam T - component typename
-     * @return true if Entity contains component
-     * @return false if Entity doesn't contain component
-     */
-    template<typename T>
-    bool HasComponent();
-
-    /**
      * Creates new Component c and adds it to Entity,
      * passing additional arguments to the component's constructor
      * @details Method chaining is possible
@@ -73,6 +55,24 @@ public:
      */
     template<typename T, typename ...Args>
     Entity& AddComponent(Args... args);
+
+    /**
+     * Get attached to this entity component
+     * @tparam T - component typename
+     * @return Reference to component if it exists in Entity, nullptr otherwise
+     * @note Use Entity::HasComponent<T>() to make sure component exists
+     */
+    template<typename T>
+    Component* GetComponent();
+
+    /**
+     * Does entity have this component?
+     * @tparam T - component typename
+     * @return true if Entity contains component
+     * @return false if Entity doesn't contain component
+     */
+    template<typename T>
+    bool HasComponent();
 
     // FIXME: these asserts require rethinking
     /**

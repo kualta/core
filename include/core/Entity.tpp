@@ -44,13 +44,15 @@ bool Entity::assertExistingComponent() {
 }
 
 template<typename T>
-T& Entity::GetComponent() {
-    auto const& it = std::find_if(components.begin(), components.end(), [&](std::shared_ptr<T>& p)
-    {
-        return typeid(p) == typeid(T);
-    });
-    if ( it != components.back() ) {
-        return *it;
+Component* Entity::GetComponent() {
+    auto it = std::find_if(components.begin(),
+                           components.end(),
+                           [&](std::shared_ptr<Component> const& p) {
+                               return typeid(*p).hash_code() == typeid(T).hash_code();
+                           });
+
+    if ( it != components.end() ) {
+        return it->get();
     } else {
         return nullptr;
     }
