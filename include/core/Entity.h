@@ -24,9 +24,9 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
 public:
-    Entity(string name                               = "entity",
-           std::weak_ptr<Entity>& parent             = root,
-           std::vector<std::shared_ptr<Component>> c = { } );
+    explicit Entity(const string& name                        = "entity",
+                    std::weak_ptr<Entity>& parent             = root,
+                    std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
     void Update();
@@ -64,16 +64,6 @@ public:
     bool HasComponent();
 
     /**
-     * Creates new Component of type T and adds it to Entity
-     * @tparam T - new component typename
-     * @return Reference to this Entity
-     * @warning returns *this even if component already exists
-     * @note Method chaining is possible
-     */
-    template<typename T>
-    Entity& AddComponent();
-
-    /**
      * Adds existing Component c to Entity
      * @tparam T - component typename
      * @return Reference to this Entity
@@ -81,7 +71,7 @@ public:
      * @note Method chaining is possible
      */
     template<typename T>
-    Entity& AddComponent(T c);
+    Entity& AddComponent(T* c);
 
     /**
      * Creates new Component c and adds it to Entity,
@@ -94,22 +84,22 @@ public:
     template<typename T, typename ...Args>
     Entity& AddComponent(Args... args);
 
+    // FIXME: these asserts require rethinking
     /**
-     * Checks if component is of any standard components type
-     * i.e. Transform or Renderer, if so sets member pointer to this component
-     * @tparam T - Type of component
-     * @param cPtr - ptr to component
+     * Checks if entity has component of type T, required by component of type C
+     * @param caller - Pointer to calling component
+     * @return bool
      */
-    template<typename T>
-    void assertStandardComponents(Component* cPtr);
+    template<typename T, typename C>
+    bool assertRequiredComponent(C* caller);
 
     /**
-     * Checks for incomatible components being added
-     * @tparam T - Type of component
-     * @param cPtr - ptr to component
+     * Checks if entity has component of type T, required by component of type C
+     * @param caller - Pointer to calling component
+     * @return bool
      */
     template<typename T>
-    void assertIncompatibleComponents(Component* cPtr);
+    bool assertExistingComponent();
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;

@@ -2,9 +2,6 @@
 
 namespace core {
 
-Shader::Shader() {
-
-}
 Shader::Shader(const string& vShaderPath, const string& fShaderPath)
 : vertexShader(LoadShader(vShaderPath)), fragmentShader(LoadShader(fShaderPath)) {
     UpdateShader();

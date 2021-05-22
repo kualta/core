@@ -1,8 +1,8 @@
-# Core Engine
-### Game Engine focused on performance and flexibility 
-**Inspired by MonoGame, raylib and OGRE.**  
+<p align="center"> 
+  <img alt="Core Engine" src="CoreLogo.png">
+</p>
 
-_Early stages of development_
+### **Game Engine focused on performance and flexibility**  
 
 ## Usage
 
