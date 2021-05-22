@@ -7,10 +7,10 @@ namespace core {
 std::atomic<uint32_t> Object::objectCounter { 0 };
 
 Object::Object(string name): id(++objectCounter), name(std::move(name)) {
-    Logger::Log(INFO, OBJECT) << "Created object " << GetInfo();
+    Logger::Log(OBJECT, INFO) << "Created object " << GetInfo();
 }
 Object::~Object() {
-    Logger::Log(INFO, OBJECT) << "Destroyed object " << GetInfo();
+    Logger::Log(OBJECT, INFO) << "Destroyed object " << GetInfo();
 }
 uint32_t Object::GetId() const {
     return id;

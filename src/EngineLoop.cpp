@@ -24,7 +24,7 @@ int32_t EngineLoop::Enter() {
 
     } // main loop
 
-    Logger::Log(INFO, INTERNAL) << "Main loop exit requested: quitting.";
+    Logger::Log(INTERNAL, INFO) << "Main loop exit requested: quitting.";
     return 0;
 }
 void EngineLoop::TickModules() {

@@ -4,7 +4,7 @@
 #ifndef CORE_ESSENTIAL_H
 #define CORE_ESSENTIAL_H
 
-//   Core defines
+//      Core defines - - - -
 #ifndef SDL_MAIN_HANDLED
 #   define SDL_MAIN_HANDLED
 #endif
@@ -13,8 +13,18 @@
 #   define NULL 0
 #endif
 
+#ifndef __FILENAME__
+#   ifdef _WIN32
+#       define __FILENAME__ (strrchr("\\" __FILE__, '\\') + 1)
+#   endif
+#   ifdef __unix__
+#       define __FILENAME__ (strrchr("/" __FILE__, '/') + 1)
+#   endif
+#endif
+//      Core defines - - - -
 
 #include <string>
+#include <cstring>
 #include <vector>
 #include <cstdint>
 #include <cassert>

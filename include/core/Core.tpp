@@ -5,7 +5,7 @@ template <class T, class Dependent>
 T* Core::GetModule() {
     auto it = moduleMap.find<T>();
     if ( it == moduleMap.end() ) {
-        Logger::Log(ERR, INTERNAL) << string(typeid(T).name())
+        Logger::Log(INTERNAL, ERR_HERE) << string(typeid(T).name())
                                    << ": unsatisfied dependency of "
                                    << string(typeid(Dependent).name());
 

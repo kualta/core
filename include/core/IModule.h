@@ -28,10 +28,10 @@ public:
 protected:
     explicit IModule(string moduleName = "Unnamed", objectTag moduleTag = GENERAL)
     : Object(std::move(moduleName) + " module"), tag(moduleTag) {
-        Logger::Log(INFO, tag) << "Initialized " << name;
+        Logger::Log(tag, INFO) << "Initialized " << name;
     };
     ~IModule() {
-        Logger::Log(INFO, tag) << "Destroyed " << name;
+        Logger::Log(tag, INFO) << "Destroyed " << name;
     }
 
 };

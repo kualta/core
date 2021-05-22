@@ -1,6 +1,5 @@
 #include <core/Logger.h>
 #include <iostream>
-#include <iomanip>
 #include <ctime>
 #include <utility>
 
@@ -9,12 +8,12 @@ namespace core {
 Logger::Logger() : Object("Logger") {
 
 }
-Log Logger::Log(logLevel level, objectTag tag) {
+Log Logger::Log(objectTag tag, logLevel level, const LogPlace& place) {
     switch (level) {
-        case   ERR: return core::Log(std::cout, ERR, tag);
-        case  WARN: return core::Log(std::cout, WARN, tag);
-        case  INFO: return core::Log(std::cout, INFO, tag);
-        case DEBUG: return core::Log(std::cout, DEBUG, tag);
+        case   ERR: return core::Log(std::cout, ERR, tag, place);
+        case  WARN: return core::Log(std::cout, WARN, tag, place);
+        case  INFO: return core::Log(std::cout, INFO, tag, place);
+        case DEBUG: return core::Log(std::cout, DEBUG, tag, place);
     }
     return core::Log(std::cout, ERR, INTERNAL);
 }
@@ -58,7 +57,25 @@ string Logger::GetLogTypeText(objectTag tag) {
 
     return text;
 }
+string Logger::GetPlaceText(const LogPlace& place) {
+    // TODO: Add build option to include place.functionName in the text
+
+    if ( !place.exist ) {
+        return "";
+    }
+
+    string text = " - at [";
+
+    text += place.fileName;
+    text += ":";
+    text += std::to_string(place.lineNumber);
+    text += "]";
+
+    return text;
+}
 std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
+    // FIXME: THIS IS SO HEAVY! For every log?! Refactoring needed!
+
     auto now = std::chrono::system_clock::now();
 
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
@@ -73,6 +90,7 @@ std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
         stream << localTime.tm_year + 1900 << "/" << localTime.tm_mon + 1 << "/" << localTime.tm_mday << " ";
     #endif
 
+    // FIXME: Ugly, Refactoring needed!
     FillWidth(stream, '0', 2);
     stream << localTime.tm_hour << ":";
 
@@ -98,11 +116,13 @@ string Logger::ToUpper(string str) {
     return std::move(str);
 }
 Log::~Log() {
+    logStream << Logger::GetPlaceText(logPlace);
     logStream << "\n";
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, logLevel level, objectTag tag) : output(out) {
+Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace)
+: output(out), level(level), logPlace(logPlace) {
     logStream << "- ";
     Logger::AddTimeStamp(logStream) << " ";
     logStream << Logger::GetLogTypeText(tag) << " ";

@@ -10,10 +10,10 @@ namespace core {
 
 bool WindowRenderer::AddRenderer(Window &window) {
     if (!InitWindow(window)) {
-        Logger::Log(ERR, RENDER) << "Couldn't create renderer";
+        Logger::Log(RENDER, ERR_HERE) << "Couldn't create renderer";
         return false;
     } else {
-        Logger::Log(INFO, RENDER) << "Created renderer succesfully";
+        Logger::Log(RENDER, INFO) << "Created renderer succesfully";
         return true;
     }
 }
@@ -55,10 +55,10 @@ bool WindowRenderer::InitWindow(Window &window) {
     bool success = bgfx::init(initObj);
 
     if (success) {
-        Logger::Log(INFO, RENDER) << "Initialized renderer for window \"" << window.GetTitle() << "\" ";
+        Logger::Log(RENDER, INFO) << "Initialized renderer for window \"" << window.GetTitle() << "\" ";
         return true;
     } else {
-        Logger::Log(ERR, RENDER) << "Cannot initialize renderer, aborting";
+        Logger::Log(RENDER, ERR_HERE) << "Cannot initialize renderer, aborting";
         return false;
     }
 }
