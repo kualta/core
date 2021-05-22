@@ -3,8 +3,8 @@
 
 namespace core {
 
-Entity::Entity(string name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<Component>> c)
-    : Object(std::move(name)), Node<Entity>(parent), components(std::move(c)) {
+Entity::Entity(const string& name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<Component>> c)
+    : Object(name), Node<Entity>(parent), components(std::move(c)) {
 }
 Entity::~Entity() {
 

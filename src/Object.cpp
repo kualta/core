@@ -4,7 +4,7 @@
 
 namespace core {
 
-uint32_t Object::objectCounter { 0 };
+std::atomic<uint32_t> Object::objectCounter { 0 };
 
 Object::Object(string name): id(++objectCounter), name(std::move(name)) {
     Logger::Log(INFO, OBJECT) << "Created object " << GetInfo();
@@ -22,7 +22,7 @@ bool Object::operator==(const Object &rhs) const {
     return id == rhs.id;
 }
 bool Object::operator!=(const Object &rhs) const {
-    return !(rhs == *this);
+    return !(id == rhs.id);
 }
 
 }

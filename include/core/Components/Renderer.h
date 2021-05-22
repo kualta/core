@@ -14,11 +14,11 @@ namespace core {
 class Renderer : public Component, public Instantiable<Renderer> {
 public:
     // TODO: Add default shader so it could be defaulted
-    explicit Renderer(Entity* parent = nullptr,
-             Shader* shaderPtr = nullptr,
-             Geometry* geometryPtr = nullptr,
+    Renderer(Entity& parent,
+             Shader* shaderPtr,
+             Geometry* geometryPtr,
              uint16_t viewId = 0,
-             string name = "Renderer");
+             const string& name = "Renderer");
 
     void Draw();
 

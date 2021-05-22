@@ -17,7 +17,7 @@ namespace core {
  * Wraps unique_ptr<T> into unique_ptr<ModuleContainer>
  * @return unique_ptr<ModuleContainer>
  */
-template <class T, class Deleter>
+template <typename T, typename Deleter>
 std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Deleter> &&ptr) {
     return std::make_unique<ModuleContainer<T, Deleter>>(std::move(ptr));
 }
@@ -25,7 +25,7 @@ std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Del
 /**
  * Maps types to objects of ValueType
  */
-template <class ValueType>
+template <typename ValueType>
 class TypeMap {
     using Container = std::unordered_map<int, ValueType>;
 
@@ -40,18 +40,18 @@ public:
     const_iterator cbegin() const { return container.cbegin(); }
     const_iterator cend() const { return container.cend(); }
 
-    template <class Key>
+    template <typename Key>
     iterator find() { return container.find(typeId<Key>()); }
 
-    template <class Key>
+    template <typename Key>
     const_iterator find() const { return container.find(typeId<Key>()); }
 
-    template <class Key>
+    template <typename Key>
     void Put(ValueType &&value) {
         container[typeId<Key>()] = std::forward<ValueType>(value);
     }
 
-    template <class Key>
+    template <typename Key>
     static int typeId() {
         static int id = ++typeIdCounter;
         return id;

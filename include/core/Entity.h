@@ -24,9 +24,9 @@ namespace core {
  */
 class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
 public:
-    Entity(string name                               = "entity",
-           std::weak_ptr<Entity>& parent             = root,
-           std::vector<std::shared_ptr<Component>> c = { } );
+    explicit Entity(const string& name                        = "entity",
+                    std::weak_ptr<Entity>& parent             = root,
+                    std::vector<std::shared_ptr<Component>> c = { } );
     ~Entity();
 
     void Update();
@@ -46,44 +46,6 @@ public:
     void Despawn();
 
     /**
-     * Get attached to this entity component
-     * @tparam T - component typename
-     * @return Reference to component if it exists in Entity, nullptr otherwise
-     * @note Use Entity::HasComponent<T>() to make sure component exists
-     */
-    template<typename T>
-    T& GetComponent();
-
-    /**
-     * Does entity have this component?
-     * @tparam T - component typename
-     * @return true if Entity contains component
-     * @return false if Entity doesn't contain component
-     */
-    template<typename T>
-    bool HasComponent();
-
-    /**
-     * Creates new Component of type T and adds it to Entity
-     * @tparam T - new component typename
-     * @return Reference to this Entity
-     * @warning returns *this even if component already exists
-     * @note Method chaining is possible
-     */
-    template<typename T>
-    Entity& AddComponent();
-
-    /**
-     * Adds existing Component c to Entity
-     * @tparam T - component typename
-     * @return Reference to this Entity
-     * @warning returns *this even if component already exists
-     * @note Method chaining is possible
-     */
-    template<typename T>
-    Entity& AddComponent(T* c);
-
-    /**
      * Creates new Component c and adds it to Entity,
      * passing additional arguments to the component's constructor
      * @details Method chaining is possible
@@ -95,21 +57,39 @@ public:
     Entity& AddComponent(Args... args);
 
     /**
-     * Checks if component is of any standard components type
-     * i.e. Transform or Renderer, if so sets member pointer to this component
-     * @tparam T - Type of component
-     * @param cPtr - ptr to component
+     * Get attached to this entity component
+     * @tparam T - component typename
+     * @return Reference to component if it exists in Entity, nullptr otherwise
+     * @note Use Entity::HasComponent<T>() to make sure component exists
      */
     template<typename T>
-    void assertStandardComponents(Component* cPtr);
+    Component* GetComponent();
 
     /**
-     * Checks for incomatible components being added
-     * @tparam T - Type of component
-     * @param cPtr - ptr to component
+     * Does entity have this component?
+     * @tparam T - component typename
+     * @return true if Entity contains component
+     * @return false if Entity doesn't contain component
      */
     template<typename T>
-    void assertIncompatibleComponents(Component* cPtr);
+    bool HasComponent();
+
+    // FIXME: these asserts require rethinking
+    /**
+     * Checks if entity has component of type T, required by component of type C, logs error if it does not
+     * @param caller - Pointer to calling component
+     * @return bool
+     */
+    template<typename T, typename C>
+    bool assertRequiredComponent(C* caller);
+
+    /**
+     * Checks if entity has component of type T, logs error if it does
+     * @param caller - Pointer to calling component
+     * @return bool
+     */
+    template<typename T>
+    bool assertExistingComponent();
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
