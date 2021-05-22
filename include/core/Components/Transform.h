@@ -9,7 +9,7 @@ namespace core {
 
 class Transform : public Component {
 public:
-    explicit Transform(Entity& parent);
+    explicit Transform(Entity& parent, const string& name = "Transform");
 
     void Update() override;
 

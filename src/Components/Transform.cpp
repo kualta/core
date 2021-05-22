@@ -1,7 +1,11 @@
 #include <core/Components/Transform.h>
+#include <core/Entity.h>
 
 namespace core {
 
+Transform::Transform(Entity& parent, const string& name) : Component(parent, name) {
+    parent.transform = this;
+}
 void Transform::Update() {
     UpdateMatrix();
 }
@@ -18,27 +22,21 @@ Transform::Transform(Entity &parent) : Component(parent) {
 }
 void Transform::SetPosition(const Vector3 &vec) {
     position = vec;
-    UpdateMatrix();
 }
 void Transform::SetPosition(const Vector3 &&vec) {
     position = vec;
-    UpdateMatrix();
 }
 void Transform::SetRotation(const Vector3 &vec) {
     rotation = vec;
-    UpdateMatrix();
 }
 void Transform::SetRotation(const Vector3 &&vec) {
     rotation = vec;
-    UpdateMatrix();
 }
 void Transform::SetScale(const Vector3 &vec) {
     scale = vec;
-    UpdateMatrix();
 }
 void Transform::SetScale(const Vector3 &&vec) {
     scale = vec;
-    UpdateMatrix();
 }
 
 }

@@ -17,7 +17,8 @@ public:
     Renderer(Entity& parent,
              Shader* shaderPtr,
              Geometry* geometryPtr,
-             uint16_t viewId = 0);
+             uint16_t viewId = 0,
+             const string& name = "Renderer");
 
     void Draw();
 
