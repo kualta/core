@@ -41,7 +41,7 @@ public:
      *          use SetRotation instead.
      * @readonly
      */
-    Vector3 rotation {0, 0, 0 };
+    Vector3 rotation { 0, 0, 0 };
 
     /**
      * Vector representing scale of the entity in world space
