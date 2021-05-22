@@ -21,6 +21,7 @@ Camera::Camera(
     farPlane(farPlane),
     homogeneousDepth(hmgDepth)
 {
+    parent.assertRequiredComponent<Transform>(this);
     Start();
 }
 void Camera::Update() {

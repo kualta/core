@@ -8,6 +8,7 @@ namespace core {
 
 Renderer::Renderer(Entity& parent, Shader* shaderPtr, Geometry* geometryPtr, uint16_t viewId, const string& name)
 : Component(parent, name), viewId(viewId), shader(shaderPtr), geometry(geometryPtr) {
+    parent.assertRequiredComponent<Transform>(this);
     parent.renderer = this;
 }
 void Renderer::Draw() {

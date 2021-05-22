@@ -13,7 +13,7 @@ public:
                     float         fovY = 90.0f,
                     float        width = 600.0f,
                     float       height = 400.0f,
-                    float    nearPlnae = 0.1f,
+                    float    nearPlane = 0.1f,
                     float     farPlane = 100.0f,
                     bool      hmgDepth = false,
                     const string& name = "Camera");

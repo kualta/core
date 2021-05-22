@@ -64,16 +64,6 @@ public:
     bool HasComponent();
 
     /**
-     * Adds existing Component c to Entity
-     * @tparam T - component typename
-     * @return Reference to this Entity
-     * @warning returns *this even if component already exists
-     * @note Method chaining is possible
-     */
-    template<typename T>
-    Entity& AddComponent(T* c);
-
-    /**
      * Creates new Component c and adds it to Entity,
      * passing additional arguments to the component's constructor
      * @details Method chaining is possible
@@ -86,7 +76,7 @@ public:
 
     // FIXME: these asserts require rethinking
     /**
-     * Checks if entity has component of type T, required by component of type C
+     * Checks if entity has component of type T, required by component of type C, logs error if it does not
      * @param caller - Pointer to calling component
      * @return bool
      */
@@ -94,7 +84,7 @@ public:
     bool assertRequiredComponent(C* caller);
 
     /**
-     * Checks if entity has component of type T, required by component of type C
+     * Checks if entity has component of type T, logs error if it does
      * @param caller - Pointer to calling component
      * @return bool
      */

@@ -13,15 +13,6 @@ public:
 
     void Update() override;
 
-    void SetPosition(const Vector3& vec);
-    void SetPosition(const Vector3&& vec);
-
-    void SetRotation(const Vector3& vec);
-    void SetRotation(const Vector3&& vec);
-
-    void SetScale(const Vector3& vec);
-    void SetScale(const Vector3&& vec);
-
     /**
      * Transform matrix that describes current position, rotation and scale of entity in world space
      */
