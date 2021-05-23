@@ -6,13 +6,14 @@
 
 ## Usage
 
-* **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine
-* **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers
+-  **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine
+-  **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers
+-  **[Engine Architecture](https://github.com/lectroMathew/Core/wiki/Architecture)** introduction
 
 Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information
 
 ## Contributing 
-* **[Contributing](https://github.com/lectroMathew/Core/blob/master/CONTRIBUTING.md)** guidelines
+- **[Contributing](https://github.com/lectroMathew/Core/wiki/Contributing)** guidelines
 
 <br>
 <br>
