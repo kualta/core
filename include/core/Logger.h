@@ -12,7 +12,11 @@
 #include <utility>
 
 #ifndef LOG_HERE
-#   define LOG_HERE LogPlace(true, __FILENAME__, __FUNCTION__, __LINE__)
+#   ifdef CORE_LOG_FULL_PATH
+#       define LOG_HERE LogPlace(true, __FILE__, __FUNCTION__, __LINE__)
+#   else
+#       define LOG_HERE LogPlace(true, __FILENAME__, __FUNCTION__, __LINE__)
+#   endif
 #endif
 
 #ifndef WARN_HERE
