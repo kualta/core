@@ -4,6 +4,8 @@
 
 ### **Game Engine focused on performance and flexibility**  
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fc8a1c207f224633841dda423aa0613a)](https://app.codacy.com/gh/lectroMathew/Core?utm_source=github.com&utm_medium=referral&utm_content=lectroMathew/Core&utm_campaign=Badge_Grade_Settings)
+
 ## Usage
 
 * **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine
