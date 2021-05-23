@@ -9,6 +9,7 @@
 #include "Component.h"
 #include "Object.h"
 #include "Node.h"
+#include "ScriptBehaviour.h"
 #include <core/Components/Transform.h>
 #include <core/Components/Renderer.h>
 
@@ -56,6 +57,11 @@ public:
      */
     template<typename T, typename ...Args>
     Entity& AddComponent(Args... args);
+
+    template<template<typename> typename T, typename S, typename ...Args>
+    Entity& AddComponent(Args... args);
+
+
 
     /**
      * Get attached to this entity component
