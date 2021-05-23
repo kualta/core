@@ -91,8 +91,6 @@ public:
 };
 
 Matrix4 operator*(const Matrix4 &lhs, const Matrix4 &rhs);
-Matrix4 operator*=(const Matrix4 &lhs, const Matrix4 &rhs);
-
 
 inline std::ostream& operator<<(std::ostream& o, const Matrix4 &mat)
 {

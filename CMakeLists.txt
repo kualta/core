@@ -68,6 +68,5 @@ target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
 
 add_custom_command(TARGET core
                    POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-                   COMMENT "Copy SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM
-                   )
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+                   COMMENT "Copy SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
