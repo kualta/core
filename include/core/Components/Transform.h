@@ -19,26 +19,17 @@ public:
     Matrix4 matrix { Matrix4::identity };
 
     /**
-     * Vector representing position of the entity in world space
-     * @warning This value is read-only, do not modify this value directly,
-     *          use SetPosition instead.
-     * @readonly
+     * Vector representing position of the entity
      */
     Vector3 position { 0, 0, 0 };
 
     /**
-     * Vector representing rotation of the entity along x, y and z axis in world space
-     * @warning This value is read-only, do not modify this value directly,
-     *          use SetRotation instead.
-     * @readonly
+     * Vector representing rotation of the entity along x, y and z axis
      */
     Vector3 rotation { 0, 0, 0 };
 
     /**
-     * Vector representing scale of the entity in world space
-     * @warning This value is read-only, do not modify this value directly,
-     *          use SetRotation instead.
-     * @readonly
+     * Vector representing scale of the entity by x, y and z axis
      */
     Vector3 scale { 1, 1, 1 };
 

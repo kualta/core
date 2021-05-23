@@ -24,16 +24,16 @@ Matrix4 Math::TranslationMatrix(const Vector3 &pos) {
 
     return mat;
 }
-Matrix4 Math::RotationAxisMatrix(const float rotX, const float rotY, const float rotZ) {
+Matrix4 Math::EulerRotationMatrix(const Vector3& euler) {
 
     Matrix4 mat = Matrix4::zero;
 
-    const float sx = sin(rotX);
-    const float cx = cos(rotX);
-    const float sy = sin(rotY);
-    const float cy = cos(rotY);
-    const float sz = sin(rotZ);
-    const float cz = cos(rotZ);
+    const float sx = std::sin(euler.x);
+    const float cx = std::cos(euler.x);
+    const float sy = std::sin(euler.y);
+    const float cy = std::cos(euler.y);
+    const float sz = std::sin(euler.z);
+    const float cz = std::cos(euler.z);
 
     mat[0][0] = cy*cz;
     mat[0][1] = -cy*sz;
@@ -67,45 +67,6 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
                 lhs.y*rhs.z - lhs.z*rhs.y,
                 lhs.z*rhs.x - lhs.x*rhs.z,
                 lhs.x*rhs.y - lhs.y*rhs.x);
-}
-float Math::Abs(float a) {
-    return std::abs(a);
-}
-float Math::Sqrt(float num) {
-    return std::sqrt(num);
-}
-float Math::Sin(const Radian& radian) {
-    return std::sin(radian.GetValue());
-}
-float Math::Sin(float a) {
-    return std::sin(a);
-}
-float Math::Cos(const Radian& radian) {
-    return std::cos(radian.GetValue());
-}
-float Math::Cos(float a) {
-    return std::cos(a);
-}
-float Math::Tan(const Radian& rad) {
-    return std::tan(rad.GetValue());
-}
-float Math::Tan(float a) {
-    return std::tan(a);
-}
-float Math::ASin(const Radian &radian) {
-    return std::asin(radian.GetValue());
-}
-float Math::ACos(float a) {
-    return std::acos(a);
-}
-float Math::ACos(const Radian &radian) {
-    return std::acos(radian.GetValue());
-}
-float Math::ASin(float a) {
-    return std::asin(a);
-}
-float Math::Atan2(float a, float b) {
-    return std::atan2(a, b);
 }
 Vector3 Math::Normalize(const Vector3& vec) {
     const float invLen = 1.0f / vec.Length();

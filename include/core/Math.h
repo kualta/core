@@ -78,7 +78,7 @@ public:
      * @param pos - position translate to
      * @return Matrix4 translation matrix
      */
-    static Matrix4 TranslationMatrix(const Vector3 &pos);
+    static Matrix4 TranslationMatrix(const Vector3& pos);
 
     /**
      * Generates new rotation matrix around X, Y and Z axis
@@ -87,7 +87,7 @@ public:
      * @param rotZ - Rotation around Z axis
      * @return Matrix4 rotation matrix
      */
-    static Matrix4 RotationAxisMatrix(float rotX, float rotY, float rotZ);
+    static Matrix4 EulerRotationMatrix(const Vector3& euler);
 
     /**
      * Generates new projection matrix in top to bottom, left to right rectangle, clipped by
@@ -129,45 +129,47 @@ public:
      */
     static Matrix4 ScaleMatrix(Vector3 scale);
 
-
-    static float Abs(float sinp);
+    /**
+     * Computes absolute value of a
+     */
+    static inline float Abs(float a) { return std::abs(a); };
 
     /**
      * Calculates square root of number
      */
-    static inline float Sqrt(float num);
+    static inline float Sqrt(float a) { return std::sqrt(a); };
 
     /**
      * Calculates sine of value in radians
      */
-    static inline float Sin(const Radian& radian);
-    static inline float Sin(float a);
+    static inline float Sin(const Radian& radian) { return std::sin(radian.GetValue()); };
+    static inline float Sin(float a) { return std::sin(a); };
 
     /**
      * Calculates sine of value in radians
      */
-    static inline float Cos(const Radian& radian);
-    static inline float Cos(float a);
+    static inline float Cos(const Radian& radian) { return std::cos(radian.GetValue()); };
+    static inline float Cos(float a) { return std::cos(a); };
 
     /**
      * Calculates tangent of value in radians
      */
-    static inline float Tan(const Radian& radian);
-    static inline float Tan(float a);
+    static inline float Tan(const Radian& radian) { return std::tan(radian.GetValue()); };
+    static inline float Tan(float a) { return std::tan(a); };
 
     /**
      * Calculates arccos of value in radians
      */
-    static float ACos(const Radian& radian);
-    static float ACos(float a);
+    static inline float ACos(const Radian& radian) { return std::acos(radian.GetValue()); };
+    static inline float ACos(float a) { return std::acos(a); };
 
     /**
      * Calculates arcsin of value in radians
      */
-    static float ASin(const Radian& radian);
-    static float ASin(float a);
+    static inline float ASin(const Radian& radian) { return std::asin(radian.GetValue()); };
+    static inline float ASin(float a) { return std::asin(a); };
 
-    static float Atan2(float a, float b);
+    static inline float Atan2(float a, float b) { return std::atan2(a, b); };
 
     static const float PI;
     static const float TWO_PI;

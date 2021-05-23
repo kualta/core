@@ -14,7 +14,7 @@ void Transform::UpdateMatrix() {
     matrix = Matrix4::identity;
 
     matrix = matrix * Math::ScaleMatrix(scale);
-    matrix = matrix * Math::RotationAxisMatrix(rotation.x, rotation.y, rotation.z);
+    matrix = matrix * Math::EulerRotationMatrix(rotation);
     matrix = matrix * Math::TranslationMatrix(position);
 }
 
