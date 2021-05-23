@@ -13,6 +13,9 @@ option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
 # HH:MM:SS:ms -> YY/MM/DD HH:MM:SS.ms
 option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
+# at [filename:line] -> at [full/file/path/filename:line]
+option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             ON)
+
 
 #       core
 set( CORE_INCLUDE_DIR include )
@@ -28,6 +31,7 @@ set( CORE_FILES
         ${CORE_MODULES_RES}
         ${CORE_COMPONENTS_RES}
    )
+set( OUTPUT )
 
 # Get Core's headers and sources
 file( GLOB CORE_SOURCES ${CORE_FILES} )
@@ -35,12 +39,15 @@ file( GLOB CORE_SOURCES ${CORE_FILES} )
 add_library( core STATIC ${CORE_SOURCES} )
 # Include Core's headers
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
-# Specify compile definitions
+# Process options and add compile definitions
 if ( CORE_HEAVY_ESSENTIALS )
     target_compile_definitions( core PRIVATE CORE_HEAVY_ESSENTIALS )
 endif()
 if ( CORE_LOG_DATE )
     target_compile_definitions( core PRIVATE CORE_LOG_DATE )
+endif()
+if ( CORE_LOG_FULL_PATH )
+    target_compile_definitions( core PRIVATE CORE_LOG_FULL_PATH )
 endif()
 
 
@@ -59,3 +66,8 @@ target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
 # Link SDL2 libs
 target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
 
+add_custom_command(TARGET core
+                   POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+                   COMMENT "Copy SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM
+                   )

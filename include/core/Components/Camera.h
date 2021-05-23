@@ -20,7 +20,7 @@ public:
 
     void Start();
 
-    void Update() override;
+    void Tick() override;
 
     void LookAt(Vector3& point);
     void LookAt(Vector3&& point);

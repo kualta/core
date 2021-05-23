@@ -20,6 +20,8 @@ public:
              uint16_t viewId = 0,
              const string& name = "Renderer");
 
+    void Tick() override;
+
     void Draw();
 
 protected:

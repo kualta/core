@@ -9,14 +9,39 @@
 #include <sstream>
 #include <chrono>
 #include <algorithm>
+#include <utility>
+
+#ifndef LOG_HERE
+#   ifdef CORE_LOG_FULL_PATH
+#       define LOG_HERE LogPlace(true, __FILE__, __FUNCTION__, __LINE__)
+#   else
+#       define LOG_HERE LogPlace(true, __FILENAME__, __FUNCTION__, __LINE__)
+#   endif
+#endif
+
+#ifndef WARN_HERE
+#   define WARN_HERE logLevel::WARN, LOG_HERE
+#endif
+
+#ifndef ERR_HERE
+#   define ERR_HERE logLevel::ERR, LOG_HERE
+#endif
+
+#ifndef INFO_HERE
+#   define INFO_HERE logLevel::INFO, LOG_HERE
+#endif
+
+#ifndef DEBUG_HERE
+#   define DEBUG_HERE logLevel::DEBUG, LOG_HERE
+#endif
 
 namespace core {
 
 enum logLevel {
-    ERR,
-    WARN,
-    INFO,
     DEBUG,
+    INFO,
+    WARN,
+    ERR,
 };
 enum objectTag {
     INTERNAL, // For engine logs
@@ -35,6 +60,17 @@ enum passInfo {
     FAIL,
 };
 
+struct LogPlace {
+    LogPlace() { };
+    LogPlace(bool exist, string file, string func, int32_t line)
+        : exist(exist), fileName(std::move(file)), functionName(std::move(func)), lineNumber(line) { };
+
+    bool        exist = false;
+    std::string fileName;
+    std::string functionName;
+    int32_t     lineNumber;
+};
+
 class Logger : public Singleton<Logger>, public Object {
 public:
     Logger();
@@ -44,7 +80,9 @@ public:
      * @warning At every Log object destruction the stream flushes. Might cause
      * performance issues
      */
-    static Log Log(logLevel level, objectTag tag = GENERAL);
+    static Log Log(objectTag tag = GENERAL,
+                   logLevel level = INFO,
+                   const LogPlace& place = LogPlace());
 
     /**
      * Adds current time stamp to string stream
@@ -64,6 +102,7 @@ public:
 
     static string GetLogTypeText(objectTag tag);
     static string GetLogLevelText(logLevel level);
+    static string GetPlaceText(const LogPlace& place);
     static string GetPassText(passInfo success);
     static string ToUpper(string str);
 
@@ -71,8 +110,10 @@ public:
 
 class Log {
 public:
-    // Must be implemented in header
-    Log(std::ostream& out, logLevel level, objectTag tag = GENERAL);
+    Log(std::ostream& out,
+        logLevel level,
+        objectTag tag = GENERAL,
+        LogPlace place = LogPlace());
     ~Log();
 
     template<class T>
@@ -82,6 +123,8 @@ public:
     };
 
 private:
+    logLevel level;
+    LogPlace logPlace;
     std::stringstream logStream;
     std::ostream& output;
 }; // class Log

@@ -2,6 +2,7 @@
 #define CORE_COMPONENT_H
 
 #include "Essential.h"
+#include "ITicker.h"
 #include "Object.h"
 
 #include <memory>
@@ -11,16 +12,17 @@ namespace core {
 /**
  *  Base class for attachments to Entity class
  */
-class Component : public Object {
+class Component : public Object, public ITicker {
 public:
-    explicit Component(Entity& parent,
-                       const string& name = "Unnamed");
-    virtual ~Component();
 
-    virtual void Update();
+    bool isActive = true;
 
     /// Entity object this component is attached to
     Entity* entity { nullptr };
+protected:
+    explicit Component(Entity& parent, const string& name = "Unnamed");
+    virtual ~Component();
+
 };
 
 } // namespace core

@@ -11,7 +11,7 @@ public:
     SceneModule();
     ~SceneModule();
 
-    void Update() override;
+    void Tick() override;
 
 };
 

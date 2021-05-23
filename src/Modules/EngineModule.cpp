@@ -16,7 +16,7 @@ int32_t EngineModule::Main() {
 
     return 0;
 }
-void EngineModule::Update() {
+void EngineModule::Tick() {
 
 }
 

@@ -21,7 +21,7 @@ Core CoreConfig::Build() {
         (*initializers.top())(core);
         initializers.pop();
     }
-    Logger::Log(INFO, INTERNAL) << "* Core build finished * ";
+    Logger::Log(INTERNAL, INFO) << "* Core build finished * ";
     return core;
 }
 
@@ -32,7 +32,7 @@ void CoreConfig::VisitNode(
 {
     nodeInfo &info = graph[nodeId];
     if (info.nodeMark == nodeInfo::mark::TEMP) {
-        Logger::Log(ERR, INTERNAL) << info.typeName << " appears to be part of a cycle";
+        Logger::Log(INTERNAL, ERR_HERE) << info.typeName << " appears to be part of a cycle";
     } else if (info.nodeMark == nodeInfo::mark::UNMARKED) {
         unmarkedNodes->erase(nodeId);
         info.nodeMark = nodeInfo::mark::TEMP;

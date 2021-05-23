@@ -18,18 +18,15 @@ void Entity::Despawn() {
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
 }
-void Entity::Update() {
+void Entity::Tick() {
     std::for_each(components.begin(),
                   components.end(),
                   [&](std::shared_ptr<Component> &c) {
-        c->Update();
+        c->Tick();
     });
 }
-void Entity::Draw() {
-
-}
 bool Entity::operator==(const Entity &rhs) const {
-    return static_cast<const core::Object&>(*this).GetId() == static_cast<const core::Object&>(rhs).GetId();
+    return this->GetId() == rhs.GetId();
 }
 
 } // namespace core

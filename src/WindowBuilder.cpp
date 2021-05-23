@@ -13,7 +13,7 @@ namespace core {
 
 uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) {
     auto window = std::make_unique<Window>(title, rect);
-    Logger::Log(INFO, WINDOW) << "Created window \"" << title << "\" ";
+    Logger::Log(WINDOW, INFO) << "Created window \"" << title << "\" ";
     uint32_t windowId = window->GetId();
 
     // Pass new window to intialize renderer

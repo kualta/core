@@ -15,7 +15,7 @@ public:
     RenderModule();
     ~RenderModule();
 
-    void Update() override;
+    void Tick() override;
 
 protected:
 

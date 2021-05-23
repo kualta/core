@@ -23,7 +23,7 @@ bool Entity::assertRequiredComponent(C* caller) {
     static_assert(std::is_base_of<core::Component, C>::value, "Component C must inherit from core::Component");
 
     if ( !this->HasComponent<T>() ) {
-        Logger::Log(ERR, OBJECT) << "Entity " << this->GetInfo() << " does not have component "
+        Logger::Log(OBJECT, ERR_HERE) << "Entity " << this->GetInfo() << " does not have component "
                                           << typeid(T).name() << ", required by " << caller->GetInfo();
         return false;
     } else {
@@ -35,7 +35,7 @@ bool Entity::assertExistingComponent() {
     static_assert(std::is_base_of<core::Component, T>::value, "Component T must inherit from core::Component");
 
     if ( this->HasComponent<T>() ) {
-        Logger::Log(ERR, OBJECT) << "Entity " << this->GetInfo() << " already has component "
+        Logger::Log(OBJECT, ERR_HERE) << "Entity " << this->GetInfo() << " already has component "
                                           << typeid(T).name();
         return true;
     } else {

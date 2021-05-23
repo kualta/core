@@ -4,7 +4,7 @@
 namespace core {
 
 
-void RenderModule::Update() {
+void RenderModule::Tick() {
 
     std::for_each(Renderer::instances.begin(), Renderer::instances.end(), [&](Renderer* renderer) {
         renderer->Draw();

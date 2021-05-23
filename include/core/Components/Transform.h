@@ -11,7 +11,7 @@ class Transform : public Component {
 public:
     explicit Transform(Entity& parent, const string& name = "Transform");
 
-    void Update() override;
+    void Tick() override;
 
     /**
      * Transform matrix that describes current position, rotation and scale of entity in world space

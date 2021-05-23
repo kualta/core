@@ -24,9 +24,9 @@ public:
     void Stop();
 
     /**
-     * Ticks every module in tickedModules list
+     * Updates all modules
      */
-    void UpdateModules();
+    void TickModules();
 
 protected:
 

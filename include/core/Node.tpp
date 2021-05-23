@@ -22,7 +22,7 @@ std::shared_ptr<T> Node<T>::GetChild(uint32_t index) {
 template<typename T>
 std::weak_ptr<T> Node<T>::GetParent() {
     if( parent.expired() ) {
-        Logger::Log(ERR, INTERNAL) << "Parent has not been assigned or has been deleted!";
+        Logger::Log(INTERNAL, ERR_HERE) << "Parent has not been assigned or has been deleted!";
     }
     return parent;
 }
@@ -30,7 +30,7 @@ template<typename T>
 void Node<T>::SetParent(std::weak_ptr<T> newParent) {
     if ( newParent.expired() ) return;
     if (*static_cast<T*>(this) == *root.lock()) {
-        Logger::Log(ERR, INTERNAL) << "Cannot set parent for root node!";
+        Logger::Log(INTERNAL, ERR_HERE) << "Cannot set parent for root node!";
         return;
     }
     if ( !parent.expired() ) {
@@ -60,7 +60,7 @@ void Node<T>::SetRoot(std::weak_ptr<T> newRoot) {
 template<typename T>
 std::weak_ptr<T> Node<T>::CreateRoot() {
     if ( !root.expired() ) {
-        Logger::Log(ERR, INTERNAL) << "Root node already exists!";
+        Logger::Log(INTERNAL, ERR_HERE) << "Root node already exists!";
     }
     std::weak_ptr<T> rootObj = std::make_shared<T>();
     T::SetRoot(rootObj);
