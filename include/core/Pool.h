@@ -11,7 +11,7 @@ namespace core {
 template <typename T>
 class Pool : public Object {
 public:
-    explicit Pool(string poolName = "Unnamed pool");
+    explicit Pool(const string& poolName = "Unnamed pool");
 
     void Register(std::unique_ptr<T>&& objectPtr);
     void Unregister(std::unique_ptr<T>& objectPtr);

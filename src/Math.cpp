@@ -68,11 +68,44 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
                 lhs.z*rhs.x - lhs.x*rhs.z,
                 lhs.x*rhs.y - lhs.y*rhs.x);
 }
+float Math::Abs(float a) {
+    return std::abs(a);
+}
 float Math::Sqrt(float num) {
     return std::sqrt(num);
 }
+float Math::Sin(const Radian& radian) {
+    return std::sin(radian.GetValue());
+}
+float Math::Sin(float a) {
+    return std::sin(a);
+}
+float Math::Cos(const Radian& radian) {
+    return std::cos(radian.GetValue());
+}
+float Math::Cos(float a) {
+    return std::cos(a);
+}
 float Math::Tan(const Radian& rad) {
     return std::tan(rad.GetValue());
+}
+float Math::Tan(float a) {
+    return std::tan(a);
+}
+float Math::ASin(const Radian &radian) {
+    return std::asin(radian.GetValue());
+}
+float Math::ACos(float a) {
+    return std::acos(a);
+}
+float Math::ACos(const Radian &radian) {
+    return std::acos(radian.GetValue());
+}
+float Math::ASin(float a) {
+    return std::asin(a);
+}
+float Math::Atan2(float a, float b) {
+    return std::atan2(a, b);
 }
 Vector3 Math::Normalize(const Vector3& vec) {
     const float invLen = 1.0f / vec.Length();
@@ -102,7 +135,7 @@ Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vect
       *   [         right.x          forward.x          up.x  0 ]
       *   [         right.y          forward.y          up.y  0 ]
       *   [         right.z          forward.z          up.z  0 ]
-      *   [ dot(right,-eye)  dot(forward,-eye)  dot(up,-eye)  1 ]
+      *   [ dot(right,-pos)  dot(forward,-pos)  dot(up,-pos)  1 ]
      */
     return mtx;
 }

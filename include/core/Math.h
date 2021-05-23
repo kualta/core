@@ -129,17 +129,45 @@ public:
      */
     static Matrix4 ScaleMatrix(Vector3 scale);
 
+
+    static float Abs(float sinp);
+
     /**
      * Calculates square root of number
      */
-    static float Sqrt(float num);
+    static inline float Sqrt(float num);
 
     /**
-     * Calculates tangent of tan
-     * @param rad - radians
+     * Calculates sine of value in radians
      */
-    static float Tan(const Radian& rad);
+    static inline float Sin(const Radian& radian);
+    static inline float Sin(float a);
 
+    /**
+     * Calculates sine of value in radians
+     */
+    static inline float Cos(const Radian& radian);
+    static inline float Cos(float a);
+
+    /**
+     * Calculates tangent of value in radians
+     */
+    static inline float Tan(const Radian& radian);
+    static inline float Tan(float a);
+
+    /**
+     * Calculates arccos of value in radians
+     */
+    static float ACos(const Radian& radian);
+    static float ACos(float a);
+
+    /**
+     * Calculates arcsin of value in radians
+     */
+    static float ASin(const Radian& radian);
+    static float ASin(float a);
+
+    static float Atan2(float a, float b);
 
     static const float PI;
     static const float TWO_PI;

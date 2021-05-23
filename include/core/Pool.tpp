@@ -8,7 +8,7 @@
 namespace core {
 
 template<typename T>
-Pool<T>::Pool(string poolName) : Object(poolName) {
+Pool<T>::Pool(const string& poolName) : Object(poolName) {
 
 }
 template<typename T>
