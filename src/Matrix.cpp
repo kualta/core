@@ -55,6 +55,3 @@ core::Matrix4 core::operator*(const core::Matrix4 &m, const core::Matrix4 &m2)
 
     return r;
 }
-core::Matrix4 core::operator*=(const core::Matrix4 &lhs, const core::Matrix4 &rhs) {
-    return lhs * rhs;
-}
