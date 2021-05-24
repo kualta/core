@@ -4,3 +4,6 @@
 [submodule "lib/SDL2"]
 	path = lib/SDL2
 	url = https://github.com/lectroMathew/SDL2
+[submodule "lib/assimp"]
+	path = lib/assimp
+	url = https://github.com/assimp/assimp

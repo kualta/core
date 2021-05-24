@@ -56,6 +56,10 @@ add_subdirectory(lib/bgfx.cmake)
 target_link_libraries(core PUBLIC bgfx)
 
 
+#       assimp
+add_subdirectory(lib/assimp)
+target_link_libraries(core PUBLIC assimp)
+
 #       SDL2
 # Specify SDL2 location
 set(SDL2_DIR lib/SDL2)

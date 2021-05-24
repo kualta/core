@@ -32,7 +32,7 @@ public:
     inline float operator[](const size_t i) const {
         assert( i < 4 );
 
-        return *(&w+i);
+        return *(&w + i);
     }
 
     /**
@@ -41,7 +41,7 @@ public:
     inline float& operator[](const size_t i) {
         assert( i < 4 );
 
-        return *(&w+i);
+        return *(&w + i);
     }
 
     /**
