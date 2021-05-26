@@ -1,11 +1,12 @@
 #ifndef CORE_MATH_H
 #define CORE_MATH_H
 
-#include "Vector.h"
 #include "Essential.h"
+#include "Vector.h"
 #include "Matrix.h"
 #include "Radian.h"
 #include "Degree.h"
+
 #include <ostream>
 
 namespace core {
@@ -29,7 +30,7 @@ public:
      * @param rhs - second Vector
      * @return dot product between lhs and rhs
      */
-    static inline float Dot(const Vector3& lhs, const Vector3& rhs) {
+    static constexpr float Dot(const Vector3& lhs, const Vector3& rhs) {
         return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
     };
 
@@ -47,17 +48,13 @@ public:
 
     /**
      * Calculates normalized version of vector
-     * @details magnitude of normalized vector is 1
-     * @param vec - lvalue ref Vector to normalize
-     * @return Vector3 normalized vector
+     * @warning This implementations uses Math::QRSqrt()
      */
     static Vector3 Normalize(const Vector3& vec);
 
     /**
      * Calculates normalized version of vector
-     * @details magnitude of normalized vector is 1
-     * @param vec - rvalue ref Vector to normalize
-     * @return Vector3 normalized vector
+     * @warning This implementations uses Math::QRSqrt()
      */
     static Vector3 Normalize(const Vector3&& vec);
 
@@ -135,9 +132,24 @@ public:
     static inline float Abs(float a) { return std::abs(a); };
 
     /**
-     * Calculates square root of number
+     * Calculates accurate square root of number
      */
     static inline float Sqrt(float a) { return std::sqrt(a); };
+
+    /**
+     * Quick Reversed Square root calculation
+     * @warning Result is apporixmated, error is about 0.1%
+     * @note one Newton's step is used in this implementation
+     * @note More about this algorithm: https://en.wikipedia.org/wiki/Fast_inverse_square_root
+     */
+    static inline float QRSqrt(float a) {
+        float xhalf = 0.5f * a;
+        int i = *(int*) &a;
+        i = 0x5f375a86 - (i >> 1);
+        a = *(float*) &i;
+        a = a * (1.5f - xhalf * a * a); // Newton step, repeating increases accuracy
+        return a;
+    };
 
     /**
      * Calculates sine of value in radians

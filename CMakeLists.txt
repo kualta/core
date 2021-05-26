@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(Core VERSION 0.1.0 DESCRIPTION "Core engine")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #       Build options
@@ -55,6 +55,10 @@ endif()
 add_subdirectory(lib/bgfx.cmake)
 target_link_libraries(core PUBLIC bgfx)
 
+
+#       assimp
+add_subdirectory(lib/assimp)
+target_link_libraries(core PUBLIC assimp)
 
 #       SDL2
 # Specify SDL2 location
