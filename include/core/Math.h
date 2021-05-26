@@ -139,21 +139,16 @@ public:
     /**
      * Quick Reversed Square root calculation
      * @warning Result is apporixmated, error is about 0.1%
+     * @note one Newton's step is used in this implementation
      * @note More about this algorithm: https://en.wikipedia.org/wiki/Fast_inverse_square_root
      */
     static inline float QRSqrt(float a) {
-        long i;
-        float x2, y;
-        const float threehalfs = 1.5f;
-
-        x2 = a * 0.5f;
-        y  = a;
-        i  = *(long *) &y;
-        i  = 0x5f3759df - ( i >> 1 );
-        y  = *(float *) &i;
-        y  = y * ( threehalfs - ( x2 * y * y ) );
-
-        return y;
+        float xhalf = 0.5f * a;
+        int i = *(int*) &a;
+        i = 0x5f375a86 - (i >> 1);
+        a = *(float*) &i;
+        a = a * (1.5f - xhalf * a * a); // Newton step, repeating increases accuracy
+        return a;
     };
 
     /**
