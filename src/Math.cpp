@@ -69,12 +69,20 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
                 lhs.x*rhs.y - lhs.y*rhs.x);
 }
 Vector3 Math::Normalize(const Vector3& vec) {
-    const float invLen = 1.0f / Math::QRSqrt(Math::Dot(vec, vec));
-    return vec * invLen;
+    const float invLen = 1.0f / Math::QRSqrt(Dot(vec, vec));
+    if ( invLen == std::numeric_limits<float>::infinity() ) {
+        return Vector3::zero;
+    } else {
+        return vec * invLen;
+    }
 }
 Vector3 Math::Normalize(const Vector3&& vec) {
-    const float invLen = 1.0f / vec.Length();
-    return invLen == std::numeric_limits<float>::infinity() ? Vector3::zero : vec * invLen;
+    const float invLen = 1.0f / Math::QRSqrt(Dot(vec, vec));
+    if ( invLen == std::numeric_limits<float>::infinity() ) {
+        return Vector3::zero;
+    } else {
+        return vec * invLen;
+    }
 }
 Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vector3 &worldUp) {
 
