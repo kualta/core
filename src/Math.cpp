@@ -69,7 +69,7 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
                 lhs.x*rhs.y - lhs.y*rhs.x);
 }
 Vector3 Math::Normalize(const Vector3& vec) {
-    const float invLen = 1.0f / Math::QRSqrt(Dot(vec, vec));
+    const float invLen = Math::QRSqrt(Dot(vec, vec));
     if ( invLen == std::numeric_limits<float>::infinity() ) {
         return Vector3::zero;
     } else {
@@ -77,7 +77,7 @@ Vector3 Math::Normalize(const Vector3& vec) {
     }
 }
 Vector3 Math::Normalize(const Vector3&& vec) {
-    const float invLen = 1.0f / Math::QRSqrt(Dot(vec, vec));
+    const float invLen = Math::QRSqrt(Dot(vec, vec));
     if ( invLen == std::numeric_limits<float>::infinity() ) {
         return Vector3::zero;
     } else {

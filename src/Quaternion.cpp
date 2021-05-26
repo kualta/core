@@ -40,7 +40,7 @@ Vector3 Quaternion::ToEuler() const {
     // pitch (y-axis rotation)
     float siny = 2 * (w * y - z * x);
     // use 90 degrees if out of range
-    euler.y = Math::Abs(siny) >= 1 ? std::copysign(M_PI / 2, siny) : Math::ASin(siny);
+    euler.y = Math::Abs(siny) >= 1 ? std::copysign(Math::PI / 2, siny) : Math::ASin(siny);
 
     // yaw (z-axis rotation)
     float sinz_cosy = 2 * (w * z + x * y);
