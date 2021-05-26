@@ -69,7 +69,7 @@ Vector3 Math::Cross(const Vector3 &lhs, const Vector3 &rhs) {
                 lhs.x*rhs.y - lhs.y*rhs.x);
 }
 Vector3 Math::Normalize(const Vector3& vec) {
-    const float invLen = 1.0f / vec.Length();
+    const float invLen = 1.0f / Math::QRSqrt(Math::Dot(vec, vec));
     return vec * invLen;
 }
 Vector3 Math::Normalize(const Vector3&& vec) {
