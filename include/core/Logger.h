@@ -35,6 +35,10 @@
 #   define DEBUG_HERE logLevel::DEBUG, LOG_HERE
 #endif
 
+#ifndef NEW_LINE
+#   define NEW_LINE string('\n') + string(16, ' ') + string(' |')
+#endif
+
 namespace core {
 
 enum logLevel {
@@ -51,7 +55,7 @@ enum objectTag {
     OBJECT,   // Objects logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
-    ASSET,    // For asset logs (importing etc.)
+    IMPORT,   // Importing logs
     SCENE,    // Scene module logs
     INPUT,    // Scene module logs
 };
@@ -90,7 +94,11 @@ public:
      * @note Format: HH.MM.SS.ms
      * @note CORE_LOG_DATE defined macro changes format to YY/MM/DD HH:MM:SS.ms
      */
-    static std::stringstream& AddTimeStamp(std::stringstream& stream);
+    static std::stringstream& LogTimeStamp(std::stringstream& stream);
+
+    static std::stringstream& LogTagText(std::stringstream& stream, objectTag tag);
+
+    static std::stringstream& LogLevelText(std::stringstream& stream, logLevel level);
 
     /**
      * Sets width and fill char for next value in stream
@@ -112,8 +120,8 @@ public:
 class Log {
 public:
     Log(std::ostream& out,
-        logLevel level,
-        objectTag tag = GENERAL,
+        logLevel level = INFO,
+        objectTag tag  = GENERAL,
         LogPlace place = LogPlace());
     ~Log();
 
