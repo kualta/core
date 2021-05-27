@@ -4,17 +4,15 @@
 namespace core {
 
 Model::Model(const string &file) {
-    scene = ModelImporter::importer.ReadFile(file, aiProcess_CalcTangentSpace       |
-                                                    aiProcess_Triangulate            |
-                                                    aiProcess_JoinIdenticalVertices  |
-                                                    aiProcess_SortByPType);
+    scene = ModelImporter::importer.ReadFile(file, aiProcess_Triangulate | aiProcess_OptimizeMeshes);
     if ( !scene ) {
         Logger::Log(ASSET, ERR_HERE) << ModelImporter::importer.GetErrorString();
     }
-    geometry = new Mesh(scene.);
+    mesh = new Mesh(scene->mMeshes[0]);
+    shader = new Shader("shaders/dx11/vs_cubes.bin", "shaders/dx11/fs_cubes.bin");
 }
 Model::~Model() {
-    delete geometry;
+    delete mesh;
 }
 
 }

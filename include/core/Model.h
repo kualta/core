@@ -4,6 +4,7 @@
 #include "Essential.h"
 #include "ModelImporter.h"
 #include "Mesh.h"
+#include "Shader.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -16,7 +17,8 @@ public:
     Model(const string& file);
     ~Model();
 
-    Mesh* geometry;
+    Mesh* mesh;
+    Shader* shader;
 
 
 protected:
