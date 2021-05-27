@@ -85,7 +85,12 @@ Vector3 Math::Normalize(const Vector3&& vec) {
     }
 }
 Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vector3 &worldUp) {
-
+    /*
+      *   [         right.x          forward.x          up.x  0 ]
+      *   [         right.y          forward.y          up.y  0 ]
+      *   [         right.z          forward.z          up.z  0 ]
+      *   [ dot(right,-pos)  dot(forward,-pos)  dot(up,-pos)  1 ]
+     */
     // Core uses left-handed coordinate system
     const Vector3 forward = Math::Normalize(lookAt - pos);
     const Vector3 right   = Math::Normalize(Math::Cross(worldUp, forward));
@@ -93,19 +98,24 @@ Matrix4 Math::LookAtMatrix(const Vector3 &pos, const Vector3 &lookAt, const Vect
 
     Matrix4 mtx = Matrix4::zero;
 
-    mtx[0][0] = right.x;                mtx[0][1] = up.x;                mtx[0][2] = forward.x;
-    mtx[1][0] = right.y;                mtx[1][1] = up.y;                mtx[1][2] = forward.y;
-    mtx[2][0] = right.z;                mtx[2][1] = up.z;                mtx[2][2] = forward.z;
-    mtx[3][0] = -Math::Dot(right, pos); mtx[3][1] = -Math::Dot(up, pos); mtx[3][2] = -Math::Dot(forward, pos);
+    mtx[0][0] = right.x;
+    mtx[0][1] = up.x;
+    mtx[0][2] = forward.x;
 
-                                                                                                    mtx[3][3] = 1.0f;
+    mtx[1][0] = right.y;
+    mtx[1][1] = up.y;
+    mtx[1][2] = forward.y;
 
-    /*
-      *   [         right.x          forward.x          up.x  0 ]
-      *   [         right.y          forward.y          up.y  0 ]
-      *   [         right.z          forward.z          up.z  0 ]
-      *   [ dot(right,-pos)  dot(forward,-pos)  dot(up,-pos)  1 ]
-     */
+    mtx[2][0] = right.z;
+    mtx[2][1] = up.z;
+    mtx[2][2] = forward.z;
+
+    mtx[3][0] = -Math::Dot(right, pos);
+    mtx[3][1] = -Math::Dot(up, pos);
+    mtx[3][2] = -Math::Dot(forward, pos);
+
+    mtx[3][3] = 1.0f;
+
     return mtx;
 }
 Matrix4 Math::ProjectionMatrix(float top, float bottom, float left, float right, float near, float far, bool hmgNdc) {

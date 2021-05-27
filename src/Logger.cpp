@@ -10,9 +10,9 @@ Logger::Logger() : Object("Logger") {
 }
 Log Logger::Log(objectTag tag, logLevel level, const LogPlace& place) {
     switch (level) {
-        case   ERR: return core::Log(std::cout, ERR, tag, place);
-        case  WARN: return core::Log(std::cout, WARN, tag, place);
-        case  INFO: return core::Log(std::cout, INFO, tag, place);
+        case   ERR: return core::Log(std::cout, ERR,   tag, place);
+        case  WARN: return core::Log(std::cout, WARN,  tag, place);
+        case  INFO: return core::Log(std::cout, INFO,  tag, place);
         case DEBUG: return core::Log(std::cout, DEBUG, tag, place);
     }
     return core::Log(std::cout, ERR, INTERNAL);
@@ -32,10 +32,10 @@ string Logger::GetLogLevelText(logLevel level) {
     string text;
 
     switch (level) {
-        case   ERR: text = "ERROR! "; break;
-        case  WARN: text = "WARN: "; break;
-        case  INFO:
-        case DEBUG: text = ""; break;
+        case   ERR: text = " ERROR! "; break;
+        case  WARN: text = " WARN: "; break;
+        case  INFO: text = " ";        break;
+        case DEBUG: text = " ";        break;
     }
 
     return text;
@@ -51,6 +51,7 @@ string Logger::GetLogTypeText(objectTag tag) {
         case  PHYSICS: text = "  |PHYS|"; break;
         case    INPUT: text = " |INPUT|"; break;
         case    SCENE: text = " |SCENE|"; break;
+        case   IMPORT: text = "|IMPORT|"; break;
         case   RENDER: text = "|RENDER|"; break;
         case   WINDOW: text = "|WINDOW|"; break;
     }
@@ -73,7 +74,7 @@ string Logger::GetPlaceText(const LogPlace& place) {
 
     return text;
 }
-std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
+std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
     // FIXME: THIS IS SO HEAVY! For every log?! Refactoring needed!
 
     auto now = std::chrono::system_clock::now();
@@ -103,6 +104,18 @@ std::stringstream& Logger::AddTimeStamp(std::stringstream& stream) {
     FillWidth(stream, '0', 3);
     stream << milliseconds.count();
 
+    stream << " ";
+
+    return stream;
+}
+std::stringstream &Logger::LogTagText(std::stringstream &stream, objectTag tag) {
+    stream << GetLogTypeText(tag);
+
+    return stream;
+}
+std::stringstream &Logger::LogLevelText(std::stringstream &stream, logLevel level) {
+    stream << GetLogLevelText(level);
+
     return stream;
 }
 std::stringstream &Logger::FillWidth(std::stringstream &stream, const char& ch, const int8_t& width) {
@@ -121,11 +134,15 @@ Log::~Log() {
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace)
-: output(out), level(level), logPlace(logPlace) {
+Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace) :
+output(out),
+level(level),
+logPlace(std::move(logPlace))
+{
     logStream << "- ";
-    Logger::AddTimeStamp(logStream) << " ";
-    logStream << Logger::GetLogTypeText(tag) << " ";
-    logStream << Logger::GetLogLevelText(level);
+    Logger::LogTimeStamp(logStream);
+    Logger::LogTagText(logStream, tag);
+    Logger::LogLevelText(logStream, level);
 }
+
 } // namespace core
