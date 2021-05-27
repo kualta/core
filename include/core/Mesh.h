@@ -25,17 +25,27 @@ public:
     size_t verticesAmount  { 0 };
     size_t trianglesAmount { 0 };
 
-
 protected:
 
-    void UpdateBuffers();
-    void UpdateIndexBuffer();
-    void UpdateVertexBuffer();
     void UpdateVertexLayout(aiMesh *aiMesh);
+    void UpdateBuffers(aiMesh* aiMesh);
 
-    float*    vertices { nullptr };
-    uint32_t* indices  { nullptr };
+    void UpdateVertexBuffer(aiMesh* aiMesh);
+    void UpdatePositionBuffer(aiMesh* aiMesh);
+    void UpdateNormalBuffer(aiMesh* aiMesh);
+    void UpdateUVBuffer(aiMesh* aiMesh);
+    void UpdateIndexBuffer(aiMesh* aiMesh);
 
+    void UpdateBufferHandles();
+    void UpdateIndexBufferHandle();
+    void UpdateVertexBufferHandle();
+
+    float*    positions { nullptr };
+    float*    normals   { nullptr };
+    float*    uvs       { nullptr };
+
+    float*    vertexBuffer  { nullptr };
+    uint32_t* indexBuffer   { nullptr };
 
 };
 

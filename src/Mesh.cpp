@@ -11,58 +11,98 @@ Mesh::Mesh(aiMesh* aiMesh) :
         indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, FIXME!
 {
     UpdateVertexLayout(aiMesh);
-
-    vertices = new float[verticesAmount * 3 * sizeof(float)];
-    indices = new uint32_t[indicesAmount * sizeof(uint32_t)];
-
-    uint32_t vInd = 0;
-    for(unsigned int j = 0; j < verticesAmount; j++) {
-        const aiVector3D& vertexPos = aiMesh->mVertices[j];
-
-        vertices[vInd++] = vertexPos.x;
-        vertices[vInd++] = vertexPos.y;
-        vertices[vInd++] = vertexPos.z;
-    }
-    uint32_t iInd = 0;
-    for(int i = 0; i < trianglesAmount; i++) {
-        const aiFace& face = aiMesh->mFaces[i];
-
-        indices[iInd++] = face.mIndices[0];
-        indices[iInd++] = face.mIndices[1];
-        indices[iInd++] = face.mIndices[2];
-    }
-
-    UpdateBuffers();
+    UpdateBuffers(aiMesh);
+    UpdateBufferHandles();
 }
 Mesh::~Mesh() {
-    delete[] vertices;
-    delete[] indices;
+    delete[] positions;
+    delete[] indexBuffer;
     bgfx::destroy(indexBufferHandle);
     bgfx::destroy(vertexBufferHandle);
 }
-void Mesh::UpdateIndexBuffer() {
-    indexBufferHandle = bgfx::createIndexBuffer(FileSystem::CopyToMemory(indices, indicesAmount),
+void Mesh::UpdateIndexBufferHandle() {
+    indexBufferHandle = bgfx::createIndexBuffer(FileSystem::CopyToMemory(indexBuffer, indicesAmount),
                                                 BGFX_BUFFER_INDEX32);
 }
-void Mesh::UpdateVertexBuffer() {
-    vertexBufferHandle = bgfx::createVertexBuffer(FileSystem::CopyToMemory(vertices, verticesAmount * 3),
-                                                  vertexLayout);
+void Mesh::UpdateVertexBufferHandle() {
+    vertexBufferHandle = bgfx::createVertexBuffer(
+            FileSystem::CopyToMemory(vertexBuffer, vertexLayout.getSize(verticesAmount)), vertexLayout);
 }
-void Mesh::UpdateBuffers() {
-    UpdateIndexBuffer();
-    UpdateVertexBuffer();
+void Mesh::UpdateBufferHandles() {
+    UpdateIndexBufferHandle();
+    UpdateVertexBufferHandle();
 }
-bool Mesh::isValid() const {
-    if (bgfx::isValid(indexBufferHandle) && bgfx::isValid(vertexBufferHandle)) {
-        return true;
-    } else {
-        return false;
+void Mesh::UpdateBuffers(aiMesh* aiMesh) {
+    UpdatePositionBuffer(aiMesh);
+    UpdateNormalBuffer(aiMesh);
+    UpdateUVBuffer(aiMesh);
+    UpdateIndexBuffer(aiMesh);
+    UpdateVertexBuffer(aiMesh);
+}
+void Mesh::UpdatePositionBuffer(aiMesh *aiMesh) {
+    positions = new float[verticesAmount * 3 * sizeof(float)];
+
+    uint32_t index = 0;
+    for(uint32_t i = 0; i < verticesAmount; i++) {
+        const aiVector3D& vertexPos = aiMesh->mVertices[i];
+
+        positions[index++] = vertexPos.x;
+        positions[index++] = vertexPos.y;
+        positions[index++] = vertexPos.z;
+    }
+}
+void Mesh::UpdateNormalBuffer(aiMesh *aiMesh) {
+    normals = new float[verticesAmount * 3 * sizeof(float)];
+
+    uint32_t index = 0;
+    for(uint32_t i = 0; i < verticesAmount; i++) {
+        const aiVector3D& normal = aiMesh->mNormals[i];
+
+        normals[index++] = normal.x;
+        normals[index++] = normal.y;
+        normals[index++] = normal.z;
+    }
+}
+void Mesh::UpdateUVBuffer(aiMesh *aiMesh) {
+    uvs = new float[verticesAmount * 2 * sizeof(float)];
+
+    uint32_t index = 0;
+    for(uint32_t i = 0; i < verticesAmount; i++) {
+        const aiVector3D& uv = aiMesh->mTextureCoords[0][i];
+
+        uvs[index++] = uv.x;
+        uvs[index++] = uv.y;
+    }
+}
+void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
+    vertexBuffer = new float[vertexLayout.getSize(verticesAmount) * sizeof(float)];
+
+    uint32_t index = 0;
+    uint32_t stride = vertexLayout.getStride();
+    for(uint32_t i = 0; i < verticesAmount; i++) {
+        const aiVector3D& uv = aiMesh->mTextureCoords[0][i];
+
+        vertexBuffer[index++] = uv.x;
+        vertexBuffer[index++] = uv.y;
+    }
+}
+void Mesh::UpdateIndexBuffer(aiMesh* aiMesh) {
+    indexBuffer = new uint32_t[indicesAmount * sizeof(uint32_t)];
+
+    uint32_t index = 0;
+    for(int i = 0; i < trianglesAmount; i++) {
+        const aiFace& face = aiMesh->mFaces[i];
+
+        indexBuffer[index++] = face.mIndices[0];
+        indexBuffer[index++] = face.mIndices[1];
+        indexBuffer[index++] = face.mIndices[2];
     }
 }
 void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
     vertexLayout.begin();
 
     Logger::Log(IMPORT, INFO) << "|| Importing Mesh \"" << aiMesh->mName.C_Str() << "\": ";
+
     if ( aiMesh->HasPositions() ) {
         Logger::Log(IMPORT, INFO) << "|| Vertices: " << verticesAmount;
         Logger::Log(IMPORT, INFO) << "|| Triangles: " << trianglesAmount;
@@ -105,6 +145,13 @@ void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
     }
 
     vertexLayout.end();
+}
+bool Mesh::isValid() const {
+    if (bgfx::isValid(indexBufferHandle) && bgfx::isValid(vertexBufferHandle)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 } // namespace
