@@ -28,12 +28,9 @@ public:
 protected:
 
     void UpdateVertexLayout(aiMesh *aiMesh);
-    void UpdateBuffers(aiMesh* aiMesh);
 
+    void UpdateBuffers(aiMesh* aiMesh);
     void UpdateVertexBuffer(aiMesh* aiMesh);
-    void UpdatePositionBuffer(aiMesh* aiMesh);
-    void UpdateNormalBuffer(aiMesh* aiMesh);
-    void UpdateUVBuffer(aiMesh* aiMesh);
     void UpdateIndexBuffer(aiMesh* aiMesh);
 
     void UpdateBufferHandles();

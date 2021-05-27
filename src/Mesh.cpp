@@ -10,6 +10,8 @@ Mesh::Mesh(aiMesh* aiMesh) :
         trianglesAmount(aiMesh->mNumFaces),
         indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, FIXME!
 {
+    Logger::Log(IMPORT, INFO) << "|| Processing Mesh \"" << aiMesh->mName.C_Str() << "\": ";
+
     UpdateVertexLayout(aiMesh);
     UpdateBuffers(aiMesh);
     UpdateBufferHandles();
@@ -33,57 +35,70 @@ void Mesh::UpdateBufferHandles() {
     UpdateVertexBufferHandle();
 }
 void Mesh::UpdateBuffers(aiMesh* aiMesh) {
-    UpdatePositionBuffer(aiMesh);
-    UpdateNormalBuffer(aiMesh);
-    UpdateUVBuffer(aiMesh);
     UpdateIndexBuffer(aiMesh);
     UpdateVertexBuffer(aiMesh);
 }
-void Mesh::UpdatePositionBuffer(aiMesh *aiMesh) {
-    positions = new float[verticesAmount * 3 * sizeof(float)];
-
-    uint32_t index = 0;
-    for(uint32_t i = 0; i < verticesAmount; i++) {
-        const aiVector3D& vertexPos = aiMesh->mVertices[i];
-
-        positions[index++] = vertexPos.x;
-        positions[index++] = vertexPos.y;
-        positions[index++] = vertexPos.z;
-    }
-}
-void Mesh::UpdateNormalBuffer(aiMesh *aiMesh) {
-    normals = new float[verticesAmount * 3 * sizeof(float)];
-
-    uint32_t index = 0;
-    for(uint32_t i = 0; i < verticesAmount; i++) {
-        const aiVector3D& normal = aiMesh->mNormals[i];
-
-        normals[index++] = normal.x;
-        normals[index++] = normal.y;
-        normals[index++] = normal.z;
-    }
-}
-void Mesh::UpdateUVBuffer(aiMesh *aiMesh) {
-    uvs = new float[verticesAmount * 2 * sizeof(float)];
-
-    uint32_t index = 0;
-    for(uint32_t i = 0; i < verticesAmount; i++) {
-        const aiVector3D& uv = aiMesh->mTextureCoords[0][i];
-
-        uvs[index++] = uv.x;
-        uvs[index++] = uv.y;
-    }
-}
 void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
-    vertexBuffer = new float[vertexLayout.getSize(verticesAmount) * sizeof(float)];
+    vertexBuffer = new float[vertexLayout.getSize(verticesAmount)];
 
-    uint32_t index = 0;
-    uint32_t stride = vertexLayout.getStride();
-    for(uint32_t i = 0; i < verticesAmount; i++) {
-        const aiVector3D& uv = aiMesh->mTextureCoords[0][i];
+    uint32_t step = vertexLayout.getStride() / sizeof(float);
+    uint32_t offset = 0;
 
-        vertexBuffer[index++] = uv.x;
-        vertexBuffer[index++] = uv.y;
+    if ( vertexLayout.has(bgfx::Attrib::Position ) ) {
+        offset = vertexLayout.getOffset(bgfx::Attrib::Position) / sizeof(float);
+        for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
+            const aiVector3D& vertexPos = aiMesh->mVertices[vNum];
+
+            vertexBuffer[vNum * step + offset + 0] = vertexPos[0];
+            vertexBuffer[vNum * step + offset + 1] = vertexPos[1];
+            vertexBuffer[vNum * step + offset + 2] = vertexPos[2];
+        }
+    }
+    if ( vertexLayout.has(bgfx::Attrib::Color0 ) ) {
+        offset = vertexLayout.getOffset(bgfx::Attrib::Color0) / sizeof(float);
+        for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
+            const aiColor4D& vertexColor = aiMesh->mColors[0][vNum];
+
+            vertexBuffer[vNum * step + offset + 0] = vertexColor[0];
+            vertexBuffer[vNum * step + offset + 1] = vertexColor[1];
+            vertexBuffer[vNum * step + offset + 2] = vertexColor[2];
+            vertexBuffer[vNum * step + offset + 3] = vertexColor[3];
+        }
+    }
+    if ( vertexLayout.has(bgfx::Attrib::TexCoord0 ) ) {
+        offset = vertexLayout.getOffset(bgfx::Attrib::TexCoord0) / sizeof(float);
+        for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
+            const aiVector3D& uv = aiMesh->mTextureCoords[0][vNum];
+
+            vertexBuffer[vNum * step + offset + 0] = uv[0];
+            vertexBuffer[vNum * step + offset + 1] = uv[1];
+        }
+    }
+    if ( vertexLayout.has(bgfx::Attrib::Normal ) ) {
+        offset = vertexLayout.getOffset(bgfx::Attrib::Normal) / sizeof(float);
+        for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
+            const aiVector3D& normal = aiMesh->mNormals[vNum];
+
+            vertexBuffer[vNum * step + offset + 0] = normal[0];
+            vertexBuffer[vNum * step + offset + 1] = normal[1];
+            vertexBuffer[vNum * step + offset + 2] = normal[2];
+        }
+    }
+    if ( vertexLayout.has(bgfx::Attrib::Tangent ) && vertexLayout.has(bgfx::Attrib::Bitangent) ) {
+        for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
+            const aiVector3D& tangent = aiMesh->mTangents[vNum];
+            const aiVector3D& bitangent = aiMesh->mBitangents[vNum];
+
+            offset = vertexLayout.getOffset(bgfx::Attrib::Tangent) / sizeof(float);
+            vertexBuffer[vNum * step + offset + 0] = tangent[0];
+            vertexBuffer[vNum * step + offset + 1] = tangent[1];
+            vertexBuffer[vNum * step + offset + 2] = tangent[2];
+
+            offset = vertexLayout.getOffset(bgfx::Attrib::Bitangent) / sizeof(float);
+            vertexBuffer[vNum * step + offset + 0] = bitangent[0];
+            vertexBuffer[vNum * step + offset + 1] = bitangent[1];
+            vertexBuffer[vNum * step + offset + 2] = bitangent[2];
+        }
     }
 }
 void Mesh::UpdateIndexBuffer(aiMesh* aiMesh) {
@@ -100,8 +115,6 @@ void Mesh::UpdateIndexBuffer(aiMesh* aiMesh) {
 }
 void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
     vertexLayout.begin();
-
-    Logger::Log(IMPORT, INFO) << "|| Importing Mesh \"" << aiMesh->mName.C_Str() << "\": ";
 
     if ( aiMesh->HasPositions() ) {
         Logger::Log(IMPORT, INFO) << "|| Vertices: " << verticesAmount;

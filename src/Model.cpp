@@ -4,7 +4,10 @@
 namespace core {
 
 Model::Model(const string &file) {
-    scene = ModelImporter::importer.ReadFile(file, aiProcess_Triangulate | aiProcess_OptimizeMeshes);
+    scene = ModelImporter::importer.ReadFile(file, aiProcess_Triangulate
+                                                 | aiProcess_OptimizeMeshes
+                                                 | aiProcess_GenNormals
+                                                 | aiProcess_CalcTangentSpace);
     if ( !scene ) {
         Logger::Log(IMPORT, ERR_HERE) << ModelImporter::importer.GetErrorString();
     }
