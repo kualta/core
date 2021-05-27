@@ -51,6 +51,7 @@ enum objectTag {
     OBJECT,   // Objects logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs
+    ASSET,    // For asset logs (importing etc.)
     SCENE,    // Scene module logs
     INPUT,    // Scene module logs
 };

@@ -7,7 +7,7 @@
 #include <core/Shader.h>
 
 #include <bgfx/bgfx.h>
-#include <core/Geometry.h>
+#include <core/Mesh.h>
 
 namespace core {
 
@@ -16,7 +16,7 @@ public:
     // TODO: Add default shader so it could be defaulted
     Renderer(Entity& parent,
              Shader* shaderPtr,
-             Geometry* geometryPtr,
+             Mesh* geometryPtr,
              uint16_t viewId = 0,
              const string& name = "Renderer");
 
@@ -26,7 +26,7 @@ public:
 
 protected:
     uint16_t         viewId    { 0 };
-    core::Geometry*  geometry  { };
+    core::Mesh*  geometry  { };
     core::Shader*    shader    { nullptr };
 
 };

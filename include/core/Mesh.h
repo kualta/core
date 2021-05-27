@@ -1,5 +1,5 @@
-#ifndef CORE_GEOMETRY_H
-#define CORE_GEOMETRY_H
+#ifndef CORE_MESH_H
+#define CORE_MESH_H
 
 #include "Essential.h"
 #include "Primitive.h"
@@ -9,11 +9,15 @@
 
 namespace core {
 
-class Geometry {
+class Mesh {
 public:
-    Geometry(std::vector<ColorVertex> vb, std::vector<uint16_t> ib);
+    Mesh(float* vertices, size_t vSize, const int* indices, size_t iSize);
+    Mesh(const std::vector<ColorVertex>& vb, const std::vector<uint16_t>& ib);
 
+    bgfx::VertexBufferHandle CreateVertexBuffer(float* vertices, size_t vSize) const;
     bgfx::VertexBufferHandle CreateVertexBuffer(const std::vector<ColorVertex>& vb) const;
+
+    bgfx::IndexBufferHandle CreateIndexBuffer(const int* indices, size_t iSize) const;
     bgfx::IndexBufferHandle CreateIndexBuffer(const std::vector<uint16_t>& ib) const;
 
     bgfx::VertexBufferHandle vertexBufferHandle { bgfx::kInvalidHandle };
@@ -22,10 +26,8 @@ public:
 
 protected:
 
-    std::vector<ColorVertex> verticesBuf;
-    std::vector<uint16_t>    trianglesBuf;
 };
 
 }
 
-#endif //CORE_GEOMETRY_H
+#endif //CORE_MESH_H
