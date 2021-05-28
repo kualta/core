@@ -52,6 +52,7 @@ enum objectTag {
     GENERAL,  // For other logs
     NETWORK,  // Network module logs
     PHYSICS,  // Physics module logs
+    MEMORY,   // For memory logs (allocs etc.)
     OBJECT,   // Objects logs
     WINDOW,   // Window module logs
     RENDER,   // Rendering module logs

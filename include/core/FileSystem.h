@@ -2,6 +2,7 @@
 #define CORE_FILESYSTEM_H
 
 #include "Essential.h"
+#include "Logger.h"
 
 #include <bgfx/bgfx.h>
 
@@ -15,8 +16,9 @@ public:
     static const bgfx::Memory* ReadFileToMemory(const string& path, size_t size);
 
     template<typename T>
-    static const bgfx::Memory* CopyToMemory(T* buff, size_t buffSize) {
-        size_t bufferSize = buffSize * sizeof(T);
+    static const bgfx::Memory* CopyToMemory(T* buff, size_t amount) {
+        size_t bufferSize = amount * sizeof(T);
+        Logger::Log(MEMORY, INFO) << "[ALLOC] Buffer elements: " << amount << ", size (bytes): " << bufferSize;
 
         const bgfx::Memory* mem = bgfx::alloc(bufferSize);
         std::memcpy(mem->data, buff, bufferSize);
