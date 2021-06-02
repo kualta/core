@@ -69,7 +69,7 @@ class WindowModule;
 class EngineModule;
 class SceneModule;
 class InputModule;
-class RenderModule;
+class BgfxRenderModule;
 
 // Core Components classes
 class BgfxRenderer;
@@ -90,6 +90,7 @@ template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
+typedef class VkRenderer Renderer;
 typedef std::string string;
 typedef uint32_t rgba;
 typedef uint32_t abgr;

@@ -10,7 +10,7 @@ Mesh::Mesh(aiMesh* aiMesh) :
         trianglesAmount(aiMesh->mNumFaces),
         indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, FIXME!
 {
-    Logger::Log(IMPORT, INFO) << "|| Processing Mesh \"" << aiMesh->mName.C_Str() << "\": ";
+    Logger::Log(IMPORT, INFO) << "Processing Mesh " << aiMesh->mName.C_Str();
 
     UpdateVertexLayout(aiMesh);
     UpdateBuffers(aiMesh);
@@ -119,9 +119,9 @@ void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
     vertexLayout.begin();
 
     if ( aiMesh->HasPositions() ) {
-        Logger::Log(IMPORT, INFO) << "|| Vertices: " << verticesAmount;
-        Logger::Log(IMPORT, INFO) << "|| Triangles: " << trianglesAmount;
-        Logger::Log(IMPORT, INFO) << "|| Indices: " << indicesAmount;
+        Logger::Log(IMPORT, INFO) << " | Vertices: " << verticesAmount;
+        Logger::Log(IMPORT, INFO) << " | Triangles: " << trianglesAmount;
+        Logger::Log(IMPORT, INFO) << " | Indices: " << indicesAmount;
         vertexLayout.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float);
     } else {
         Logger::Log(IMPORT, ERR_HERE) << "Import failed, mesh does not contain position info?!";
@@ -129,34 +129,34 @@ void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
     }
 
     if ( aiMesh->HasVertexColors(0) ) {
-        Logger::Log(IMPORT, INFO) << "|| Color channels: " << aiMesh->GetNumColorChannels();
+        Logger::Log(IMPORT, INFO) << " | Color channels: " << aiMesh->GetNumColorChannels();
         vertexLayout.add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Float);
     } else {
-        Logger::Log(IMPORT, INFO) << "|| Color channels: " << aiMesh->GetNumColorChannels();
+        Logger::Log(IMPORT, INFO) << " | Color channels: " << aiMesh->GetNumColorChannels();
     }
 
     if ( aiMesh->HasTextureCoords(0) ) {
-        Logger::Log(IMPORT, INFO) << "|| Texture channels: " << aiMesh->GetNumUVChannels();
+        Logger::Log(IMPORT, INFO) << " | Texture channels: " << aiMesh->GetNumUVChannels();
         vertexLayout.add(bgfx::Attrib::TexCoord0, 3, bgfx::AttribType::Float);
     } else {
-        Logger::Log(IMPORT, INFO) << "|| Texture channels: " << aiMesh->GetNumUVChannels();
+        Logger::Log(IMPORT, INFO) << " | Texture channels: " << aiMesh->GetNumUVChannels();
     }
 
     if ( aiMesh->HasNormals() ) {
-        Logger::Log(IMPORT, INFO) << "|| Normals: " << "true";
+        Logger::Log(IMPORT, INFO) << " | Normals: " << "true";
         vertexLayout.add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float);
     } else {
-        Logger::Log(IMPORT, INFO) << "|| Normals: " << "false";
+        Logger::Log(IMPORT, INFO) << " | Normals: " << "false";
     }
 
     if ( aiMesh->HasTangentsAndBitangents() ) {
-        Logger::Log(IMPORT, INFO) << "|| Tangents: " << "true";
-        Logger::Log(IMPORT, INFO) << "|| Bitangents: " << "true";
+        Logger::Log(IMPORT, INFO) << " | Tangents: " << "true";
+        Logger::Log(IMPORT, INFO) << " | Bitangents: " << "true";
         vertexLayout.add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float);
         vertexLayout.add(bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float);
     } else {
-        Logger::Log(IMPORT, INFO) << "|| Tangents: " << "false";
-        Logger::Log(IMPORT, INFO) << "|| Bitangents: " << "false";
+        Logger::Log(IMPORT, INFO) << " | Tangents: " << "false";
+        Logger::Log(IMPORT, INFO) << " | Bitangents: " << "false";
     }
 
     vertexLayout.end();
