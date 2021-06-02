@@ -12,14 +12,14 @@ Camera::Camera(
         float farPlane,
         bool hmgDepth,
         const string& name)
-:   Component(parent, name),
-    fov(fovY),
-    aspectRatio(width/height),
-    width(width),
-    height(height),
-    nearPlane(nearPlane),
-    farPlane(farPlane),
-    homogeneousDepth(hmgDepth)
+: IComponent(parent, name),
+  fov(fovY),
+  aspectRatio(width/height),
+  width(width),
+  height(height),
+  nearPlane(nearPlane),
+  farPlane(farPlane),
+  homogeneousDepth(hmgDepth)
 {
     parent.assertRequiredComponent<Transform>(this);
     Start();

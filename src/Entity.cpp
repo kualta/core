@@ -3,7 +3,7 @@
 
 namespace core {
 
-Entity::Entity(const string& name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<Component>> c)
+Entity::Entity(const string& name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<IComponent>> c)
     : Object(name), Node<Entity>(parent), components(std::move(c)) {
 }
 Entity::~Entity() {
@@ -21,7 +21,7 @@ bool Entity::operator!=(const Entity &rhs) const {
 void Entity::Tick() {
     std::for_each(components.begin(),
                   components.end(),
-                  [&](std::shared_ptr<Component> &c) {
+                  [&](std::shared_ptr<IComponent> &c) {
         c->Tick();
     });
 }

@@ -19,12 +19,6 @@ public:
 
     Mesh* mesh;
     Shader* shader;
-
-
-protected:
-
-    const aiScene* scene;
-
 };
 
 }

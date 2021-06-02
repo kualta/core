@@ -2,12 +2,12 @@
 #define CORE_CAMERA_H
 
 #include <core/Essential.h>
-#include <core/Component.h>
+#include <core/IComponent.h>
 #include <core/Entity.h>
 
 namespace core {
 
-class Camera : public Component {
+class Camera : public IComponent {
 public:
     explicit Camera(Entity&     parent,
                     float         fovY = 90.0f,
