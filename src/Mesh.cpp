@@ -17,8 +17,9 @@ Mesh::Mesh(aiMesh* aiMesh) :
     UpdateBufferHandles();
 }
 Mesh::~Mesh() {
-    delete[] positions;
     delete[] indexBuffer;
+    delete[] vertexBuffer;
+
     bgfx::destroy(indexBufferHandle);
     bgfx::destroy(vertexBufferHandle);
 }
@@ -28,7 +29,7 @@ void Mesh::UpdateIndexBufferHandle() {
 }
 void Mesh::UpdateVertexBufferHandle() {
     vertexBufferHandle = bgfx::createVertexBuffer(
-            FileSystem::CopyToMemory(vertexBuffer, vertexLayout.getSize(verticesAmount)), vertexLayout);
+            FileSystem::CopyToMemory(vertexBuffer, vertexLayout.getSize(verticesAmount) / sizeof(float)), vertexLayout);
 }
 void Mesh::UpdateBufferHandles() {
     UpdateIndexBufferHandle();
@@ -39,13 +40,14 @@ void Mesh::UpdateBuffers(aiMesh* aiMesh) {
     UpdateVertexBuffer(aiMesh);
 }
 void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
-    vertexBuffer = new float[vertexLayout.getSize(verticesAmount)];
+    const int16_t elementSize = sizeof(float);
+    const uint32_t step = vertexLayout.getStride() / elementSize;
 
-    uint32_t step = vertexLayout.getStride() / sizeof(float);
+    vertexBuffer = new float[vertexLayout.getSize(verticesAmount) / elementSize];
     uint32_t offset = 0;
 
     if ( vertexLayout.has(bgfx::Attrib::Position ) ) {
-        offset = vertexLayout.getOffset(bgfx::Attrib::Position) / sizeof(float);
+        offset = vertexLayout.getOffset(bgfx::Attrib::Position) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiVector3D& vertexPos = aiMesh->mVertices[vNum];
 
@@ -55,7 +57,7 @@ void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
         }
     }
     if ( vertexLayout.has(bgfx::Attrib::Color0 ) ) {
-        offset = vertexLayout.getOffset(bgfx::Attrib::Color0) / sizeof(float);
+        offset = vertexLayout.getOffset(bgfx::Attrib::Color0) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiColor4D& vertexColor = aiMesh->mColors[0][vNum];
 
@@ -66,7 +68,7 @@ void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
         }
     }
     if ( vertexLayout.has(bgfx::Attrib::TexCoord0 ) ) {
-        offset = vertexLayout.getOffset(bgfx::Attrib::TexCoord0) / sizeof(float);
+        offset = vertexLayout.getOffset(bgfx::Attrib::TexCoord0) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiVector3D& uv = aiMesh->mTextureCoords[0][vNum];
 
@@ -75,7 +77,7 @@ void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
         }
     }
     if ( vertexLayout.has(bgfx::Attrib::Normal ) ) {
-        offset = vertexLayout.getOffset(bgfx::Attrib::Normal) / sizeof(float);
+        offset = vertexLayout.getOffset(bgfx::Attrib::Normal) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiVector3D& normal = aiMesh->mNormals[vNum];
 
@@ -89,12 +91,12 @@ void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
             const aiVector3D& tangent = aiMesh->mTangents[vNum];
             const aiVector3D& bitangent = aiMesh->mBitangents[vNum];
 
-            offset = vertexLayout.getOffset(bgfx::Attrib::Tangent) / sizeof(float);
+            offset = vertexLayout.getOffset(bgfx::Attrib::Tangent) / elementSize;
             vertexBuffer[vNum * step + offset + 0] = tangent[0];
             vertexBuffer[vNum * step + offset + 1] = tangent[1];
             vertexBuffer[vNum * step + offset + 2] = tangent[2];
 
-            offset = vertexLayout.getOffset(bgfx::Attrib::Bitangent) / sizeof(float);
+            offset = vertexLayout.getOffset(bgfx::Attrib::Bitangent) / elementSize;
             vertexBuffer[vNum * step + offset + 0] = bitangent[0];
             vertexBuffer[vNum * step + offset + 1] = bitangent[1];
             vertexBuffer[vNum * step + offset + 2] = bitangent[2];

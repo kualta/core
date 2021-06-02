@@ -50,7 +50,7 @@ bool WindowRenderer::InitWindow(Window &window) {
     initObj.type = bgfx::RendererType::Count; // Automatically choose a renderer.
     initObj.resolution.width = window.GetWidth();
     initObj.resolution.height = window.GetHeight();
-    initObj.resolution.reset = BGFX_RESET_VSYNC;
+    initObj.resolution.reset = BGFX_RESET_VSYNC | BGFX_RESET_MSAA_X4;
 
     bool success = bgfx::init(initObj);
 

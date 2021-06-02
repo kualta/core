@@ -2,13 +2,13 @@
 #define CORE_SCRIPT_H
 
 #include <core/Essential.h>
-#include <core/Component.h>
+#include <core/IComponent.h>
 #include <core/ScriptBehaviour.h>
 
 namespace core {
 
 template<typename T>
-class Script : public Component {
+class Script : public IComponent {
     static_assert(std::is_base_of<core::ScriptBehaviour, T>::value, "Script T must inherit from ScriptBehaviour");
 
 public:
@@ -27,7 +27,7 @@ protected:
 };
 
 template<typename T>
-Script<T>::Script(Entity &parent, const string &name) : Component(parent, name + " component") {
+Script<T>::Script(Entity &parent, const string &name) : IComponent(parent, name + " component") {
     scriptObj = new T;
     scriptObj->SetEntity(entity);
 }

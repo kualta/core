@@ -37,10 +37,6 @@ protected:
     void UpdateIndexBufferHandle();
     void UpdateVertexBufferHandle();
 
-    float*    positions { nullptr };
-    float*    normals   { nullptr };
-    float*    uvs       { nullptr };
-
     float*    vertexBuffer  { nullptr };
     uint32_t* indexBuffer   { nullptr };
 

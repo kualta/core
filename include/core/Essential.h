@@ -29,39 +29,53 @@
 #include <cstdint>
 #include <cassert>
 
+#include "Exceptions.h"
+
 
 namespace core {
 
 class WindowModule;
 
 class Color;
-class Component;
-class Transform;
-class Renderer;
+class IComponent;
 class Core;
 class CoreConfig;
 class Degree;
+class EngineLoop;
 class Entity;
+class FileSystem;
+class IModule;
+class IModuleContainer;
+class IRenderer;
+class ITicker;
 class Logger;
 class Log;
 class Math;
-class IModuleContainer;
+class Mesh;
+class Model;
+class ModelImporter;
 class Object;
 class Primitive;
+class Quaternion;
 class Radian;
+class ScriptBehaviour;
+class Shader;
 class WindowRenderer;
-class Root;
 class Window;
 class WindowBuilder;
 
-// Interfaces classes
-class IModule;
-
-
+// Core Module classes
 class WindowModule;
 class EngineModule;
+class SceneModule;
 class InputModule;
 class RenderModule;
+
+// Core Components classes
+class BgfxRenderer;
+class Camera;
+class Transform;
+template<typename T> class Script;
 
 struct StatusDesc;
 struct RgbaColor;

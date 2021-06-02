@@ -10,14 +10,14 @@ namespace core {
  * errors in the future.
  */
 class bad_file : public std::runtime_error {
-public: explicit bad_file(const string& message = "") : std::runtime_error(message) { };
+public: explicit bad_file(const std::string& message = "") : std::runtime_error(message) { };
 };
 
 /**
  * Runtime exteption indicating unexpected mesh object contents
  */
 class bad_mesh : public std::runtime_error {
-public: explicit bad_mesh(const string& message = "") : std::runtime_error(message) { };
+public: explicit bad_mesh(const std::string& message = "") : std::runtime_error(message) { };
 };
 
 

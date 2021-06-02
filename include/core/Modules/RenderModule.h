@@ -3,7 +3,7 @@
 
 #include <core/Essential.h>
 #include <core/IModule.h>
-#include <core/Components/Renderer.h>
+#include <core/Components/BgfxRenderer.h>
 
 #include <algorithm>
 #include <bgfx/bgfx.h>

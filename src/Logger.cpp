@@ -47,6 +47,7 @@ string Logger::GetLogTypeText(objectTag tag) {
         case  GENERAL: text = "        "; break;
         case   OBJECT: text = "       >"; break;
         case  NETWORK: text = "   |NET|"; break;
+        case   MEMORY: text = "   |MEM|"; break;
         case INTERNAL: text = "  |CORE|"; break;
         case  PHYSICS: text = "  |PHYS|"; break;
         case    INPUT: text = " |INPUT|"; break;

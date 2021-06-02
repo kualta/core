@@ -6,12 +6,12 @@
 
 #include "Essential.h"
 #include "Instantiable.h"
-#include "Component.h"
+#include "IComponent.h"
 #include "Object.h"
 #include "Node.h"
 #include "ScriptBehaviour.h"
 #include <core/Components/Transform.h>
-#include <core/Components/Renderer.h>
+#include <core/Components/BgfxRenderer.h>
 
 #include <memory>
 #include <utility>
@@ -27,7 +27,7 @@ class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
 public:
     explicit Entity(const string& name                        = "entity",
                     std::weak_ptr<Entity>& parent             = root,
-                    std::vector<std::shared_ptr<Component>> c = { } );
+                    std::vector<std::shared_ptr<IComponent>> c = { } );
     ~Entity();
 
     /**
@@ -70,7 +70,7 @@ public:
      * @note Use Entity::HasComponent<T>() to make sure component exists
      */
     template<typename T>
-    Component* GetComponent();
+    IComponent* GetComponent();
 
     /**
      * Does entity have this component?
@@ -102,11 +102,11 @@ public:
     bool operator!=(const Entity &rhs) const;
 
     Transform*  transform { nullptr };
-    Renderer*   renderer  { nullptr };
+    BgfxRenderer*   renderer  {nullptr };
 
 protected:
 
-    std::vector<std::shared_ptr<Component>> components;
+    std::vector<std::shared_ptr<IComponent>> components;
     bool  isActive { true };
 };
 

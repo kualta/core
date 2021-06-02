@@ -2,12 +2,12 @@
 #define CORE_COMPONENT_TRANSFORM_H
 
 #include <core/Essential.h>
-#include <core/Component.h>
+#include <core/IComponent.h>
 #include <core/Math.h>
 
 namespace core {
 
-class Transform : public Component {
+class Transform : public IComponent {
 public:
     explicit Transform(Entity& parent, const string& name = "Transform");
 
