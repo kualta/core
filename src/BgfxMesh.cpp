@@ -1,11 +1,11 @@
-#include <core/Mesh.h>
+#include <core/BgfxMesh.h>
 #include <core/FileSystem.h>
 #include <core/Logger.h>
 #include <core/Exceptions.h>
 
 namespace core {
 
-Mesh::Mesh(aiMesh* aiMesh) :
+BgfxMesh::BgfxMesh(aiMesh* aiMesh) :
         verticesAmount(aiMesh->mNumVertices),
         trianglesAmount(aiMesh->mNumFaces),
         indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, FIXME!
@@ -16,30 +16,30 @@ Mesh::Mesh(aiMesh* aiMesh) :
     UpdateBuffers(aiMesh);
     UpdateBufferHandles();
 }
-Mesh::~Mesh() {
+BgfxMesh::~BgfxMesh() {
     delete[] indexBuffer;
     delete[] vertexBuffer;
 
     bgfx::destroy(indexBufferHandle);
     bgfx::destroy(vertexBufferHandle);
 }
-void Mesh::UpdateIndexBufferHandle() {
+void BgfxMesh::UpdateIndexBufferHandle() {
     indexBufferHandle = bgfx::createIndexBuffer(FileSystem::CopyToMemory(indexBuffer, indicesAmount),
                                                 BGFX_BUFFER_INDEX32);
 }
-void Mesh::UpdateVertexBufferHandle() {
+void BgfxMesh::UpdateVertexBufferHandle() {
     vertexBufferHandle = bgfx::createVertexBuffer(
             FileSystem::CopyToMemory(vertexBuffer, vertexLayout.getSize(verticesAmount) / sizeof(float)), vertexLayout);
 }
-void Mesh::UpdateBufferHandles() {
+void BgfxMesh::UpdateBufferHandles() {
     UpdateIndexBufferHandle();
     UpdateVertexBufferHandle();
 }
-void Mesh::UpdateBuffers(aiMesh* aiMesh) {
+void BgfxMesh::UpdateBuffers(aiMesh* aiMesh) {
     UpdateIndexBuffer(aiMesh);
     UpdateVertexBuffer(aiMesh);
 }
-void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
+void BgfxMesh::UpdateVertexBuffer(aiMesh* aiMesh) {
     const int16_t elementSize = sizeof(float);
     const uint32_t step = vertexLayout.getStride() / elementSize;
 
@@ -103,7 +103,7 @@ void Mesh::UpdateVertexBuffer(aiMesh* aiMesh) {
         }
     }
 }
-void Mesh::UpdateIndexBuffer(aiMesh* aiMesh) {
+void BgfxMesh::UpdateIndexBuffer(aiMesh* aiMesh) {
     indexBuffer = new uint32_t[indicesAmount * sizeof(uint32_t)];
 
     uint32_t index = 0;
@@ -115,7 +115,7 @@ void Mesh::UpdateIndexBuffer(aiMesh* aiMesh) {
         indexBuffer[index++] = face.mIndices[2];
     }
 }
-void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
+void BgfxMesh::UpdateVertexLayout(aiMesh *aiMesh) {
     vertexLayout.begin();
 
     if ( aiMesh->HasPositions() ) {
@@ -161,7 +161,7 @@ void Mesh::UpdateVertexLayout(aiMesh *aiMesh) {
 
     vertexLayout.end();
 }
-bool Mesh::isValid() const {
+bool BgfxMesh::isValid() const {
     if (bgfx::isValid(indexBufferHandle) && bgfx::isValid(vertexBufferHandle)) {
         return true;
     } else {

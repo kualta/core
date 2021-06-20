@@ -51,7 +51,7 @@ class ITicker;
 class Logger;
 class Log;
 class Math;
-class Mesh;
+class BgfxMesh;
 class Model;
 class ModelImporter;
 class Object;

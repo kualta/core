@@ -2,7 +2,7 @@
 #define CORE_VKRENDERER_H
 
 #include <core/Essential.h>
-#include <core/IRenderer.h>
+#include <core/Components/IRenderer.h>
 
 namespace core {
 

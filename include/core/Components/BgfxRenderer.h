@@ -2,8 +2,8 @@
 #define CORE_BGFXRENDERER_H
 
 #include <core/Essential.h>
-#include <core/IRenderer.h>
-#include <core/Mesh.h>
+#include <core/Components/IRenderer.h>
+#include <core/BgfxMesh.h>
 #include <core/Model.h>
 #include <core/Shader.h>
 
@@ -20,7 +20,7 @@ public:
 
     BgfxRenderer(Entity& parent,
                  Shader* shaderPtr,
-                 Mesh* meshPtr,
+                 BgfxMesh* meshPtr,
                  uint16_t viewId = 0,
                  const string& name = "Renderer");
 

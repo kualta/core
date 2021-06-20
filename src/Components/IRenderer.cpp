@@ -1,4 +1,4 @@
-#include <core/IRenderer.h>
+#include <core/Components/IRenderer.h>
 #include <core/Model.h>
 
 namespace core {
@@ -6,7 +6,7 @@ namespace core {
 // TODO: Add asserts to parent
 IRenderer::IRenderer(Entity& parent,
                      Shader* shaderPtr,
-                     Mesh* meshPtr,
+                     BgfxMesh* meshPtr,
                      const string &name)
 : IComponent(parent, name),
 mesh(meshPtr),

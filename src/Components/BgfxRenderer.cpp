@@ -8,7 +8,7 @@ namespace core {
 
 BgfxRenderer::BgfxRenderer(Entity& parent,
                            Shader* shaderPtr,
-                           Mesh* geometryPtr,
+                           BgfxMesh* geometryPtr,
                            uint16_t viewId,
                            const string& name)
 : IRenderer(parent, shaderPtr, geometryPtr, name),

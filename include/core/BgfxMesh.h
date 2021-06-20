@@ -1,8 +1,9 @@
-#ifndef CORE_MESH_H
-#define CORE_MESH_H
+#ifndef CORE_BGFXMESH_H
+#define CORE_BGFXMESH_H
 
 #include "Essential.h"
 #include "Primitive.h"
+#include "IMesh.h"
 
 #include <assimp/mesh.h>
 #include <bgfx/bgfx.h>
@@ -10,10 +11,10 @@
 
 namespace core {
 
-class Mesh {
+class BgfxMesh : public IMesh {
 public:
-    explicit Mesh(aiMesh* aiMesh);
-    ~Mesh();
+    explicit BgfxMesh(aiMesh* aiMesh);
+    ~BgfxMesh();
 
     bgfx::VertexBufferHandle vertexBufferHandle { bgfx::kInvalidHandle };
     bgfx::IndexBufferHandle  indexBufferHandle  { bgfx::kInvalidHandle };
@@ -44,4 +45,4 @@ protected:
 
 }
 
-#endif //CORE_MESH_H
+#endif //CORE_BGFXMESH_H
