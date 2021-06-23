@@ -9,6 +9,9 @@ VkRenderer::VkRenderer(Entity& parent,
 {
 
 }
+VkRenderer::~VkRenderer() {
+
+}
 void VkRenderer::Draw() {
 
 }

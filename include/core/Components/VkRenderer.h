@@ -11,6 +11,7 @@ public:
     VkRenderer(Entity& parent,
                Model* modelPtr,
                const string& name = "Renderer");
+    ~VkRenderer();
 
     void Draw() override;
 

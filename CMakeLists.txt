@@ -55,6 +55,11 @@ endif()
 add_subdirectory(lib/bgfx.cmake)
 target_link_libraries(core PUBLIC bgfx)
 
+#       vulkan
+find_package(Vulkan REQUIRED FATAL_ERROR)
+target_link_directories(core PUBLIC ${Vulkan_INCLUDE_DIR})
+target_include_directories(core PUBLIC ${Vulkan_INCLUDE_DIR})
+target_link_libraries(core PUBLIC ${Vulkan_LIBRARIES})
 
 #       assimp
 add_subdirectory(lib/assimp)
@@ -64,7 +69,7 @@ target_link_libraries(core PUBLIC assimp)
 # Specify SDL2 location
 set(SDL2_DIR lib/SDL2)
 # Find SDL2
-find_package(SDL2 REQUIRED)
+find_package(SDL2 REQUIRED FATAL_ERROR)
 # Add SDL2 into include directories
 target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
 # Link SDL2 libs
