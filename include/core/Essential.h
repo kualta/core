@@ -21,6 +21,18 @@
 #       define __FILENAME__ (strrchr("/" __FILE__, '/') + 1)
 #   endif
 #endif
+
+#ifndef CORE_MAJOR_VERSION
+#   define CORE_MAJOR_VERSION 0
+#endif
+
+#ifndef CORE_MINOR_VERSION
+#   define CORE_MINOR_VERSION 3
+#endif
+
+#ifndef CORE_PATCH_VERSION
+#   define CORE_PATCH_VERSION 0
+#endif
 //      Core defines - - - -
 
 #include <string>
@@ -80,6 +92,7 @@ template<typename T> class Script;
 struct StatusDesc;
 struct RgbaColor;
 struct AbgrColor;
+struct AppInfo;
 
 template<int cols, int rows, typename T> class Matrix;
 template<int dims, typename T> class Vector;

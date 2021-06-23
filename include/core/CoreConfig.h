@@ -15,8 +15,23 @@
 
 namespace core {
 
+struct ProjectInfo {
+    static string GetVersion();
+    static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);
+    static void SetName(const string& name);
+
+    static string name;
+    static uint16_t majorVersion;
+    static uint16_t minorVersion;
+    static uint16_t patchVersion;
+};
+
 class CoreConfig {
+    using initializer_fn = std::function<void(Core &)>;
+
 public:
+    CoreConfig();
+
     /**
      * Adds module to CoreConfig
      * @details Method chaining is available
@@ -34,10 +49,14 @@ public:
      */
     Core Build();
 
-private:
-    using initializer_fn = std::function<void(Core &)>;
+    struct AppInfo : public ProjectInfo { };
+    struct CoreInfo : public ProjectInfo { };
 
-    struct nodeInfo {
+private:
+
+    void VisitNode(int nodeId, std::unordered_set<int> *unmarkedNodes, std::stack<initializer_fn*> *output);
+
+    struct NodeInfo {
         enum class mark { UNMARKED, TEMP, PERM };
 
         mark nodeMark;
@@ -64,9 +83,8 @@ private:
     /**
      * Graph of dependencies for every module
      */
-    std::unordered_map<int, nodeInfo> graph;
+    std::unordered_map<int, NodeInfo> graph;
 
-    void VisitNode(int nodeId, std::unordered_set<int> *unmarkedNodes, std::stack<initializer_fn*> *output);
 };
 
 }
