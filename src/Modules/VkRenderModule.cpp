@@ -20,7 +20,7 @@ void VkRenderModule::Cleanup() {
 void VkRenderModule::Frame() {
 
 }
-void VkRenderModule::CreateInstance() {
+void VkRenderModule::CreateInstance(Window* window) {
     VkApplicationInfo appInfo { };
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = CoreConfig::AppInfo::GetName().c_str();

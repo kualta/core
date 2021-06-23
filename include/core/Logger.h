@@ -4,6 +4,7 @@
 #include "Essential.h"
 #include "Singleton.h"
 #include "Object.h"
+#include "ObjectTag.h"
 
 #include <ostream>
 #include <sstream>
@@ -46,19 +47,6 @@ enum logLevel {
     INFO,
     WARN,
     ERR,
-};
-enum objectTag {
-    INTERNAL, // For engine logs
-    GENERAL,  // For other logs
-    NETWORK,  // Network module logs
-    PHYSICS,  // Physics module logs
-    MEMORY,   // For memory logs (allocs etc.)
-    OBJECT,   // Objects logs
-    WINDOW,   // Window module logs
-    RENDER,   // Rendering module logs
-    IMPORT,   // Importing logs
-    SCENE,    // Scene module logs
-    INPUT,    // Scene module logs
 };
 enum passInfo {
     SUCCESS,

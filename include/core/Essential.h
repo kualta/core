@@ -83,6 +83,7 @@ class SceneModule;
 class InputModule;
 class BgfxRenderModule;
 class VkRenderModule;
+class RenderModule;
 
 // Core Components classes
 class BgfxRenderer;
@@ -123,7 +124,6 @@ typedef Vector<2, int> Vector2i;
 typedef Vector<3, float> Vector3;
 typedef Vector<3, int> Vector3i;
 typedef Vector<4, float> Vector4;
-
 
 } // namespace core
 

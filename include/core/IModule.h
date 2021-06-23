@@ -8,6 +8,7 @@
 #include "Instantiable.h"
 #include "ITicker.h"
 #include "Logger.h"
+#include "ObjectTag.h"
 
 #include <utility>
 

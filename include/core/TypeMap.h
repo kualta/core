@@ -43,6 +43,8 @@ public:
     template <typename Key>
     iterator find() { return container.find(typeId<Key>()); }
 
+    iterator find(int id) { return container.find(id); }
+
     template <typename Key>
     const_iterator find() const { return container.find(typeId<Key>()); }
 

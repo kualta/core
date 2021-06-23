@@ -9,10 +9,9 @@ namespace core {
 class IWindowRenderer : public Object {
 public:
 
-    bool InitWindow(Window* window);
+    virtual bool InitWindow(Window& window) = 0;
 
 };
-
 
 }
 

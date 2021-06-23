@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ctime>
 #include <utility>
+#include "core/ObjectTag.h"
 
 namespace core {
 

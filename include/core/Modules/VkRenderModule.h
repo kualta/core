@@ -20,7 +20,7 @@ public:
 private:
     void Init();
     void Cleanup();
-    void CreateInstance();
+    void CreateInstance(Window* window);
 
     VkInstance instance;
 

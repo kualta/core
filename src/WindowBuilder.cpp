@@ -1,4 +1,5 @@
 #include <core/Modules/WindowModule.h>
+#include <core/Modules/IRenderModule.h>
 #include <core/WindowBuilder.h>
 #include <core/BgfxWindowRenderer.h>
 #include <core/Window.h>
@@ -17,7 +18,9 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     uint32_t windowId = window->GetId();
 
     // Pass new window to intialize renderer
-    BgfxWindowRenderer::InitWindow(*window);
+//    BgfxWindowRenderer::InitWindow(*window);
+    auto renderModule = dynamic_cast<IRenderModule*>(Core::GetModule(Core::GetModuleIdByTag(RENDER)));
+    renderModule->windowRenderer->InitWindow(*window);
     Core::GetModule<WindowModule>()->windowPool.Register(std::move(window));
     return windowId;
 }

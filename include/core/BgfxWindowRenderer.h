@@ -17,7 +17,7 @@ public:
     /**
      * Initializes rederer for given window
      */
-    static bool InitWindow(Window& window);
+    bool InitWindow(Window& window);
 
     /**
      * Gathers platform data for given window
