@@ -1,13 +1,12 @@
-#ifndef CORE_WINDOWRENDERER_H
-#define CORE_WINDOWRENDERER_H
+#ifndef CORE_BGFXWINDOWRENDERER_H
+#define CORE_BGFXWINDOWRENDERER_H
 
 #include "Essential.h"
-#include "Singleton.h"
-#include "Object.h"
+#include "IWindowRenderer.h"
 
 namespace core {
 
-class WindowRenderer : public Singleton<WindowRenderer>, public Object {
+class BgfxWindowRenderer : public IWindowRenderer {
 public:
 
     /**
@@ -30,4 +29,4 @@ public:
 
 } // namespace core
 
-#endif //CORE_WINDOWRENDERER_H
+#endif //CORE_BGFXWINDOWRENDERER_H

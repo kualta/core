@@ -11,6 +11,8 @@
 
 namespace core {
 
+typedef BgfxRenderModule RenderModule;
+
 class BgfxRenderModule : public IRenderModule {
 public:
     BgfxRenderModule();

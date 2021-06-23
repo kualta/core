@@ -16,9 +16,11 @@
 namespace core {
 
 struct ProjectInfo {
-    static string GetVersion();
     static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);
+    static string GetVersion();
+
     static void SetName(const string& name);
+    static string GetName();
 
     static string name;
     static uint16_t majorVersion;

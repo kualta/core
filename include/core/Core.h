@@ -25,8 +25,6 @@ public:
     Core& operator=(Core &&other) noexcept;
     ~Core();
 
-
-
     template<class T, class Dependent = std::nullptr_t>
     static T* GetModule();
 

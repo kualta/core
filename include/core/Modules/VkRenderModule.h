@@ -8,6 +8,8 @@
 
 namespace core {
 
+typedef VkRenderModule RenderModule;
+
 class VkRenderModule : public IRenderModule {
 public:
     VkRenderModule();

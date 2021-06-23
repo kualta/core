@@ -72,7 +72,7 @@ class Quaternion;
 class Radian;
 class ScriptBehaviour;
 class Shader;
-class WindowRenderer;
+class BgfxWindowRenderer;
 class Window;
 class WindowBuilder;
 
@@ -82,6 +82,7 @@ class EngineModule;
 class SceneModule;
 class InputModule;
 class BgfxRenderModule;
+class VkRenderModule;
 
 // Core Components classes
 class BgfxRenderer;

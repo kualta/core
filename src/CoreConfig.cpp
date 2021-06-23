@@ -75,5 +75,8 @@ void ProjectInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
 void ProjectInfo::SetName(const string &projName) {
     name = projName;
 }
+string ProjectInfo::GetName() {
+    return name;
+}
 
 }
