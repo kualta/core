@@ -15,21 +15,54 @@ VkRenderModule::VkRenderModule()
 VkRenderModule::~VkRenderModule() {
     Cleanup();
 }
-void VkRenderModule::Init(Window& window) {
+void VkRenderModule::Init() {
+    AddValidationLayers();
     CheckValidationLayerSupport();
-    CreateInstance(window);
+    AddDebugExtensions();
+    CreateInstance();
+    SetupDebugMessenger();
+    PickPhysicalDevice();
     Logger::Log(RENDER, INFO) << "Initialized VkRenderModule";
     initialized = true;
 }
 void VkRenderModule::Cleanup() {
     delete windowRenderer;
 
+    if ( validationLayersEnabled ) {
+        DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
+    }
+
     vkDestroyInstance(instance, nullptr);
 }
 void VkRenderModule::Frame() {
 
 }
-void VkRenderModule::CreateInstance(Window& window) {
+void VkRenderModule::PickPhysicalDevice() {
+    uint32_t deviceCount = 0;
+    vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+
+    if (deviceCount == 0) {
+        Logger::Log(RENDER, ERR_HERE) << "No GPUs with Vulkan support found";
+        throw std::runtime_error("No GPUs with Vulkan support found");
+    }
+
+    std::vector<VkPhysicalDevice> devices(deviceCount);
+    vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+
+    for (const auto& device : devices) {
+        if (IsDeviceSuitable(device)) {
+            physicalDevice = device;
+            break;
+        }
+    }
+
+    if (physicalDevice == VK_NULL_HANDLE) {
+        Logger::Log(RENDER, ERR_HERE) << "No suitable GPUs found";
+        throw std::runtime_error("No suitable GPUs found");
+    }
+
+}
+void VkRenderModule::CreateInstance() {
     VkApplicationInfo appInfo { };
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = CoreConfig::AppInfo::name.c_str();
@@ -55,10 +88,26 @@ void VkRenderModule::CreateInstance(Window& window) {
     VkInstanceCreateInfo createInfo { };
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
-    createInfo.enabledExtensionCount = requiredExtensions.size();
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(requiredExtensions.size());
     createInfo.ppEnabledExtensionNames = requiredExtensions.data();
-    createInfo.enabledLayerCount = requiredLayers.size();
-    createInfo.ppEnabledLayerNames = requiredLayers.data();
+    if ( validationLayersEnabled ) {
+        createInfo.enabledLayerCount = static_cast<uint32_t>(requiredLayers.size());
+        createInfo.ppEnabledLayerNames = requiredLayers.data();
+    } else {
+        createInfo.enabledLayerCount = 0;
+    }
+
+    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo { };
+    if ( validationLayersEnabled ) {
+        createInfo.enabledLayerCount = static_cast<uint32_t>(requiredLayers.size());
+        createInfo.ppEnabledLayerNames = requiredLayers.data();
+
+        PopulateDebugMessengerCreateInfo(debugCreateInfo);
+        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*) &debugCreateInfo;
+    } else {
+        createInfo.enabledLayerCount = 0;
+        createInfo.pNext = nullptr;
+    }
 
     // TODO: Check that all required extensions are supported.
     Logger::Log(RENDER, INFO) << "Creating VkInstance: ";
@@ -120,8 +169,98 @@ void VkRenderModule::CheckValidationLayerSupport() {
             }
         }
     }
+}
+void VkRenderModule::AddDebugExtensions() {
+    if ( validationLayersEnabled ) {
+        requiredExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    }
+}
+VKAPI_ATTR VkBool32 VKAPI_CALL VkRenderModule::DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+                                                             VkDebugUtilsMessageTypeFlagsEXT messageType,
+                                                             const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                                                             void* pUserData)
+{
+    switch (messageSeverity) {
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
+            Logger::Log(RENDER, DEBUG) << "Validation layer: " << pCallbackData->pMessage; break;
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
+            Logger::Log(RENDER, INFO) << "Validation layer: " << pCallbackData->pMessage; break;
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
+            Logger::Log(RENDER, WARN) << "Validation layer: " << pCallbackData->pMessage;
+            LogDebugObjectsInfo(pCallbackData);
+            break;
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
+            Logger::Log(RENDER, ERR) << "Validation layer: " << pCallbackData->pMessage;
+            LogDebugObjectsInfo(pCallbackData);
+            break;
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_FLAG_BITS_MAX_ENUM_EXT:
+            Logger::Log(RENDER, ERR) << "Validation layer: " << pCallbackData->pMessage;
+            LogDebugObjectsInfo(pCallbackData);
+            break;
+    }
 
+    return VK_FALSE;
+}
+void VkRenderModule::LogDebugObjectsInfo(const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData) {
+    Logger::Log(RENDER, INFO) << "Related objects: ";
+    for (int i = 0; i < pCallbackData->objectCount; i++) {
+        string objName = pCallbackData->pObjects[i].pObjectName ? string(pCallbackData->pObjects[i].pObjectName) : "Unnamed";
+        Logger::Log(RENDER, INFO) << " * " << objName << " (" <<pCallbackData->pObjects[i].objectHandle << ')';
+    }
+}
+void VkRenderModule::SetupDebugMessenger() {
+    if ( !validationLayersEnabled ) { return; }
 
+    VkDebugUtilsMessengerCreateInfoEXT createInfo { };
+    PopulateDebugMessengerCreateInfo(createInfo);
+
+    if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
+        throw std::runtime_error("Failed to set up debug messenger!");
+    }
+
+}
+void VkRenderModule::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
+    createInfo = { };
+    createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+    createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
+                               | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+    createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
+                           | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
+                           | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+    createInfo.pfnUserCallback = DebugCallback;
+}
+VkResult VkRenderModule::CreateDebugUtilsMessengerEXT(VkInstance instance,
+                                                      const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
+                                                      const VkAllocationCallbacks *pAllocator,
+                                                      VkDebugUtilsMessengerEXT *pDebugMessenger)
+{
+    auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (func != nullptr) {
+        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+    } else {
+        return VK_ERROR_EXTENSION_NOT_PRESENT;
+    }
+}
+void VkRenderModule::DestroyDebugUtilsMessengerEXT(VkInstance instance,
+                                                   VkDebugUtilsMessengerEXT debugMessenger,
+                                                   const VkAllocationCallbacks *pAllocator)
+{
+    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (func != nullptr) {
+        func(instance, debugMessenger, pAllocator);
+    }
+}
+void VkRenderModule::AddValidationLayers() {
+    requiredLayers = {
+        "VK_LAYER_KHRONOS_validation"
+    };
+}
+bool VkRenderModule::IsDeviceSuitable(VkPhysicalDevice device) {
+    VkPhysicalDeviceProperties deviceProperties;
+    vkGetPhysicalDeviceProperties(device, &deviceProperties);
+
+    VkPhysicalDeviceFeatures deviceFeatures;
+    vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 }
 
 }
