@@ -27,10 +27,13 @@ private:
 
     VkInstance instance;
 
-    bool initialized { false };
+    bool initialized             { false };
+    bool validationLayersEnabled { false };
 
-    std::vector<const char*> extensions;
-    std::vector<const char*> layers;
+    std::vector<const char*> requiredExtensions;
+    std::vector<const char*> requiredLayers;
+
+    void CheckValidationLayerSupport();
 };
 
 }

@@ -65,6 +65,8 @@ public:
         static uint16_t patchVersion;
     };
 
+    const static bool debugMode;
+
 private:
 
     void VisitNode(int nodeId, std::unordered_set<int> *unmarkedNodes, std::stack<initializer_fn*> *output);

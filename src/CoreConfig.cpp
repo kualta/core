@@ -1,7 +1,14 @@
 #include <core/CoreConfig.h>
 #include <core/Logger.h>
 
+
 namespace core {
+
+#ifdef NDEBUG
+    const bool CoreConfig::debugMode { false };
+#else
+    const bool CoreConfig::debugMode { true };
+#endif
 
 string   CoreConfig::AppInfo::name { "Unnamed app" };
 uint16_t CoreConfig::AppInfo::majorVersion { 1 };
