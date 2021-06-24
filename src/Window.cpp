@@ -12,7 +12,7 @@ Window::Window(const std::string &title, const Rect& rect)
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                        rect.x, rect.y,
                                        rect.w, rect.h,
-                                       SDL_WINDOW_RESIZABLE);
+                                       SDL_WINDOW_VULKAN);
     /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
     SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);

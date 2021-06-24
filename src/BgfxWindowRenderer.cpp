@@ -8,14 +8,8 @@
 
 namespace core {
 
-bool BgfxWindowRenderer::AddRenderer(Window &window) {
-    if (!InitWindow(window)) {
-        Logger::Log(RENDER, ERR_HERE) << "Couldn't create renderer";
-        return false;
-    } else {
-        Logger::Log(RENDER, INFO) << "Created renderer succesfully";
-        return true;
-    }
+void BgfxWindowRenderer::AddRenderer(Window &window) {
+    InitWindow(window);
 }
 bgfx::PlatformData BgfxWindowRenderer::GetPlatformData(const Window& _window) {
 
@@ -42,7 +36,7 @@ bgfx::PlatformData BgfxWindowRenderer::GetPlatformData(const Window& _window) {
 
     return platformData;
 }
-bool BgfxWindowRenderer::InitWindow(Window &window) {
+void BgfxWindowRenderer::InitWindow(Window &window) {
 
     bgfx::Init initObj;
 
@@ -56,10 +50,8 @@ bool BgfxWindowRenderer::InitWindow(Window &window) {
 
     if (success) {
         Logger::Log(RENDER, INFO) << "Initialized renderer for window \"" << window.GetTitle() << "\" ";
-        return true;
     } else {
         Logger::Log(RENDER, ERR_HERE) << "Cannot initialize renderer, aborting";
-        return false;
     }
 }
 

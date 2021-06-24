@@ -60,6 +60,7 @@ class IModule;
 class IModuleContainer;
 class IRenderer;
 class ITicker;
+class IWindowRenderer;
 class Logger;
 class Log;
 class Math;
@@ -81,6 +82,7 @@ class WindowModule;
 class EngineModule;
 class SceneModule;
 class InputModule;
+class IRenderModule;
 class BgfxRenderModule;
 class VkRenderModule;
 

@@ -11,19 +11,26 @@ namespace core {
 typedef VkRenderModule RenderModule;
 
 class VkRenderModule : public IRenderModule {
+    friend class VkWindowRenderer;
 public:
     VkRenderModule();
     ~VkRenderModule();
 
     void Frame() override;
 
+    bool isReady();
+
 private:
-    void Init();
+    void Init(Window& window);
     void Cleanup();
     void CreateInstance(Window& window);
 
     VkInstance instance;
 
+    bool initialized { false };
+
+    std::vector<const char*> extentions;
+    std::vector<const char*> layers;
 };
 
 }

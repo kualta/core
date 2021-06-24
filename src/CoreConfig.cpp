@@ -3,17 +3,18 @@
 
 namespace core {
 
-string   ProjectInfo::name { };
-uint16_t ProjectInfo::majorVersion { 0 };
-uint16_t ProjectInfo::minorVersion { 0 };
-uint16_t ProjectInfo::patchVersion { 0 };
+string   CoreConfig::AppInfo::name { "Unnamed app" };
+uint16_t CoreConfig::AppInfo::majorVersion { 1 };
+uint16_t CoreConfig::AppInfo::minorVersion { 0 };
+uint16_t CoreConfig::AppInfo::patchVersion { 0 };
 
-CoreConfig::CoreConfig() {
-    CoreInfo::SetVersion(CORE_MAJOR_VERSION, CORE_MINOR_VERSION, CORE_PATCH_VERSION);
-    CoreInfo::SetName("Core Engine");
-}
-Core CoreConfig::Build() {
-    Core core;
+string   CoreConfig::CoreInfo::name { "Core Engine" };
+uint16_t CoreConfig::CoreInfo::majorVersion { CORE_MAJOR_VERSION };
+uint16_t CoreConfig::CoreInfo::minorVersion { CORE_MINOR_VERSION };
+uint16_t CoreConfig::CoreInfo::patchVersion { CORE_PATCH_VERSION };
+
+Core* CoreConfig::Build() {
+    Core* core = new Core;
     std::stack<initializer_fn*> initializers;
 
     std::unordered_set<int> unmarkedNodes;
@@ -26,7 +27,7 @@ Core CoreConfig::Build() {
         VisitNode(node_id, &unmarkedNodes, &initializers);
     }
     while ( !initializers.empty() ) {
-        (*initializers.top())(core);
+        (*initializers.top())(*core);
         initializers.pop();
     }
     Logger::Log(INTERNAL, INFO) << "* Core build finished * ";
@@ -60,22 +61,36 @@ void CoreConfig::VisitNode(
     }
 }
 
-string ProjectInfo::GetVersion() {
-    return std::to_string(majorVersion) + '.'
-           + std::to_string(minorVersion) + '.'
-           + std::to_string(patchVersion);
-
-}
-void ProjectInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
+void CoreConfig::AppInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
     majorVersion = major;
     minorVersion = minor;
     patchVersion = patch;
 }
-
-void ProjectInfo::SetName(const string &projName) {
-    name = projName;
+string CoreConfig::AppInfo::GetVersion() {
+    return std::to_string(majorVersion) + '.'
+           + std::to_string(minorVersion) + '.'
+           + std::to_string(patchVersion);
 }
-string ProjectInfo::GetName() {
+void CoreConfig::AppInfo::SetName(const string &pName) {
+    name = pName;
+}
+string CoreConfig::AppInfo::GetName() {
+    return name;
+}
+void CoreConfig::CoreInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
+    majorVersion = major;
+    minorVersion = minor;
+    patchVersion = patch;
+}
+string CoreConfig::CoreInfo::GetVersion() {
+    return std::to_string(majorVersion) + '.'
+           + std::to_string(minorVersion) + '.'
+           + std::to_string(patchVersion);
+}
+void CoreConfig::CoreInfo::SetName(const string &pName) {
+    name = pName;
+}
+string CoreConfig::CoreInfo::GetName() {
     return name;
 }
 

@@ -15,24 +15,10 @@
 
 namespace core {
 
-struct ProjectInfo {
-    static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);
-    static string GetVersion();
-
-    static void SetName(const string& name);
-    static string GetName();
-
-    static string name;
-    static uint16_t majorVersion;
-    static uint16_t minorVersion;
-    static uint16_t patchVersion;
-};
-
 class CoreConfig {
     using initializer_fn = std::function<void(Core &)>;
 
 public:
-    CoreConfig();
 
     /**
      * Adds module to CoreConfig
@@ -49,10 +35,33 @@ public:
      * Creates new Core object from this config
      * @return core::Core object
      */
-    Core Build();
+    Core* Build();
 
-    struct AppInfo : public ProjectInfo { };
-    struct CoreInfo : public ProjectInfo { };
+    struct AppInfo {
+        static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);
+        static string GetVersion();
+
+        static void SetName(const string& name);
+        static string GetName();
+
+        static string name;
+        static uint16_t majorVersion;
+        static uint16_t minorVersion;
+        static uint16_t patchVersion;
+    };
+
+    struct CoreInfo {
+        static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);
+        static string GetVersion();
+
+        static void SetName(const string& name);
+        static string GetName();
+
+        static string name;
+        static uint16_t majorVersion;
+        static uint16_t minorVersion;
+        static uint16_t patchVersion;
+    };
 
 private:
 

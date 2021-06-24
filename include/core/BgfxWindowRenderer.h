@@ -12,12 +12,12 @@ public:
     /**
      * Creates renderer for specific window
      */
-    bool AddRenderer(Window& window);
+    void AddRenderer(Window& window);
 
     /**
      * Initializes rederer for given window
      */
-    bool InitWindow(Window& window);
+    void InitWindow(Window& window);
 
     /**
      * Gathers platform data for given window

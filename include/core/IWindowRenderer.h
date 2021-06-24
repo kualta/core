@@ -2,6 +2,7 @@
 #define CORE_IWINDOWRENDERER_H
 
 #include "Essential.h"
+#include "Modules/IRenderModule.h"
 #include "Object.h"
 
 namespace core {
@@ -9,7 +10,7 @@ namespace core {
 class IWindowRenderer : public Object {
 public:
 
-    virtual bool InitWindow(Window& window) = 0;
+    virtual void InitWindow(Window& window) = 0;
 
 };
 

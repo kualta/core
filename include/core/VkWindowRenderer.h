@@ -8,9 +8,11 @@ namespace core {
 
 class VkWindowRenderer : public IWindowRenderer {
 public:
+    VkWindowRenderer(VkRenderModule* parent);
 
-    bool InitWindow(Window &window) override;
+    void InitWindow(Window &window) override;
 
+    VkRenderModule* parent;
 };
 
 }
