@@ -18,9 +18,9 @@ uint32_t WindowBuilder::SpawnWindow(const std::string& title, const Rect& rect) 
     uint32_t windowId = window->GetId();
 
     // Pass new window to intialize renderer
-//    BgfxWindowRenderer::InitWindow(*window);
-    auto renderModule = dynamic_cast<IRenderModule*>(Core::GetModule(Core::GetModuleIdByTag(RENDER)));
+    auto renderModule = dynamic_cast<IRenderModule*>(Core::GetModule(Core::renderModuleId));
     renderModule->windowRenderer->InitWindow(*window);
+
     Core::GetModule<WindowModule>()->windowPool.Register(std::move(window));
     return windowId;
 }

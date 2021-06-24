@@ -83,7 +83,6 @@ class SceneModule;
 class InputModule;
 class BgfxRenderModule;
 class VkRenderModule;
-class RenderModule;
 
 // Core Components classes
 class BgfxRenderer;

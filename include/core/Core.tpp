@@ -15,21 +15,12 @@ T* Core::GetModule() {
     }
     return static_cast<T*>(it->second->Get());
 }
-IModule* Core::GetModule(int32_t id) {
-    auto it = moduleMap.find(id);
+template<class T>
+int32_t Core::GetModuleId() {
+    auto it = moduleMap.find<T>();
     if ( it == moduleMap.end() ) {
-        Logger::Log(GENERAL, ERR) << "Module with id " << id << " not found!";
-        throw std::runtime_error("Module with id " + std::to_string(id) + " not found!");
-    }
-    return static_cast<IModule*>(it->second->Get());
-};
-int32_t Core::GetModuleIdByTag(objectTag tag) {
-    auto it = std::find_if(moduleTagMap.begin(),
-                           moduleTagMap.end(),
-                           [&](const auto& e) { return e.second == tag; });
-    if ( it == moduleTagMap.end() ) {
-        Logger::Log(GENERAL, ERR) << "Module with tag " << tag << " not found!";
-        throw std::runtime_error("Module with tag " + std::to_string(tag) + " not found!");
+        Logger::Log(INTERNAL, ERR_HERE) << string(typeid(T).name()) << " module not found!";
+        throw std::runtime_error(string(typeid(T).name()) + " module not found!");
     }
     return it->first;
 }

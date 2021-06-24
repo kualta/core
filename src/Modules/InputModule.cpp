@@ -4,7 +4,7 @@
 namespace core {
 
 
-InputModule::InputModule() : IModule("Input", INPUT) {
+InputModule::InputModule() : IModule("Input", INPUT_T) {
 
 }
 InputModule::~InputModule() {

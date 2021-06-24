@@ -12,7 +12,7 @@ public:
     /**
      * Creates renderer for specific window
      */
-    static bool AddRenderer(Window& window);
+    bool AddRenderer(Window& window);
 
     /**
      * Initializes rederer for given window

@@ -12,7 +12,7 @@ enum objectTag {
     RENDER,   // Rendering module logs
     IMPORT,   // Importing logs
     SCENE,    // Scene module logs
-    INPUT,    // Scene module logs
+    INPUT_T,    // Scene module logs
 };
 
 #endif //CORE_OBJECTTAG_H

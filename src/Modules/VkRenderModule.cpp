@@ -1,10 +1,13 @@
 #include <core/Modules/VkRenderModule.h>
+#include <core/VkWindowRenderer.h>
 #include <core/CoreConfig.h>
 
 namespace core {
 
 VkRenderModule::VkRenderModule()
-: IRenderModule("Render", "Vulkan")
+: IRenderModule("Render",
+                "Vulkan",
+                new VkWindowRenderer)
 {
     Init();
 }
@@ -15,7 +18,7 @@ void VkRenderModule::Init() {
 
 }
 void VkRenderModule::Cleanup() {
-
+    delete windowRenderer;
 }
 void VkRenderModule::Frame() {
 
