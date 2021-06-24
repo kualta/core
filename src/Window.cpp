@@ -5,7 +5,7 @@
 
 namespace core {
 
-
+// TODO: Untie Window from SDL
 Window::Window(const std::string &title, const Rect& rect)
   : title(title), height(rect.h), width(rect.w),
     position(rect.x, rect.y), sdlWmi(), Object(title + " Window") {

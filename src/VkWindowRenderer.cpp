@@ -24,7 +24,7 @@ void VkWindowRenderer::InitWindow(Window &window) {
     std::vector<const char*> layerNames { };
 
     if ( !parent->isReady() ) {
-        parent->extentions = extensionNames;
+        parent->extensions = extensionNames;
         parent->layers = layerNames;
         parent->Init(window);
     }

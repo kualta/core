@@ -1,6 +1,7 @@
 #include <core/Modules/VkRenderModule.h>
 #include <core/VkWindowRenderer.h>
 #include <core/CoreConfig.h>
+#include <iostream>
 
 namespace core {
 
@@ -38,11 +39,21 @@ void VkRenderModule::CreateInstance(Window& window) {
                                             CoreConfig::CoreInfo::patchVersion);
     appInfo.apiVersion = VK_API_VERSION_1_0;
 
+    uint32_t extensionCount = 0;
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+    std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, availableExtensions.data());
+
+    Logger::Log(RENDER, INFO) << "Available Vulkan extentions(" << extensionCount << "): ";
+    for (const auto& extension : availableExtensions) {
+        Logger::Log(RENDER, INFO) << " | " << extension.extensionName << " v." << extension.specVersion;
+    }
+
     VkInstanceCreateInfo createInfo { };
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
-    createInfo.enabledExtensionCount = extentions.size();
-    createInfo.ppEnabledExtensionNames = extentions.data();
+    createInfo.enabledExtensionCount = extensions.size();
+    createInfo.ppEnabledExtensionNames = extensions.data();
     createInfo.enabledLayerCount = layers.size();
     createInfo.ppEnabledLayerNames = layers.data();
 
@@ -51,9 +62,14 @@ void VkRenderModule::CreateInstance(Window& window) {
     Logger::Log(RENDER, INFO) << " | Application version: " << appInfo.applicationVersion;
     Logger::Log(RENDER, INFO) << " | Engine version: " << appInfo.engineVersion;
     Logger::Log(RENDER, INFO) << " | API version: " << appInfo.apiVersion;
-    Logger::Log(RENDER, INFO) << " | Enabled extensions: " << createInfo.enabledExtensionCount;
-    Logger::Log(RENDER, INFO) << " | Enabled layers: " << createInfo.enabledLayerCount;
-    // TODO: Add extentions and layers listing
+    Logger::Log(RENDER, INFO) << " | Enabled extensions (" << createInfo.enabledExtensionCount << "): ";
+    for (int i = 0; i < createInfo.enabledExtensionCount; i++) {
+        Logger::Log(RENDER, INFO) << " |  * " << *(createInfo.ppEnabledExtensionNames + i);
+    }
+    Logger::Log(RENDER, INFO) << " | Enabled layers (" << createInfo.enabledLayerCount << "): " ;
+    for (int i = 0; i < createInfo.enabledLayerCount; i++) {
+        Logger::Log(RENDER, INFO) << " |  * " << *(createInfo.ppEnabledLayerNames + i);
+    }
 
     VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
     if (result != VK_SUCCESS) {

@@ -29,7 +29,7 @@ private:
 
     bool initialized { false };
 
-    std::vector<const char*> extentions;
+    std::vector<const char*> extensions;
     std::vector<const char*> layers;
 };
 
