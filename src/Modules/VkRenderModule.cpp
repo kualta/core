@@ -23,7 +23,7 @@ void VkRenderModule::Cleanup() {
 void VkRenderModule::Frame() {
 
 }
-void VkRenderModule::CreateInstance(Window* window) {
+void VkRenderModule::CreateInstance(Window& window) {
     VkApplicationInfo appInfo { };
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = CoreConfig::AppInfo::GetName().c_str();
@@ -36,6 +36,7 @@ void VkRenderModule::CreateInstance(Window* window) {
                                             CoreConfig::CoreInfo::patchVersion);
     appInfo.apiVersion = VK_API_VERSION_1_0;
 
+    windowRenderer->InitWindow(window)
     VkInstanceCreateInfo createInfo { };
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;

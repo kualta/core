@@ -17,9 +17,6 @@ CoreConfig& CoreConfig::Add(ModuleFactory<ModuleType, Deleter, Deps...> moduleFa
     newNodeInfo.initializer = [moduleFactory](Core &core) {
         auto instance = WrapIntoModuleContainer(core.Inject(moduleFactory));
         Core::moduleMap.Put<ModuleType>(std::move(instance));
-        if ( std::is_base_of<IRenderModule, ModuleType>() ) {
-            core.renderModuleId = Core::GetModuleId<ModuleType>();
-        }
     };
     newNodeInfo.hasIniliatizer = true;
     newNodeInfo.typeName = typeid(typename std::remove_const<ModuleType>::type).name();

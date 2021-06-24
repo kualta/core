@@ -6,7 +6,6 @@ namespace core {
 
 using ModuleMap = TypeMap<std::unique_ptr<IModuleContainer>>;
 ModuleMap Core::moduleMap { };
-int32_t  Core::renderModuleId { };
 
 Core::Core(Core &&other) {
     *this = std::move(other);

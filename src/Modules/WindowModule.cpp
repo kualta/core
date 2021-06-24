@@ -3,7 +3,11 @@
 
 namespace core {
 
-WindowModule::WindowModule() : IModule("Window", WINDOW), windowPool("Window pool") {
+WindowModule::WindowModule(IRenderModule* rModule)
+: IModule("Window", WINDOW),
+windowPool("Window pool"),
+renderModule(rModule)
+{
 
 }
 WindowModule::~WindowModule() {

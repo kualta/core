@@ -1,9 +1,12 @@
 #include <core/Modules/BgfxRenderModule.h>
+#include <core/BgfxWindowRenderer.h>
 
 namespace core {
 
 BgfxRenderModule::BgfxRenderModule()
-: IRenderModule("Render", "bgfx") {
+: IRenderModule("Render",
+                "bgfx",
+                new BgfxWindowRenderer) {
 
 }
 BgfxRenderModule::~BgfxRenderModule() {

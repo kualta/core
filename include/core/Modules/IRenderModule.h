@@ -13,8 +13,8 @@ public:
 
 protected:
     explicit IRenderModule(const string& moduleName = "ERR",
-                           string type = "ERR",
-                           IWindowRenderer* wRend = nullptr);
+                           const string& type       = "ERR",
+                           IWindowRenderer* wRend   = nullptr);
 
     virtual void Frame() = 0;
 

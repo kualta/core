@@ -37,8 +37,6 @@ public:
     template<class ModuleType, class Deleter, class ...Deps>
     std::unique_ptr<ModuleType, Deleter> Inject(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) const;
 
-    static int32_t renderModuleId;
-
 private:
     Core() : Object("Core") { };
 

@@ -7,7 +7,7 @@
 
 namespace core {
 
-class WindowBuilder : public Object, public Singleton<WindowBuilder> {
+class WindowBuilder : public Object {
 public:
 
     /**

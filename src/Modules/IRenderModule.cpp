@@ -4,9 +4,9 @@
 
 namespace core {
 
-IRenderModule::IRenderModule(const string& moduleName, string type, IWindowRenderer* wRend)
+IRenderModule::IRenderModule(const string& moduleName, const string& type, IWindowRenderer* wRend)
 : IModule(moduleName, RENDER),
-renderType(std::move(type)),
+renderType(type),
 windowRenderer(wRend)
 {
     Logger::Log(RENDER, INFO) << " | Render Module configuration: ";
