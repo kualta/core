@@ -13,8 +13,8 @@ uint16_t CoreConfig::CoreInfo::majorVersion { CORE_MAJOR_VERSION };
 uint16_t CoreConfig::CoreInfo::minorVersion { CORE_MINOR_VERSION };
 uint16_t CoreConfig::CoreInfo::patchVersion { CORE_PATCH_VERSION };
 
-Core* CoreConfig::Build() {
-    Core* core = new Core;
+CoreContainer CoreConfig::Build() {
+    CoreContainer coreContaner = std::unique_ptr<Core>(new Core);
     std::stack<initializer_fn*> initializers;
 
     std::unordered_set<int> unmarkedNodes;
@@ -27,11 +27,11 @@ Core* CoreConfig::Build() {
         VisitNode(node_id, &unmarkedNodes, &initializers);
     }
     while ( !initializers.empty() ) {
-        (*initializers.top())(*core);
+        (*initializers.top())(*coreContaner);
         initializers.pop();
     }
     Logger::Log(INTERNAL, INFO) << "* Core build finished * ";
-    return core;
+    return coreContaner;
 }
 
 void CoreConfig::VisitNode(
