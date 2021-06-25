@@ -1,6 +1,7 @@
 #ifndef CORE_VKWINDOWRENDERER_H
 #define CORE_VKWINDOWRENDERER_H
 
+#include <vulkan/vulkan_core.h>
 #include "Essential.h"
 #include "IWindowRenderer.h"
 
@@ -11,6 +12,8 @@ public:
     VkWindowRenderer(VkRenderModule* parent);
 
     void InitWindow(Window &window) override;
+
+    void AddRenderer(Window& window) override;
 
     VkRenderModule* parent;
 };

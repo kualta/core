@@ -12,6 +12,8 @@ public:
 
     virtual void InitWindow(Window& window) = 0;
 
+    virtual void AddRenderer(Window& window) = 0;
+
 };
 
 }

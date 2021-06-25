@@ -5,11 +5,22 @@
 #include <core/Modules/IRenderModule.h>
 
 #include <vulkan/vulkan.h>
+#include <optional>
 
 namespace core {
 
 typedef VkRenderModule RenderModule;
 
+struct QueueFamilyIndices {
+    std::optional<uint32_t> graphicsFamily;
+    std::optional<uint32_t> presentFamily;
+
+
+    bool IsComplete() {
+        return graphicsFamily.has_value()
+            && presentFamily.has_value();
+    }
+};
 
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
@@ -22,15 +33,20 @@ public:
     bool isReady();
 
 private:
-    void Init();
+    void Init(Window& window);
     void Cleanup();
     void CreateInstance();
+    void CreateSurface(Window& window);
+    void CreateLogicalDevice();
     void CheckValidationLayerSupport();
+    bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
     void PickPhysicalDevice();
     void AddDebugExtensions();
     void AddValidationLayers();
     void SetupDebugMessenger();
-    bool IsDeviceSuitable(VkPhysicalDevice device);
+
+    bool IsDeviceSuitable(VkPhysicalDevice pDevice);
+    QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
 
     void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
@@ -49,6 +65,10 @@ private:
 
     VkInstance               instance;
     VkPhysicalDevice         physicalDevice { VK_NULL_HANDLE };
+    VkDevice                 device;
+    VkQueue                  graphicsQueue;
+    VkQueue                  presentQueue;
+    VkSurfaceKHR             surface;
     VkDebugUtilsMessengerEXT debugMessenger;
 
     bool initialized             { false };

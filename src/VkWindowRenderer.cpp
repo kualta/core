@@ -21,11 +21,17 @@ void VkWindowRenderer::InitWindow(Window &window) {
     std::vector<const char*> extensionNames(extensionCount);
     SDL_Vulkan_GetInstanceExtensions(nullptr, &extensionCount, extensionNames.data());
 
-
     if ( !parent->isReady() ) {
         parent->requiredExtensions = extensionNames;
-        parent->Init();
+        parent->Init(window);
     }
+}
+void VkWindowRenderer::AddRenderer(Window& window) {
+    if (SDL_Vulkan_CreateSurface(window.GetSdlWindow(), parent->instance, &parent->surface) != SDL_TRUE) {
+        Logger::Log(RENDER, ERR_HERE) << "Cannot create vulkan surface";
+        throw std::runtime_error("Cannot create vulkan surface");
+    }
+    Logger::Log(RENDER, INFO) << "Created vulkan surface for window " << window.GetTitle();
 }
 
 }
