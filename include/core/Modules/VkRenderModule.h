@@ -22,6 +22,12 @@ struct QueueFamilyIndices {
     }
 };
 
+struct SwapChainSupportDetails {
+    VkSurfaceCapabilitiesKHR capabilities;
+    std::vector<VkSurfaceFormatKHR> formats;
+    std::vector<VkPresentModeKHR> presentModes;
+};
+
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
 public:
@@ -37,9 +43,10 @@ private:
     void Cleanup();
     void CreateInstance();
     void CreateSurface(Window& window);
+    void CreateSwapChain(Window& window);
     void CreateLogicalDevice();
     void CheckValidationLayerSupport();
-    bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
+    bool CheckDeviceExtensionSupport(VkPhysicalDevice pDevice);
     void PickPhysicalDevice();
     void AddDebugExtensions();
     void AddValidationLayers();
@@ -47,6 +54,10 @@ private:
 
     bool IsDeviceSuitable(VkPhysicalDevice pDevice);
     QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+    SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice pDevice);
+    VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+    VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+    VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, Window& window);
 
     void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
@@ -69,13 +80,16 @@ private:
     VkQueue                  graphicsQueue;
     VkQueue                  presentQueue;
     VkSurfaceKHR             surface;
+    VkSwapchainKHR           swapChain;
     VkDebugUtilsMessengerEXT debugMessenger;
 
     bool initialized             { false };
     bool validationLayersEnabled { false };
 
     std::vector<const char*> requiredExtensions;
+    std::vector<const char*> deviceExtensions;
     std::vector<const char*> requiredLayers;
+
 
 };
 

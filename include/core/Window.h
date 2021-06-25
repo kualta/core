@@ -17,7 +17,9 @@ public:
     ~Window();
 
     uint32_t GetHeight() const;
+    int32_t GetFrameBufferHeight() const;
     uint32_t GetWidth() const;
+    int32_t GetFrameBufferWidth() const;
     Vector2 GetPosition() const;
     SDL_Window* GetSdlWindow() const;
     SDL_SysWMinfo* GetSdlWmi() const;
@@ -30,8 +32,12 @@ private:
     SDL_SysWMinfo sdlWmi;
     std::string title;
     Vector2 position;
+
     uint32_t height;
     uint32_t width;
+
+    int32_t frameBufferHeight;
+    int32_t frameBufferWidth;
 };
 
 } // namespace core

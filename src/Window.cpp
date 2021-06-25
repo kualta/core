@@ -16,6 +16,7 @@ Window::Window(const std::string &title, const Rect& rect)
     /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
     SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);
+    SDL_GetWindowSize(sdlWindow, &frameBufferWidth, &frameBufferHeight);
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
@@ -44,6 +45,12 @@ SDL_Window* Window::GetSdlWindow() const {
 }
 SDL_SysWMinfo* Window::GetSdlWmi() const {
     return const_cast<SDL_SysWMinfo*>(&sdlWmi);
+}
+int32_t Window::GetFrameBufferHeight() const {
+    return frameBufferHeight;
+}
+int32_t Window::GetFrameBufferWidth() const {
+    return frameBufferWidth;
 }
 
 }
