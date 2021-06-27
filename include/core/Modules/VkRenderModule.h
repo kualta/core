@@ -41,12 +41,17 @@ public:
 private:
     void Init(Window& window);
     void Cleanup();
+
     void CreateInstance();
     void CreateSurface(Window& window);
     void CreateSwapChain(Window& window);
     void CreateLogicalDevice();
     void CreateImageViews();
+    void CreateRenderPass();
+    void CreateFrameBuffers();
     void CreateGraphicsPipeline();
+    void CreateCommandPool();
+
     void CheckValidationLayerSupport();
     bool CheckDeviceExtensionSupport(VkPhysicalDevice pDevice);
     void PickPhysicalDevice();
@@ -60,6 +65,7 @@ private:
     VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
     VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
     VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, Window& window);
+    VkShaderModule CreateShaderModule(const std::vector<char>& code);
 
     void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
@@ -86,15 +92,20 @@ private:
     VkFormat                 swapChainImageFormat;
     VkExtent2D               swapChainExtent;
     VkDebugUtilsMessengerEXT debugMessenger;
+    VkRenderPass             renderPass;
+    VkPipelineLayout         pipelineLayout;
+    VkPipeline               graphicsPipeline;
+    VkCommandPool            commandPool;
 
     bool initialized             { false };
     bool validationLayersEnabled { false };
 
-    std::vector<const char*> requiredExtensions;
-    std::vector<const char*> deviceExtensions;
-    std::vector<const char*> requiredLayers;
-    std::vector<VkImage>     swapChainImages;
-    std::vector<VkImageView> swapChainImageViews;
+    std::vector<const char*>   requiredExtensions;
+    std::vector<const char*>   deviceExtensions;
+    std::vector<const char*>   requiredLayers;
+    std::vector<VkImage>       swapChainImages;
+    std::vector<VkImageView>   swapChainImageViews;
+    std::vector<VkFramebuffer> swapChainFramebuffers;
 
 };
 
