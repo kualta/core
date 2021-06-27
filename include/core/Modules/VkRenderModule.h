@@ -45,6 +45,8 @@ private:
     void CreateSurface(Window& window);
     void CreateSwapChain(Window& window);
     void CreateLogicalDevice();
+    void CreateImageViews();
+    void CreateGraphicsPipeline();
     void CheckValidationLayerSupport();
     bool CheckDeviceExtensionSupport(VkPhysicalDevice pDevice);
     void PickPhysicalDevice();
@@ -81,6 +83,8 @@ private:
     VkQueue                  presentQueue;
     VkSurfaceKHR             surface;
     VkSwapchainKHR           swapChain;
+    VkFormat                 swapChainImageFormat;
+    VkExtent2D               swapChainExtent;
     VkDebugUtilsMessengerEXT debugMessenger;
 
     bool initialized             { false };
@@ -89,7 +93,8 @@ private:
     std::vector<const char*> requiredExtensions;
     std::vector<const char*> deviceExtensions;
     std::vector<const char*> requiredLayers;
-
+    std::vector<VkImage>     swapChainImages;
+    std::vector<VkImageView> swapChainImageViews;
 
 };
 
