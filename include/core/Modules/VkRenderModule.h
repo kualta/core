@@ -51,6 +51,8 @@ private:
     void CreateFrameBuffers();
     void CreateGraphicsPipeline();
     void CreateCommandPool();
+    void CreateCommandBuffers();
+    void CreateSemaphores();
 
     void CheckValidationLayerSupport();
     bool CheckDeviceExtensionSupport(VkPhysicalDevice pDevice);
@@ -97,15 +99,19 @@ private:
     VkPipeline               graphicsPipeline;
     VkCommandPool            commandPool;
 
+    VkSemaphore imageAvailableSemaphore;
+    VkSemaphore renderFinishedSemaphore;
+
     bool initialized             { false };
     bool validationLayersEnabled { false };
 
-    std::vector<const char*>   requiredExtensions;
-    std::vector<const char*>   deviceExtensions;
-    std::vector<const char*>   requiredLayers;
-    std::vector<VkImage>       swapChainImages;
-    std::vector<VkImageView>   swapChainImageViews;
-    std::vector<VkFramebuffer> swapChainFramebuffers;
+    std::vector<const char*>     requiredExtensions;
+    std::vector<const char*>     deviceExtensions;
+    std::vector<const char*>     requiredLayers;
+    std::vector<VkImage>         swapChainImages;
+    std::vector<VkImageView>     swapChainImageViews;
+    std::vector<VkFramebuffer>   swapChainFramebuffers;
+    std::vector<VkCommandBuffer> commandBuffers;
 
 };
 
