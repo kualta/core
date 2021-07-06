@@ -55,6 +55,8 @@ private:
     void CreateCommandPool();
     void CreateCommandBuffers();
     void CreateSemaphores();
+    void CreateFences();
+    void CreateImagesSyncObject();
 
     void CheckValidationLayerSupport();
     bool CheckDeviceExtensionSupport(VkPhysicalDevice pDevice);
@@ -101,6 +103,11 @@ private:
     VkPipeline               graphicsPipeline;
     VkCommandPool            commandPool;
 
+    std::vector<VkSemaphore> imageAvailableSemaphores;
+    std::vector<VkSemaphore> renderFinishedSemaphores;
+    std::vector<VkFence>     inFlightFences;
+    std::vector<VkFence>     imagesInFlight;
+
     VkSemaphore imageAvailableSemaphore;
     VkSemaphore renderFinishedSemaphore;
 
@@ -114,6 +121,9 @@ private:
     std::vector<VkImageView>     swapChainImageViews;
     std::vector<VkFramebuffer>   swapChainFramebuffers;
     std::vector<VkCommandBuffer> commandBuffers;
+
+    const uint32_t maxFramesInFlight { 2 };
+    size_t         currentFrame { 0 };
 
 };
 
