@@ -22,7 +22,7 @@ Core &Core::operator=(Core &&other) noexcept {
     return *this;
 }
 Core::~Core() {
-    Logger::Log(INTERNAL, INFO) << "* Core destruction started *";
+    Logger::Log(INTERNAL, INFO) << "### Core destruction started ###";
 }
 
 }

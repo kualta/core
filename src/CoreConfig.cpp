@@ -37,7 +37,7 @@ CoreContainer CoreConfig::Build() {
         (*initializers.top())(*coreContaner);
         initializers.pop();
     }
-    Logger::Log(INTERNAL, INFO) << "* Core build finished * ";
+    Logger::Log(INTERNAL, INFO) << "### Core build finished ###";
     return coreContaner;
 }
 

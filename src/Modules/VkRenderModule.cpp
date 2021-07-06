@@ -875,5 +875,8 @@ void VkRenderModule::CreateSemaphores() {
         throw std::runtime_error("Failed to create semaphores");
     }
 }
+void VkRenderModule::Stop() {
+    vkDeviceWaitIdle(device);
+}
 
 }

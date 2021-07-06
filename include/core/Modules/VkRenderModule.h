@@ -36,6 +36,8 @@ public:
 
     void Frame() override;
 
+    void Stop() override;
+
     bool isReady();
 
 private:
