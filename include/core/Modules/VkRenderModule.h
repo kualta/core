@@ -6,6 +6,7 @@
 
 #include <vulkan/vulkan.h>
 #include <optional>
+#include <core/Window.h>
 
 namespace core {
 
@@ -43,10 +44,12 @@ public:
 private:
     void Init(Window& window);
     void Cleanup();
+    void CleanupSwapChain();
 
     void CreateInstance();
     void CreateSurface(Window& window);
     void CreateSwapChain(Window& window);
+    void RecreateSwapChain(Window& window);
     void CreateLogicalDevice();
     void CreateImageViews();
     void CreateRenderPass();
@@ -113,6 +116,7 @@ private:
 
     bool initialized             { false };
     bool validationLayersEnabled { false };
+    bool frameBufferResized      { false };
 
     std::vector<const char*>     requiredExtensions;
     std::vector<const char*>     deviceExtensions;
@@ -124,6 +128,8 @@ private:
 
     const uint32_t maxFramesInFlight { 2 };
     size_t         currentFrame { 0 };
+
+    Window* currentWindow { nullptr };
 
 };
 

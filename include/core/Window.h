@@ -13,6 +13,8 @@ namespace core {
 
 class Window : public Object {
 public:
+    Window();
+
     Window(const std::string &title, const core::Rect &rect);
     ~Window();
 
@@ -28,7 +30,7 @@ public:
     void SetPosition(const Vector2& pos);
 
 private:
-    SDL_Window *sdlWindow;
+    SDL_Window* sdlWindow;
     SDL_SysWMinfo sdlWmi;
     std::string title;
     Vector2 position;

@@ -7,16 +7,24 @@ namespace core {
 
 // TODO: Untie Window from SDL
 Window::Window(const std::string &title, const Rect& rect)
-  : title(title), height(rect.h), width(rect.w),
-    position(rect.x, rect.y), sdlWmi(), Object(title + " Window") {
+: title(title),
+height(rect.h),
+width(rect.w),
+position(rect.x, rect.y),
+Object(title + " Window")
+{
     this->sdlWindow = SDL_CreateWindow(title.c_str(),
                                        rect.x, rect.y,
                                        rect.w, rect.h,
-                                       SDL_WINDOW_VULKAN);
+                                       SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE);
     /// sdlWmi must be initialized with version
     SDL_VERSION(&sdlWmi.version);
     SDL_GetWindowWMInfo(this->sdlWindow, &sdlWmi);
     SDL_GetWindowSize(sdlWindow, &frameBufferWidth, &frameBufferHeight);
+}
+Window::Window()
+{
+
 }
 Window::~Window() {
     SDL_DestroyWindow(sdlWindow);
