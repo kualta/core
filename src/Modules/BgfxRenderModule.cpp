@@ -3,10 +3,9 @@
 
 namespace core {
 
-BgfxRenderModule::BgfxRenderModule()
-: IRenderModule("Render",
-                "bgfx",
-                new BgfxWindowRenderer) {
+BgfxRenderModule::BgfxRenderModule(InputModule* inputModule)
+: IRenderModule("Render", new BgfxWindowRenderer, inputModule)
+{
 
 }
 BgfxRenderModule::~BgfxRenderModule() {

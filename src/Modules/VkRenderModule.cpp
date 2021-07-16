@@ -9,10 +9,8 @@
 
 namespace core {
 
-VkRenderModule::VkRenderModule(InputModule *pModule)
-: IRenderModule("Render",
-                "Vulkan",
-                new VkWindowRenderer(this))
+VkRenderModule::VkRenderModule(InputModule* inputModule)
+: IRenderModule("Render", new VkWindowRenderer(this), inputModule)
 {
 
 }
@@ -124,6 +122,8 @@ void VkRenderModule::Frame() {
 
     result = vkQueuePresentKHR(presentQueue, &presentInfo);
 
+    // TODO: Add explicit resizes handling, frameBufferResized is not used yet
+    // TODO: Add explicit minimizing handling
     if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || frameBufferResized) {
         frameBufferResized = false;
         RecreateSwapChain(*currentWindow);

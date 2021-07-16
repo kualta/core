@@ -8,8 +8,8 @@
 
 namespace core {
 
-VkWindowRenderer::VkWindowRenderer(VkRenderModule* parent)
-: parent(parent)
+VkWindowRenderer::VkWindowRenderer(VkRenderModule* renderModule)
+: renderModule(renderModule)
 {
 
 }
@@ -21,13 +21,13 @@ void VkWindowRenderer::InitWindow(Window& window) {
     std::vector<const char*> extensionNames(extensionCount);
     SDL_Vulkan_GetInstanceExtensions(nullptr, &extensionCount, extensionNames.data());
 
-    if ( !parent->isReady() ) {
-        parent->requiredExtensions = extensionNames;
-        parent->Init(window);
+    if ( !renderModule->isReady() ) {
+        renderModule->requiredExtensions = extensionNames;
+        renderModule->Init(window);
     }
 }
 void VkWindowRenderer::AddRenderer(Window& window) {
-    if (SDL_Vulkan_CreateSurface(window.GetSdlWindow(), parent->instance, &parent->surface) != SDL_TRUE) {
+    if (SDL_Vulkan_CreateSurface(window.GetSdlWindow(), renderModule->instance, &renderModule->surface) != SDL_TRUE) {
         Logger::Log(RENDER, ERR_HERE) << "Cannot create vulkan surface";
         throw std::runtime_error("Cannot create vulkan surface");
     }

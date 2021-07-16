@@ -4,7 +4,7 @@
 #ifndef CORE_ESSENTIAL_H
 #define CORE_ESSENTIAL_H
 
-//      Core defines - - - -
+// ### Core defines ###
 #ifndef SDL_MAIN_HANDLED
 #   define SDL_MAIN_HANDLED
 #endif
@@ -27,14 +27,15 @@
 #endif
 
 #ifndef CORE_MINOR_VERSION
-#   define CORE_MINOR_VERSION 3
+#   define CORE_MINOR_VERSION 2
 #endif
 
 #ifndef CORE_PATCH_VERSION
 #   define CORE_PATCH_VERSION 0
 #endif
-//      Core defines - - - -
+// Core defines
 
+// ### Core includes ###
 #include <string>
 #include <cstring>
 #include <vector>
@@ -42,6 +43,7 @@
 #include <cassert>
 
 #include "Exceptions.h"
+// Core includes
 
 
 namespace core {
@@ -55,6 +57,8 @@ class CoreConfig;
 class Degree;
 class EngineLoop;
 class Entity;
+class Event;
+class EventDispatcher;
 class FileSystem;
 class IModule;
 class IModuleContainer;

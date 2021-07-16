@@ -15,7 +15,7 @@ typedef BgfxRenderModule RenderModule;
 
 class BgfxRenderModule : public IRenderModule {
 public:
-    BgfxRenderModule();
+    BgfxRenderModule(InputModule *inputModule);
     ~BgfxRenderModule();
 
     void Frame() override;

@@ -9,13 +9,13 @@ namespace core {
 
 class VkWindowRenderer : public IWindowRenderer {
 public:
-    VkWindowRenderer(VkRenderModule* parent);
+    VkWindowRenderer(VkRenderModule* renderModule);
 
     void InitWindow(Window &window) override;
 
     void AddRenderer(Window& window) override;
 
-    VkRenderModule* parent;
+    VkRenderModule* renderModule;
 };
 
 }

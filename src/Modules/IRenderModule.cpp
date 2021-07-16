@@ -1,19 +1,24 @@
 #include <core/Modules/IRenderModule.h>
 
-#include <utility>
-
 namespace core {
 
-IRenderModule::IRenderModule(const string& moduleName, const string& type, IWindowRenderer* wRend)
+IRenderModule::IRenderModule(const string &moduleName, IWindowRenderer *windowRenderer, InputModule *inputModule)
 : IModule(moduleName, RENDER),
-renderType(type),
-windowRenderer(wRend)
+windowRenderer(windowRenderer),
+inputModule(inputModule)
 {
-    Logger::Log(RENDER, INFO) << " | Render Module configuration: ";
-    Logger::Log(RENDER, INFO) << " |    Renderer type: " + renderType;
+    SubscribeToEvents();
+    Logger::Log(RENDER, INFO) << "Render Module initialized";
 }
 void IRenderModule::Tick() {
     Frame();
+}
+void IRenderModule::SubscribeToEvents() {
+    if ( !inputModule ) {
+        Logger::Log(RENDER, WARN_HERE) << "Render module doesn't have dependent InputModule! "
+                                       << "Cannot subscribe to events";
+    }
+    inputModule->SubscribeTo("OnWindowResized", OnWindowResized);
 }
 
 }
