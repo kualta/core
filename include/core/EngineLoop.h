@@ -21,7 +21,7 @@ public:
     /**
      * Stops main engine loop after current frame.
      */
-    void Stop();
+    static void Stop();
 
 protected:
 
@@ -35,7 +35,7 @@ protected:
      */
     void StopModules();
 
-    bool         isRunning { true };
+    static bool  isRunning;
     InputModule* inputModule;
 
 };

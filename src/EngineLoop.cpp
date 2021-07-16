@@ -5,6 +5,8 @@
 
 namespace core {
 
+bool EngineLoop::isRunning { true };
+
 EngineLoop::EngineLoop(InputModule* inputModule) : inputModule(inputModule) {
 
 }

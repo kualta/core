@@ -12,8 +12,8 @@ public:
     IWindowRenderer* windowRenderer;
 
 protected:
-    explicit IRenderModule(const string& moduleName = "ERR",
-                           const string& type       = "ERR",
+    explicit IRenderModule(const string& moduleName = "Unnamed",
+                           const string& type       = "NoType",
                            IWindowRenderer* wRend   = nullptr);
 
     virtual void Frame() = 0;

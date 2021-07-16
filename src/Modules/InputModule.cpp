@@ -11,7 +11,7 @@ InputModule::~InputModule() {
 
 }
 bool InputModule::GetAnyKey() {
-    return false;
+    throw std::runtime_error("Not yet implemented");
 }
 void InputModule::Tick() {
     PollEvents();
@@ -19,8 +19,7 @@ void InputModule::Tick() {
 }
 void InputModule::PollEvents() {
     while (SDL_PollEvent(&event)) {
-        switch (event.type)
-        {
+        switch (event.type) {
             case SDL_QUIT:
                 exitRequested = true;
             break;
