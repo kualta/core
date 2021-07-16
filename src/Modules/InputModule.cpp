@@ -20,14 +20,20 @@ void InputModule::Tick() {
 void InputModule::PollEvents() {
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
-            case SDL_QUIT:
-                exitRequested = true;
-            break;
             case SDL_KEYDOWN:
                 if ( event.key.keysym.sym == SDLK_ESCAPE ) exitRequested = true;
             break;
+
+            case SDL_QUIT:                OnExitRequest(); break;
+            case SDL_WINDOWEVENT_RESIZED: OnWindowResize(); break;
         }
     }
+}
+void InputModule::OnExitRequest() {
+    exitRequested = true;
+}
+void InputModule::OnWindowResize() {
+
 }
 
 }

@@ -16,10 +16,8 @@ struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
     std::optional<uint32_t> presentFamily;
 
-
     bool IsComplete() {
-        return graphicsFamily.has_value()
-            && presentFamily.has_value();
+        return graphicsFamily.has_value() && presentFamily.has_value();
     }
 };
 
@@ -32,7 +30,7 @@ struct SwapChainSupportDetails {
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
 public:
-    VkRenderModule();
+    VkRenderModule(InputModule* inputModule);
     ~VkRenderModule();
 
     void Frame() override;
@@ -67,6 +65,8 @@ private:
     void AddDebugExtensions();
     void AddValidationLayers();
     void SetupDebugMessenger();
+
+    void OnWindowResize();
 
     bool IsDeviceSuitable(VkPhysicalDevice pDevice);
     QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);

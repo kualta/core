@@ -9,7 +9,7 @@
 
 namespace core {
 
-VkRenderModule::VkRenderModule()
+VkRenderModule::VkRenderModule(InputModule *pModule)
 : IRenderModule("Render",
                 "Vulkan",
                 new VkWindowRenderer(this))
@@ -41,8 +41,8 @@ void VkRenderModule::Init(Window& window) {
     CreateFences();
     CreateImagesSyncObject();
 
-    Logger::Log(RENDER, INFO) << "Initialized VkRenderModule";
     initialized = true;
+    Logger::Log(RENDER, INFO) << "Initialized VkRenderModule";
 }
 void VkRenderModule::Cleanup() {
     delete windowRenderer;

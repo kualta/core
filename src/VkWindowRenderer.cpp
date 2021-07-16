@@ -13,7 +13,7 @@ VkWindowRenderer::VkWindowRenderer(VkRenderModule* parent)
 {
 
 }
-void VkWindowRenderer::InitWindow(Window &window) {
+void VkWindowRenderer::InitWindow(Window& window) {
     // TODO: Switch behaviour based on windowing lib
 
     uint32_t extensionCount { 0 };

@@ -28,6 +28,10 @@ protected:
 
 private:
 
+    void OnExitRequest();
+    void OnWindowResize();
+
+
 };
 
 
