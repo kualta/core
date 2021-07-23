@@ -1,8 +1,7 @@
 #include <core/Modules/VkRenderModule.h>
-#include <core/VkWindowRenderer.h>
+#include <core/Modules/VkWindowRenderer.h>
 #include <core/CoreConfig.h>
 #include <core/FileSystem.h>
-#include <core/Color.h>
 
 #include <iostream>
 #include <set>
@@ -10,9 +9,9 @@
 namespace core {
 
 VkRenderModule::VkRenderModule(InputModule* inputModule)
-: IRenderModule("Render", new VkWindowRenderer(this), inputModule)
+: IRenderModule("Render", new VkWindowRenderer(this))
 {
-
+    inputModule->SubscribeTo("OnWindowResize", [this] { OnWindowResize(); });
 }
 VkRenderModule::~VkRenderModule() {
     Cleanup();

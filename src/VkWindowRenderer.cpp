@@ -1,4 +1,4 @@
-#include <core/VkWindowRenderer.h>
+#include <core/Modules/VkWindowRenderer.h>
 #include <core/Modules/VkRenderModule.h>
 #include <core/Modules/WindowModule.h>
 #include <core/Core.h>

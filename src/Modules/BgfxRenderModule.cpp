@@ -4,7 +4,7 @@
 namespace core {
 
 BgfxRenderModule::BgfxRenderModule(InputModule* inputModule)
-: IRenderModule("Render", new BgfxWindowRenderer, inputModule)
+: IRenderModule("Render", new BgfxWindowRenderer)
 {
 
 }

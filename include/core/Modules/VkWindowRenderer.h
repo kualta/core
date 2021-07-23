@@ -2,8 +2,8 @@
 #define CORE_VKWINDOWRENDERER_H
 
 #include <vulkan/vulkan_core.h>
-#include "Essential.h"
-#include "IWindowRenderer.h"
+#include "core/Essential.h"
+#include "core/IWindowRenderer.h"
 
 namespace core {
 

@@ -30,7 +30,7 @@ struct SwapChainSupportDetails {
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
 public:
-    VkRenderModule(InputModule* inputModule);
+    VkRenderModule(InputModule* inputModule = nullptr);
     ~VkRenderModule();
 
     void Frame() override;

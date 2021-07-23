@@ -10,9 +10,6 @@ InputModule::InputModule() : IModule("Input", INPUT_T) {
 InputModule::~InputModule() {
 
 }
-bool InputModule::GetAnyKey() {
-    throw std::runtime_error("Not yet implemented");
-}
 void InputModule::Tick() {
     PollEvents();
     keystate = SDL_GetKeyboardState(nullptr);

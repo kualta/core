@@ -14,17 +14,13 @@ public:
     InputModule*     inputModule;
 
 protected:
-    explicit IRenderModule(const string &moduleName,
-                           IWindowRenderer* windowRenderer,
-                           InputModule* inputModule);
+    explicit IRenderModule(const string &moduleName, IWindowRenderer *windowRenderer);
 
     virtual void Frame() = 0;
 
 private:
 
     void Tick() override;
-    void SubscribeToEvents();
-    void OnWindowResized() { };
 
 };
 
