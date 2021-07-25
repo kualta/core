@@ -56,7 +56,7 @@ void BgfxMesh::UpdateVertexBuffer(aiMesh* aiMesh) {
             vertexBuffer[vNum * step + offset + 2] = vertexPos[2];
         }
     }
-    if ( vertexLayout.has(bgfx::Attrib::Color0 ) ) {
+    if ( vertexLayout.has(bgfx::Attrib::Color0) ) {
         offset = vertexLayout.getOffset(bgfx::Attrib::Color0) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiColor4D& vertexColor = aiMesh->mColors[0][vNum];
@@ -67,7 +67,7 @@ void BgfxMesh::UpdateVertexBuffer(aiMesh* aiMesh) {
             vertexBuffer[vNum * step + offset + 3] = vertexColor[3];
         }
     }
-    if ( vertexLayout.has(bgfx::Attrib::TexCoord0 ) ) {
+    if ( vertexLayout.has(bgfx::Attrib::TexCoord0) ) {
         offset = vertexLayout.getOffset(bgfx::Attrib::TexCoord0) / elementSize;
         for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
             const aiVector3D& uv = aiMesh->mTextureCoords[0][vNum];

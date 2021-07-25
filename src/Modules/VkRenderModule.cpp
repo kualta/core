@@ -928,7 +928,6 @@ void VkRenderModule::RecreateSwapChain(Window& window) {
     Logger::Log(RENDER, INFO) << "Recreating swap chain for window " << window.GetInfo();
 
     vkDeviceWaitIdle(device);
-
     CreateSwapChain(window);
     CreateImageViews();
     CreateRenderPass();

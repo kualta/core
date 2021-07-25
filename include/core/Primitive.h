@@ -5,6 +5,7 @@
 #define CORE_PRIMITIVE_H
 
 #include "Essential.h"
+#include "Vector.h"
 
 namespace core {
 
@@ -17,25 +18,35 @@ typedef struct ColorVertex {
     float x;
     float y;
     float z;
-    abgr abgr;
+    Vector4 argb;
 } ColorVertex;
 
 class Primitive {
-    // TODO: Hide vectors behind Primitive's methods
+    // TODO: ummm? Rename? Delete? FIXME!
 };
 
 struct Cube : public Primitive {
+//    const std::vector<ColorVertex> vertices {
+//            {-1.0f,  1.0f,  1.0f, 0xff000000 },
+//            { 1.0f,  1.0f,  1.0f, 0xff0000ff },
+//            {-1.0f, -1.0f,  1.0f, 0xff00ff00 },
+//            { 1.0f, -1.0f,  1.0f, 0xff00ffff },
+//            {-1.0f,  1.0f, -1.0f, 0xffff0000 },
+//            { 1.0f,  1.0f, -1.0f, 0xffff00ff },
+//            {-1.0f, -1.0f, -1.0f, 0xffffff00 },
+//            { 1.0f, -1.0f, -1.0f, 0xffffffff }
+//    };
     const std::vector<ColorVertex> vertices {
-            {-1.0f,  1.0f,  1.0f, 0xff000000 },
-            { 1.0f,  1.0f,  1.0f, 0xff0000ff },
-            {-1.0f, -1.0f,  1.0f, 0xff00ff00 },
-            { 1.0f, -1.0f,  1.0f, 0xff00ffff },
-            {-1.0f,  1.0f, -1.0f, 0xffff0000 },
-            { 1.0f,  1.0f, -1.0f, 0xffff00ff },
-            {-1.0f, -1.0f, -1.0f, 0xffffff00 },
-            { 1.0f, -1.0f, -1.0f, 0xffffffff }
+            {-1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
+            { 1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
+            {-1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
+            { 1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
+            {-1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
+            { 1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
+            {-1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}},
+            { 1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}}
     };
-    const std::vector<uint16_t> triangles {
+    const std::vector<uint16_t> indices {
             0, 1, 2,
             1, 3, 2,
             4, 6, 5,
