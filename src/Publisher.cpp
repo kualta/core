@@ -2,13 +2,13 @@
 
 namespace core {
 
-void Publisher::SubscribeTo(const char* eventName, std::function<void()> callback) {
-    if ( !this->HasEvent(eventName) ) {
-        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << eventName << "\"";
-        throw std::runtime_error("Publisher does not have event \"" + string(eventName) + "\"");
+void Publisher::SubscribeTo(const char* name, std::function<void()> callback) {
+    if ( !this->HasEvent(name) ) {
+        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
+        throw std::runtime_error("Publisher does not have event \"" + string(name) + "\"");
     }
 
-    auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e){ return e.first == eventName; });
+    auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e){ return e.first == name; });
     e->second.emplace_back(callback);
 }
 void Publisher::AddEvent(const string& name) {
@@ -27,6 +27,17 @@ bool Publisher::HasEvent(const string &name) {
         return true;
     } else {
         return false;
+    }
+}
+void Publisher::Trigger(const string& name) {
+    if ( !this->HasEvent(name) ) {
+        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
+        throw std::runtime_error("Publisher does not have event \"" + string(name) + "\"");
+    }
+
+    auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e){ return e.first == name; });
+    for (const auto& callback : e->second) {
+        callback();
     }
 }
 

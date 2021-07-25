@@ -14,7 +14,7 @@ namespace core {
 class Publisher {
 public:
 
-    void SubscribeTo(const char* eventName, std::function<void()> callback);
+    void SubscribeTo(const char* name, std::function<void()> callback);
     bool HasEvent(const string& name);
 
 protected:
@@ -22,6 +22,7 @@ protected:
     using event = std::pair<string, callbackList>;
 
     void AddEvent(const string& name);
+    void Trigger(const string& name);
 
     std::vector<event> eventList;
 

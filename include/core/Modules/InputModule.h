@@ -28,6 +28,8 @@ protected:
 
 private:
 
+    void CreateEvents();
+
     void OnExitRequest();
     void OnWindowResize();
 

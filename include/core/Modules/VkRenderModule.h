@@ -116,7 +116,6 @@ private:
 
     bool initialized             { false };
     bool validationLayersEnabled { false };
-    bool frameBufferResized      { false };
 
     std::vector<const char*>     requiredExtensions;
     std::vector<const char*>     deviceExtensions;

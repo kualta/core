@@ -123,13 +123,11 @@ void VkRenderModule::Frame() {
 
     result = vkQueuePresentKHR(presentQueue, &presentInfo);
 
-    // TODO: Add explicit resizes handling, frameBufferResized is not used yet
     // TODO: Add explicit minimizing handling
-    if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || frameBufferResized) {
-        frameBufferResized = false;
+    if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
         RecreateSwapChain(*currentWindow);
     } else if (result != VK_SUCCESS) {
-        throw std::runtime_error("failed to present swap chain image!");
+        throw std::runtime_error("Failed to present swap chain image!");
     }
 
     currentFrame = (currentFrame + 1) % maxFramesInFlight;
@@ -955,7 +953,7 @@ void VkRenderModule::CleanupSwapChain() {
     vkDestroySwapchainKHR(device, swapChain, nullptr);
 }
 void VkRenderModule::OnWindowResize() {
-
+    RecreateSwapChain(*currentWindow);
 }
 
 }
