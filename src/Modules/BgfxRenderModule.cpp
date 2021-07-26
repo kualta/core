@@ -1,5 +1,5 @@
 #include <core/Modules/BgfxRenderModule.h>
-#include <core/BgfxWindowRenderer.h>
+#include <core/Modules/BgfxRender/BgfxWindowRenderer.h>
 
 namespace core {
 

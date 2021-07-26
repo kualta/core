@@ -45,7 +45,6 @@
 #include "Exceptions.h"
 // Core includes
 
-
 namespace core {
 
 class WindowModule;

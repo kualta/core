@@ -4,6 +4,7 @@
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
 
+#include <vulkan/vulkan_core.h>
 #include "Essential.h"
 #include "Vector.h"
 
@@ -19,6 +20,14 @@ typedef struct ColorVertex {
     float y;
     float z;
     Vector4 argb;
+
+    static VkVertexInputBindingDescription GetBindingDescription() {
+        VkVertexInputBindingDescription bindingDescription { };
+
+
+
+        return bindingDescription;
+    }
 } ColorVertex;
 
 class Primitive {

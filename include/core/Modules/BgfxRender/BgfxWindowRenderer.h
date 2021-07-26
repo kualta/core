@@ -1,8 +1,8 @@
 #ifndef CORE_BGFXWINDOWRENDERER_H
 #define CORE_BGFXWINDOWRENDERER_H
 
-#include "Essential.h"
-#include "IWindowRenderer.h"
+#include "core/Essential.h"
+#include "core/IWindowRenderer.h"
 
 namespace core {
 

@@ -1,8 +1,9 @@
 #ifndef CORE_BGFXMESH_H
 #define CORE_BGFXMESH_H
 
-#include "Essential.h"
-#include "Primitive.h"
+#include "core/Essential.h"
+#include "core/Primitive.h"
+#include "core/IMesh.h"
 
 #include <assimp/mesh.h>
 #include <bgfx/bgfx.h>
@@ -10,7 +11,7 @@
 
 namespace core {
 
-class BgfxMesh {
+class BgfxMesh : public IMesh {
 public:
     explicit BgfxMesh(aiMesh* aiMesh);
     ~BgfxMesh();

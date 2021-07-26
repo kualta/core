@@ -1,7 +1,7 @@
 #include <core/Modules/WindowModule.h>
 #include <core/Modules/IRenderModule.h>
 #include <core/WindowBuilder.h>
-#include <core/BgfxWindowRenderer.h>
+#include <core/Modules/BgfxRender/BgfxWindowRenderer.h>
 #include <core/Window.h>
 #include <core/Logger.h>
 #include <core/Core.h>

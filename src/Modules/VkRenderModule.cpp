@@ -1,5 +1,5 @@
 #include <core/Modules/VkRenderModule.h>
-#include <core/Modules/VkWindowRenderer.h>
+#include <core/Modules/VkRender/VkWindowRenderer.h>
 #include <core/CoreConfig.h>
 #include <core/FileSystem.h>
 

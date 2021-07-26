@@ -4,7 +4,7 @@
 #include "core/Essential.h"
 #include "core/IComponent.h"
 #include "core/Instantiable.h"
-#include "core/BgfxMesh.h"
+#include "core/Modules/BgfxRender/BgfxMesh.h"
 #include "core/Shader.h"
 
 namespace core {

@@ -2,11 +2,11 @@
 #define CORE_VKRENDERMODULE_H
 
 #include <core/Essential.h>
+#include <core/Window.h>
 #include <core/Modules/IRenderModule.h>
 
 #include <vulkan/vulkan.h>
 #include <optional>
-#include <core/Window.h>
 
 namespace core {
 
