@@ -11,6 +11,8 @@
 
 namespace core {
 
+typedef BgfxMesh Mesh;
+
 class BgfxMesh : public IMesh {
 public:
     explicit BgfxMesh(aiMesh* aiMesh);

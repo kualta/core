@@ -12,8 +12,6 @@ VkRenderModule::VkRenderModule(InputModule* inputModule)
 : IRenderModule("Render", new VkWindowRenderer(this))
 {
     inputModule->SubscribeTo("OnWindowResize", [this] { OnWindowResize(); });
-
-//    inputModule->SubscribeTo("OnWindowResize", std::bind(&VkRenderModule::OnWindowResize, this));
 }
 VkRenderModule::~VkRenderModule() {
     Cleanup();

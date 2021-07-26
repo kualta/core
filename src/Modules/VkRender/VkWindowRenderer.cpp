@@ -1,7 +1,6 @@
 #include <core/Modules/VkRender/VkWindowRenderer.h>
 #include <core/Modules/VkRenderModule.h>
 #include <core/Modules/WindowModule.h>
-#include <core/Core.h>
 
 #include <SDL_vulkan.h>
 #include <vulkan/vulkan.h>

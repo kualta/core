@@ -115,7 +115,7 @@ void BgfxMesh::UpdateIndexBuffer(aiMesh* aiMesh) {
         indexBuffer[index++] = face.mIndices[2];
     }
 }
-void BgfxMesh::UpdateVertexLayout(aiMesh *aiMesh) {
+void BgfxMesh::UpdateVertexLayout(aiMesh* aiMesh) {
     vertexLayout.begin();
 
     if ( aiMesh->HasPositions() ) {

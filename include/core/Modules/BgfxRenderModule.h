@@ -5,6 +5,7 @@
 #include <core/IModule.h>
 #include <core/Components/BgfxRenderer.h>
 #include <core/Modules/IRenderModule.h>
+#include <core/Modules/BgfxRender/BgfxMesh.h>
 
 #include <algorithm>
 #include <bgfx/bgfx.h>
@@ -15,7 +16,7 @@ typedef BgfxRenderModule RenderModule;
 
 class BgfxRenderModule : public IRenderModule {
 public:
-    BgfxRenderModule(InputModule *inputModule);
+    BgfxRenderModule(InputModule* inputModule);
     ~BgfxRenderModule();
 
     void Frame() override;
