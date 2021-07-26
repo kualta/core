@@ -14,7 +14,7 @@ option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
 option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
 # at [filename:line] -> at [full/file/path/filename:line]
-option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             ON)
+option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 
 
 #       core

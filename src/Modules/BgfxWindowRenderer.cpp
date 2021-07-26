@@ -1,4 +1,4 @@
-#include <core/Modules/BgfxRender/BgfxWindowRenderer.h>
+#include <core/Modules/BgfxWindowRenderer.h>
 #include <core/Logger.h>
 #include <core/Window.h>
 

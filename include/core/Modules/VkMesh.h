@@ -4,7 +4,9 @@
 #include <core/Essential.h>
 #include <core/IMesh.h>
 
+#include <array>
 #include <assimp/mesh.h>
+#include <vulkan/vulkan_core.h>
 
 namespace core {
 
@@ -12,10 +14,11 @@ typedef VkMesh Mesh;
 
 class VkMesh : public IMesh {
 public:
-    VkMesh(AiMesh* aiMesh);
+    VkMesh(aiMesh* aiMesh);
 
 protected:
     static VkVertexInputBindingDescription GetBindingDescription();
+    static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions();
 
 };
 

@@ -67,7 +67,6 @@ class IWindowRenderer;
 class Logger;
 class Log;
 class Math;
-class BgfxMesh;
 class Model;
 class ModelImporter;
 class Object;
@@ -76,7 +75,6 @@ class Quaternion;
 class Radian;
 class ScriptBehaviour;
 class Shader;
-class BgfxWindowRenderer;
 class Window;
 class WindowBuilder;
 
@@ -86,8 +84,16 @@ class EngineModule;
 class SceneModule;
 class InputModule;
 class IRenderModule;
-class BgfxRenderModule;
+
+// VkRenderModule
 class VkRenderModule;
+class VkWindowRenderer;
+class VkMesh;
+
+// BgfxRenderModule
+class BgfxRenderModule;
+class BgfxWindowRenderer;
+class BgfxMesh;
 
 // Core Components classes
 class BgfxRenderer;

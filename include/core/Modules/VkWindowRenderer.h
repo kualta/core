@@ -1,8 +1,8 @@
 #ifndef CORE_VKWINDOWRENDERER_H
 #define CORE_VKWINDOWRENDERER_H
 
-#include "core/Essential.h"
-#include "core/IWindowRenderer.h"
+#include <core/Essential.h>
+#include <core/IWindowRenderer.h>
 
 #include <vulkan/vulkan_core.h>
 

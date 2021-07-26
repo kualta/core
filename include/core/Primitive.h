@@ -6,6 +6,7 @@
 
 #include <vulkan/vulkan_core.h>
 #include "Essential.h"
+#include "Vertex.h"
 #include "Vector.h"
 
 namespace core {
@@ -14,21 +15,6 @@ typedef struct Rect {
     float x, y;
     float w, h;
 } Rect;
-
-typedef struct ColorVertex {
-    float x;
-    float y;
-    float z;
-    Vector4 argb;
-
-    static VkVertexInputBindingDescription GetBindingDescription() {
-        VkVertexInputBindingDescription bindingDescription { };
-
-
-
-        return bindingDescription;
-    }
-} ColorVertex;
 
 class Primitive {
     // TODO: ummm? Rename? Delete? FIXME!

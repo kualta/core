@@ -5,7 +5,7 @@
 #include <core/IModule.h>
 #include <core/Components/BgfxRenderer.h>
 #include <core/Modules/IRenderModule.h>
-#include <core/Modules/BgfxRender/BgfxMesh.h>
+#include <core/Modules/BgfxMesh.h>
 
 #include <algorithm>
 #include <bgfx/bgfx.h>

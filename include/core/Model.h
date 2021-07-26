@@ -3,7 +3,7 @@
 
 #include "Essential.h"
 #include "ModelImporter.h"
-#include "core/Modules/BgfxRender/BgfxMesh.h"
+#include "core/Modules/BgfxMesh.h"
 #include "Shader.h"
 
 #include <assimp/Importer.hpp>

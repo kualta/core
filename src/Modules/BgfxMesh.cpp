@@ -1,4 +1,4 @@
-#include <core/Modules/BgfxRender/BgfxMesh.h>
+#include <core/Modules/BgfxMesh.h>
 #include <core/FileSystem.h>
 #include <core/Logger.h>
 #include <core/Exceptions.h>

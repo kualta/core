@@ -3,7 +3,7 @@
 
 #include <core/Essential.h>
 #include <core/Components/IRenderer.h>
-#include <core/Modules/BgfxRender/BgfxMesh.h>
+#include <core/Modules/BgfxMesh.h>
 #include <core/Model.h>
 #include <core/Shader.h>
 
