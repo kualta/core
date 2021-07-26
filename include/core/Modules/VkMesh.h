@@ -18,7 +18,7 @@ public:
 
 protected:
     static VkVertexInputBindingDescription GetBindingDescription();
-    static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions();
+    static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
 
 };
 
