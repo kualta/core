@@ -4,6 +4,7 @@
 #include <core/Essential.h>
 #include <core/Window.h>
 #include <core/Modules/IRenderModule.h>
+#include <core/Modules/VkMesh.h>
 
 #include <vulkan/vulkan.h>
 #include <optional>
@@ -29,6 +30,7 @@ struct SwapChainSupportDetails {
 
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
+    friend class VkMesh;
 public:
     VkRenderModule(InputModule* inputModule = nullptr);
     ~VkRenderModule();
@@ -92,8 +94,8 @@ private:
     static void LogDebugObjectsInfo(const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData);
 
     VkInstance               instance;
-    VkPhysicalDevice         physicalDevice { VK_NULL_HANDLE };
-    VkDevice                 device;
+    static VkPhysicalDevice         physicalDevice {VK_NULL_HANDLE };
+    static VkDevice                 device;
     VkQueue                  graphicsQueue;
     VkQueue                  presentQueue;
     VkSurfaceKHR             surface;

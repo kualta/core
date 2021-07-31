@@ -592,9 +592,11 @@ void VkRenderModule::CreateImageViews() {
             throw std::runtime_error("Failed to create image views!");
         }
     }
-
 }
 void VkRenderModule::CreateGraphicsPipeline() {
+    auto bindingDescription = VkMesh::GetBindingDescription();
+    auto attributeDescriptions = VkMesh::GetAttributeDescriptions();
+
     auto vertShaderCode = FileSystem::ReadFile("../res/shaders/vert.spv");
     auto fragShaderCode = FileSystem::ReadFile("../res/shaders/frag.spv");
 
@@ -615,10 +617,10 @@ void VkRenderModule::CreateGraphicsPipeline() {
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo { };
     vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-    vertexInputInfo.vertexBindingDescriptionCount = 0;
-    vertexInputInfo.pVertexBindingDescriptions = nullptr;
-    vertexInputInfo.vertexAttributeDescriptionCount = 0;
-    vertexInputInfo.pVertexAttributeDescriptions = nullptr;
+    vertexInputInfo.vertexBindingDescriptionCount = 1;
+    vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+    vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+    vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly { };
     inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;

@@ -15,11 +15,20 @@ typedef VkMesh Mesh;
 class VkMesh : public IMesh {
 public:
     VkMesh(aiMesh* aiMesh);
+    ~VkMesh();
 
-protected:
     static VkVertexInputBindingDescription GetBindingDescription();
     static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
 
+    static uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
+protected:
+
+    void CreateVertexBuffer();
+
+    VkBuffer vertexBuffer;
+
+    std::vector<ColorVertex> vertices;
 };
 
 

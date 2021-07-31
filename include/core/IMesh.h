@@ -6,6 +6,11 @@ namespace core {
 class IMesh {
 public:
 
+protected:
+
+    virtual void UpdateVertexBuffer() { };
+    virtual void UpdateIndexBuffer() { };
+
 };
 
 }
