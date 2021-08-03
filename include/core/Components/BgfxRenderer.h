@@ -11,6 +11,10 @@
 
 namespace core {
 
+#ifdef CORE_SIMPLIFY_SYNTAX
+typedef class BgfxRenderer Renderer;
+#endif
+
 class BgfxRenderer : public IRenderer {
 public:
     BgfxRenderer(Entity& parent,
@@ -27,7 +31,8 @@ public:
     void Draw() override;
 
 protected:
-    uint16_t         viewId    { 0 };
+    BgfxMesh*   mesh    { nullptr };
+    uint16_t    viewId  { 0 };
 
 };
 

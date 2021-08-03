@@ -10,7 +10,9 @@
 
 namespace core {
 
-typedef VkMesh Mesh;
+#ifdef CORE_SIMPLIFY_SYNTAX
+typedef class VkMesh Mesh;
+#endif
 
 class VkMesh : public IMesh {
 public:

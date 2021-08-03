@@ -12,7 +12,9 @@
 
 namespace core {
 
-typedef BgfxRenderModule RenderModule;
+#ifdef CORE_SIMPLIFY_SYNTAX
+    typedef BgfxRenderModule RenderModule;
+#endif
 
 class BgfxRenderModule : public IRenderModule {
 public:

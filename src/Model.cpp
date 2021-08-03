@@ -12,7 +12,8 @@ Model::Model(const string &file) {
         Logger::Log(IMPORT, ERR_HERE) << ModelImporter::importer.GetErrorString();
         throw core::bad_file(ModelImporter::importer.GetErrorString());
     }
-    mesh = new BgfxMesh(scene->mMeshes[0]);
+    // FIXME: change to new Mesh
+//    mesh = new BgfxMesh(scene->mMeshes[0]);
     shader = new Shader("shaders/dx11/vs_cubes.bin", "shaders/dx11/fs_cubes.bin");
 }
 Model::~Model() {

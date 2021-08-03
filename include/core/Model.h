@@ -3,8 +3,8 @@
 
 #include "Essential.h"
 #include "ModelImporter.h"
-#include "core/Modules/BgfxMesh.h"
 #include "Shader.h"
+#include "IMesh.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -17,7 +17,7 @@ public:
     Model(const string& file);
     ~Model();
 
-    BgfxMesh* mesh;
+    IMesh* mesh;
     Shader* shader;
 };
 

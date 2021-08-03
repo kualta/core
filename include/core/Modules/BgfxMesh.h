@@ -11,7 +11,9 @@
 
 namespace core {
 
-typedef BgfxMesh Mesh;
+#ifdef CORE_SIMPLIFY_SYNTAX
+typedef class BgfxMesh Mesh;
+#endif
 
 class BgfxMesh : public IMesh {
 public:

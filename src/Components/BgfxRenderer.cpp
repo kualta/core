@@ -8,10 +8,11 @@ namespace core {
 
 BgfxRenderer::BgfxRenderer(Entity& parent,
                            Shader* shaderPtr,
-                           BgfxMesh* geometryPtr,
+                           BgfxMesh* bgfxMesh,
                            uint16_t viewId,
                            const string& name)
-: IRenderer(parent, shaderPtr, geometryPtr, name),
+: IRenderer(parent, shaderPtr, name),
+mesh(bgfxMesh),
 viewId(viewId)
 {
     parent.assertRequiredComponent<Transform>(this);

@@ -3,15 +3,20 @@
 
 #include <core/Essential.h>
 #include <core/Window.h>
+
 #include <core/Modules/IRenderModule.h>
 #include <core/Modules/VkMesh.h>
+
+#include <core/Components/VkRenderer.h>
 
 #include <vulkan/vulkan.h>
 #include <optional>
 
 namespace core {
 
-typedef VkRenderModule RenderModule;
+#ifdef CORE_SIMPLIFY_SYNTAX
+    typedef class VkRenderModule RenderModule;
+#endif
 
 struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
@@ -93,8 +98,8 @@ private:
                                               const VkAllocationCallbacks* pAllocator);
     static void LogDebugObjectsInfo(const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData);
 
-    VkInstance               instance;
-    static VkPhysicalDevice         physicalDevice {VK_NULL_HANDLE };
+    static VkInstance               instance;
+    static VkPhysicalDevice         physicalDevice;
     static VkDevice                 device;
     VkQueue                  graphicsQueue;
     VkQueue                  presentQueue;

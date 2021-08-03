@@ -97,6 +97,7 @@ class BgfxMesh;
 
 // Core Components classes
 class BgfxRenderer;
+class VkRenderer;
 class Camera;
 class Transform;
 template<typename T> class Script;
@@ -115,7 +116,6 @@ template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
-typedef class VkRenderer Renderer;
 typedef std::string string;
 typedef uint32_t rgba;
 typedef uint32_t abgr;

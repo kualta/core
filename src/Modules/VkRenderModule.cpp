@@ -8,6 +8,10 @@
 
 namespace core {
 
+VkPhysicalDevice VkRenderModule::physicalDevice { VK_NULL_HANDLE };
+VkInstance       VkRenderModule::instance       { VK_NULL_HANDLE };
+VkDevice         VkRenderModule::device         { VK_NULL_HANDLE };
+
 VkRenderModule::VkRenderModule(InputModule* inputModule)
 : IRenderModule("Render", new VkWindowRenderer(this))
 {

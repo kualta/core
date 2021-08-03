@@ -4,7 +4,6 @@
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
 
-#include <vulkan/vulkan_core.h>
 #include "Essential.h"
 #include "Vertex.h"
 #include "Vector.h"

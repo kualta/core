@@ -6,6 +6,10 @@
 
 namespace core {
 
+#ifdef CORE_SIMPLIFY_SYNTAX
+typedef class VkRenderer Renderer;
+#endif
+
 class VkRenderer : public IRenderer {
 public:
     VkRenderer(Entity& parent,
@@ -15,8 +19,11 @@ public:
 
     void Draw() override;
 
-};
+protected:
 
+    VkMesh*     mesh    { nullptr };
+
+};
 
 }
 
