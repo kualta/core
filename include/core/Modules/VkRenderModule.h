@@ -35,6 +35,7 @@ struct SwapChainSupportDetails {
 
 class VkRenderModule : public IRenderModule {
     friend class VkWindowRenderer;
+    friend class VkBufferFactory;
     friend class VkMesh;
 public:
     VkRenderModule(InputModule* inputModule = nullptr);
@@ -101,8 +102,9 @@ private:
     static VkInstance               instance;
     static VkPhysicalDevice         physicalDevice;
     static VkDevice                 device;
-    VkQueue                  graphicsQueue;
-    VkQueue                  presentQueue;
+    static VkCommandPool            commandPool;
+    static VkQueue                  graphicsQueue;
+    static VkQueue                  presentQueue;
     VkSurfaceKHR             surface;
     VkSwapchainKHR           swapChain;
     VkFormat                 swapChainImageFormat;
@@ -111,7 +113,6 @@ private:
     VkRenderPass             renderPass;
     VkPipelineLayout         pipelineLayout;
     VkPipeline               graphicsPipeline;
-    VkCommandPool            commandPool;
 
     std::vector<VkSemaphore> imageAvailableSemaphores;
     std::vector<VkSemaphore> renderFinishedSemaphores;

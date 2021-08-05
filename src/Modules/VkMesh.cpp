@@ -1,5 +1,6 @@
 #include <core/Modules/VkMesh.h>
 #include <core/Modules/VkRenderModule.h>
+#include <core/Modules/VkBufferFactory.h>
 #include <core/Vertex.h>
 #include <core/Primitive.h>
 
@@ -10,10 +11,9 @@ VkMesh::VkMesh(aiMesh *aiMesh) {
 }
 VkMesh::VkMesh() {
     vertices = {
-        {0.0f, -0.5f, {1.0f, 0.0f, 0.0f}},
-        {0.5f, 0.5f,  {0.0f, 1.0f, 0.0f}},
-        {-0.5f, 0.5f, {0.0f, 0.0f, 1.0f}}
-    };
+        {0.0f, -0.5f, {1.0f, 1.0f, 1.0f}},
+        {0.5f, 0.5f,  {0.0f, 1.0f, 1.0f}},
+        {-0.5f, 0.5f, {0.0f, 0.0f, 1.0f}}};
     CreateVertexBuffer();
     VkRenderModule::meshes.push_back(this);
 }
@@ -38,61 +38,32 @@ std::array<VkVertexInputAttributeDescription, 2> VkMesh::GetAttributeDescription
     attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
     attributeDescriptions[1].offset = offsetof(ColorVertex2, rgb);
 
-
     return attributeDescriptions;
 }
 void VkMesh::CreateVertexBuffer() {
-    VkBufferCreateInfo bufferInfo { };
-    bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    bufferInfo.size = sizeof(vertices[0]) * vertices.size();
-    bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-    bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+    VkBuffer stagingBuffer;
+    VkDeviceMemory stagingBufferMemory;
 
-    if (vkCreateBuffer(VkRenderModule::device, &bufferInfo, nullptr, &vertexBuffer) != VK_SUCCESS) {
-        Logger::Log(RENDER, ERR_HERE) << "Failed to create vertex buffer";
-        throw std::runtime_error("Failed to create vertex buffer");
-    }
-
-    VkMemoryRequirements memRequirements;
-    vkGetBufferMemoryRequirements(VkRenderModule::device, vertexBuffer, &memRequirements);
-
-    VkMemoryAllocateInfo allocInfo { };
-    allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    allocInfo.allocationSize = memRequirements.size;
-    allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
-                                                                             | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-    if (vkAllocateMemory(VkRenderModule::device, &allocInfo, nullptr, &vertexBufferMemory) != VK_SUCCESS) {
-        Logger::Log(RENDER, ERR_HERE) << "Failed to allocate vertex buffer memory";
-        throw std::runtime_error("Failed to allocate vertex buffer memory");
-    }
-
-    vkBindBufferMemory(VkRenderModule::device, vertexBuffer, vertexBufferMemory, 0);
+    VkBufferFactory::CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
+    | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
     void* data;
-    vkMapMemory(VkRenderModule::device, vertexBufferMemory, 0, bufferInfo.size, 0, &data);
-    memcpy(data, vertices.data(), (size_t) bufferInfo.size);
-    vkUnmapMemory(VkRenderModule::device, vertexBufferMemory);
+    vkMapMemory(VkRenderModule::device, stagingBufferMemory, 0, bufferSize, 0, &data);
+    memcpy(data, vertices.data(), (size_t) bufferSize);
+    vkUnmapMemory(VkRenderModule::device, stagingBufferMemory);
 
+    VkBufferFactory::CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT
+    | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, vertexBuffer, vertexBufferMemory);
+
+    VkBufferFactory::CopyBuffer(stagingBuffer, vertexBuffer, bufferSize);
+
+    vkDestroyBuffer(VkRenderModule::device, stagingBuffer, nullptr);
+    vkFreeMemory(VkRenderModule::device, stagingBufferMemory, nullptr);
 }
 VkMesh::~VkMesh() {
     vkDestroyBuffer(VkRenderModule::device, vertexBuffer, nullptr);
     vkFreeMemory(VkRenderModule::device, vertexBufferMemory, nullptr);
 }
-uint32_t VkMesh::FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
-
-    VkPhysicalDeviceMemoryProperties memProperties;
-    vkGetPhysicalDeviceMemoryProperties(VkRenderModule::physicalDevice, &memProperties);
-
-    for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
-        if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
-            return i;
-        }
-    }
-
-    Logger::Log(MEMORY, ERR_HERE) << "Failed to find suitable memory type";
-    throw std::runtime_error("Failed to find suitable memory type");
-}
-
 
 }

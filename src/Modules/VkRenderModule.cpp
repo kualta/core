@@ -11,6 +11,9 @@ namespace core {
 VkPhysicalDevice      VkRenderModule::physicalDevice { VK_NULL_HANDLE };
 VkInstance            VkRenderModule::instance       { VK_NULL_HANDLE };
 VkDevice              VkRenderModule::device         { VK_NULL_HANDLE };
+VkQueue               VkRenderModule::graphicsQueue  { };
+VkQueue               VkRenderModule::presentQueue   { };
+VkCommandPool         VkRenderModule::commandPool    { };
 std::vector<VkMesh*>  VkRenderModule::meshes         { };
 
 VkRenderModule::VkRenderModule(InputModule* inputModule)

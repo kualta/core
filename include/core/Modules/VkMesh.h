@@ -23,8 +23,6 @@ public:
     static VkVertexInputBindingDescription GetBindingDescription();
     static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
 
-    uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
-
     VkBuffer vertexBuffer;
     std::vector<ColorVertex2> vertices;
 protected:
