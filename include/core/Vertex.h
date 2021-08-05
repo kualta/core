@@ -13,6 +13,12 @@ typedef struct ColorVertex {
     Vector4 argb;
 } ColorVertex;
 
+typedef struct ColorVertex2 {
+    float x;
+    float y;
+    Vector3 rgb;
+} ColorVertex2;
+
 }
 
 #endif //CORE_VERTEX_H

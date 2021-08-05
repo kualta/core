@@ -16,6 +16,7 @@ typedef class VkMesh Mesh;
 
 class VkMesh : public IMesh {
 public:
+    VkMesh();
     VkMesh(aiMesh* aiMesh);
     ~VkMesh();
 
@@ -24,14 +25,14 @@ public:
 
     uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
+    VkBuffer vertexBuffer;
+    std::vector<ColorVertex2> vertices;
 protected:
 
     void CreateVertexBuffer();
 
-    VkBuffer vertexBuffer;
     VkDeviceMemory vertexBufferMemory;
 
-    std::vector<ColorVertex> vertices;
 };
 
 

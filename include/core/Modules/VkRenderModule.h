@@ -131,6 +131,7 @@ private:
     std::vector<VkImageView>     swapChainImageViews;
     std::vector<VkFramebuffer>   swapChainFramebuffers;
     std::vector<VkCommandBuffer> commandBuffers;
+    static std::vector<VkMesh*>  meshes;
 
     const uint32_t maxFramesInFlight { 2 };
     size_t         currentFrame { 0 };

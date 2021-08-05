@@ -30,6 +30,7 @@ struct Cube : public Primitive {
 //            {-1.0f, -1.0f, -1.0f, 0xffffff00 },
 //            { 1.0f, -1.0f, -1.0f, 0xffffffff }
 //    };
+
     const std::vector<ColorVertex> vertices {
             {-1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
             { 1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},

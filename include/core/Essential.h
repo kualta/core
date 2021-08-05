@@ -123,6 +123,7 @@ typedef uint32_t abgr;
 typedef struct Cube Cube;
 typedef struct Rect Rect;
 typedef struct ColorVertex ColorVertex;
+typedef struct ColorVertex2 ColorVertex2;
 
 typedef Matrix<3, 3, float> Matrix3;
 typedef Matrix<3, 3, int> Matrix3i;

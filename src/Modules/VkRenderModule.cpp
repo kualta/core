@@ -8,9 +8,10 @@
 
 namespace core {
 
-VkPhysicalDevice VkRenderModule::physicalDevice { VK_NULL_HANDLE };
-VkInstance       VkRenderModule::instance       { VK_NULL_HANDLE };
-VkDevice         VkRenderModule::device         { VK_NULL_HANDLE };
+VkPhysicalDevice      VkRenderModule::physicalDevice { VK_NULL_HANDLE };
+VkInstance            VkRenderModule::instance       { VK_NULL_HANDLE };
+VkDevice              VkRenderModule::device         { VK_NULL_HANDLE };
+std::vector<VkMesh*>  VkRenderModule::meshes         { };
 
 VkRenderModule::VkRenderModule(InputModule* inputModule)
 : IRenderModule("Render", new VkWindowRenderer(this))
@@ -883,7 +884,13 @@ void VkRenderModule::CreateCommandBuffers() {
 
         vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
         vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-        vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+
+        VkDeviceSize offsets[] = { 0 };
+        if (!meshes.empty()) {
+            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &meshes[0]->vertexBuffer, offsets);
+
+            vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(meshes[0]->vertices.size()), 1, 0, 0);
+        }
         vkCmdEndRenderPass(commandBuffers[i]);
 
         if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {

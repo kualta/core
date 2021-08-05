@@ -6,21 +6,21 @@
 namespace core {
 
 VkMesh::VkMesh(aiMesh *aiMesh) {
+
+}
+VkMesh::VkMesh() {
     vertices = {
-            {-1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
-            { 1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
-            {-1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
-            { 1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
-            {-1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
-            { 1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
-            {-1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}},
-            { 1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}}
+        {0.0f, -0.5f, {1.0f, 0.0f, 0.0f}},
+        {0.5f, 0.5f,  {0.0f, 1.0f, 0.0f}},
+        {-0.5f, 0.5f, {0.0f, 0.0f, 1.0f}}
     };
+    CreateVertexBuffer();
+    VkRenderModule::meshes.push_back(this);
 }
 VkVertexInputBindingDescription VkMesh::GetBindingDescription() {
     VkVertexInputBindingDescription bindingDescription { };
     bindingDescription.binding = 0;
-    bindingDescription.stride = sizeof(ColorVertex);
+    bindingDescription.stride = sizeof(ColorVertex2);
     bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
     return bindingDescription;
@@ -30,21 +30,18 @@ std::array<VkVertexInputAttributeDescription, 2> VkMesh::GetAttributeDescription
 
     attributeDescriptions[0].binding = 0;
     attributeDescriptions[0].location = 0;
-    attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-    attributeDescriptions[0].offset = offsetof(ColorVertex, x);
+    attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+    attributeDescriptions[0].offset = offsetof(ColorVertex2, x);
 
     attributeDescriptions[1].binding = 0;
     attributeDescriptions[1].location = 1;
-    attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
-    attributeDescriptions[1].offset = offsetof(ColorVertex, argb);
+    attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+    attributeDescriptions[1].offset = offsetof(ColorVertex2, rgb);
 
 
     return attributeDescriptions;
 }
 void VkMesh::CreateVertexBuffer() {
-    VkMemoryRequirements memRequirements;
-    vkGetBufferMemoryRequirements(VkRenderModule::device, vertexBuffer, &memRequirements);
-
     VkBufferCreateInfo bufferInfo { };
     bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     bufferInfo.size = sizeof(vertices[0]) * vertices.size();
@@ -55,6 +52,9 @@ void VkMesh::CreateVertexBuffer() {
         Logger::Log(RENDER, ERR_HERE) << "Failed to create vertex buffer";
         throw std::runtime_error("Failed to create vertex buffer");
     }
+
+    VkMemoryRequirements memRequirements;
+    vkGetBufferMemoryRequirements(VkRenderModule::device, vertexBuffer, &memRequirements);
 
     VkMemoryAllocateInfo allocInfo { };
     allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
