@@ -23,13 +23,20 @@ public:
     static VkVertexInputBindingDescription GetBindingDescription();
     static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
 
-    VkBuffer vertexBuffer;
+    // TODO: move two buffers to core::Mesh
     std::vector<ColorVertex2> vertices;
+    std::vector<uint16_t> indices;
+
+    VkBuffer vertexBuffer;
+    VkBuffer indexBuffer;
+
 protected:
 
     void CreateVertexBuffer();
+    void CreateIndexBuffer();
 
     VkDeviceMemory vertexBufferMemory;
+    VkDeviceMemory indexBufferMemory;
 
 };
 

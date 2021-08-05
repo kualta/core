@@ -890,9 +890,11 @@ void VkRenderModule::CreateCommandBuffers() {
 
         VkDeviceSize offsets[] = { 0 };
         if (!meshes.empty()) {
-            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &meshes[0]->vertexBuffer, offsets);
 
-            vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(meshes[0]->vertices.size()), 1, 0, 0);
+            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &meshes[0]->vertexBuffer, offsets);
+            vkCmdBindIndexBuffer(commandBuffers[i], meshes[0]->indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+            vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(meshes[0]->indices.size()), 1, 0, 0, 0);
         }
         vkCmdEndRenderPass(commandBuffers[i]);
 
