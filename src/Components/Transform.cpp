@@ -8,14 +8,14 @@ Transform::Transform(Entity& parent, const string& name) : IComponent(parent, na
     parent.transform = this;
 }
 void Transform::Tick() {
-    UpdateMatrix();
-}
-void Transform::UpdateMatrix() {
-    matrix = Matrix4::identity;
 
-    matrix = matrix * Math::ScaleMatrix(scale);
-    matrix = matrix * Math::EulerRotationMatrix(rotation);
-    matrix = matrix * Math::TranslationMatrix(position);
 }
+//void Transform::UpdateMatrix() {
+//    matrix = Matrix4::identity;
+//
+//    matrix = matrix * Math::ScaleMatrix(scale);
+//    matrix = matrix * Math::EulerRotationMatrix(rotation);
+//    matrix = matrix * Math::TranslationMatrix(position);
+//}
 
 }

@@ -2,6 +2,7 @@
 #include <core/Modules/VkRenderModule.h>
 #include <core/Modules/VkBufferFactory.h>
 #include <core/Vertex.h>
+#include <core/Matrix.h>
 #include <core/Primitive.h>
 
 namespace core {

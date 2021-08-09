@@ -31,7 +31,8 @@ viewId(viewId)
 void BgfxRenderer::Draw() {
     bgfx::setVertexBuffer(viewId, mesh->vertexBufferHandle);
     bgfx::setIndexBuffer(mesh->indexBufferHandle);
-    bgfx::setTransform(&entity->transform->matrix);
+    // FIXME: matrix has been removed from tranform component
+//    bgfx::setTransform(&entity->transform->matrix);
 
     bgfx::submit(viewId, shader->program);
 }

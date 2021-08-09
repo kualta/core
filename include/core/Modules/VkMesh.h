@@ -17,6 +17,7 @@ typedef class VkMesh Mesh;
 class VkMesh : public IMesh {
 public:
     VkMesh();
+    // TODO: add constructor from core::Mesh* mesh, remove aiMesh* constructor
     VkMesh(aiMesh* aiMesh);
     ~VkMesh();
 

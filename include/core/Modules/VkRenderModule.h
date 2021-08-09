@@ -34,6 +34,7 @@ struct SwapChainSupportDetails {
 };
 
 class VkRenderModule : public IRenderModule {
+    friend class VkRenderer;
     friend class VkWindowRenderer;
     friend class VkBufferFactory;
     friend class VkMesh;
@@ -60,6 +61,7 @@ private:
     void CreateImageViews();
     void CreateRenderPass();
     void CreateFrameBuffers();
+    void CreateDescriptorSetLayout();
     void CreateGraphicsPipeline();
     void CreateCommandPool();
     void CreateCommandBuffers();
@@ -99,18 +101,21 @@ private:
                                               const VkAllocationCallbacks* pAllocator);
     static void LogDebugObjectsInfo(const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData);
 
-    static VkInstance               instance;
-    static VkPhysicalDevice         physicalDevice;
-    static VkDevice                 device;
-    static VkCommandPool            commandPool;
-    static VkQueue                  graphicsQueue;
-    static VkQueue                  presentQueue;
+    static uint32_t          imageIndex;
+    static VkInstance        instance;
+    static VkPhysicalDevice  physicalDevice;
+    static VkDevice          device;
+    static VkCommandPool     commandPool;
+    static VkQueue           graphicsQueue;
+    static VkQueue           presentQueue;
+
     VkSurfaceKHR             surface;
     VkSwapchainKHR           swapChain;
     VkFormat                 swapChainImageFormat;
     VkExtent2D               swapChainExtent;
     VkDebugUtilsMessengerEXT debugMessenger;
     VkRenderPass             renderPass;
+    VkDescriptorSetLayout    descriptorSetLayout;
     VkPipelineLayout         pipelineLayout;
     VkPipeline               graphicsPipeline;
 
@@ -119,8 +124,8 @@ private:
     std::vector<VkFence>     inFlightFences;
     std::vector<VkFence>     imagesInFlight;
 
-    VkSemaphore imageAvailableSemaphore;
-    VkSemaphore renderFinishedSemaphore;
+    VkSemaphore              imageAvailableSemaphore;
+    VkSemaphore              renderFinishedSemaphore;
 
     bool initialized             { false };
     bool validationLayersEnabled { false };
@@ -128,14 +133,14 @@ private:
     std::vector<const char*>     requiredExtensions;
     std::vector<const char*>     deviceExtensions;
     std::vector<const char*>     requiredLayers;
-    std::vector<VkImage>         swapChainImages;
+    static std::vector<VkImage>  swapChainImages;
     std::vector<VkImageView>     swapChainImageViews;
     std::vector<VkFramebuffer>   swapChainFramebuffers;
     std::vector<VkCommandBuffer> commandBuffers;
     static std::vector<VkMesh*>  meshes;
 
     const uint32_t maxFramesInFlight { 2 };
-    size_t         currentFrame { 0 };
+    size_t         currentFrame      { 0 };
 
     Window* currentWindow { nullptr };
 

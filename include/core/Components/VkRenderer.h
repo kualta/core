@@ -3,8 +3,18 @@
 
 #include <core/Essential.h>
 #include <core/Components/IRenderer.h>
+#include <core/Matrix.h>
+
+#include "vulkan/vulkan.h"
 
 namespace core {
+
+struct UniformBufferObject {
+    Matrix4 model;
+    Matrix4 view;
+    Matrix4 proj;
+};
+
 
 #ifdef CORE_SIMPLIFY_SYNTAX
 typedef class VkRenderer Renderer;
@@ -21,8 +31,13 @@ public:
 
 protected:
 
-    VkMesh*     mesh    { nullptr };
+    void CreateUniformBuffers();
+    void UpdateUniformBuffer(uint32_t currentImage);
 
+    std::vector<VkBuffer> uniformBuffers;
+    std::vector<VkDeviceMemory> uniformBuffersMemory;
+
+    VkMesh* mesh { nullptr };
 };
 
 }
