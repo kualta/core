@@ -4,7 +4,7 @@
 #include "Essential.h"
 #include "ModelImporter.h"
 #include "Shader.h"
-#include "IMesh.h"
+#include "core/Modules/IRendererMesh.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -17,7 +17,7 @@ public:
     Model(const string& file);
     ~Model();
 
-    IMesh* mesh;
+    IRendererMesh* mesh;
     Shader* shader;
 };
 

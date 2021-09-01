@@ -2,7 +2,7 @@
 #define CORE_VKMESH_H
 
 #include <core/Essential.h>
-#include <core/IMesh.h>
+#include <core/Modules/IRendererMesh.h>
 
 #include <array>
 #include <assimp/mesh.h>
@@ -14,7 +14,7 @@ namespace core {
 typedef class VkMesh Mesh;
 #endif
 
-class VkMesh : public IMesh {
+class VkMesh : public IRendererMesh {
 public:
     VkMesh();
     // TODO: add constructor from core::Mesh* mesh, remove aiMesh* constructor

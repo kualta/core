@@ -3,7 +3,7 @@
 
 #include "core/Essential.h"
 #include "core/Primitive.h"
-#include "core/IMesh.h"
+#include "IRendererMesh.h"
 
 #include <assimp/mesh.h>
 #include <bgfx/bgfx.h>
@@ -15,7 +15,7 @@ namespace core {
 typedef class BgfxMesh Mesh;
 #endif
 
-class BgfxMesh : public IMesh {
+class BgfxMesh : public IRendererMesh {
 public:
     explicit BgfxMesh(aiMesh* aiMesh);
     ~BgfxMesh();
