@@ -57,16 +57,6 @@ if ( CORE_SIMPLIFY_SYNTAX )
 endif()
 
 
-#       bgfx
-add_subdirectory(lib/bgfx.cmake)
-target_link_libraries(core PUBLIC bgfx)
-
-#       vulkan
-find_package(Vulkan REQUIRED FATAL_ERROR)
-target_link_directories(core PUBLIC ${Vulkan_INCLUDE_DIR})
-target_include_directories(core PUBLIC ${Vulkan_INCLUDE_DIR})
-target_link_libraries(core PUBLIC ${Vulkan_LIBRARIES})
-
 #       assimp
 add_subdirectory(lib/assimp)
 target_link_libraries(core PUBLIC assimp)
