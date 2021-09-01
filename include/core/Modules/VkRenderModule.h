@@ -143,6 +143,7 @@ private:
     size_t         currentFrame      { 0 };
 
     Window* currentWindow { nullptr };
+    static Camera* mainCamera;
 
 };
 

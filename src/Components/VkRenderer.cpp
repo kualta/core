@@ -1,5 +1,6 @@
 #include <core/Components/VkRenderer.h>
 #include <core/Modules/VkBufferFactory.h>
+#include <core/Components/Camera.h>
 
 namespace core {
 
@@ -34,10 +35,17 @@ void VkRenderer::CreateUniformBuffers() {
 void VkRenderer::UpdateUniformBuffer(uint32_t currentImage) {
     UniformBufferObject ubo { };
 
-    ubo.model =
-    //    matrix = matrix * Math::ScaleMatrix(scale);
-    //    matrix = matrix * Math::EulerRotationMatrix(rotation);
-    //    matrix = matrix * Math::TranslationMatrix(position);
+    ubo.model = Matrix4::identity;
+        ubo.model = ubo.model * Math::ScaleMatrix(entity->transform->scale);
+        ubo.model = ubo.model * Math::EulerRotationMatrix(entity->transform->rotation);
+        ubo.model = ubo.model * Math::TranslationMatrix(entity->transform->position);
+    ubo.view = VkRenderModule::mainCamera->GetViewMtx();
+    ubo.proj = VkRenderModule::mainCamera->GetProjMtx();
+
+    void* data;
+    vkMapMemory(VkRenderModule::device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
+    memcpy(data, &ubo, sizeof(ubo));
+    vkUnmapMemory(VkRenderModule::device, uniformBuffersMemory[currentImage]);
 }
 
 }

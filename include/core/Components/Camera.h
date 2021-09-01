@@ -15,17 +15,17 @@ public:
                     float       height = 400.0f,
                     float    nearPlane = 0.1f,
                     float     farPlane = 100.0f,
-                    bool      hmgDepth = false,
                     const string& name = "Camera");
-
-    void Start();
 
     void Tick() override;
 
     void LookAt(Vector3& point);
     void LookAt(Vector3&& point);
+    Matrix4 GetViewMtx();
+    Matrix4 GetProjMtx();
 
 protected:
+
     Matrix4 viewMatrix;
     Matrix4 projectionMatrix;
 
@@ -63,11 +63,6 @@ protected:
      * Far clipping plane distance
      */
     float farPlane = 100.0f;
-
-    /**
-     * Is homogeneous depth supported?
-     */
-    bool homogeneousDepth = bgfx::getCaps()->homogeneousDepth;
 };
 
 }

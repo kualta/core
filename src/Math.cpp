@@ -131,7 +131,6 @@ Matrix4 Math::ProjectionMatrix(float fovY, float aspect, float near, float far, 
     const float height = 1.0f / Math::Tan(Math::DegreesToRadians(Degree(fovY * 0.5f)));
     const float width  = height * 1.0f / aspect;
     return ProjectionMatrix(Rect { 0.0f, 0.0f, width, height }, near, far, hmgNdc);
-
 }
 Matrix4 Math::ProjectionMatrix(Rect rect, float near, float far, bool hmgNdc) {
     const float diff = far - near;

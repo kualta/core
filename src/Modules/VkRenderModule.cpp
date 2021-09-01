@@ -17,6 +17,7 @@ VkCommandPool         VkRenderModule::commandPool     { };
 std::vector<VkMesh*>  VkRenderModule::meshes          { };
 std::vector<VkImage>  VkRenderModule::swapChainImages { };
 uint32_t              VkRenderModule::imageIndex      { };
+Camera*               VkRenderModule::mainCamera      { nullptr };
 
 VkRenderModule::VkRenderModule(InputModule* inputModule)
 : IRenderModule("Render", new VkWindowRenderer(this))
