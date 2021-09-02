@@ -3,4 +3,7 @@
 	url = https://github.com/lectroMathew/SDL2
 [submodule "lib/assimp"]
 	path = lib/assimp
-	url = https://github.com/assimp/assimp
+	url = https://github.com/lectroMathew/assimp.git
+[submodule "lib/DiligentEngine"]
+	path = lib/DiligentEngine
+	url = https://github.com/lectroMathew/DiligentEngine.git
