@@ -15,7 +15,15 @@ T* Core::GetModule() {
     }
     return static_cast<T*>(it->second->Get());
 }
-
+template<class T>
+int32_t Core::GetModuleId() {
+    auto it = moduleMap.find<T>();
+    if ( it == moduleMap.end() ) {
+        Logger::Log(INTERNAL, ERR_HERE) << string(typeid(T).name()) << " module not found!";
+        throw std::runtime_error(string(typeid(T).name()) + " module not found!");
+    }
+    return it->first;
+}
 template <class ModuleType, class Deleter, class ...Deps>
 std::unique_ptr<ModuleType, Deleter> Core::Inject(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) const {
     return moduleFactory(GetModule<typename std::remove_const<Deps>::type,

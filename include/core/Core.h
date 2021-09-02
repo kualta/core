@@ -6,6 +6,7 @@
 #define CORE_CORE_H
 
 #include "ModuleContainer.h"
+#include "Modules/IRenderModule.h"
 #include "Essential.h"
 #include "Singleton.h"
 #include "TypeMap.h"
@@ -27,6 +28,11 @@ public:
 
     template<class T, class Dependent = std::nullptr_t>
     static T* GetModule();
+
+    static IModule* GetModule(int32_t id);
+
+    template<class T>
+    static int32_t GetModuleId();
 
     template<class ModuleType, class Deleter, class ...Deps>
     std::unique_ptr<ModuleType, Deleter> Inject(ModuleFactory<ModuleType, Deleter, Deps...> moduleFactory) const;

@@ -1,16 +1,32 @@
 #include <core/CoreConfig.h>
 #include <core/Logger.h>
 
+
 namespace core {
 
+#ifdef NDEBUG
+    const bool CoreConfig::debugMode { false };
+#else
+    const bool CoreConfig::debugMode { true };
+#endif
 
-Core CoreConfig::Build() {
-    Core core;
+string   CoreConfig::AppInfo::name { "Unnamed app" };
+uint16_t CoreConfig::AppInfo::majorVersion { 1 };
+uint16_t CoreConfig::AppInfo::minorVersion { 0 };
+uint16_t CoreConfig::AppInfo::patchVersion { 0 };
+
+string   CoreConfig::CoreInfo::name { "Core Engine" };
+uint16_t CoreConfig::CoreInfo::majorVersion { CORE_MAJOR_VERSION };
+uint16_t CoreConfig::CoreInfo::minorVersion { CORE_MINOR_VERSION };
+uint16_t CoreConfig::CoreInfo::patchVersion { CORE_PATCH_VERSION };
+
+CoreContainer CoreConfig::Build() {
+    CoreContainer coreContaner = std::unique_ptr<Core>(new Core);
     std::stack<initializer_fn*> initializers;
 
     std::unordered_set<int> unmarkedNodes;
     for (auto &node : graph) {
-        node.second.nodeMark = nodeInfo::mark::UNMARKED;
+        node.second.nodeMark = NodeInfo::mark::UNMARKED;
         unmarkedNodes.insert(node.first);
     }
     while ( !unmarkedNodes.empty() ) {
@@ -18,11 +34,11 @@ Core CoreConfig::Build() {
         VisitNode(node_id, &unmarkedNodes, &initializers);
     }
     while ( !initializers.empty() ) {
-        (*initializers.top())(core);
+        (*initializers.top())(*coreContaner);
         initializers.pop();
     }
-    Logger::Log(INTERNAL, INFO) << "* Core build finished * ";
-    return core;
+    Logger::Log(INTERNAL, INFO) << "### Core build finished ###";
+    return coreContaner;
 }
 
 void CoreConfig::VisitNode(
@@ -30,16 +46,16 @@ void CoreConfig::VisitNode(
         std::unordered_set<int> *unmarkedNodes,
         std::stack <CoreConfig::initializer_fn*> *output)
 {
-    nodeInfo &info = graph[nodeId];
-    if (info.nodeMark == nodeInfo::mark::TEMP) {
+    NodeInfo &info = graph[nodeId];
+    if (info.nodeMark == NodeInfo::mark::TEMP) {
         Logger::Log(INTERNAL, ERR_HERE) << info.typeName << " appears to be part of a cycle";
-    } else if (info.nodeMark == nodeInfo::mark::UNMARKED) {
+    } else if (info.nodeMark == NodeInfo::mark::UNMARKED) {
         unmarkedNodes->erase(nodeId);
-        info.nodeMark = nodeInfo::mark::TEMP;
+        info.nodeMark = NodeInfo::mark::TEMP;
         for (int dependent : info.dependents) {
             VisitNode(dependent, unmarkedNodes, output);
         }
-        info.nodeMark = nodeInfo::mark::PERM;
+        info.nodeMark = NodeInfo::mark::PERM;
 
         /*
          * if hasInitializer is false, it means someone depends on this
@@ -52,5 +68,37 @@ void CoreConfig::VisitNode(
     }
 }
 
+void CoreConfig::AppInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
+    majorVersion = major;
+    minorVersion = minor;
+    patchVersion = patch;
+}
+string CoreConfig::AppInfo::GetVersion() {
+    return std::to_string(majorVersion) + '.'
+           + std::to_string(minorVersion) + '.'
+           + std::to_string(patchVersion);
+}
+void CoreConfig::AppInfo::SetName(const string &pName) {
+    name = pName;
+}
+string CoreConfig::AppInfo::GetName() {
+    return name;
+}
+void CoreConfig::CoreInfo::SetVersion(uint16_t major, uint16_t minor, uint16_t patch) {
+    majorVersion = major;
+    minorVersion = minor;
+    patchVersion = patch;
+}
+string CoreConfig::CoreInfo::GetVersion() {
+    return std::to_string(majorVersion) + '.'
+           + std::to_string(minorVersion) + '.'
+           + std::to_string(patchVersion);
+}
+void CoreConfig::CoreInfo::SetName(const string &pName) {
+    name = pName;
+}
+string CoreConfig::CoreInfo::GetName() {
+    return name;
+}
 
 }

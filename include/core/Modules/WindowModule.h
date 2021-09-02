@@ -6,7 +6,7 @@
 
 #include <core/Window.h>
 #include <core/WindowBuilder.h>
-#include <core/WindowRenderer.h>
+#include <core/Modules/IRenderModule.h>
 
 #include <memory>
 
@@ -14,12 +14,13 @@ namespace core {
 
 class WindowModule : public IModule {
 public:
-    WindowModule();
+    WindowModule(IRenderModule* rModule);
     ~WindowModule();
 
     void Tick() override;
 
-    Pool<Window> windowPool;
+    Pool<Window>   windowPool;
+    IRenderModule* renderModule;
 };
 
 }

@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #       Build options
-
 # Reduces amount of includes in client-side code by cost of slightly increased build time.
 # Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
 option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
@@ -14,8 +13,12 @@ option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
 option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
 # at [filename:line] -> at [full/file/path/filename:line]
-option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             ON)
+option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 
+# Adds core::VkRenderer -> core::Renderer kind of typedefs. Gives better looking client-side
+# code, but you will not be able to include two modules with same typedefs in the same file
+# (e.g. VkRenderer and BgfxRenderer)
+option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
 #       core
 set( CORE_INCLUDE_DIR include )
@@ -41,19 +44,17 @@ add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 # Process options and add compile definitions
 if ( CORE_HEAVY_ESSENTIALS )
-    target_compile_definitions( core PRIVATE CORE_HEAVY_ESSENTIALS )
+    target_compile_definitions( core PUBLIC CORE_HEAVY_ESSENTIALS )
 endif()
 if ( CORE_LOG_DATE )
-    target_compile_definitions( core PRIVATE CORE_LOG_DATE )
+    target_compile_definitions( core PUBLIC CORE_LOG_DATE )
 endif()
 if ( CORE_LOG_FULL_PATH )
-    target_compile_definitions( core PRIVATE CORE_LOG_FULL_PATH )
+    target_compile_definitions( core PUBLIC CORE_LOG_FULL_PATH )
 endif()
-
-
-#       bgfx
-add_subdirectory(lib/bgfx.cmake)
-target_link_libraries(core PUBLIC bgfx)
+if ( CORE_SIMPLIFY_SYNTAX )
+    target_compile_definitions( core PUBLIC CORE_SIMPLIFY_SYNTAX )
+endif()
 
 
 #       assimp
@@ -64,7 +65,7 @@ target_link_libraries(core PUBLIC assimp)
 # Specify SDL2 location
 set(SDL2_DIR lib/SDL2)
 # Find SDL2
-find_package(SDL2 REQUIRED)
+find_package(SDL2 REQUIRED FATAL_ERROR)
 # Add SDL2 into include directories
 target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
 # Link SDL2 libs

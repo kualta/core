@@ -14,24 +14,29 @@ public:
     explicit EngineLoop(InputModule* inputModule);
 
     /**
-     * Function which contains main engine loop.
+     * Enters main engine loop.
      */
     int32_t Enter();
 
     /**
      * Stops main engine loop after current frame.
      */
-    void Stop();
+    static void Stop();
+
+protected:
 
     /**
      * Updates all modules
      */
     void TickModules();
 
-protected:
+    /**
+     * Stops all modules
+     */
+    void StopModules();
 
-    bool                        isRunning { true };
-    InputModule*                Input;
+    static bool  isRunning;
+    InputModule* inputModule;
 
 };
 

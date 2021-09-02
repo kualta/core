@@ -12,7 +12,6 @@
 
 namespace core {
 
-
 /**
  * Wraps unique_ptr<T> into unique_ptr<ModuleContainer>
  * @return unique_ptr<ModuleContainer>
@@ -22,6 +21,7 @@ std::unique_ptr<IModuleContainer> WrapIntoModuleContainer(std::unique_ptr<T, Del
     return std::make_unique<ModuleContainer<T, Deleter>>(std::move(ptr));
 }
 
+// FIXME: Should be moved to other namespace, TypeMap -> type_map
 /**
  * Maps types to objects of ValueType
  */
@@ -42,6 +42,8 @@ public:
 
     template <typename Key>
     iterator find() { return container.find(typeId<Key>()); }
+
+    iterator find(int id) { return container.find(id); }
 
     template <typename Key>
     const_iterator find() const { return container.find(typeId<Key>()); }

@@ -17,8 +17,6 @@ using ModuleFactory = std::unique_ptr<InstanceType, Deleter>(*)(Deps*...);
  * Stores raw ptr to module of an arbitrary class.
  */
 class IModuleContainer {
-// That is not quite an interface class, it's just a raw version of ModuleContainer,
-// I didn't find better name for it
 public:
     virtual ~IModuleContainer() = default;
 
@@ -38,7 +36,7 @@ protected:
     explicit IModuleContainer(void *rawPtr) : rawPtr(rawPtr) { }
 
 private:
-    void *rawPtr { };
+    void* rawPtr { };
 };
 
 

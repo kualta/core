@@ -8,6 +8,7 @@
 #include "Instantiable.h"
 #include "ITicker.h"
 #include "Logger.h"
+#include "ObjectTag.h"
 
 #include <utility>
 
@@ -23,11 +24,16 @@ enum M_STATUS {
 class IModule : public Instantiable<IModule>, public Object, public ITicker {
 public:
 
+    /**
+     * Called after main loop exit is requested
+     */
+    virtual void Stop() { };
+
     objectTag tag { GENERAL };
 
 protected:
-    explicit IModule(string moduleName = "Unnamed", objectTag moduleTag = GENERAL)
-    : Object(std::move(moduleName) + " module"), tag(moduleTag) {
+    explicit IModule(const string& moduleName = "Unnamed",
+                     objectTag moduleTag = GENERAL) : Object(moduleName + " module"), tag(moduleTag) {
         Logger::Log(tag, INFO) << "Initialized " << name;
     };
     ~IModule() {
