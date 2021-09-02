@@ -61,6 +61,15 @@ endif()
 add_subdirectory(lib/assimp)
 target_link_libraries(core PUBLIC assimp)
 
+#       Deligent Enigne
+add_subdirectory(lib/DiligentEngine)
+target_include_directories(core PUBLIC lib/DiligentEngine/DiligentCore)
+target_link_libraries(core PUBLIC
+        Diligent-GraphicsEngineD3D11-shared
+        Diligent-GraphicsEngineOpenGL-shared
+        Diligent-GraphicsEngineD3D12-shared
+        Diligent-GraphicsEngineVk-shared)
+
 #       SDL2
 # Specify SDL2 location
 set(SDL2_DIR lib/SDL2)
@@ -74,4 +83,6 @@ target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
 add_custom_command(TARGET core
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-                   COMMENT "Copy SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
+                   COMMENT "Copying SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
+
+copy_required_dlls(core)
