@@ -1,4 +1,5 @@
 #include <core/Mesh.h>
+#include <core/Logger.h>
 
 namespace core {
 
@@ -10,9 +11,9 @@ indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, F
     Logger::Log(IMPORT, INFO) << "Processing Mesh " << aiMesh->mName.C_Str();
 
     const int16_t elementSize = sizeof(float);
-    const uint32_t step = vertexLayout.getStride() / elementSize;
+    //    const uint32_t step = .getStride() / elementSize;
 
-    vertexBuffer = new float[vertexLayout.getSize(verticesAmount) / elementSize];
+    //    vertexBuffer = new float[vertexLayout.getSize(verticesAmount) / elementSize];
     uint32_t offset = 0;
 
     // TODO: Move to new VertexLayout class constructor
@@ -45,9 +46,9 @@ indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, F
     for(size_t vNum = 0; vNum < verticesAmount; vNum++) {
         const aiVector3D& vertexPos = aiMesh->mVertices[vNum];
 
-        vertexBuffer[vNum * step + offset + 0] = vertexPos[0];
-        vertexBuffer[vNum * step + offset + 1] = vertexPos[1];
-        vertexBuffer[vNum * step + offset + 2] = vertexPos[2];
+        //        vertexBuffer[vNum * step + offset + 0] = vertexPos[0];
+        //        vertexBuffer[vNum * step + offset + 1] = vertexPos[1];
+        //        vertexBuffer[vNum * step + offset + 2] = vertexPos[2];
     }
 
     indexBuffer = new uint32_t[indicesAmount * sizeof(uint32_t)];
@@ -60,4 +61,6 @@ indicesAmount(aiMesh->mNumFaces * 3) // Considering the model is triangulated, F
         indexBuffer[index++] = face.mIndices[1];
         indexBuffer[index++] = face.mIndices[2];
     }
+}
+
 }

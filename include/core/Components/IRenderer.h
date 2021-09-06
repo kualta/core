@@ -4,7 +4,6 @@
 #include <core/Essential.h>
 #include <core/Instantiable.h>
 #include <core/IComponent.h>
-#include <core/Modules/IRendererMesh.h>
 #include <core/Shader.h>
 
 namespace core {

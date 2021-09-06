@@ -14,7 +14,7 @@ public:
     InputModule*     inputModule;
 
 protected:
-    explicit IRenderModule(const string &moduleName, IWindowRenderer *windowRenderer);
+    IRenderModule(const string &moduleName, IWindowRenderer *windowRenderer);
 
     virtual void Frame() = 0;
 

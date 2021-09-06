@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.16)
-project(Core VERSION 0.1.0 DESCRIPTION "Core engine")
+cmake_minimum_required(VERSION 3.6)
+project(Core VERSION 0.1.0 DESCRIPTION "Core engine" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/lib/")
+
 
 #       Build options
 # Reduces amount of includes in client-side code by cost of slightly increased build time.
@@ -20,6 +21,7 @@ option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 # (e.g. VkRenderer and BgfxRenderer)
 option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
+
 #       core
 set( CORE_INCLUDE_DIR include )
 set( CORE_SRC_DIR     src )
@@ -34,15 +36,11 @@ set( CORE_FILES
         ${CORE_MODULES_RES}
         ${CORE_COMPONENTS_RES}
    )
-set( OUTPUT )
 
-# Get Core's headers and sources
 file( GLOB CORE_SOURCES ${CORE_FILES} )
-# Create core target
 add_library( core STATIC ${CORE_SOURCES} )
-# Include Core's headers
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
-# Process options and add compile definitions
+
 if ( CORE_HEAVY_ESSENTIALS )
     target_compile_definitions( core PUBLIC CORE_HEAVY_ESSENTIALS )
 endif()
@@ -61,28 +59,32 @@ endif()
 add_subdirectory(lib/assimp)
 target_link_libraries(core PUBLIC assimp)
 
-#       Deligent Enigne
-add_subdirectory(lib/DiligentEngine)
-target_include_directories(core PUBLIC lib/DiligentEngine/DiligentCore)
-target_link_libraries(core PUBLIC
-        Diligent-GraphicsEngineD3D11-shared
-        Diligent-GraphicsEngineOpenGL-shared
-        Diligent-GraphicsEngineD3D12-shared
-        Diligent-GraphicsEngineVk-shared)
 
 #       SDL2
-# Specify SDL2 location
 set(SDL2_DIR lib/SDL2)
-# Find SDL2
 find_package(SDL2 REQUIRED FATAL_ERROR)
-# Add SDL2 into include directories
-target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
-# Link SDL2 libs
-target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
-
+target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIR})
+target_link_libraries(core PUBLIC ${SDL2_LIBRARY})
 add_custom_command(TARGET core
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
                    COMMENT "Copying SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
 
-copy_required_dlls(core)
+
+#       magnum
+add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
+add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
+find_package(Magnum REQUIRED GL)
+set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
+target_link_libraries(core PRIVATE
+        Magnum::GL
+        Magnum::Magnum)
+
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(MSVC2019_COMPATIBILITY ON)
+endif()

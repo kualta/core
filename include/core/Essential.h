@@ -67,6 +67,7 @@ class IWindowRenderer;
 class Logger;
 class Log;
 class Math;
+class Mesh;
 class Model;
 class ModelImporter;
 class Object;
@@ -85,27 +86,13 @@ class SceneModule;
 class InputModule;
 class IRenderModule;
 
-// VkRenderModule
-class VkRenderModule;
-class VkWindowRenderer;
-class VkMesh;
-
-// BgfxRenderModule
-class BgfxRenderModule;
-class BgfxWindowRenderer;
-class BgfxMesh;
+// DERendeModule
+class DERenderModule;
 
 // Core Components classes
-class BgfxRenderer;
-class VkRenderer;
 class Camera;
 class Transform;
 template<typename T> class Script;
-
-struct StatusDesc;
-struct RgbaColor;
-struct AbgrColor;
-struct AppInfo;
 
 template<int cols, int rows, typename T> class Matrix;
 template<int dims, typename T> class Vector;
@@ -122,6 +109,7 @@ typedef uint32_t abgr;
 
 typedef struct Cube Cube;
 typedef struct Rect Rect;
+typedef struct Vertex Vertex;
 typedef struct ColorVertex ColorVertex;
 typedef struct ColorVertex2 ColorVertex2;
 
@@ -137,14 +125,6 @@ typedef Vector<3, int> Vector3i;
 typedef Vector<4, float> Vector4;
 
 } // namespace core
-
-
-namespace bgfx {
-
-class PlatformData;
-
-} // namespace bgfx
-
 
 /// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
 #ifdef CORE_HEAVY_ESSENTIALS
