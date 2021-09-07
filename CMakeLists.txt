@@ -46,12 +46,9 @@ if ( CORE_SIMPLIFY_SYNTAX )
 endif()
 
 
-#       assimp
-#add_subdirectory(lib/assimp)
-#target_link_libraries(core PUBLIC assimp)
-
-
-#       magnum
+#       SDL2
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/SDL2-2.0.10")
 set(SDL_ATOMIC     OFF CACHE BOOL "" FORCE)
 set(SDL_CPUINFO    OFF CACHE BOOL "" FORCE)
 set(SDL_EVENTS     OFF CACHE BOOL "" FORCE)
@@ -65,10 +62,10 @@ set(SDL_SENSOR     OFF CACHE BOOL "" FORCE)
 set(SDL_THREADS    OFF CACHE BOOL "" FORCE)
 set(SDL_TIMERS     OFF CACHE BOOL "" FORCE)
 set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
-
 set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
 
-add_subdirectory(lib/SDL EXCLUDE_FROM_ALL)
+
+#       magnum
 add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
 add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
 
@@ -79,6 +76,7 @@ set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 target_link_libraries(core PUBLIC
         Magnum::GL
         Magnum::Magnum
+        Magnum::Application
         Magnum::Sdl2Application)
 
 
