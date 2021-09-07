@@ -2,6 +2,6 @@
 
 namespace core {
 
-Assimp::Importer ModelImporter::importer { };
+//Assimp::Importer ModelImporter::importer { };
 
 }

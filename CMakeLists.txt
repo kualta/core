@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 project(Core VERSION 0.1.0 DESCRIPTION "Core engine" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/lib/")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
 
 
 #       Build options
@@ -26,9 +26,9 @@ option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 set( CORE_INCLUDE_DIR include )
 set( CORE_SRC_DIR     src )
 
-set( CORE_ENGINE_RES ${CORE_INCLUDE_DIR}/core/ ${CORE_SRC_DIR}/ "*.cpp" "*.hpp" "*.h")
+set( CORE_ENGINE_RES  )
 
-file( GLOB_RECURSE CORE_SOURCES ${CORE_ENGINE_RES} )
+file( GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/include/core/ ${CMAKE_CURRENT_LIST_DIR}/src/ "src/*.cpp" "core/*.hpp" "core/*.h" )
 add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 
@@ -47,7 +47,6 @@ endif()
 
 
 #       SDL2
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/SDL2-2.0.10")
 set(SDL_ATOMIC     OFF CACHE BOOL "" FORCE)
 set(SDL_CPUINFO    OFF CACHE BOOL "" FORCE)
@@ -62,22 +61,28 @@ set(SDL_SENSOR     OFF CACHE BOOL "" FORCE)
 set(SDL_THREADS    OFF CACHE BOOL "" FORCE)
 set(SDL_TIMERS     OFF CACHE BOOL "" FORCE)
 set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
-set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
 
 
 #       magnum
+set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
+set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
+set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
+
 add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
 add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
 
-find_package(Magnum REQUIRED GL Sdl2Application)
-
-set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
+find_package(Magnum REQUIRED
+        GL
+        Trade
+        Sdl2Application)
 
 target_link_libraries(core PUBLIC
         Magnum::GL
+        Magnum::Trade
         Magnum::Magnum
         Magnum::Application
-        Magnum::Sdl2Application)
+        Magnum::Sdl2Application
+        Magnum::AnySceneImporter)
 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

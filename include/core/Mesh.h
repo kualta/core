@@ -3,15 +3,13 @@
 
 #include "Essential.h"
 
-#include <assimp/mesh.h>
-
 namespace core {
 
 class Mesh {
 public:
 
 protected:
-    explicit Mesh(aiMesh* mesh);
+//    explicit Mesh(aiMesh* mesh);
 
     Vertex*   vertexBuffer    { nullptr };
     uint32_t* indexBuffer     { nullptr };
