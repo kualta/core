@@ -13,3 +13,6 @@
 [submodule "lib/corrade"]
 	path = lib/corrade
 	url = https://github.com/lectroMathew/corrade.git
+[submodule "lib/SDL"]
+	path = lib/SDL
+	url = https://github.com/lectroMathew/SDL.git

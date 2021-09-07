@@ -26,18 +26,9 @@ option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 set( CORE_INCLUDE_DIR include )
 set( CORE_SRC_DIR     src )
 
-set( CORE_ENGINE_RES     ${CORE_INCLUDE_DIR}/core/*.h            ${CORE_SRC_DIR}/*.cpp
-                         ${CORE_INCLUDE_DIR}/core/*.tpp )
-set( CORE_MODULES_RES    ${CORE_INCLUDE_DIR}/core/Modules/*.h    ${CORE_SRC_DIR}/Modules/*.cpp )
-set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/Components/*.h ${CORE_SRC_DIR}/Components/*.cpp )
+set( CORE_ENGINE_RES ${CORE_INCLUDE_DIR}/core/ ${CORE_SRC_DIR}/ "*.cpp" "*.hpp" "*.h")
 
-set( CORE_FILES
-        ${CORE_ENGINE_RES}
-        ${CORE_MODULES_RES}
-        ${CORE_COMPONENTS_RES}
-   )
-
-file( GLOB CORE_SOURCES ${CORE_FILES} )
+file( GLOB_RECURSE CORE_SOURCES ${CORE_ENGINE_RES} )
 add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 
@@ -56,29 +47,39 @@ endif()
 
 
 #       assimp
-add_subdirectory(lib/assimp)
-target_link_libraries(core PUBLIC assimp)
-
-
-#       SDL2
-set(SDL2_DIR lib/SDL2)
-find_package(SDL2 REQUIRED FATAL_ERROR)
-target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIR})
-target_link_libraries(core PUBLIC ${SDL2_LIBRARY})
-add_custom_command(TARGET core
-                   POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_if_different "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-                   COMMENT "Copying SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
+#add_subdirectory(lib/assimp)
+#target_link_libraries(core PUBLIC assimp)
 
 
 #       magnum
+set(SDL_ATOMIC     OFF CACHE BOOL "" FORCE)
+set(SDL_CPUINFO    OFF CACHE BOOL "" FORCE)
+set(SDL_EVENTS     OFF CACHE BOOL "" FORCE)
+set(SDL_FILE       OFF CACHE BOOL "" FORCE)
+set(SDL_FILESYSTEM OFF CACHE BOOL "" FORCE)
+set(SDL_HAPTIC     OFF CACHE BOOL "" FORCE)
+set(SDL_LOCALE     OFF CACHE BOOL "" FORCE)
+set(SDL_POWER      OFF CACHE BOOL "" FORCE)
+set(SDL_RENDER     OFF CACHE BOOL "" FORCE)
+set(SDL_SENSOR     OFF CACHE BOOL "" FORCE)
+set(SDL_THREADS    OFF CACHE BOOL "" FORCE)
+set(SDL_TIMERS     OFF CACHE BOOL "" FORCE)
+set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
+
+set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
+
+add_subdirectory(lib/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
 add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
-find_package(Magnum REQUIRED GL)
+
+find_package(Magnum REQUIRED GL Sdl2Application)
+
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
-target_link_libraries(core PRIVATE
+
+target_link_libraries(core PUBLIC
         Magnum::GL
-        Magnum::Magnum)
+        Magnum::Magnum
+        Magnum::Sdl2Application)
 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -86,5 +87,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # required by magnum
     set(MSVC2019_COMPATIBILITY ON)
 endif()
