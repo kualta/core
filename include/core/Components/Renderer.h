@@ -19,8 +19,7 @@ public:
 protected:
     void Tick() override;
 
-    Shader* shader { nullptr };
-    Mesh*   mesh   { nullptr };
+    Model* model;
 
 };
 

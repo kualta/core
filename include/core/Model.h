@@ -13,8 +13,13 @@ public:
     Model(Mesh* _mesh, Shader* _shader);
     ~Model();
 
+    void Draw();
+
+protected:
+
     Mesh*   mesh;
     Shader* shader;
+
 };
 
 }

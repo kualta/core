@@ -12,5 +12,8 @@ Model::Model(Mesh* _mesh, Shader* _shader)
 {
 
 }
+void Model::Draw() {
+    shader->Draw(mesh);
+}
 
 }
