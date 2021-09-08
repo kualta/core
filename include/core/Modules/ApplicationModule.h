@@ -12,7 +12,8 @@ public:
     ApplicationModule();
     ~ApplicationModule();
 
-    void CreateApplication();
+    void CreateApplication(const string &title = "Core Application",
+                           Rect rect = { 0, 0, 1280, 720 });
 
 protected:
 

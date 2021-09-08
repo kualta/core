@@ -1,4 +1,3 @@
-#include <core/Modules/IRenderModule.h>
 #include "CoreConfig.h"
 
 namespace core {

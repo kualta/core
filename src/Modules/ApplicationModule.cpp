@@ -13,8 +13,8 @@ ApplicationModule::~ApplicationModule() {
 void ApplicationModule::Tick() {
     UpdateApps();
 }
-void ApplicationModule::CreateApplication() {
-    apps.push_back(new Application());
+void ApplicationModule::CreateApplication(const string &title, Rect rect) {
+    apps.push_back(new Application(title, rect));
 }
 void ApplicationModule::UpdateApps() {
     for (auto app : apps) {
