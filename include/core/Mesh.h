@@ -3,20 +3,25 @@
 
 #include "Essential.h"
 
+#include <Magnum/GL/Mesh.h>
+#include <Magnum/GL/Buffer.h>
+#include <Magnum/GL/DefaultFramebuffer.h>
+#include <Magnum/Math/Color.h>
+#include <Magnum/Shaders/VertexColorGL.h>
+
+using namespace Magnum;
 namespace core {
 
 class Mesh {
 public:
+    Mesh();
+
+    GL::Mesh* GetGLMesh();
 
 protected:
-//    explicit Mesh(aiMesh* mesh);
 
-    Vertex*   vertexBuffer    { nullptr };
-    uint32_t* indexBuffer     { nullptr };
-
-    size_t    indicesAmount   { 0 };
-    size_t    verticesAmount  { 0 };
-    size_t    trianglesAmount { 0 };
+    GL::Buffer buffer;
+    GL::Mesh mesh;
 };
 
 

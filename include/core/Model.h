@@ -10,10 +10,10 @@ namespace core {
 
 class Model {
 public:
-    Model(const string& file);
+    Model(Mesh* _mesh, Shader* _shader);
     ~Model();
 
-    Mesh* mesh;
+    Mesh*   mesh;
     Shader* shader;
 };
 

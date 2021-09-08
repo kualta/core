@@ -3,18 +3,25 @@
 
 #include "Essential.h"
 #include "FileSystem.h"
+#include "Mesh.h"
 
 #include <string>
 #include <fstream>
 
+#include <Magnum/Shaders/VertexColorGL.h>
+
+using namespace Magnum;
 namespace core {
 
 class Shader {
 public:
-    Shader(const string& vertexShaderPath, const string& fragmentShaderPath);
+    Shader();
 
-    void SetVertexShader(const string& path);
-    void SetFragmentShader(const string& path);
+    void Draw(Mesh* mesh);
+
+protected:
+
+    Shaders::VertexColorGL2D shader;
 
 };
 

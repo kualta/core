@@ -61,7 +61,7 @@ class EventDispatcher;
 class FileSystem;
 class IModule;
 class IModuleContainer;
-class IRenderer;
+class Renderer;
 class ITicker;
 class IWindowRenderer;
 class Logger;

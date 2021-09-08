@@ -2,10 +2,11 @@
 
 namespace core {
 
-Shader::Shader(const string& vShaderPath, const string& fShaderPath) { }
-void Shader::SetVertexShader(const string& path) {
+Shader::Shader() {
+
 }
-void Shader::SetFragmentShader(const string& path) {
+void Shader::Draw(Mesh* mesh) {
+    shader.draw(*mesh->GetGLMesh());
 }
 
 }

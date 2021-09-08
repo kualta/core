@@ -74,12 +74,14 @@ add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
 find_package(Magnum REQUIRED
         GL
         Trade
+        Shaders
         Sdl2Application)
 
 target_link_libraries(core PUBLIC
         Magnum::GL
         Magnum::Trade
         Magnum::Magnum
+        Magnum::Shaders
         Magnum::Application
         Magnum::Sdl2Application
         Magnum::AnySceneImporter)
