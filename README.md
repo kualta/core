@@ -1,8 +1,7 @@
-<p align="center"> 
-  <img alt="Core Engine" src="CoreLogo.png">
-</p>
+<img alt="Core Engine" align="right" valign="middle" src="CoreLogo.png">
 
-### **Game Engine focused on performance and flexibility**  
+## Game Engine focused on performance and flexibility
+
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
 
 ## Usage
@@ -13,7 +12,7 @@
 
 Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information
 
-## Contributing 
+## Contributing
 -   **[Contributing](https://github.com/lectroMathew/Core/wiki/Contributing)** guidelines
 
 <br>
