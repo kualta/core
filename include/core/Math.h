@@ -7,10 +7,14 @@
 #include <Magnum/Math/Vector2.h>
 #include <Magnum/Math/Vector3.h>
 #include <Magnum/Math/Vector4.h>
+#include <Magnum/Math/BoolVector.h>
 #include "Magnum/Math/Matrix.h"
 #include "Magnum/Math/Matrix3.h"
 #include "Magnum/Math/Matrix4.h"
 #include "Magnum/Math/RectangularMatrix.h"
+#include "Magnum/Math/Bezier.h"
+#include "Magnum/Math/Angle.h"
+#include "Magnum/Math/Range.h"
 
 using namespace Magnum;
 namespace core {
@@ -40,12 +44,6 @@ typedef Math::Vector4<UnsignedInt> Vector4ui;
 typedef Math::Vector2<Int> Vector2i;
 typedef Math::Vector3<Int> Vector3i;
 typedef Math::Vector4<Int> Vector4i;
-typedef Math::Color3<Float> Color3;
-typedef Math::Color4<Float> Color4;
-typedef Math::Color3<UnsignedByte> Color3ub;
-typedef Math::Color4<UnsignedByte> Color4ub;
-typedef Math::Color3<UnsignedShort> Color3us;
-typedef Math::Color4<UnsignedShort> Color4us;
 typedef Math::Matrix3<Float> Matrix3;
 typedef Math::Matrix4<Float> Matrix4;
 typedef Math::Matrix2x2<Float> Matrix2x2;
@@ -101,8 +99,6 @@ typedef Math::Frustum<Float> Frustum;
 typedef Math::Vector2<Half> Vector2h;
 typedef Math::Vector3<Half> Vector3h;
 typedef Math::Vector4<Half> Vector4h;
-typedef Math::Color3<Half> Color3h;
-typedef Math::Color4<Half> Color4h;
 typedef Math::Matrix2x2<Half> Matrix2x2h;
 typedef Math::Matrix2x3<Half> Matrix2x3h;
 typedef Math::Matrix2x4<Half> Matrix2x4h;
