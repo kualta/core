@@ -75,6 +75,8 @@ find_package(Magnum REQUIRED
         GL
         Trade
         Shaders
+        MeshTools
+        Primitives
         Sdl2Application)
 
 target_link_libraries(core PUBLIC
@@ -82,10 +84,11 @@ target_link_libraries(core PUBLIC
         Magnum::Trade
         Magnum::Magnum
         Magnum::Shaders
+        Magnum::MeshTools
+        Magnum::Primitives
         Magnum::Application
         Magnum::Sdl2Application
         Magnum::AnySceneImporter)
-
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 

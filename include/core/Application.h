@@ -12,9 +12,14 @@ class Application : public Platform::Application {
 public:
     Application(const string& title, Rect rect, int args = 0);
 
+    virtual void resetEvent();
+    virtual void drawEvent();
+
 private:
 
-    void drawEvent() override;
+    virtual void mousePressEvent(MouseEvent& event);
+    virtual void mouseReleaseEvent(MouseEvent& event);
+    virtual void mouseMoveEvent(MouseMoveEvent& event);
 
 
 };

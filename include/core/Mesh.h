@@ -3,11 +3,13 @@
 
 #include "Essential.h"
 
+#include <Magnum/GL/DefaultFramebuffer.h>
+#include <Magnum/Shaders/VertexColorGL.h>
+#include <Magnum/MeshTools/Compile.h>
+#include <Magnum/Trade/MeshData.h>
+#include <Magnum/Math/Color.h>
 #include <Magnum/GL/Mesh.h>
 #include <Magnum/GL/Buffer.h>
-#include <Magnum/GL/DefaultFramebuffer.h>
-#include <Magnum/Math/Color.h>
-#include <Magnum/Shaders/VertexColorGL.h>
 
 using namespace Magnum;
 namespace core {
@@ -20,8 +22,10 @@ public:
 
 protected:
 
-    GL::Buffer buffer;
-    GL::Mesh mesh;
+    GL::Mesh   mesh;
+
+    GL::Buffer vertices;
+    GL::Buffer indices;
 };
 
 

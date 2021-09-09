@@ -4,11 +4,13 @@
 #include "Essential.h"
 #include "FileSystem.h"
 #include "Mesh.h"
+#include "Matrix.h"
 
 #include <string>
 #include <fstream>
 
-#include <Magnum/Shaders/VertexColorGL.h>
+#include <Magnum/Shaders/PhongGL.h>
+#include <Magnum/Math/Matrix4.h>
 
 using namespace Magnum;
 namespace core {
@@ -19,9 +21,16 @@ public:
 
     void Draw(Mesh* mesh);
 
+    void SetLightPositions(Magnum::Vector4 pos);
+    void SetDiffuseColor(Color3 color);
+    void SetAmbientColor(Color3 color);
+    void SetTransformMatrix(Magnum::Matrix4 mtx);
+    void SetProjectionMatrix(Magnum::Matrix4 mtx);
+    void SetNormalMatrix(Magnum::Matrix4 mtx);
+
 protected:
 
-    Shaders::VertexColorGL2D shader;
+    Shaders::PhongGL shader;
 
 };
 

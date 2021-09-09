@@ -17,6 +17,7 @@ public:
 
 protected:
 
+    void EarlyTick() override;
     void Tick() override;
     void UpdateApps();
 
@@ -24,6 +25,7 @@ private:
 
     std::vector<Application*> apps;
 
+    void EarlyUpdateApps();
 };
 
 }

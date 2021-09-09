@@ -6,6 +6,8 @@
 #include "Shader.h"
 #include "Mesh.h"
 
+#include <Magnum/Math/Matrix4.h>
+
 namespace core {
 
 class Model {
@@ -17,9 +19,12 @@ public:
 
 protected:
 
+    Magnum::Matrix4 transformMtx;
+    Magnum::Matrix4 projectionMtx;
+    Magnum::Color3  color;
+
     Mesh*   mesh;
     Shader* shader;
-
 };
 
 }
