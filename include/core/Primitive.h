@@ -9,6 +9,9 @@
 
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/Primitives/Cube.h>
+#include <Magnum/Primitives/UVSphere.h>
+#include <Magnum/Primitives/Cone.h>
+#include <Magnum/Primitives/Cylinder.h>
 #include <Magnum/MeshTools/Interleave.h>
 #include <Magnum/MeshTools/CompressIndices.h>
 #include <Magnum/Shaders/PhongGL.h>
@@ -37,6 +40,56 @@ public:
     }
 };
 
+class Sphere : public Mesh {
+public:
+    Sphere() {
+        Trade::MeshData cubeData = Primitives::uvSphereSolid(25, 25);
+        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
+
+        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
+        indices.setData(compressed.first);
+
+        mesh
+                .setPrimitive(cubeData.primitive())
+                .setCount(cubeData.indexCount())
+                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
+                .setIndexBuffer(std::move(indices), 0, compressed.second);
+    }
+};
+
+class Cone : public Mesh {
+public:
+    Cone() {
+        Trade::MeshData cubeData = Primitives::coneSolid(25, 25, 1);
+        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
+
+        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
+        indices.setData(compressed.first);
+
+        mesh
+                .setPrimitive(cubeData.primitive())
+                .setCount(cubeData.indexCount())
+                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
+                .setIndexBuffer(std::move(indices), 0, compressed.second);
+    }
+};
+
+class Cylinder : public Mesh {
+public:
+    Cylinder() {
+        Trade::MeshData cubeData = Primitives::cylinderSolid(25, 25, 1);
+        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
+
+        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
+        indices.setData(compressed.first);
+
+        mesh
+                .setPrimitive(cubeData.primitive())
+                .setCount(cubeData.indexCount())
+                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
+                .setIndexBuffer(std::move(indices), 0, compressed.second);
+    }
+};
 }
 
 
