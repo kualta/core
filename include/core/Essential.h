@@ -92,16 +92,8 @@ template <class T, class D> class ModuleContainer;
 
 typedef std::string string;
 
-
 typedef struct Rect Rect;
 
 } // namespace core
-
-/// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
-#ifdef CORE_HEAVY_ESSENTIALS
-#include "Matrix.h"
-#include "Vector.h"
-#endif
-
 
 #endif //CORE_ESSENTIAL_H

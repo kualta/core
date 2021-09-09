@@ -29,7 +29,8 @@ public:
 
 protected:
 
-    Shaders::PhongGL shader;
+    Shaders::PhongGL coloredShader;
+    Shaders::PhongGL texturedShader {Shaders::PhongGL::Flag::DiffuseTexture};
 
 };
 

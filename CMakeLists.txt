@@ -6,10 +6,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
 
 
 #       Build options
-# Reduces amount of includes in client-side code by cost of slightly increased build time.
-# Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
-option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
-
 # HH:MM:SS:ms -> YY/MM/DD HH:MM:SS.ms
 option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
@@ -32,9 +28,6 @@ file( GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/include/core/ ${CMAKE_
 add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 
-if ( CORE_HEAVY_ESSENTIALS )
-    target_compile_definitions( core PUBLIC CORE_HEAVY_ESSENTIALS )
-endif()
 if ( CORE_LOG_DATE )
     target_compile_definitions( core PUBLIC CORE_LOG_DATE )
 endif()
@@ -65,27 +58,36 @@ set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
 
 #       magnum
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
-set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
+set(WITH_SDL2APPLICATION  ON CACHE BOOL "" FORCE)
 set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_ANYIMAGEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_OBJIMPORTER      ON CACHE BOOL "" FORCE)
+set(WITH_STBIMAGEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_TINYGLTFIMPORTER ON CACHE BOOL "" FORCE)
 
 add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
 add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
+
 
 find_package(Magnum REQUIRED
         GL
         Trade
         Shaders
         MeshTools
+        SceneGraph
         Primitives
         Sdl2Application)
 
 target_link_libraries(core PUBLIC
+        Corrade::Main
         Magnum::GL
         Magnum::Trade
         Magnum::Magnum
         Magnum::Shaders
         Magnum::MeshTools
         Magnum::Primitives
+        Magnum::SceneGraph
         Magnum::Application
         Magnum::Sdl2Application
         Magnum::AnySceneImporter)

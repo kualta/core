@@ -4,12 +4,19 @@
 #include <core/Essential.h>
 #include <core/IComponent.h>
 #include <core/Entity.h>
+#include <core/Math.h>
+#include <Magnum/SceneGraph/Camera.h>
+#include <Magnum/SceneGraph/Drawable.h>
+#include <Magnum/SceneGraph/MatrixTransformation3D.h>
+#include <Magnum/SceneGraph/Scene.h>
 
 namespace core {
 
 class Camera : public IComponent {
+    typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
+    typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
 public:
-    explicit Camera(Entity&     parent,
+    explicit Camera(Entity&       parent,
                     float         fovY = 90.0f,
                     float        width = 600.0f,
                     float       height = 400.0f,
@@ -19,10 +26,9 @@ public:
 
     void Tick() override;
 
-    void LookAt(Vector3& point);
-    void LookAt(Vector3&& point);
-    Matrix4 GetViewMtx();
-    Matrix4 GetProjMtx();
+    SceneGraph::Camera3D* camera;
+    Object3D manipulator;
+    Object3D cameraObject;
 
 protected:
 

@@ -3,7 +3,10 @@
 
 #include "Essential.h"
 #include "Primitive.h"
+
 #include <Magnum/Platform/Sdl2Application.h>
+#include <Magnum/Trade/AbstractImporter.h>
+#include <Corrade/PluginManager/Manager.h>
 
 using namespace Magnum;
 namespace core {
@@ -15,13 +18,11 @@ public:
     virtual void resetEvent();
     virtual void drawEvent();
 
-private:
+protected:
 
     virtual void mousePressEvent(MouseEvent& event);
     virtual void mouseReleaseEvent(MouseEvent& event);
     virtual void mouseMoveEvent(MouseMoveEvent& event);
-
-
 };
 
 }

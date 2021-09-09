@@ -1,5 +1,6 @@
 #include <core/Components/Camera.h>
 #include <core/Color.h>
+#include <core/Math.h>
 
 namespace core {
 
@@ -20,21 +21,16 @@ Camera::Camera(
   farPlane(farPlane)
 {
     parent.assertRequiredComponent<Transform>(this);
+    cameraObject
+//        .setParent(&scene)
+        .translate(Vector3::zAxis(5.0f));
+        (*(camera = new SceneGraph::Camera3D{cameraObject}))
+        .setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend)
+        .setProjectionMatrix(Matrix4::perspectiveProjection(35.0_degf, 1.0f, 0.01f, 1000.0f))
+        .setViewport(GL::defaultFramebuffer.viewport().size());
 }
 void Camera::Tick() {
 
-}
-void Camera::LookAt(Vector3& point) {
-    lookAt = point;
-}
-void Camera::LookAt(Vector3 &&point) {
-    lookAt = point;
-}
-Matrix4 Camera::GetViewMtx() {
-    return viewMatrix;
-}
-Matrix4 Camera::GetProjMtx() {
-    return projectionMatrix;
 }
 
 }
