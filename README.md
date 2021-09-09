@@ -1,4 +1,4 @@
-<img alt="Core Engine" height=130 align="right" valign="middle" src="CoreLogo.png">
+<img alt="Core Engine" height=120 align="right" valign="middle" src="CoreLogo.png">
 
 ## Game Engine focused on performance and flexibility
 
