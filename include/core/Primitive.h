@@ -5,8 +5,6 @@
 #define CORE_PRIMITIVE_H
 
 #include "Essential.h"
-#include "Vertex.h"
-#include "Vector.h"
 #include "Model.h"
 
 #include <Magnum/Trade/MeshData.h>

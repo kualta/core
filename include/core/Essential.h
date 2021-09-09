@@ -49,9 +49,9 @@ namespace core {
 
 class WindowModule;
 
-class Color;
 class IComponent;
 class Core;
+class Cube;
 class CoreConfig;
 class Degree;
 class EngineLoop;
@@ -63,39 +63,26 @@ class IModule;
 class IModuleContainer;
 class Renderer;
 class ITicker;
-class IWindowRenderer;
 class Logger;
 class Log;
-class Math;
 class Mesh;
 class Model;
-class ModelImporter;
 class Object;
-class Primitive;
-class Quaternion;
 class Radian;
 class ScriptBehaviour;
 class Shader;
-class Window;
-class WindowBuilder;
 
 // Core Module classes
-class WindowModule;
+class ApplicationModule;
 class EngineModule;
 class SceneModule;
 class InputModule;
-class IRenderModule;
-
-// DERendeModule
-class DERenderModule;
 
 // Core Components classes
 class Camera;
 class Transform;
 template<typename T> class Script;
 
-template<int cols, int rows, typename T> class Matrix;
-template<int dims, typename T> class Vector;
 template<typename T> class Pool;
 template<typename T> class Node;
 template<typename T> class Singleton;
@@ -104,25 +91,9 @@ template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
 typedef std::string string;
-typedef uint32_t rgba;
-typedef uint32_t abgr;
 
-typedef struct Cube Cube;
+
 typedef struct Rect Rect;
-typedef struct Vertex Vertex;
-typedef struct ColorVertex ColorVertex;
-typedef struct ColorVertex2 ColorVertex2;
-
-typedef Matrix<3, 3, float> Matrix3;
-typedef Matrix<3, 3, int> Matrix3i;
-typedef Matrix<4, 4, float> Matrix4;
-typedef Matrix<4, 4, int> Matrix4i;
-
-typedef Vector<2, float> Vector2;
-typedef Vector<2, int> Vector2i;
-typedef Vector<3, float> Vector3;
-typedef Vector<3, int> Vector3i;
-typedef Vector<4, float> Vector4;
 
 } // namespace core
 

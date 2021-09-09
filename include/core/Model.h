@@ -2,11 +2,9 @@
 #define CORE_MODEL_H
 
 #include "Essential.h"
-#include "ModelImporter.h"
 #include "Shader.h"
 #include "Mesh.h"
-
-#include <Magnum/Math/Matrix4.h>
+#include "Math.h"
 
 namespace core {
 
@@ -19,9 +17,9 @@ public:
 
 protected:
 
-    Magnum::Matrix4 transformMtx;
-    Magnum::Matrix4 projectionMtx;
-    Magnum::Color3  color;
+    Matrix4 transformMtx;
+    Matrix4 projectionMtx;
+    Color3  color;
 
     Mesh*   mesh;
     Shader* shader;

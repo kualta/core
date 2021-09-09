@@ -1,195 +1,151 @@
 #ifndef CORE_MATH_H
 #define CORE_MATH_H
 
-#include "Essential.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "Radian.h"
-#include "Degree.h"
+#include <Magnum/Magnum.h>
+#include <Magnum/Math/Math.h>
+#include <Magnum/Math/Vector.h>
+#include <Magnum/Math/Vector2.h>
+#include <Magnum/Math/Vector3.h>
+#include <Magnum/Math/Vector4.h>
+#include "Magnum/Math/Matrix.h"
+#include "Magnum/Math/Matrix3.h"
+#include "Magnum/Math/Matrix4.h"
+#include "Magnum/Math/RectangularMatrix.h"
 
-#include <ostream>
-
+using namespace Magnum;
 namespace core {
 
-
-class Math {
-public:
-
-    static inline Radian DegreesToRadians(const Degree& degrees) { return Radian(degrees.data * PI / float(180.0)); }
-    static inline Radian DegreesToRadians(const Degree&& degrees) { return Radian(degrees.data * PI / float(180.0)); }
-
-    static inline Degree RadiansToDegrees(const Radian& radians) { return Degree(radians.data * float(180.0) / PI); }
-    static inline Degree RadiansToDegrees(const Radian&& radians) { return Degree(radians.data * float(180.0) / PI); }
-
-    /**
-     * Calculates dot product of two Vectors
-     * @details dot product = first.x * second.x
-     *                      + first.y * second.y
-     *                      + first.z * second.z;
-     * @param lhs - first Vector
-     * @param rhs - second Vector
-     * @return dot product between lhs and rhs
-     */
-    static constexpr float Dot(const Vector3& lhs, const Vector3& rhs) {
-        return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
-    };
-
-    /**
-     * Calculates cross product between two vectors
-     * @details cross product = (
-                first.y * second.z - first.z * second.y,
-                first.z * second.x - first.x * second.z,
-                first.x * second.y - first.y * second.x)
-     * @param lhs - first Vector
-     * @param rhs - second Vector
-     * @return Vector3 cross product between lhs and rhs
-     */
-    static Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
-
-    /**
-     * Calculates normalized version of vector
-     * @warning This implementations uses Math::QRSqrt()
-     */
-    static Vector3 Normalize(const Vector3& vec);
-
-    /**
-     * Calculates normalized version of vector
-     * @warning This implementations uses Math::QRSqrt()
-     */
-    static Vector3 Normalize(const Vector3&& vec);
-
-    /**
-     * Calculates matrix that represents transformation
-     * from pos to lookAt
-     * @param pos - position of transform
-     * @param lookAt - point transform looks at
-     * @param worldUp - world up vector (default = {0, 0, 1})
-     * @return Matrix4 transform matrix
-     */
-    static Matrix4 LookAtMatrix(const Vector3& pos,
-                                const Vector3& lookAt,
-                                const Vector3& worldUp = Vector3::up);
-
-    /**
-     * Generates new translation matrix to vector
-     * @param pos - position translate to
-     * @return Matrix4 translation matrix
-     */
-    static Matrix4 TranslationMatrix(const Vector3& pos);
-
-    /**
-     * Generates new rotation matrix around X, Y and Z axis
-     * @param rotX - Rotation around X axis
-     * @param rotY - Rotation around Y axis
-     * @param rotZ - Rotation around Z axis
-     * @return Matrix4 rotation matrix
-     */
-    static Matrix4 EulerRotationMatrix(const Vector3& euler);
-
-    /**
-     * Generates new projection matrix in top to bottom, left to right rectangle, clipped by
-     * near and far planes.
-     * @param near - distance to near clipping plane
-     * @param far - distance to far clipping plane
-     * @param hmgNdc - is clip space homogeneous?
-     * @return Matrix4 projection matrix
-     */
-    static Matrix4 ProjectionMatrix(float top, float bottom, float left, float right, float near, float far, bool hmgNdc);
-
-    /**
-     * Generates new projection matrix in given Y axis fov with aspect ratio, clipped by near and far planes.
-     * @param fovY - Field of View by Y axis
-     * @param aspect - aspect ratio
-     * @param near - distance to near clipping plane
-     * @param far - distance to far clipping plane
-     * @param hmgNdc - is clip space homogeneous?
-     * @return Matrix4 projection matrix
-     */
-    static Matrix4 ProjectionMatrix(float fovY, float aspect, float near, float far, bool hmgNdc);
-
-    /**
-     * Generates new projection matrix in given rectangle, clipped by near and far planes.
-     * @param rect - projection Rect
-     * @param near - distance to near clipping plane
-     * @param far - distance to far clipping plane
-     * @param hmgNdc - is clip space homogeneous?
-     * @return Matrix4 projection matrix
-     */
-    static Matrix4 ProjectionMatrix(Rect rect, float near, float far, bool hmgNdc);
-
-    /**
-     * Generates new scale matrix
-     * @param x - scale by X axis
-     * @param y - scale by Y axis
-     * @param z - scale by Z axis
-     * @return Matrix4 scale matrix
-     */
-    static Matrix4 ScaleMatrix(Vector3 scale);
-
-    /**
-     * Computes absolute value of a
-     */
-    static inline float Abs(float a) { return std::abs(a); };
-
-    /**
-     * Calculates accurate square root of number
-     */
-    static inline float Sqrt(float a) { return std::sqrt(a); };
-
-    /**
-     * Quick Reversed Square root calculation
-     * @warning Result is apporixmated, error is about 0.1%
-     * @note one Newton's step is used in this implementation
-     * @note More about this algorithm: https://en.wikipedia.org/wiki/Fast_inverse_square_root
-     */
-    static inline float QRSqrt(float a) {
-        float xhalf = 0.5f * a;
-        int i = *(int*) &a;
-        i = 0x5f375a86 - (i >> 1);
-        a = *(float*) &i;
-        a = a * (1.5f - xhalf * a * a); // Newton step, repeating increases accuracy
-        return a;
-    };
-
-    /**
-     * Calculates sine of value in radians
-     */
-    static inline float Sin(const Radian& radian) { return std::sin(radian.GetValue()); };
-    static inline float Sin(float a) { return std::sin(a); };
-
-    /**
-     * Calculates sine of value in radians
-     */
-    static inline float Cos(const Radian& radian) { return std::cos(radian.GetValue()); };
-    static inline float Cos(float a) { return std::cos(a); };
-
-    /**
-     * Calculates tangent of value in radians
-     */
-    static inline float Tan(const Radian& radian) { return std::tan(radian.GetValue()); };
-    static inline float Tan(float a) { return std::tan(a); };
-
-    /**
-     * Calculates arccos of value in radians
-     */
-    static inline float ACos(const Radian& radian) { return std::acos(radian.GetValue()); };
-    static inline float ACos(float a) { return std::acos(a); };
-
-    /**
-     * Calculates arcsin of value in radians
-     */
-    static inline float ASin(const Radian& radian) { return std::asin(radian.GetValue()); };
-    static inline float ASin(float a) { return std::asin(a); };
-
-    static inline float Atan2(float a, float b) { return std::atan2(a, b); };
-
-    static const float PI;
-    static const float TWO_PI;
-    static const float TAU;
-    static const float HALF_PI;
-    static const float LOG2;
-
-}; // class Math
+typedef Math::Half Half;
+typedef Math::BoolVector<2> BoolVector2;
+typedef Math::BoolVector<3> BoolVector3;
+typedef Math::BoolVector<4> BoolVector4;
+typedef Math::Vector2<Float> Vector2;
+typedef Math::Vector3<Float> Vector3;
+typedef Math::Vector4<Float> Vector4;
+typedef Math::Vector2<UnsignedByte> Vector2ub;
+typedef Math::Vector3<UnsignedByte> Vector3ub;
+typedef Math::Vector4<UnsignedByte> Vector4ub;
+typedef Math::Vector2<Byte> Vector2b;
+typedef Math::Vector3<Byte> Vector3b;
+typedef Math::Vector4<Byte> Vector4b;
+typedef Math::Vector2<UnsignedShort> Vector2us;
+typedef Math::Vector3<UnsignedShort> Vector3us;
+typedef Math::Vector4<UnsignedShort> Vector4us;
+typedef Math::Vector2<Short> Vector2s;
+typedef Math::Vector3<Short> Vector3s;
+typedef Math::Vector4<Short> Vector4s;
+typedef Math::Vector2<UnsignedInt> Vector2ui;
+typedef Math::Vector3<UnsignedInt> Vector3ui;
+typedef Math::Vector4<UnsignedInt> Vector4ui;
+typedef Math::Vector2<Int> Vector2i;
+typedef Math::Vector3<Int> Vector3i;
+typedef Math::Vector4<Int> Vector4i;
+typedef Math::Color3<Float> Color3;
+typedef Math::Color4<Float> Color4;
+typedef Math::Color3<UnsignedByte> Color3ub;
+typedef Math::Color4<UnsignedByte> Color4ub;
+typedef Math::Color3<UnsignedShort> Color3us;
+typedef Math::Color4<UnsignedShort> Color4us;
+typedef Math::Matrix3<Float> Matrix3;
+typedef Math::Matrix4<Float> Matrix4;
+typedef Math::Matrix2x2<Float> Matrix2x2;
+typedef Math::Matrix3x3<Float> Matrix3x3;
+typedef Math::Matrix4x4<Float> Matrix4x4;
+typedef Math::Matrix2x3<Float> Matrix2x3;
+typedef Math::Matrix3x2<Float> Matrix3x2;
+typedef Math::Matrix2x4<Float> Matrix2x4;
+typedef Math::Matrix4x2<Float> Matrix4x2;
+typedef Math::Matrix3x4<Float> Matrix3x4;
+typedef Math::Matrix4x3<Float> Matrix4x3;
+typedef Math::Matrix2x2<Byte> Matrix2x2b;
+typedef Math::Matrix2x3<Byte> Matrix2x3b;
+typedef Math::Matrix2x4<Byte> Matrix2x4b;
+typedef Math::Matrix3x2<Byte> Matrix3x2b;
+typedef Math::Matrix3x3<Byte> Matrix3x3b;
+typedef Math::Matrix3x4<Byte> Matrix3x4b;
+typedef Math::Matrix4x2<Byte> Matrix4x2b;
+typedef Math::Matrix4x3<Byte> Matrix4x3b;
+typedef Math::Matrix4x4<Byte> Matrix4x4b;
+typedef Math::Matrix2x2<Short> Matrix2x2s;
+typedef Math::Matrix2x3<Short> Matrix2x3s;
+typedef Math::Matrix2x4<Short> Matrix2x4s;
+typedef Math::Matrix3x2<Short> Matrix3x2s;
+typedef Math::Matrix3x3<Short> Matrix3x3s;
+typedef Math::Matrix3x4<Short> Matrix3x4s;
+typedef Math::Matrix4x2<Short> Matrix4x2s;
+typedef Math::Matrix4x3<Short> Matrix4x3s;
+typedef Math::Matrix4x4<Short> Matrix4x4s;
+typedef Math::QuadraticBezier2D<Float> QuadraticBezier2D;
+typedef Math::QuadraticBezier3D<Float> QuadraticBezier3D;
+typedef Math::CubicBezier2D<Float> CubicBezier2D;
+typedef Math::CubicBezier3D<Float> CubicBezier3D;
+typedef Math::CubicHermite1D<Float> CubicHermite1D;
+typedef Math::CubicHermite2D<Float> CubicHermite2D;
+typedef Math::CubicHermite3D<Float> CubicHermite3D;
+typedef Math::CubicHermiteComplex<Float> CubicHermiteComplex;
+typedef Math::CubicHermiteQuaternion<Float> CubicHermiteQuaternion;
+typedef Math::Complex<Float> Complex;
+typedef Math::DualComplex<Float> DualComplex;
+typedef Math::Quaternion<Float> Quaternion;
+typedef Math::DualQuaternion<Float> DualQuaternion;
+typedef Math::Constants<Float> Constants;
+typedef Math::Deg<Float> Deg;
+typedef Math::Rad<Float> Rad;
+typedef Math::Range1D<Float> Range1D;
+typedef Math::Range2D<Float> Range2D;
+typedef Math::Range3D<Float> Range3D;
+typedef Math::Range1D<Int> Range1Di;
+typedef Math::Range2D<Int> Range2Di;
+typedef Math::Range3D<Int> Range3Di;
+typedef Math::Frustum<Float> Frustum;
+typedef Math::Vector2<Half> Vector2h;
+typedef Math::Vector3<Half> Vector3h;
+typedef Math::Vector4<Half> Vector4h;
+typedef Math::Color3<Half> Color3h;
+typedef Math::Color4<Half> Color4h;
+typedef Math::Matrix2x2<Half> Matrix2x2h;
+typedef Math::Matrix2x3<Half> Matrix2x3h;
+typedef Math::Matrix2x4<Half> Matrix2x4h;
+typedef Math::Matrix3x2<Half> Matrix3x2h;
+typedef Math::Matrix3x3<Half> Matrix3x3h;
+typedef Math::Matrix3x4<Half> Matrix3x4h;
+typedef Math::Matrix4x2<Half> Matrix4x2h;
+typedef Math::Matrix4x3<Half> Matrix4x3h;
+typedef Math::Matrix4x4<Half> Matrix4x4h;
+typedef Math::Vector2<Double> Vector2d;
+typedef Math::Vector3<Double> Vector3d;
+typedef Math::Vector4<Double> Vector4d;
+typedef Math::Matrix3<Double> Matrix3d;
+typedef Math::Matrix4<Double> Matrix4d;
+typedef Math::Matrix2x2<Double> Matrix2x2d;
+typedef Math::Matrix3x3<Double> Matrix3x3d;
+typedef Math::Matrix4x4<Double> Matrix4x4d;
+typedef Math::Matrix2x3<Double> Matrix2x3d;
+typedef Math::Matrix3x2<Double> Matrix3x2d;
+typedef Math::Matrix2x4<Double> Matrix2x4d;
+typedef Math::Matrix4x2<Double> Matrix4x2d;
+typedef Math::Matrix3x4<Double> Matrix3x4d;
+typedef Math::Matrix4x3<Double> Matrix4x3d;
+typedef Math::QuadraticBezier2D<Float> QuadraticBezier2Dd;
+typedef Math::QuadraticBezier3D<Float> QuadraticBezier3Dd;
+typedef Math::CubicBezier2D<Float> CubicBezier2Dd;
+typedef Math::CubicBezier3D<Float> CubicBezier3Dd;
+typedef Math::CubicHermite1D<Double> CubicHermite1Dd;
+typedef Math::CubicHermite2D<Double> CubicHermite2Dd;
+typedef Math::CubicHermite3D<Double> CubicHermite3Dd;
+typedef Math::CubicHermiteComplex<Double> CubicHermiteComplexd;
+typedef Math::CubicHermiteQuaternion<Double> CubicHermiteQuaterniond;
+typedef Math::Complex<Double> Complexd;
+typedef Math::DualComplex<Double> DualComplexd;
+typedef Math::Quaternion<Double> Quaterniond;
+typedef Math::DualQuaternion<Double> DualQuaterniond;
+typedef Math::Constants<Double> Constantsd;
+typedef Math::Deg<Double> Degd;
+typedef Math::Rad<Double> Radd;
+typedef Math::Range1D<Double> Range1Dd;
+typedef Math::Range2D<Double> Range2Dd;
+typedef Math::Range3D<Double> Range3Dd;
+typedef Math::Frustum<Double> Frustumd;
 
 } // namespace
 

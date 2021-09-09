@@ -4,13 +4,12 @@
 #include "Essential.h"
 #include "FileSystem.h"
 #include "Mesh.h"
-#include "Matrix.h"
+#include "Math.h"
 
 #include <string>
 #include <fstream>
 
 #include <Magnum/Shaders/PhongGL.h>
-#include <Magnum/Math/Matrix4.h>
 
 using namespace Magnum;
 namespace core {
