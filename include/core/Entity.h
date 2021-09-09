@@ -11,7 +11,7 @@
 #include "Node.h"
 #include "ScriptBehaviour.h"
 #include <core/Components/Transform.h>
-#include <core/Components/IRenderer.h>
+#include <core/Components/Renderer.h>
 
 #include <memory>
 #include <utility>
@@ -102,7 +102,7 @@ public:
     bool operator!=(const Entity &rhs) const;
 
     Transform*  transform { nullptr };
-    IRenderer*  renderer  { nullptr };
+    Renderer*  renderer  {nullptr };
 
 protected:
 

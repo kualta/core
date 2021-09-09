@@ -22,6 +22,11 @@ public:
     virtual void FixedTick() { };
 
     /**
+     * Early update function, called before current frame is rendered
+     */
+    virtual void EarlyTick() { };
+
+    /**
      * Main update function
      *      @Includes Modules update
      *      @Includes Input update

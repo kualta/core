@@ -1,33 +1,32 @@
 #include <core/Shader.h>
 
+#include "Magnum/Math/Matrix4.h"
+using namespace Math::Literals;
 namespace core {
 
-Shader::Shader(const string& vShaderPath, const string& fShaderPath)
-: vertexShader(LoadShader(vShaderPath)), fragmentShader(LoadShader(fShaderPath)) {
-    UpdateShader();
-}
-void Shader::SetVertexShader(const string& path) {
-    vertexShader = LoadShader(path);
-}
-void Shader::SetFragmentShader(const string& path) {
-    fragmentShader = LoadShader(path);
-}
-void Shader::UpdateShader() {
-    if (isValid(vertexShader) && isValid(fragmentShader)) {
-        program = bgfx::createProgram(vertexShader, fragmentShader, true);
-    }
-}
-bgfx::ShaderHandle Shader::LoadShader(const string& path) {
+Shader::Shader() {
 
-    int64_t shaderSize = FileSystem::GetFileSize(path);
-    const bgfx::Memory* shaderMemory = FileSystem::ReadFileToMemory(path, shaderSize);
-
-    bgfx::ShaderHandle handle = bgfx::createShader(shaderMemory);
-
-    return handle;
 }
-bool Shader::IsValid() {
-    return bgfx::isValid(program);
+void Shader::Draw(Mesh* mesh) {
+    shader.draw(*mesh->GetGLMesh());
+}
+void Shader::SetDiffuseColor(Color3 color) {
+    shader.setDiffuseColor(color);
+}
+void Shader::SetAmbientColor(Color3 color) {
+    shader.setAmbientColor(Color3::fromHsv({color.hue(), 1.0f, 0.3f}));
+}
+void Shader::SetTransformMatrix(Magnum::Matrix4 mtx) {
+    shader.setTransformationMatrix(mtx);
+}
+void Shader::SetProjectionMatrix(Magnum::Matrix4 mtx) {
+    shader.setProjectionMatrix(mtx);
+}
+void Shader::SetNormalMatrix(Magnum::Matrix4 mtx) {
+    shader.setNormalMatrix(mtx.normalMatrix());
+}
+void Shader::SetLightPositions(Magnum::Vector4 pos) {
+    shader.setLightPositions({ pos });
 }
 
 }

@@ -32,8 +32,9 @@ public:
     objectTag tag { GENERAL };
 
 protected:
-    explicit IModule(const string& moduleName = "Unnamed",
-                     objectTag moduleTag = GENERAL) : Object(moduleName + " module"), tag(moduleTag) {
+    explicit IModule(const string& moduleName = "Unnamed", objectTag moduleTag = GENERAL)
+    : Object(moduleName + " module"), tag(moduleTag)
+    {
         Logger::Log(tag, INFO) << "Initialized " << name;
     };
     ~IModule() {

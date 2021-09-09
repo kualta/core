@@ -32,7 +32,7 @@ protected:
     /**
      * Point camera is pointing towards
      */
-    Vector3 lookAt = Vector3::zero;
+    Vector3 lookAt = Vector3(0);
 
     /**
      * Field of View by Y axis

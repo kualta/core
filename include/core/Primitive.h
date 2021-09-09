@@ -5,8 +5,13 @@
 #define CORE_PRIMITIVE_H
 
 #include "Essential.h"
-#include "Vertex.h"
-#include "Vector.h"
+#include "Model.h"
+
+#include <Magnum/Trade/MeshData.h>
+#include <Magnum/Primitives/Cube.h>
+#include <Magnum/MeshTools/Interleave.h>
+#include <Magnum/MeshTools/CompressIndices.h>
+#include <Magnum/Shaders/PhongGL.h>
 
 namespace core {
 
@@ -15,46 +20,21 @@ typedef struct Rect {
     float w, h;
 } Rect;
 
-class Primitive {
-    // TODO: ummm? Rename? Delete? FIXME!
-};
+class Cube : public Mesh {
+public:
+    Cube() {
+        Trade::MeshData cubeData = Primitives::cubeSolid();
+        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
 
-struct Cube : public Primitive {
-//    const std::vector<ColorVertex> vertices {
-//            {-1.0f,  1.0f,  1.0f, 0xff000000 },
-//            { 1.0f,  1.0f,  1.0f, 0xff0000ff },
-//            {-1.0f, -1.0f,  1.0f, 0xff00ff00 },
-//            { 1.0f, -1.0f,  1.0f, 0xff00ffff },
-//            {-1.0f,  1.0f, -1.0f, 0xffff0000 },
-//            { 1.0f,  1.0f, -1.0f, 0xffff00ff },
-//            {-1.0f, -1.0f, -1.0f, 0xffffff00 },
-//            { 1.0f, -1.0f, -1.0f, 0xffffffff }
-//    };
+        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
+        indices.setData(compressed.first);
 
-    const std::vector<ColorVertex> vertices {
-            {-1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
-            { 1.0f,  1.0f,  1.0f, {1.0f, 1.0f, 1.0f, 1.0f}},
-            {-1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
-            { 1.0f, -1.0f,  1.0f, {1.0f, 0.5f, 1.0f, 1.0f}},
-            {-1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
-            { 1.0f,  1.0f, -1.0f, {1.0f, 1.0f, 0.5f, 1.0f}},
-            {-1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}},
-            { 1.0f, -1.0f, -1.0f, {1.0f, 1.0f, 1.0f, 0.5f}}
-    };
-    const std::vector<uint16_t> indices {
-            0, 1, 2,
-            1, 3, 2,
-            4, 6, 5,
-            5, 6, 7,
-            0, 2, 4,
-            4, 2, 6,
-            1, 5, 3,
-            5, 7, 3,
-            0, 4, 1,
-            4, 5, 1,
-            2, 3, 6,
-            6, 3, 7,
-    };
+        mesh
+            .setPrimitive(cubeData.primitive())
+            .setCount(cubeData.indexCount())
+            .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
+            .setIndexBuffer(std::move(indices), 0, compressed.second);
+    }
 };
 
 }

@@ -2,22 +2,26 @@
 #define CORE_MODEL_H
 
 #include "Essential.h"
-#include "ModelImporter.h"
 #include "Shader.h"
-#include "core/Modules/IRendererMesh.h"
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include "Mesh.h"
+#include "Math.h"
 
 namespace core {
 
 class Model {
 public:
-    Model(const string& file);
+    Model(Mesh* _mesh, Shader* _shader);
     ~Model();
 
-    IRendererMesh* mesh;
+    void Draw();
+
+protected:
+
+    Matrix4 transformMtx;
+    Matrix4 projectionMtx;
+    Color3  color;
+
+    Mesh*   mesh;
     Shader* shader;
 };
 

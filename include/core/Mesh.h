@@ -1,20 +1,31 @@
 #ifndef CORE_MESH_H
 #define CORE_MESH_H
 
+#include "Essential.h"
+
+#include <Magnum/GL/DefaultFramebuffer.h>
+#include <Magnum/Shaders/VertexColorGL.h>
+#include <Magnum/MeshTools/Compile.h>
+#include <Magnum/Trade/MeshData.h>
+#include <Magnum/Math/Color.h>
+#include <Magnum/GL/Mesh.h>
+#include <Magnum/GL/Buffer.h>
+
+using namespace Magnum;
 namespace core {
 
 class Mesh {
 public:
+    Mesh();
+
+    GL::Mesh* GetGLMesh();
 
 protected:
-    explicit Mesh(aiMesh* aiMesh)
 
-    Vertex*   vertexBuffer    { nullptr };
-    uint32_t* indexBuffer     { nullptr };
+    GL::Mesh   mesh;
 
-    size_t    indicesAmount   { 0 };
-    size_t    verticesAmount  { 0 };
-    size_t    trianglesAmount { 0 };
+    GL::Buffer vertices;
+    GL::Buffer indices;
 };
 
 

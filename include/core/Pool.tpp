@@ -1,5 +1,4 @@
 #include <core/Logger.h>
-#include <core/Window.h>
 
 #include <algorithm>
 #include "Pool.h"

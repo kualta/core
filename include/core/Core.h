@@ -6,7 +6,6 @@
 #define CORE_CORE_H
 
 #include "ModuleContainer.h"
-#include "Modules/IRenderModule.h"
 #include "Essential.h"
 #include "Singleton.h"
 #include "TypeMap.h"

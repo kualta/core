@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.16)
-project(Core VERSION 0.1.0 DESCRIPTION "Core engine")
+cmake_minimum_required(VERSION 3.6)
+project(Core VERSION 0.1.0 DESCRIPTION "Core engine" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
+
 
 #       Build options
 # Reduces amount of includes in client-side code by cost of slightly increased build time.
@@ -20,29 +21,17 @@ option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 # (e.g. VkRenderer and BgfxRenderer)
 option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
+
 #       core
 set( CORE_INCLUDE_DIR include )
 set( CORE_SRC_DIR     src )
 
-set( CORE_ENGINE_RES     ${CORE_INCLUDE_DIR}/core/*.h            ${CORE_SRC_DIR}/*.cpp
-                         ${CORE_INCLUDE_DIR}/core/*.tpp )
-set( CORE_MODULES_RES    ${CORE_INCLUDE_DIR}/core/Modules/*.h    ${CORE_SRC_DIR}/Modules/*.cpp )
-set( CORE_COMPONENTS_RES ${CORE_INCLUDE_DIR}/core/Components/*.h ${CORE_SRC_DIR}/Components/*.cpp )
+set( CORE_ENGINE_RES  )
 
-set( CORE_FILES
-        ${CORE_ENGINE_RES}
-        ${CORE_MODULES_RES}
-        ${CORE_COMPONENTS_RES}
-   )
-set( OUTPUT )
-
-# Get Core's headers and sources
-file( GLOB CORE_SOURCES ${CORE_FILES} )
-# Create core target
+file( GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/include/core/ ${CMAKE_CURRENT_LIST_DIR}/src/ "src/*.cpp" "core/*.hpp" "core/*.h" )
 add_library( core STATIC ${CORE_SOURCES} )
-# Include Core's headers
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
-# Process options and add compile definitions
+
 if ( CORE_HEAVY_ESSENTIALS )
     target_compile_definitions( core PUBLIC CORE_HEAVY_ESSENTIALS )
 endif()
@@ -57,21 +46,55 @@ if ( CORE_SIMPLIFY_SYNTAX )
 endif()
 
 
-#       assimp
-add_subdirectory(lib/assimp)
-target_link_libraries(core PUBLIC assimp)
-
 #       SDL2
-# Specify SDL2 location
-set(SDL2_DIR lib/SDL2)
-# Find SDL2
-find_package(SDL2 REQUIRED FATAL_ERROR)
-# Add SDL2 into include directories
-target_include_directories(core PUBLIC ${SDL2_INCLUDE_DIRS})
-# Link SDL2 libs
-target_link_libraries(core PUBLIC ${SDL2_LIBRARIES})
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/SDL2-2.0.10")
+set(SDL_ATOMIC     OFF CACHE BOOL "" FORCE)
+set(SDL_CPUINFO    OFF CACHE BOOL "" FORCE)
+set(SDL_EVENTS     OFF CACHE BOOL "" FORCE)
+set(SDL_FILE       OFF CACHE BOOL "" FORCE)
+set(SDL_FILESYSTEM OFF CACHE BOOL "" FORCE)
+set(SDL_HAPTIC     OFF CACHE BOOL "" FORCE)
+set(SDL_LOCALE     OFF CACHE BOOL "" FORCE)
+set(SDL_POWER      OFF CACHE BOOL "" FORCE)
+set(SDL_RENDER     OFF CACHE BOOL "" FORCE)
+set(SDL_SENSOR     OFF CACHE BOOL "" FORCE)
+set(SDL_THREADS    OFF CACHE BOOL "" FORCE)
+set(SDL_TIMERS     OFF CACHE BOOL "" FORCE)
+set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
 
-add_custom_command(TARGET core
-                   POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_if_different "${SDL2_DLL}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
-                   COMMENT "Copy SDL2.dll to ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} directory" VERBATIM)
+
+#       magnum
+set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
+set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
+set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
+
+add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
+add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
+
+find_package(Magnum REQUIRED
+        GL
+        Trade
+        Shaders
+        MeshTools
+        Primitives
+        Sdl2Application)
+
+target_link_libraries(core PUBLIC
+        Magnum::GL
+        Magnum::Trade
+        Magnum::Magnum
+        Magnum::Shaders
+        Magnum::MeshTools
+        Magnum::Primitives
+        Magnum::Application
+        Magnum::Sdl2Application
+        Magnum::AnySceneImporter)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # required by magnum
+    set(MSVC2019_COMPATIBILITY ON)
+endif()

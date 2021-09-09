@@ -3,29 +3,34 @@
 
 #include "Essential.h"
 #include "FileSystem.h"
+#include "Mesh.h"
+#include "Math.h"
 
 #include <string>
 #include <fstream>
-#include <bgfx/bgfx.h>
 
+#include <Magnum/Shaders/PhongGL.h>
+
+using namespace Magnum;
 namespace core {
 
 class Shader {
 public:
-    Shader(const string& vertexShaderPath, const string& fragmentShaderPath);
+    Shader();
 
-    void SetVertexShader(const string& path);
-    void SetFragmentShader(const string& path);
-    void UpdateShader();
-    bool IsValid();
+    void Draw(Mesh* mesh);
 
-    bgfx::ProgramHandle program { bgfx::kInvalidHandle };
+    void SetLightPositions(Magnum::Vector4 pos);
+    void SetDiffuseColor(Color3 color);
+    void SetAmbientColor(Color3 color);
+    void SetTransformMatrix(Magnum::Matrix4 mtx);
+    void SetProjectionMatrix(Magnum::Matrix4 mtx);
+    void SetNormalMatrix(Magnum::Matrix4 mtx);
 
 protected:
-    static bgfx::ShaderHandle LoadShader(const string& path);
 
-    bgfx::ShaderHandle  vertexShader   { bgfx::kInvalidHandle };
-    bgfx::ShaderHandle  fragmentShader { bgfx::kInvalidHandle };
+    Shaders::PhongGL shader;
+
 };
 
 }
