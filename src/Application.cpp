@@ -1,7 +1,8 @@
 #include <core/Application.h>
 #include <core/Logger.h>
-#include <Magnum/GL/DebugOutput.h>
+#include <core/Components/Camera.h>
 
+#include <Magnum/GL/DebugOutput.h>
 #include "Magnum/GL/Renderer.h"
 #include "Magnum/Math/Vector2.h"
 
@@ -11,7 +12,9 @@ Application::Application(const string& title, Rect rect, int args)
 : Platform::Application(Arguments(args, nullptr),
                         Configuration{ }
                             .setTitle(title)
+                            .setWindowFlags(Configuration::WindowFlag::Resizable)
                             .setSize(Magnum::Vector2i(rect.w, rect.h)))
+
 {
     GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
@@ -27,19 +30,17 @@ void Application::resetEvent() {
     GL::defaultFramebuffer.clear(GL::FramebufferClear::Color|GL::FramebufferClear::Depth);
 }
 void Application::mousePressEvent(MouseEvent &event) {
-    if(event.button() != MouseEvent::Button::Left) return;
 
-    event.setAccepted();
 }
 void Application::mouseReleaseEvent(MouseEvent& event) {
-    event.setAccepted();
-    redraw();
+
 }
 void Application::mouseMoveEvent(MouseMoveEvent& event) {
-    if(!(event.buttons() & MouseMoveEvent::Button::Left)) return;
 
-    event.setAccepted();
-    redraw();
+}
+void Application::viewportEvent(ViewportEvent& event) {
+    GL::defaultFramebuffer.setViewport( { { }, event.framebufferSize() } );
+    Camera::camera->setViewport(event.windowSize());
 }
 
 

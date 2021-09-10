@@ -19,18 +19,20 @@ public:
     Shader();
 
     void Draw(Mesh* mesh);
+    static void Init();
 
-    void SetLightPositions(Magnum::Vector4 pos);
+    void SetLightPositions(Vector4 pos);
     void SetDiffuseColor(Color3 color);
     void SetAmbientColor(Color3 color);
-    void SetTransformMatrix(Magnum::Matrix4 mtx);
-    void SetProjectionMatrix(Magnum::Matrix4 mtx);
-    void SetNormalMatrix(Magnum::Matrix4 mtx);
+    void SetTransformMatrix(Matrix4 mtx);
+    void SetProjectionMatrix(Matrix4 mtx);
+    void SetNormalMatrix(Matrix4 mtx);
+
+    static Shaders::PhongGL coloredShader;
+    static Shaders::PhongGL texturedShader;
 
 protected:
 
-    Shaders::PhongGL coloredShader;
-    Shaders::PhongGL texturedShader {Shaders::PhongGL::Flag::DiffuseTexture};
 
 };
 

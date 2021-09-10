@@ -1,9 +1,11 @@
-#ifndef CORE_MODELIMPORTER_H
-#define CORE_MODELIMPORTER_H
+#ifndef CORE_SCENE_H
+#define CORE_SCENE_H
 
 #include "Essential.h"
-#include "Drawable.h"
-#include "Shader.h"
+
+#include <Magnum/SceneGraph/Object.h>
+#include <Magnum/SceneGraph/Scene.h>
+#include <Magnum/SceneGraph/MatrixTransformation3D.h>
 
 #include <Corrade/Containers/Array.h>
 #include <Corrade/Containers/Optional.h>
@@ -37,23 +39,18 @@
 using namespace Magnum;
 namespace core {
 
-class ModelImporter {
-    typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
-    typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
+typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
+typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
+
+class Scene {
 public:
-    ModelImporter();
 
-    static void AddObject(Trade::AbstractImporter& importer, Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials, Object3D& parent, UnsignedInt i);
-    static void LoadImporter();
-    static void LoadModel(const string& filepath);
+    static Scene3D scene;
+    static SceneGraph::DrawableGroup3D drawables;
+    static Object3D manipulator;
 
-    static Containers::Array<Containers::Optional<GL::Mesh>> meshes;
-    static Containers::Array<Containers::Optional<GL::Texture2D>> textures;
-
-    static PluginManager::Manager<Trade::AbstractImporter> manager;
-    static Containers::Pointer<Trade::AbstractImporter> importer;
 };
 
 }
 
-#endif //CORE_MODELIMPORTER_H
+#endif //CORE_SCENE_H

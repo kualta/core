@@ -26,8 +26,7 @@ public:
 
     void Tick() override;
 
-    SceneGraph::Camera3D* camera;
-    Object3D manipulator;
+    static SceneGraph::Camera3D* camera;
     Object3D cameraObject;
 
 protected:

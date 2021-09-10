@@ -3,15 +3,21 @@
 using namespace Math::Literals;
 namespace core {
 
+Shaders::PhongGL Shader::coloredShader { NoCreate };
+Shaders::PhongGL Shader::texturedShader { NoCreate };
+
 Shader::Shader() {
+    texturedShader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture };
+    coloredShader = Shaders::PhongGL { };
+
     coloredShader
-        .setAmbientColor(0x111111_rgbf)
-        .setSpecularColor(0xffffff_rgbf)
-        .setShininess(80.0f);
+            .setAmbientColor(0x111111_rgbf)
+            .setSpecularColor(0xffffff_rgbf)
+            .setShininess(80.0f);
     texturedShader
-        .setAmbientColor(0x111111_rgbf)
-        .setSpecularColor(0x111111_rgbf)
-        .setShininess(80.0f);
+            .setAmbientColor(0x111111_rgbf)
+            .setSpecularColor(0x111111_rgbf)
+            .setShininess(80.0f);
 }
 void Shader::Draw(Mesh* mesh) {
     coloredShader.draw(*mesh->GetGLMesh());
@@ -32,7 +38,9 @@ void Shader::SetNormalMatrix(Magnum::Matrix4 mtx) {
     coloredShader.setNormalMatrix(mtx.normalMatrix());
 }
 void Shader::SetLightPositions(Magnum::Vector4 pos) {
-    coloredShader.setLightPositions({pos });
+    coloredShader.setLightPositions({ pos });
+}
+void Shader::Init() {
 }
 
 }

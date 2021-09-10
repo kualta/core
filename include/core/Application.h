@@ -23,6 +23,7 @@ protected:
     virtual void mousePressEvent(MouseEvent& event);
     virtual void mouseReleaseEvent(MouseEvent& event);
     virtual void mouseMoveEvent(MouseMoveEvent& event);
+    virtual void viewportEvent(ViewportEvent& event);
 };
 
 }
