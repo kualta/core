@@ -29,7 +29,9 @@ target_link_libraries(MyApplication PUBLIC core)
 cmake --build . --target MyApplication
 ```
 > Note: on Unix* systems use **gcc** or **g++** to compile, on Windows **MinGW** is recommended, 
-> **MSVC** compilation is somtimes possible, but not guaranteed
+> **MSVC** compilation is possible, but not guaranteed
+ 
+> Note: Make sure you're using 64bit version of your compiler of choice
 
 
 ### Using the engine

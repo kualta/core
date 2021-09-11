@@ -11,3 +11,6 @@
 	path = lib/magnum-plugins
 	url = https://github.com/lectroMathew/magnum-plugins.git
 
+[submodule "lib/assimp"]
+	path = lib/assimp
+	url = https://github.com/lectroMathew/assimp.git

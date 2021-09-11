@@ -18,7 +18,7 @@ void ModelImporter::AddObject(Trade::AbstractImporter &importer,
                               Object3D &parent,
                               UnsignedInt i)
 {
-    Logger::Log(IMPORT, INFO) << "Importing object" << i << importer.object3DName(i);
+    Logger::Log(IMPORT, INFO) << "Importing object " << i << " " << importer.object3DName(i);
     Containers::Pointer<Trade::ObjectData3D> objectData = importer.object3D(i);
     if (!objectData) {
         Logger::Log(IMPORT, ERR_HERE) << "Cannot import object, skipping";
@@ -108,7 +108,7 @@ void ModelImporter::LoadModel(const string& filepath) {
 
     Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials{ importer->materialCount() };
     for (UnsignedInt i = 0; i != importer->materialCount(); ++i) {
-        Logger::Log(IMPORT, INFO) << "Importing material" << i << importer->materialName(i);
+        Logger::Log(IMPORT, INFO) << "Importing material " << i << " " << importer->materialName(i);
 
         Containers::Optional<Trade::MaterialData> materialData = importer->material(i);
         if (!materialData || !(materialData->types() & Trade::MaterialType::Phong)) {
