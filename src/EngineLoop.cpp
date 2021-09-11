@@ -15,6 +15,11 @@ int32_t EngineLoop::Enter() {
     while ( isRunning ) {
 
         /*
+         * Called before the frame is drawn
+         */
+        this->EarlyTickModules();
+
+        /*
          * This will call Tick() function on every module added to the core.
          * The modules lower in the dependency hierarchy are guaranteed to be updated before
          * their dependants.
@@ -27,7 +32,7 @@ int32_t EngineLoop::Enter() {
             this->StopModules();
             Logger::Log(INTERNAL, INFO) << " | Modules stopped";
 
-            EngineLoop::Stop();
+            this->Stop();
             Logger::Log(INTERNAL, INFO) << " | Main loop stopped";
         }
 
@@ -46,6 +51,11 @@ void EngineLoop::TickModules() {
 void EngineLoop::StopModules() {
     std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
         module->Stop();
+    });
+}
+void EngineLoop::EarlyTickModules() {
+    std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
+        module->EarlyTick();
     });
 }
 

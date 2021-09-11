@@ -44,6 +44,9 @@ typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
 
 class Scene {
 public:
+    Scene() {
+        manipulator.setParent(&scene);
+    }
 
     static Scene3D scene;
     static SceneGraph::DrawableGroup3D drawables;

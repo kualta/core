@@ -19,7 +19,6 @@ Model::Model(Mesh* _mesh, Shader* _shader)
     shader->SetAmbientColor(Color3::fromHsv({ color.hue(), 1.0f, 0.3f }));
 }
 void Model::Draw() {
-    GL::defaultFramebuffer.clear(GL::FramebufferClear::Color|GL::FramebufferClear::Depth);
     transformMtx = Magnum::Matrix4::rotationX(30.0_degf) * Magnum::Matrix4::rotationY(40.0_degf);
     projectionMtx = Magnum::Matrix4::perspectiveProjection(
                     35.0_degf, Magnum::Vector2{1280, 720}.aspectRatio(), 0.01f, 100.0f) *

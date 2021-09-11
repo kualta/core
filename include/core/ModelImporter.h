@@ -43,12 +43,12 @@ class ModelImporter {
 public:
     ModelImporter();
 
-    static void AddObject(Trade::AbstractImporter& importer, Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials, Object3D& parent, UnsignedInt i);
-    static void LoadImporter();
-    static void LoadModel(const string& filepath);
+    void AddObject(Trade::AbstractImporter& importer, Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials, Object3D& parent, UnsignedInt i);
+    void LoadImporter();
+    void LoadModel(const string& filepath);
 
-    static Containers::Array<Containers::Optional<GL::Mesh>> meshes;
-    static Containers::Array<Containers::Optional<GL::Texture2D>> textures;
+    Containers::Array<Containers::Optional<GL::Mesh>> meshes;
+    Containers::Array<Containers::Optional<GL::Texture2D>> textures;
 
     static PluginManager::Manager<Trade::AbstractImporter> manager;
     static Containers::Pointer<Trade::AbstractImporter> importer;

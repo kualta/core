@@ -7,9 +7,6 @@ namespace core {
 PluginManager::Manager<Trade::AbstractImporter> ModelImporter::manager { };
 Containers::Pointer<Trade::AbstractImporter> ModelImporter::importer { };
 
-Containers::Array<Containers::Optional<GL::Mesh>> ModelImporter::meshes;
-Containers::Array<Containers::Optional<GL::Texture2D>> ModelImporter::textures;
-
 ModelImporter::ModelImporter() {
     LoadImporter();
 }
@@ -29,6 +26,7 @@ void ModelImporter::AddObject(Trade::AbstractImporter &importer,
     auto* object = new Object3D { &parent };
     object->setTransformation(objectData->transformation());
 
+    Logger::Log(IMPORT, INFO) << objectData->instance();
     /* Add a drawable if the object has a mesh and the mesh is loaded */
     if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && meshes[objectData->instance()]) {
         const Int materialId = static_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
@@ -106,7 +104,7 @@ void ModelImporter::LoadModel(const string& filepath) {
         textures[i] = std::move(texture);
     }
 
-    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials{ importer->materialCount() };
+    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials { importer->materialCount() };
     for (UnsignedInt i = 0; i != importer->materialCount(); ++i) {
         Logger::Log(IMPORT, INFO) << "Importing material " << i << " " << importer->materialName(i);
 
@@ -117,6 +115,20 @@ void ModelImporter::LoadModel(const string& filepath) {
         }
 
         materials[i] = std::move(static_cast<Trade::PhongMaterialData&>(*materialData));
+    }
+
+    meshes = Containers::Array<Containers::Optional<GL::Mesh>>{importer->meshCount()};
+    for(UnsignedInt i = 0; i != importer->meshCount(); ++i) {
+        Logger::Log(IMPORT, INFO) << "Importing mesh " << i << " " << importer->meshName(i);
+
+        Containers::Optional<Trade::MeshData> meshData = importer->mesh(i);
+        if(!meshData || !meshData->hasAttribute(Trade::MeshAttribute::Normal) || meshData->primitive() != MeshPrimitive::Triangles) {
+            Logger::Log(IMPORT, WARN_HERE) << "Cannot load the mesh, skipping";
+            continue;
+        }
+
+        /* Compile the mesh */
+        meshes[i] = MeshTools::compile(*meshData);
     }
 
     if (importer->defaultScene() != -1) {
