@@ -12,9 +12,7 @@
 
 namespace core {
 
-class Camera : public IComponent {
-    typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
-    typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
+class Camera : public IComponent, public SceneGraph::Camera3D {
 public:
     explicit Camera(Entity&       parent,
                     float         fovY = 90.0f,
@@ -25,9 +23,6 @@ public:
                     const string& name = "Camera");
 
     void Tick() override;
-
-    static SceneGraph::Camera3D* camera;
-    Object3D cameraObject;
 
 protected:
 

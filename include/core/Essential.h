@@ -47,17 +47,12 @@
 
 namespace core {
 
-class WindowModule;
-
 class IComponent;
 class Core;
 class Cube;
 class CoreConfig;
-class Degree;
 class EngineLoop;
 class Entity;
-class Event;
-class EventDispatcher;
 class FileSystem;
 class IModule;
 class IModuleContainer;
@@ -68,7 +63,7 @@ class Log;
 class Mesh;
 class Model;
 class Object;
-class Radian;
+class Scene;
 class ScriptBehaviour;
 class Shader;
 
@@ -90,9 +85,9 @@ template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
-typedef std::string string;
-
 typedef struct Rect Rect;
+
+typedef std::string string;
 
 } // namespace core
 

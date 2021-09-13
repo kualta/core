@@ -2,8 +2,6 @@
 
 namespace core {
 
-Scene3D Scene::scene { };
-SceneGraph::DrawableGroup3D Scene::drawables { };
-Object3D Scene::manipulator { };
+SceneGraph::DrawableGroup3D Scene::drawables;
 
 }

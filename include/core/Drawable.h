@@ -3,6 +3,7 @@
 
 #include "Essential.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include <Magnum/SceneGraph/Drawable.h>
 #include <Corrade/Containers/Array.h>
@@ -37,9 +38,9 @@
 using namespace Magnum;
 namespace core {
 
-class ColoredDrawable: public SceneGraph::Drawable3D {
+class ColoredDrawable : public SceneGraph::Drawable3D {
 public:
-    explicit ColoredDrawable(Object3D& object,
+    explicit ColoredDrawable(GraphObject& object,
                              Shaders::PhongGL& shader,
                              GL::Mesh& mesh,
                              const Color4& color,
@@ -59,7 +60,7 @@ private:
 
 class TexturedDrawable: public SceneGraph::Drawable3D {
 public:
-    explicit TexturedDrawable(Object3D& object,
+    explicit TexturedDrawable(GraphObject& object,
                               Shaders::PhongGL& shader,
                               GL::Mesh& mesh,
                               GL::Texture2D& texture,

@@ -13,7 +13,8 @@ void ColoredDrawable::draw(const Matrix4& transformationMatrix, SceneGraph::Came
 }
 
 void TexturedDrawable::draw(const Matrix4& transformationMatrix, SceneGraph::Camera3D& camera) {
-    shader .setLightPositions({ { camera.cameraMatrix().transformPoint({-3.0f, 10.0f, 10.0f}), 0.0f } });
+    shader
+        .setLightPositions({ { camera.cameraMatrix().transformPoint({-3.0f, 10.0f, 10.0f}), 0.0f } });
 }
 
 }

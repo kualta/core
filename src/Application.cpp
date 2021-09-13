@@ -39,8 +39,7 @@ void Application::mouseMoveEvent(MouseMoveEvent& event) {
 
 }
 void Application::viewportEvent(ViewportEvent& event) {
-    GL::defaultFramebuffer.setViewport( { { }, event.framebufferSize() } );
-    Camera::camera->setViewport(event.windowSize());
+
 }
 
 

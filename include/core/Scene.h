@@ -36,21 +36,15 @@
 #include <Magnum/Trade/SceneData.h>
 #include <Magnum/Trade/TextureData.h>
 
+#include <core/Singleton.h>
+
 using namespace Magnum;
 namespace core {
 
-typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
-typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
-
-class Scene {
+class Scene : public SceneGraph::Scene<SceneGraph::MatrixTransformation3D>, public Singleton<Scene> {
 public:
-    Scene() {
-        manipulator.setParent(&scene);
-    }
 
-    static Scene3D scene;
     static SceneGraph::DrawableGroup3D drawables;
-    static Object3D manipulator;
 
 };
 

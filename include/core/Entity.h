@@ -9,9 +9,14 @@
 #include "IComponent.h"
 #include "Object.h"
 #include "Node.h"
+#include "Scene.h"
 #include "ScriptBehaviour.h"
+
 #include <core/Components/Transform.h>
 #include <core/Components/Renderer.h>
+
+#include <Magnum/SceneGraph/MatrixTransformation3D.h>
+#include <Magnum/SceneGraph/Scene.h>
 
 #include <memory>
 #include <utility>
@@ -19,33 +24,25 @@
 
 namespace core {
 
+typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> GraphObject;
 
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
+class Entity : public Object, public GraphObject, public Instantiable<Entity> {
 public:
-    explicit Entity(const string& name                        = "entity",
-                    std::weak_ptr<Entity>& parent             = root,
-                    std::vector<std::shared_ptr<IComponent>> c = { } );
+    Entity(Entity& parent,
+           const string& name = "entity",
+           std::vector<std::shared_ptr<IComponent>> c = { });
+    Entity(GraphObject* parent = Scene::Get(),
+           const string& name = "entity",
+           std::vector<std::shared_ptr<IComponent>> c = { });
     ~Entity();
 
     /**
      * Updated all components of this entity
      */
     void Tick();
-
-    /**
-     * Activates entity
-     * @note Entity is active by default, no need to call this after creation
-     */
-    void Spawn();
-
-    /**
-     * Deactivates entity
-     * @note This method doesn't destroy entity
-     */
-    void Despawn();
 
     /**
      * Creates new Component c and adds it to Entity,

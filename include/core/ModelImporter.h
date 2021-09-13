@@ -38,17 +38,14 @@ using namespace Magnum;
 namespace core {
 
 class ModelImporter {
-    typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> Object3D;
-    typedef SceneGraph::Scene<SceneGraph::MatrixTransformation3D> Scene3D;
 public:
-    ModelImporter();
 
-    void AddObject(Trade::AbstractImporter& importer, Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials, Object3D& parent, UnsignedInt i);
-    void LoadImporter();
-    void LoadModel(const string& filepath);
+    static void AddObject(GraphObject *parent, Model &model,
+                          Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials,
+                          UnsignedInt i);
+    static void LoadImporter();
+    static void LoadModel(const string& filepath);
 
-    Containers::Array<Containers::Optional<GL::Mesh>> meshes;
-    Containers::Array<Containers::Optional<GL::Texture2D>> textures;
 
     static PluginManager::Manager<Trade::AbstractImporter> manager;
     static Containers::Pointer<Trade::AbstractImporter> importer;

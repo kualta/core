@@ -11,7 +11,7 @@ Model::~Model() {
     delete shader;
 }
 Model::Model(Mesh* _mesh, Shader* _shader)
-: mesh(_mesh), shader(_shader)
+: mesh(mesh), shader(shader)
 {
     color = Color3::fromHsv({333.0_degf, 0.5f, 1.0f});
     shader->SetLightPositions({1.4f, 1.0f, 0.75f, 0.0f});
@@ -29,6 +29,9 @@ void Model::Draw() {
     shader->SetProjectionMatrix(projectionMtx);
 
     shader->Draw(mesh);
+}
+Model::Model() {
+
 }
 
 }
