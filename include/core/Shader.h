@@ -19,7 +19,6 @@ public:
     Shader();
 
     void Draw(Mesh* mesh);
-    static void Init();
 
     void SetLightPositions(Vector4 pos);
     void SetDiffuseColor(Color3 color);

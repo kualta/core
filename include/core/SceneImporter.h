@@ -1,13 +1,14 @@
-#ifndef CORE_MODELIMPORTER_H
-#define CORE_MODELIMPORTER_H
+#ifndef CORE_SCENEIMPORTER_H
+#define CORE_SCENEIMPORTER_H
 
 #include "Essential.h"
 #include "Drawable.h"
 #include "Shader.h"
+#include "Importer.h"
+#include "SceneData.h"
 
 #include <Corrade/Containers/Array.h>
 #include <Corrade/Containers/Optional.h>
-#include <Corrade/PluginManager/Manager.h>
 #include <Corrade/Utility/Arguments.h>
 #include <Corrade/Utility/DebugStl.h>
 #include <Magnum/ImageView.h>
@@ -26,7 +27,6 @@
 #include <Magnum/SceneGraph/MatrixTransformation3D.h>
 #include <Magnum/SceneGraph/Scene.h>
 #include <Magnum/Shaders/PhongGL.h>
-#include <Magnum/Trade/AbstractImporter.h>
 #include <Magnum/Trade/ImageData.h>
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/Trade/MeshObjectData3D.h>
@@ -37,20 +37,32 @@
 using namespace Magnum;
 namespace core {
 
-class ModelImporter {
+class SceneImporter : public Importer {
 public:
 
-    static void AddObject(GraphObject *parent, Model &model,
-                          Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials,
-                          UnsignedInt i);
-    static void LoadImporter();
-    static void LoadModel(const string& filepath);
+    /**
+     * Imports and returns pointer to core::SceneData
+     * @param filepath - path to scene file
+     * @return core::SceneData* data
+     */
+    SceneData* ImportScene(const string& filepath);
 
+    void CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id);
+    void ImportObjectsFromScene(SceneData& data);
 
-    static PluginManager::Manager<Trade::AbstractImporter> manager;
-    static Containers::Pointer<Trade::AbstractImporter> importer;
+protected:
+
+    void LoadImporter();
+    void OpenFile(const string& filepath);
+
+    void ImportTextures(SceneData& data);
+    void ImportMaterials(SceneData& data);
+    void ImportMeshes(SceneData& data);
+
+    Containers::Pointer<Trade::AbstractImporter> importer;
+
 };
 
 }
 
-#endif //CORE_MODELIMPORTER_H
+#endif //CORE_SCENEIMPORTER_H

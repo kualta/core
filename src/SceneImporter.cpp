@@ -1,4 +1,4 @@
-#include <core/ModelImporter.h>
+#include <core/SceneImporter.h>
 #include <core/Math.h>
 #include <core/Logger.h>
 #include <core/Entity.h>
@@ -6,17 +6,11 @@
 
 namespace core {
 
-PluginManager::Manager<Trade::AbstractImporter> ModelImporter::manager { };
-Containers::Pointer<Trade::AbstractImporter> ModelImporter::importer { };
-
-void ModelImporter::AddObject(GraphObject* parent,
-                              Model& model,
-                              Containers::ArrayView<const Containers::Optional<Trade::PhongMaterialData>> materials,
-                              UnsignedInt i)
+void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id)
 {
-    Logger::Log(IMPORT, INFO) << "Importing object " << i << " " << importer->object3DName(i);
+    Logger::Log(IMPORT, INFO) << "Importing object " << id << " " << importer->object3DName(id);
 
-    Containers::Pointer<Trade::ObjectData3D> objectData = importer->object3D(i);
+    Containers::Pointer<Trade::ObjectData3D> objectData = importer->object3D(id);
     if (!objectData) {
         Logger::Log(IMPORT, ERR_HERE) << "Cannot import object, skipping";
         return;
@@ -26,34 +20,33 @@ void ModelImporter::AddObject(GraphObject* parent,
     auto* object = new Entity { parent };
     object->setTransformation(objectData->transformation());
 
-    Logger::Log(IMPORT, INFO) << objectData->instance();
     /* Add a drawable if the object has a mesh and the mesh is loaded */
-    if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && model.meshes[objectData->instance()]) {
-        const Int materialId = static_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
+    if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && data.meshes[objectData->instance()]) {
+        const Int materialId = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
 
         /* Material not available / not loaded, use a default material */
-        if(materialId == -1 || !materials[materialId]) {
-            new ColoredDrawable { *object, Shader::coloredShader, *model.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
+        if(materialId == -1 || !data.materials[materialId]) {
+            new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
-        } else if(materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
-            Containers::Optional<GL::Texture2D>& texture = model.textures[materials[materialId]->diffuseTexture()];
+        } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
+            Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
             if(texture)
-                new TexturedDrawable { *object, Shader::texturedShader, *model.meshes[objectData->instance()], *texture, Scene::drawables };
+                new TexturedDrawable { *object, Shader::texturedShader, *data.meshes[objectData->instance()], *texture, Scene::drawables };
             else
-                new ColoredDrawable { *object, Shader::coloredShader, *model.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
+                new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
 
             /* Color-only material */
         } else {
-            new ColoredDrawable { *object, Shader::coloredShader, *model.meshes[objectData->instance()], materials[materialId]->diffuseColor(), Scene::drawables };
+            new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], data.materials[materialId]->diffuseColor(), Scene::drawables };
         }
     }
 
     /* Recursively add children */
-    for(std::size_t id : objectData->children())
-        AddObject(object, model, materials, id);
+    for(std::size_t childId : objectData->children())
+        CreateObject(object, data, childId);
 }
-void ModelImporter::LoadImporter() {
+void SceneImporter::LoadImporter() {
     importer = manager.loadAndInstantiate("AnySceneImporter");
     if (!importer) {
         Logger::Log(IMPORT, ERR_HERE) << "Failed to load or instantiate importer";
@@ -61,17 +54,20 @@ void ModelImporter::LoadImporter() {
     }
     Logger::Log(IMPORT, DEBUG) << "Loaded model importer successfully";
 }
-void ModelImporter::LoadModel(const string& filepath) {
+SceneData* SceneImporter::ImportScene(const string& filepath) {
     if (!importer) { LoadImporter(); }
-    if (!importer->openFile(filepath)) {
-        Logger::Log(IMPORT, ERR_HERE) << "Failed to open file " << filepath;
-        throw std::runtime_error("Failed to open file " + filepath);
-    }
-    Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
+    OpenFile(filepath);
 
-    Model* model = new Model();
+    SceneData* data = new SceneData();
 
-    model->textures = Containers::Array<Containers::Optional<GL::Texture2D>>{ importer->textureCount() };
+    ImportTextures(*data);
+    ImportMaterials(*data);
+    ImportMeshes(*data);
+
+    return data;
+}
+void SceneImporter::ImportTextures(SceneData& data) {
+    data.textures = Containers::Array<Containers::Optional<GL::Texture2D>> { importer->textureCount() };
     for(UnsignedInt i = 0; i != importer->textureCount(); ++i) {
         Logger::Log(IMPORT, INFO) << "Importing texture" << i << importer->textureName(i);
 
@@ -96,17 +92,18 @@ void ModelImporter::LoadModel(const string& filepath) {
 
         GL::Texture2D texture;
         texture
-            .setMagnificationFilter(textureData->magnificationFilter())
-            .setMinificationFilter(textureData->minificationFilter(), textureData->mipmapFilter())
-            .setWrapping(textureData->wrapping().xy())
-            .setStorage(Math::log2(imageData->size().max()) + 1, format, imageData->size())
-            .setSubImage(0, { }, *imageData)
-            .generateMipmap();
+                .setMagnificationFilter(textureData->magnificationFilter())
+                .setMinificationFilter(textureData->minificationFilter(), textureData->mipmapFilter())
+                .setWrapping(textureData->wrapping().xy())
+                .setStorage(Math::log2(imageData->size().max()) + 1, format, imageData->size())
+                .setSubImage(0, { }, *imageData)
+                .generateMipmap();
 
-        model->textures[i] = std::move(texture);
+        data.textures[i] = std::move(texture);
     }
-
-    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials { importer->materialCount() };
+}
+void SceneImporter::ImportMaterials(SceneData &data) {
+    data.materials = Containers::Array<Containers::Optional<Trade::PhongMaterialData>> { importer->materialCount() };
     for (UnsignedInt i = 0; i != importer->materialCount(); ++i) {
         Logger::Log(IMPORT, INFO) << "Importing material " << i << " " << importer->materialName(i);
 
@@ -116,10 +113,11 @@ void ModelImporter::LoadModel(const string& filepath) {
             continue;
         }
 
-        materials[i] = std::move(static_cast<Trade::PhongMaterialData&>(*materialData));
+        data.materials[i] = std::move(static_cast<Trade::PhongMaterialData&>(*materialData));
     }
-
-    model->meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
+}
+void SceneImporter::ImportMeshes(SceneData& data) {
+    data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
     for(UnsignedInt i = 0; i != importer->meshCount(); ++i) {
         Logger::Log(IMPORT, INFO) << "Importing mesh " << i << " " << importer->meshName(i);
 
@@ -130,28 +128,37 @@ void ModelImporter::LoadModel(const string& filepath) {
         }
 
         /* Compile the mesh */
-        model->meshes[i] = MeshTools::compile(*meshData);
+        data.meshes[i] = MeshTools::compile(*meshData);
     }
-    // End of core::LoadModel
-
-
+}
+void SceneImporter::ImportObjectsFromScene(SceneData& data) {
     if (importer->defaultScene() != -1) {
-         Logger::Log(IMPORT, INFO) << "Adding default scene " << importer->sceneName(importer->defaultScene());
+        Logger::Log(IMPORT, INFO) << "Importing default scene " << importer->sceneName(importer->defaultScene());
 
         Containers::Optional<Trade::SceneData> sceneData = importer->scene(importer->defaultScene());
         if (!sceneData) {
             Logger::Log(IMPORT, ERR_HERE) << "Cannot load scene";
-            return;
+            throw std::runtime_error("Cannot load scene");
         }
 
         /* Recursively add all children */
         for (UnsignedInt objectId : sceneData->children3D())
-            AddObject(Scene::Get(), *model, materials, objectId);
+            CreateObject(Scene::Get(), data, objectId);
 
         /* The format has no scene support, display just the first loaded mesh with
            a default material and be done with it */
-    } else if (!model->meshes.empty() && model->meshes[0])
-        new ColoredDrawable { Scene::GetInstance(), Shader::coloredShader, *model->meshes[0], 0xffffff_rgbf, Scene::drawables };
+    } else if (!data.meshes.empty() && data.meshes[0]) {
+        new ColoredDrawable { Scene::GetInstance(), Shader::coloredShader, *data.meshes[0], 0xffffff_rgbf, Scene::drawables };
+    } else {
+
+    }
+}
+void SceneImporter::OpenFile(const string& filepath) {
+    if (!importer->openFile(filepath)) {
+        Logger::Log(IMPORT, ERR_HERE) << "Failed to open file " << filepath;
+        throw std::runtime_error("Failed to open file " + filepath);
+    }
+    Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
 }
 
 }

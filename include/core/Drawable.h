@@ -65,7 +65,7 @@ public:
                               GL::Mesh& mesh,
                               GL::Texture2D& texture,
                               SceneGraph::DrawableGroup3D& group)
-    : SceneGraph::Drawable3D{object, &group},
+    : SceneGraph::Drawable3D{ object, &group },
     shader(shader),
     mesh(mesh),
     texture(texture) { }

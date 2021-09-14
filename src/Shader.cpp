@@ -40,7 +40,5 @@ void Shader::SetNormalMatrix(Magnum::Matrix4 mtx) {
 void Shader::SetLightPositions(Magnum::Vector4 pos) {
     coloredShader.setLightPositions({ pos });
 }
-void Shader::Init() {
-}
 
 }

@@ -1,5 +1,6 @@
 #include <core/Model.h>
 #include <core/Logger.h>
+#include <core/SceneImporter.h>
 
 
 using namespace Magnum;
@@ -10,7 +11,7 @@ Model::~Model() {
     delete mesh;
     delete shader;
 }
-Model::Model(Mesh* _mesh, Shader* _shader)
+Model::Model(Mesh* mesh, Shader* shader)
 : mesh(mesh), shader(shader)
 {
     color = Color3::fromHsv({333.0_degf, 0.5f, 1.0f});
@@ -27,11 +28,17 @@ void Model::Draw() {
     shader->SetTransformMatrix(transformMtx);
     shader->SetNormalMatrix(transformMtx);
     shader->SetProjectionMatrix(projectionMtx);
-
     shader->Draw(mesh);
 }
 Model::Model() {
 
+}
+void Model::Load(const string& filepath) {
+    SceneImporter sceneImporter;
+    SceneData* sceneData = sceneImporter.ImportScene(filepath);
+    // FIXME: This is leaking memory: pointer cannot be deleted, because resources are shared.
+    // TODO: Add resources lifetime management
+    sceneImporter.ImportObjectsFromScene(*sceneData);
 }
 
 }
