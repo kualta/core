@@ -9,6 +9,9 @@
 
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/Primitives/Cube.h>
+#include <Magnum/Primitives/UVSphere.h>
+#include <Magnum/Primitives/Cone.h>
+#include <Magnum/Primitives/Cylinder.h>
 #include <Magnum/MeshTools/Interleave.h>
 #include <Magnum/MeshTools/CompressIndices.h>
 #include <Magnum/Shaders/PhongGL.h>
@@ -22,21 +25,26 @@ typedef struct Rect {
 
 class Cube : public Mesh {
 public:
-    Cube() {
-        Trade::MeshData cubeData = Primitives::cubeSolid();
-        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
-
-        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
-        indices.setData(compressed.first);
-
-        mesh
-            .setPrimitive(cubeData.primitive())
-            .setCount(cubeData.indexCount())
-            .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
-            .setIndexBuffer(std::move(indices), 0, compressed.second);
-    }
+//    Cube() {
+//        GL::Mesh glMesh = MeshTools::compile(Primitives::cubeSolid());
+//        mesh = &glMesh;
+//    }
 };
 
+class Sphere : public Mesh {
+public:
+//    Sphere() { mesh = MeshTools::compile(Primitives::uvSphereSolid(25, 25)); }
+};
+
+class Cone : public Mesh {
+public:
+//    Cone() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
+};
+
+class Cylinder : public Mesh {
+public:
+//    Cylinder() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
+};
 }
 
 

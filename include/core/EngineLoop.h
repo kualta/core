@@ -25,6 +25,12 @@ public:
 
 protected:
 
+
+    /**
+     * Early update all modules
+     */
+    void EarlyTickModules();
+
     /**
      * Updates all modules
      */

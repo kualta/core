@@ -17,6 +17,7 @@
 #include "Magnum/Math/Range.h"
 
 using namespace Magnum;
+using namespace Math::Literals;
 namespace core {
 
 typedef Math::Half Half;

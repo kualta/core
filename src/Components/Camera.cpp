@@ -1,40 +1,43 @@
 #include <core/Components/Camera.h>
 #include <core/Color.h>
+#include <core/Math.h>
+#include <core/Scene.h>
 
 namespace core {
 
 Camera::Camera(
         Entity& parent,
-        float fovY,
+        float fov,
         float width,
         float height,
-        float nearPlane,
         float farPlane,
+        float nearPlane,
         const string& name)
 : IComponent(parent, name),
-  fov(fovY),
-  aspectRatio(width/height),
+  SceneGraph::Camera3D(parent),
+  fov(fov),
   width(width),
   height(height),
+  aspectRatio(width/height),
   nearPlane(nearPlane),
   farPlane(farPlane)
 {
     parent.assertRequiredComponent<Transform>(this);
+    transform = parent.GetComponent<Transform>();
+
+    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend);
+    setViewport(GL::defaultFramebuffer.viewport().size());
 }
 void Camera::Tick() {
-
+    setProjectionMatrix(Matrix4::perspectiveProjection(Deg(fov), aspectRatio, nearPlane, farPlane) * Matrix4::translation(transform->position));
+    Draw();
 }
-void Camera::LookAt(Vector3& point) {
-    lookAt = point;
-}
-void Camera::LookAt(Vector3 &&point) {
-    lookAt = point;
-}
-Matrix4 Camera::GetViewMtx() {
-    return viewMatrix;
-}
-Matrix4 Camera::GetProjMtx() {
-    return projectionMatrix;
+void Camera::Draw() {
+    // TODO: Add drawing by layers
+    // NOTE: Temporary solution
+    for (auto renderer : Renderer::instances) {
+        renderer->Draw(*this);
+    }
 }
 
 }

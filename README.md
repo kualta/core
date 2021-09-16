@@ -2,6 +2,7 @@
 
 ## Game Engine focused on performance and flexibility
 
+[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
 
 ## Usage
@@ -28,7 +29,9 @@ target_link_libraries(MyApplication PUBLIC core)
 cmake --build . --target MyApplication
 ```
 > Note: on Unix* systems use **gcc** or **g++** to compile, on Windows **MinGW** is recommended, 
-> **MSVC** compilation is somtimes possible, but not guaranteed
+> **MSVC** compilation is possible, but not guaranteed
+ 
+> Note: Make sure you're using 64bit version of your compiler of choice
 
 
 ### Using the engine

@@ -10,21 +10,23 @@ namespace core {
 
 class Model {
 public:
-    Model(Mesh* _mesh, Shader* _shader);
+    Model(Mesh* mesh, Shader* shader);
+    Model();
     ~Model();
 
-    void Draw();
+    void Draw(Matrix4 &transformMtx, Camera &camera);
 
-protected:
+    /**
+     * Imports and adds model to the scene
+     * @param filepath - path to model file
+     */
+    static void Load(const string& filepath);
 
-    Matrix4 transformMtx;
-    Matrix4 projectionMtx;
     Color3  color;
-
     Mesh*   mesh;
     Shader* shader;
 };
 
-}
+} // namespace core
 
 #endif //CORE_MODEL_H

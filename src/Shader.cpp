@@ -1,32 +1,40 @@
 #include <core/Shader.h>
 
-#include "Magnum/Math/Matrix4.h"
 using namespace Math::Literals;
 namespace core {
 
-Shader::Shader() {
+Shaders::PhongGL Shader::coloredShader { NoCreate };
+Shaders::PhongGL Shader::texturedShader { NoCreate };
 
+Shader::Shader(Shaders::PhongGL* shader)
+: shader(shader)
+{
+    texturedShader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture };
+    coloredShader = Shaders::PhongGL { };
 }
 void Shader::Draw(Mesh* mesh) {
-    shader.draw(*mesh->GetGLMesh());
+    coloredShader.draw(*mesh->GetGLMesh());
 }
 void Shader::SetDiffuseColor(Color3 color) {
-    shader.setDiffuseColor(color);
+    coloredShader.setDiffuseColor(color);
 }
 void Shader::SetAmbientColor(Color3 color) {
-    shader.setAmbientColor(Color3::fromHsv({color.hue(), 1.0f, 0.3f}));
+    coloredShader.setAmbientColor(Color3::fromHsv({color.hue(), 1.0f, 0.3f}));
 }
-void Shader::SetTransformMatrix(Magnum::Matrix4 mtx) {
-    shader.setTransformationMatrix(mtx);
+void Shader::SetTransformMatrix(Matrix4& mtx) {
+    coloredShader.setTransformationMatrix(mtx);
 }
-void Shader::SetProjectionMatrix(Magnum::Matrix4 mtx) {
-    shader.setProjectionMatrix(mtx);
+void Shader::SetProjectionMatrix(Matrix4& mtx) {
+    coloredShader.setProjectionMatrix(mtx);
 }
-void Shader::SetNormalMatrix(Magnum::Matrix4 mtx) {
-    shader.setNormalMatrix(mtx.normalMatrix());
+void Shader::SetProjectionMatrix(Matrix4&& mtx) {
+    coloredShader.setProjectionMatrix(mtx);
 }
-void Shader::SetLightPositions(Magnum::Vector4 pos) {
-    shader.setLightPositions({ pos });
+void Shader::SetNormalMatrix(Matrix4& mtx) {
+    coloredShader.setNormalMatrix(mtx.normalMatrix());
+}
+void Shader::SetLightPositions(Vector4& pos) {
+    coloredShader.setLightPositions({ pos });
 }
 
 }

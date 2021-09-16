@@ -6,10 +6,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
 
 
 #       Build options
-# Reduces amount of includes in client-side code by cost of slightly increased build time.
-# Includes classes like core::Vector, ::Matrix and ::Object into Essential.h
-option(CORE_HEAVY_ESSENTIALS "Adds basic types includes into Essential.h"  OFF)
-
 # HH:MM:SS:ms -> YY/MM/DD HH:MM:SS.ms
 option(CORE_LOG_DATE "Adds year, month and date to each log entry"         OFF)
 
@@ -32,9 +28,6 @@ file( GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/include/core/ ${CMAKE_
 add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 
-if ( CORE_HEAVY_ESSENTIALS )
-    target_compile_definitions( core PUBLIC CORE_HEAVY_ESSENTIALS )
-endif()
 if ( CORE_LOG_DATE )
     target_compile_definitions( core PUBLIC CORE_LOG_DATE )
 endif()
@@ -63,38 +56,74 @@ set(SDL_TIMERS     OFF CACHE BOOL "" FORCE)
 set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
 
 
+#       assimp
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT ON CACHE BOOL "" FORCE)
+# If you won't be accessing Assimp outside of the plugin, build it as static to
+# have the plugin binary self-contained
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+# The following is important to avoid Assimp appending `d` to all your
+# binaries. You need Assimp >= 5.0.0 for this to work, also note that after
+# 5.0.1 this option is prefixed with ASSIMP_, so better set both variants.
+set(INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
+add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
+
+
+
 #       magnum
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
-set(WITH_SDL2APPLICATION ON CACHE BOOL "" FORCE)
+
+set(MAGNUM_PLUGINS_DIR lib/magnum-plugins)
+
+set(WITH_SDL2APPLICATION  ON CACHE BOOL "" FORCE)
 set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_ANYIMAGEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_OBJIMPORTER      ON CACHE BOOL "" FORCE)
+set(WITH_STBIMAGEIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_TINYGLTFIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_ASSIMPIMPORTER   ON CACHE BOOL "" FORCE)
 
 add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
 add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
+add_subdirectory(lib/magnum-plugins EXCLUDE_FROM_ALL)
+
+add_dependencies(core MagnumPlugins::StbImageImporter)
 
 find_package(Magnum REQUIRED
         GL
         Trade
         Shaders
         MeshTools
+        SceneGraph
         Primitives
-        Sdl2Application)
+        ObjImporter
+        Sdl2Application
+        AnySceneImporter)
 
 target_link_libraries(core PUBLIC
+        Corrade::Main
         Magnum::GL
         Magnum::Trade
         Magnum::Magnum
         Magnum::Shaders
         Magnum::MeshTools
         Magnum::Primitives
+        Magnum::SceneGraph
+        Magnum::ObjImporter
         Magnum::Application
         Magnum::Sdl2Application
-        Magnum::AnySceneImporter)
+        Magnum::AnySceneImporter
+        MagnumPlugins::AssimpImporter)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    # required by magnum
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W4" )
+    # required by corrade
     set(MSVC2019_COMPATIBILITY ON)
 endif()

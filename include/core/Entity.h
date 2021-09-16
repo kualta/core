@@ -8,10 +8,14 @@
 #include "Instantiable.h"
 #include "IComponent.h"
 #include "Object.h"
-#include "Node.h"
+#include "Scene.h"
 #include "ScriptBehaviour.h"
+
 #include <core/Components/Transform.h>
 #include <core/Components/Renderer.h>
+
+#include <Magnum/SceneGraph/MatrixTransformation3D.h>
+#include <Magnum/SceneGraph/Scene.h>
 
 #include <memory>
 #include <utility>
@@ -19,33 +23,25 @@
 
 namespace core {
 
+typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> GraphObject;
 
 /**
  *  Base class for every object appearing on the scene.
  */
-class Entity : public Object, public Node<Entity>, public Instantiable<Entity> {
+class Entity : public Object, public GraphObject, public Instantiable<Entity> {
 public:
-    explicit Entity(const string& name                        = "entity",
-                    std::weak_ptr<Entity>& parent             = root,
-                    std::vector<std::shared_ptr<IComponent>> c = { } );
+    Entity(Entity& parent,
+           const string& name = "entity",
+           std::vector<std::shared_ptr<IComponent>> c = { });
+    Entity(GraphObject* parent = Scene::Get(),
+           const string& name = "entity",
+           std::vector<std::shared_ptr<IComponent>> c = { });
     ~Entity();
 
     /**
      * Updated all components of this entity
      */
     void Tick();
-
-    /**
-     * Activates entity
-     * @note Entity is active by default, no need to call this after creation
-     */
-    void Spawn();
-
-    /**
-     * Deactivates entity
-     * @note This method doesn't destroy entity
-     */
-    void Despawn();
 
     /**
      * Creates new Component c and adds it to Entity,
@@ -61,8 +57,6 @@ public:
     template<template<typename> typename T, typename S, typename ...Args>
     Entity& AddComponent(Args... args);
 
-
-
     /**
      * Get attached to this entity component
      * @tparam T - component typename
@@ -70,7 +64,7 @@ public:
      * @note Use Entity::HasComponent<T>() to make sure component exists
      */
     template<typename T>
-    IComponent* GetComponent();
+    T* GetComponent();
 
     /**
      * Does entity have this component?
@@ -88,7 +82,7 @@ public:
      * @return bool
      */
     template<typename T, typename C>
-    bool assertRequiredComponent(C* caller);
+    void assertRequiredComponent(C* caller);
 
     /**
      * Checks if entity has component of type T, logs error if it does
@@ -96,13 +90,10 @@ public:
      * @return bool
      */
     template<typename T>
-    bool assertExistingComponent();
+    void assertExistingComponent();
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
-
-    Transform*  transform { nullptr };
-    Renderer*  renderer  {nullptr };
 
 protected:
 

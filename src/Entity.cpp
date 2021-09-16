@@ -3,17 +3,18 @@
 
 namespace core {
 
-Entity::Entity(const string& name, std::weak_ptr<Entity>& parent, std::vector<std::shared_ptr<IComponent>> c)
-    : Object(name), Node<Entity>(parent), components(std::move(c)) {
+Entity::Entity(Entity& parent, const string& name, std::vector<std::shared_ptr<IComponent>> c)
+: core::Object(name), GraphObject(&parent), components(std::move(c))
+{
+
+}
+Entity::Entity(GraphObject* parent, const string &name, std::vector<std::shared_ptr<IComponent>> c)
+: core::Object(name), GraphObject(parent), components(std::move(c))
+{
+
 }
 Entity::~Entity() {
 
-}
-void Entity::Spawn() {
-    isActive = true;
-}
-void Entity::Despawn() {
-    isActive = false;
 }
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);

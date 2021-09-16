@@ -41,23 +41,16 @@
 #include <vector>
 #include <cstdint>
 #include <cassert>
-
-#include "Exceptions.h"
 // Core includes
 
 namespace core {
-
-class WindowModule;
 
 class IComponent;
 class Core;
 class Cube;
 class CoreConfig;
-class Degree;
 class EngineLoop;
 class Entity;
-class Event;
-class EventDispatcher;
 class FileSystem;
 class IModule;
 class IModuleContainer;
@@ -68,7 +61,7 @@ class Log;
 class Mesh;
 class Model;
 class Object;
-class Radian;
+class Scene;
 class ScriptBehaviour;
 class Shader;
 
@@ -84,24 +77,15 @@ class Transform;
 template<typename T> class Script;
 
 template<typename T> class Pool;
-template<typename T> class Node;
 template<typename T> class Singleton;
 template<typename T> class Instantiable;
 template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
-typedef std::string string;
-
-
 typedef struct Rect Rect;
 
+typedef std::string string;
+
 } // namespace core
-
-/// Defined by CORE_HEAVY_ESSENTIALS option in CMakeLists.txt
-#ifdef CORE_HEAVY_ESSENTIALS
-#include "Matrix.h"
-#include "Vector.h"
-#endif
-
 
 #endif //CORE_ESSENTIAL_H
