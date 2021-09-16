@@ -58,8 +58,6 @@ public:
     template<template<typename> typename T, typename S, typename ...Args>
     Entity& AddComponent(Args... args);
 
-
-
     /**
      * Get attached to this entity component
      * @tparam T - component typename
@@ -67,7 +65,7 @@ public:
      * @note Use Entity::HasComponent<T>() to make sure component exists
      */
     template<typename T>
-    IComponent* GetComponent();
+    T* GetComponent();
 
     /**
      * Does entity have this component?
@@ -85,7 +83,7 @@ public:
      * @return bool
      */
     template<typename T, typename C>
-    bool assertRequiredComponent(C* caller);
+    void assertRequiredComponent(C* caller);
 
     /**
      * Checks if entity has component of type T, logs error if it does
@@ -93,13 +91,10 @@ public:
      * @return bool
      */
     template<typename T>
-    bool assertExistingComponent();
+    void assertExistingComponent();
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
-
-    Transform*  transform { nullptr };
-    Renderer*  renderer  {nullptr };
 
 protected:
 

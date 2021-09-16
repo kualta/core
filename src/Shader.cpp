@@ -6,7 +6,9 @@ namespace core {
 Shaders::PhongGL Shader::coloredShader { NoCreate };
 Shaders::PhongGL Shader::texturedShader { NoCreate };
 
-Shader::Shader() {
+Shader::Shader(Shaders::PhongGL* shader)
+: shader(shader)
+{
     texturedShader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture };
     coloredShader = Shaders::PhongGL { };
 
@@ -28,16 +30,16 @@ void Shader::SetDiffuseColor(Color3 color) {
 void Shader::SetAmbientColor(Color3 color) {
     coloredShader.setAmbientColor(Color3::fromHsv({color.hue(), 1.0f, 0.3f}));
 }
-void Shader::SetTransformMatrix(Magnum::Matrix4 mtx) {
+void Shader::SetTransformMatrix(Matrix4& mtx) {
     coloredShader.setTransformationMatrix(mtx);
 }
-void Shader::SetProjectionMatrix(Magnum::Matrix4 mtx) {
+void Shader::SetProjectionMatrix(Matrix4& mtx) {
     coloredShader.setProjectionMatrix(mtx);
 }
-void Shader::SetNormalMatrix(Magnum::Matrix4 mtx) {
+void Shader::SetNormalMatrix(Matrix4& mtx) {
     coloredShader.setNormalMatrix(mtx.normalMatrix());
 }
-void Shader::SetLightPositions(Magnum::Vector4 pos) {
+void Shader::SetLightPositions(Vector4& pos) {
     coloredShader.setLightPositions({ pos });
 }
 

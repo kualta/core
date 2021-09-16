@@ -14,12 +14,19 @@ public:
              Model* model,
              const string& name = "Renderer");
 
-    virtual void Draw();
+    /**
+     * Draws attached Model
+     * calculates transform matrix based on attached Transfrom component values,
+     * uses provided projMtx as projection matrix
+     * @param camera - projection matrix
+     */
+    void Draw(Camera &camera);
 
 protected:
     void Tick() override;
 
-    Model* model;
+    Model*     model;
+    Transform* transform { nullptr };
 
 };
 

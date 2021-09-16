@@ -16,22 +16,23 @@ namespace core {
 
 class Shader {
 public:
-    Shader();
+    Shader(Shaders::PhongGL* shader);
 
     void Draw(Mesh* mesh);
 
-    void SetLightPositions(Vector4 pos);
+    void SetLightPositions(Vector4& pos);
     void SetDiffuseColor(Color3 color);
     void SetAmbientColor(Color3 color);
-    void SetTransformMatrix(Matrix4 mtx);
-    void SetProjectionMatrix(Matrix4 mtx);
-    void SetNormalMatrix(Matrix4 mtx);
+    void SetTransformMatrix(Matrix4& mtx);
+    void SetProjectionMatrix(Matrix4& mtx);
+    void SetNormalMatrix(Matrix4& mtx);
 
     static Shaders::PhongGL coloredShader;
     static Shaders::PhongGL texturedShader;
 
 protected:
 
+    Shaders::PhongGL* shader;
 
 };
 

@@ -15,19 +15,17 @@ namespace core {
 class Camera : public IComponent, public SceneGraph::Camera3D {
 public:
     explicit Camera(Entity&       parent,
-                    float         fovY = 90.0f,
-                    float        width = 600.0f,
-                    float       height = 400.0f,
-                    float    nearPlane = 0.1f,
+                    float          fov = 90.0f,
+                    float        width = 1280.0f,
+                    float       height = 720.0f,
                     float     farPlane = 100.0f,
+                    float    nearPlane = 0.1f,
                     const string& name = "Camera");
 
     void Tick() override;
+    void Draw();
 
 protected:
-
-    Matrix4 viewMatrix;
-    Matrix4 projectionMatrix;
 
     /**
      * Point camera is pointing towards

@@ -7,15 +7,15 @@ namespace core {
 
 Camera::Camera(
         Entity& parent,
-        float fovY,
+        float fov,
         float width,
         float height,
-        float nearPlane,
         float farPlane,
+        float nearPlane,
         const string& name)
 : IComponent(parent, name),
   SceneGraph::Camera3D(parent),
-  fov(fovY),
+  fov(fov),
   width(width),
   height(height),
   aspectRatio(width/height),
@@ -23,14 +23,24 @@ Camera::Camera(
   farPlane(farPlane)
 {
     parent.assertRequiredComponent<Transform>(this);
-    parent.translate(Vector3::zAxis(5.0f));
+//    parent.translate(Vector3::zAxis(5.0f));
+//    parent.GetComponent<Transform>()->position = Vector3(1.0f, 1.0f, 1.0f);
 
     setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend);
-    setProjectionMatrix(Matrix4::perspectiveProjection(35.0_degf, 1.0f, 0.01f, 1000.0f));
     setViewport(GL::defaultFramebuffer.viewport().size());
+
+//    setProjectionMatrix(Matrix4::perspectiveProjection(Deg(fov), aspectRatio, nearPlane, farPlane));
+    setProjectionMatrix(Matrix4::perspectiveProjection(35.0_degf, 1.0f, 0.01f, 1000.0f));
 }
 void Camera::Tick() {
-    draw(Scene::drawables);
+    Draw();
+}
+void Camera::Draw() {
+    // TODO: Add drawing by layers
+    // NOTE: Temporary solution
+    for (auto renderer : Renderer::instances) {
+        renderer->Draw(*this);
+    }
 }
 
 }

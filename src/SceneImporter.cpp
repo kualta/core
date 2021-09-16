@@ -17,8 +17,11 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
     }
 
     /* Add the object to the scene and set its transformation */
-    auto* object = new Entity { parent };
+    Entity* object = new Entity { parent };
     object->setTransformation(objectData->transformation());
+    object->AddComponent<Transform>();
+
+    Model* model;
 
     /* Add a drawable if the object has a mesh and the mesh is loaded */
     if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && data.meshes[objectData->instance()]) {
@@ -26,25 +29,54 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
 
         /* Material not available / not loaded, use a default material */
         if(materialId == -1 || !data.materials[materialId]) {
-            new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
+            model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
             Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
-            if(texture)
-                new TexturedDrawable { *object, Shader::texturedShader, *data.meshes[objectData->instance()], *texture, Scene::drawables };
-            else
-                new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], 0xffffff_rgbf, Scene::drawables };
+            if(texture) {
+                model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::texturedShader));
+            } else {
+                model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
+            }
 
             /* Color-only material */
         } else {
-            new ColoredDrawable { *object, Shader::coloredShader, *data.meshes[objectData->instance()], data.materials[materialId]->diffuseColor(), Scene::drawables };
+            model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
         }
+
+        object->AddComponent<Renderer>(model);
     }
 
     /* Recursively add children */
     for(std::size_t childId : objectData->children())
         CreateObject(object, data, childId);
+}
+void SceneImporter::ImportObjectsFromScene(SceneData& data) {
+    if (importer->defaultScene() != -1) {
+        Logger::Log(IMPORT, INFO) << "Importing default scene " << importer->sceneName(importer->defaultScene());
+
+        Containers::Optional<Trade::SceneData> sceneData = importer->scene(importer->defaultScene());
+        if (!sceneData) {
+            Logger::Log(IMPORT, ERR_HERE) << "Cannot load scene";
+            throw std::runtime_error("Cannot load scene");
+        }
+
+        /* Recursively add all children */
+        for (UnsignedInt objectId : sceneData->children3D())
+            CreateObject(Scene::Get(), data, objectId);
+
+        /* The format has no scene support, display just the first loaded mesh with
+           a default material and be done with it */
+    } else if (!data.meshes.empty() && data.meshes[0]) {
+        Entity* object = new Entity { Scene::Get() };
+        Model* model = new Model(new Mesh(&(*data.meshes[0])), new Shader(&Shader::coloredShader));
+
+        object->AddComponent<Transform>();
+        object->AddComponent<Renderer>(model);
+    } else {
+
+    }
 }
 void SceneImporter::LoadImporter() {
     importer = manager.loadAndInstantiate("AnySceneImporter");
@@ -129,28 +161,6 @@ void SceneImporter::ImportMeshes(SceneData& data) {
 
         /* Compile the mesh */
         data.meshes[i] = MeshTools::compile(*meshData);
-    }
-}
-void SceneImporter::ImportObjectsFromScene(SceneData& data) {
-    if (importer->defaultScene() != -1) {
-        Logger::Log(IMPORT, INFO) << "Importing default scene " << importer->sceneName(importer->defaultScene());
-
-        Containers::Optional<Trade::SceneData> sceneData = importer->scene(importer->defaultScene());
-        if (!sceneData) {
-            Logger::Log(IMPORT, ERR_HERE) << "Cannot load scene";
-            throw std::runtime_error("Cannot load scene");
-        }
-
-        /* Recursively add all children */
-        for (UnsignedInt objectId : sceneData->children3D())
-            CreateObject(Scene::Get(), data, objectId);
-
-        /* The format has no scene support, display just the first loaded mesh with
-           a default material and be done with it */
-    } else if (!data.meshes.empty() && data.meshes[0]) {
-        new ColoredDrawable { Scene::GetInstance(), Shader::coloredShader, *data.meshes[0], 0xffffff_rgbf, Scene::drawables };
-    } else {
-
     }
 }
 void SceneImporter::OpenFile(const string& filepath) {

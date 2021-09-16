@@ -25,70 +25,25 @@ typedef struct Rect {
 
 class Cube : public Mesh {
 public:
-    Cube() {
-        Trade::MeshData cubeData = Primitives::cubeSolid();
-        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
-
-        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
-        indices.setData(compressed.first);
-
-        mesh
-            .setPrimitive(cubeData.primitive())
-            .setCount(cubeData.indexCount())
-            .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
-            .setIndexBuffer(std::move(indices), 0, compressed.second);
-    }
+//    Cube() {
+//        GL::Mesh glMesh = MeshTools::compile(Primitives::cubeSolid());
+//        mesh = &glMesh;
+//    }
 };
 
 class Sphere : public Mesh {
 public:
-    Sphere() {
-        Trade::MeshData cubeData = Primitives::uvSphereSolid(25, 25);
-        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
-
-        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
-        indices.setData(compressed.first);
-
-        mesh
-                .setPrimitive(cubeData.primitive())
-                .setCount(cubeData.indexCount())
-                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
-                .setIndexBuffer(std::move(indices), 0, compressed.second);
-    }
+//    Sphere() { mesh = MeshTools::compile(Primitives::uvSphereSolid(25, 25)); }
 };
 
 class Cone : public Mesh {
 public:
-    Cone() {
-        Trade::MeshData cubeData = Primitives::coneSolid(25, 25, 1);
-        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
-
-        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
-        indices.setData(compressed.first);
-
-        mesh
-                .setPrimitive(cubeData.primitive())
-                .setCount(cubeData.indexCount())
-                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
-                .setIndexBuffer(std::move(indices), 0, compressed.second);
-    }
+//    Cone() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
 };
 
 class Cylinder : public Mesh {
 public:
-    Cylinder() {
-        Trade::MeshData cubeData = Primitives::cylinderSolid(25, 25, 1);
-        std::pair<Containers::Array<char>, MeshIndexType> compressed = MeshTools::compressIndices(cubeData.indicesAsArray());
-
-        vertices.setData(MeshTools::interleave(cubeData.positions3DAsArray(), cubeData.normalsAsArray()));
-        indices.setData(compressed.first);
-
-        mesh
-                .setPrimitive(cubeData.primitive())
-                .setCount(cubeData.indexCount())
-                .addVertexBuffer(std::move(vertices), 0, Shaders::PhongGL::Position{ }, Shaders::PhongGL::Normal{ })
-                .setIndexBuffer(std::move(indices), 0, compressed.second);
-    }
+//    Cylinder() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
 };
 }
 

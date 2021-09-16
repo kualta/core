@@ -14,7 +14,7 @@ public:
     Model();
     ~Model();
 
-    void Draw();
+    void Draw(Matrix4& transformMtx, Camera &camera);
 
     /**
      * Imports and adds model to the scene
@@ -22,8 +22,6 @@ public:
      */
     static void Load(const string& filepath);
 
-    Matrix4 transformMtx;
-    Matrix4 projectionMtx;
     Color3  color;
 
     Mesh*   mesh;
