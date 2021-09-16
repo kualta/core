@@ -14,7 +14,7 @@ namespace core {
 
 class Camera : public IComponent, public SceneGraph::Camera3D {
 public:
-    explicit Camera(Entity&       parent,
+    explicit Camera(Entity&     parent,
                     float          fov = 90.0f,
                     float        width = 1280.0f,
                     float       height = 720.0f,
@@ -27,39 +27,24 @@ public:
 
 protected:
 
-    /**
-     * Point camera is pointing towards
-     */
-    Vector3 lookAt = Vector3(0);
+    Transform* transform;
 
-    /**
-     * Field of View by Y axis
-     */
+    /** Field of View by Y axis */
     float fov = 90.0f;
 
-    /**
-     * Width of camera rectangle
-     */
-    float width = 600.0f;
+    /** Width of camera rectangle */
+    float width = 1280.0f;
 
-    /**
-     * Height of camera rectangle
-     */
-    float height = 400.0f;
+    /**  Height of camera rectangle */
+    float height = 720.0f;
 
-    /**
-     * Camera boundaries aspect ratio
-     */
+    /** Camera boundaries aspect ratio */
     float aspectRatio = width / height;
 
-    /**
-     * Near clipping plane distance
-     */
+    /** Near clipping plane distance */
     float nearPlane = 0.1f;
 
-    /**
-     * Far clipping plane distance
-     */
+    /**  Far clipping plane distance */
     float farPlane = 100.0f;
 };
 

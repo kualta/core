@@ -1,8 +1,5 @@
 #include <core/SceneImporter.h>
-#include <core/Math.h>
 #include <core/Logger.h>
-#include <core/Entity.h>
-#include <core/Model.h>
 
 namespace core {
 

@@ -77,7 +77,6 @@ class Transform;
 template<typename T> class Script;
 
 template<typename T> class Pool;
-template<typename T> class Node;
 template<typename T> class Singleton;
 template<typename T> class Instantiable;
 template<typename T> class TypeMap;

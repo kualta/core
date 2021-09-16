@@ -23,16 +23,13 @@ Camera::Camera(
   farPlane(farPlane)
 {
     parent.assertRequiredComponent<Transform>(this);
-//    parent.translate(Vector3::zAxis(5.0f));
-//    parent.GetComponent<Transform>()->position = Vector3(1.0f, 1.0f, 1.0f);
+    transform = parent.GetComponent<Transform>();
 
     setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend);
     setViewport(GL::defaultFramebuffer.viewport().size());
-
-//    setProjectionMatrix(Matrix4::perspectiveProjection(Deg(fov), aspectRatio, nearPlane, farPlane));
-    setProjectionMatrix(Matrix4::perspectiveProjection(35.0_degf, 1.0f, 0.01f, 1000.0f));
 }
 void Camera::Tick() {
+    setProjectionMatrix(Matrix4::perspectiveProjection(Deg(fov), aspectRatio, nearPlane, farPlane) * Matrix4::translation(transform->position));
     Draw();
 }
 void Camera::Draw() {

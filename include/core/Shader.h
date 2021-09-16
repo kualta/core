@@ -25,6 +25,7 @@ public:
     void SetAmbientColor(Color3 color);
     void SetTransformMatrix(Matrix4& mtx);
     void SetProjectionMatrix(Matrix4& mtx);
+    void SetProjectionMatrix(Matrix4&& mtx);
     void SetNormalMatrix(Matrix4& mtx);
 
     static Shaders::PhongGL coloredShader;
