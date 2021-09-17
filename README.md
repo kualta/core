@@ -1,6 +1,6 @@
 <img alt="Core Engine" height=120 align="right" valign="middle" src="CoreLogo.png">
 
-## Game Engine focused on performance and flexibility
+## FINALLY, A NEAT GAME ENGINE
 
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
@@ -24,9 +24,10 @@ brew install sdl2               # on macOS (via Homebrew)
 add_subdirectory(Core)
 target_link_libraries(MyApplication PUBLIC core)
 ```
-3. Build your application
+3. Generate & Build your application
 ```
-cmake --build . --target MyApplication
+cmake -G <Your generator> ./
+cmake --build ./build --target MyApplication
 ```
 > Note: on Unix* systems use **gcc** or **g++** to compile, on Windows **MinGW** is recommended, 
 > **MSVC** compilation is possible, but not guaranteed
@@ -48,23 +49,23 @@ _For full guide, read **[Quick Start](https://github.com/lectroMathew/Core/wiki/
 using namespace core;
 int main() {
     
-CoreConfig config;
+  CoreConfig config;
 
-config
-    .Add(NewModule<InputModule>)
-    .Add(NewModule<EngineModule, InputModule>)
-    .Add(NewModule<SceneModule>)
-    .Add(NewModule<ApplicationModule>);
-CoreContainer coreContainer = config.Build();
+  config
+      .Add(NewModule<InputModule>)
+      .Add(NewModule<EngineModule, InputModule>)
+      .Add(NewModule<SceneModule>)
+      .Add(NewModule<ApplicationModule>);
+  CoreContainer coreContainer = config.Build();
 ```
 3. Create a window and enter the main engine loop like so:
 ```c++
-                                                     // window title     x, y, w,    h
-Core::GetModule<ApplicationModule>()->CreateApplication("Core Engine", { 0, 0, 1280, 720 });
+                                                       // window title     x, y, w,    h
+  Core::GetModule<ApplicationModule>()->CreateApplication("Core Engine", { 0, 0, 1280, 720 });
 
-Core::GetModule<EngineModule>()->Main(); // Enter engine main loop
+  Core::GetModule<EngineModule>()->Main(); // Enter engine main loop
 
-return 0;
+  return 0;
 }
 ```
 4. You're amazing!   
@@ -78,6 +79,11 @@ Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for 
 
 ## Contributing
 Get involved into **Core Engine** development, read **[Contributing](https://github.com/lectroMathew/Core/wiki/Contributing)** guidelines
+
+## Last but not least
+* Check out **[dev branch](https://github.com/lectroMathew/Core/tree/dev)** for latest development updates
+* **master** branch is guaranteed to build, **dev** branch is not
+* If you experience any problems with building the engine feel free to open an issue. This would help us make building process as smooth as possible
 
 ### License
 **Core Engine** is destributed under **MIT License**, check [LICENSE](LICENSE) for details
