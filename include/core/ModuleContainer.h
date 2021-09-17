@@ -4,7 +4,7 @@
 #ifndef CORE_MODULECONTAINER_H
 #define CORE_MODULECONTAINER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <memory>
 

@@ -1,7 +1,7 @@
 #ifndef CORE_RENDERER_H
 #define CORE_RENDERER_H
 
-#include <core/Essential.h>
+#include <core/Essentials.h>
 #include <core/Instantiable.h>
 #include <core/IComponent.h>
 #include <core/Shader.h>

@@ -1,8 +1,8 @@
 /**
  * This header contains forward-declarations for core and bgfx classes
  */
-#ifndef CORE_ESSENTIAL_H
-#define CORE_ESSENTIAL_H
+#ifndef CORE_ESSENTIALS_H
+#define CORE_ESSENTIALS_H
 
 // ### Core defines ###
 #ifndef SDL_MAIN_HANDLED
@@ -88,4 +88,4 @@ typedef std::string string;
 
 } // namespace core
 
-#endif //CORE_ESSENTIAL_H
+#endif //CORE_ESSENTIALS_H

@@ -1,7 +1,7 @@
 #ifndef CORE_EVENTDISPATCHER_H
 #define CORE_EVENTDISPATCHER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Event.h"
 
 namespace core {

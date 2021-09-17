@@ -6,7 +6,7 @@
 #define CORE_CORE_H
 
 #include "ModuleContainer.h"
-#include "Essential.h"
+#include "Essentials.h"
 #include "Singleton.h"
 #include "TypeMap.h"
 #include "Object.h"

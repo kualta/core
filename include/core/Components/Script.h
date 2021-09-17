@@ -1,7 +1,7 @@
 #ifndef CORE_SCRIPT_H
 #define CORE_SCRIPT_H
 
-#include <core/Essential.h>
+#include <core/Essentials.h>
 #include <core/IComponent.h>
 #include <core/ScriptBehaviour.h>
 

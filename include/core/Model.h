@@ -1,7 +1,7 @@
 #ifndef CORE_MODEL_H
 #define CORE_MODEL_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Math.h"

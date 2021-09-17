@@ -1,7 +1,7 @@
 #ifndef CORE_SCENEDATA_H
 #define CORE_SCENEDATA_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <Corrade/Containers/Array.h>
 #include <Corrade/Containers/Optional.h>

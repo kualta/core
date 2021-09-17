@@ -4,7 +4,7 @@
 #ifndef CORE_TYPEMAP_H
 #define CORE_TYPEMAP_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <atomic>
 #include <memory>

@@ -1,7 +1,7 @@
 #ifndef CORE_APPLICATIONMODULE_H
 #define CORE_APPLICATIONMODULE_H
 
-#include <core/Essential.h>
+#include <core/Essentials.h>
 #include <core/IModule.h>
 #include <core/Application.h>
 

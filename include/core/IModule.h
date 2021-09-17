@@ -4,7 +4,7 @@
 #ifndef CORE_IMODULE_H
 #define CORE_IMODULE_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Instantiable.h"
 #include "ITicker.h"
 #include "Logger.h"

@@ -4,7 +4,7 @@
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Model.h"
 
 #include <Magnum/Trade/MeshData.h>

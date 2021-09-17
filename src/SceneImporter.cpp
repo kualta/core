@@ -1,4 +1,6 @@
 #include <core/SceneImporter.h>
+#include <core/Components/Transform.h>
+#include <core/Components/Renderer.h>
 #include <core/Logger.h>
 
 namespace core {
@@ -14,7 +16,7 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
     }
 
     /* Add the object to the scene and set its transformation */
-    Entity* object = new Entity { parent };
+    Entity* object = new Entity(importer->object3DName(id), parent);
     object->setTransformation(objectData->transformation());
     object->AddComponent<Transform>();
 
@@ -66,7 +68,7 @@ void SceneImporter::ImportObjectsFromScene(SceneData& data) {
         /* The format has no scene support, display just the first loaded mesh with
            a default material and be done with it */
     } else if (!data.meshes.empty() && data.meshes[0]) {
-        Entity* object = new Entity { Scene::Get() };
+        Entity* object = new Entity("Entity", Scene::Get());
         Model* model = new Model(new Mesh(&(*data.meshes[0])), new Shader(&Shader::coloredShader));
 
         object->AddComponent<Transform>();

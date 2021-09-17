@@ -1,7 +1,7 @@
 #ifndef CORE_SCENEIMPORTER_H
 #define CORE_SCENEIMPORTER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "SceneData.h"
 #include "Importer.h"
 #include "Shader.h"

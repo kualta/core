@@ -1,7 +1,7 @@
 #ifndef CORE_CAMERA_H
 #define CORE_CAMERA_H
 
-#include <core/Essential.h>
+#include <core/Essentials.h>
 #include <core/IComponent.h>
 #include <core/Entity.h>
 #include <core/Math.h>

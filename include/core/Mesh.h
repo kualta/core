@@ -1,7 +1,7 @@
 #ifndef CORE_MESH_H
 #define CORE_MESH_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <Magnum/GL/DefaultFramebuffer.h>
 #include <Magnum/Shaders/VertexColorGL.h>
