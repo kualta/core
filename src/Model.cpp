@@ -3,7 +3,6 @@
 #include <core/SceneImporter.h>
 #include <core/Components/Camera.h>
 
-
 using namespace Magnum;
 using namespace Math::Literals;
 namespace core {

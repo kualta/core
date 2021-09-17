@@ -47,7 +47,6 @@ namespace core {
 
 class IComponent;
 class Core;
-class Cube;
 class CoreConfig;
 class EngineLoop;
 class Entity;
@@ -83,6 +82,10 @@ template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
 typedef struct Rect Rect;
+struct Cube;
+struct Sphere;
+struct Cone;
+struct Cylinder;
 
 typedef std::string string;
 

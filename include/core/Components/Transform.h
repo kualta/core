@@ -21,7 +21,7 @@ public:
     /**
      * Vector representing rotation of the entity along x, y and z axis
      */
-    Vector3 rotation { 0, 0, 0 };
+    Vector3 rotation { 1, 0, 0 };
 
     /**
      * Vector representing scale of the entity by x, y and z axis
