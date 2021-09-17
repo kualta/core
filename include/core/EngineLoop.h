@@ -1,7 +1,7 @@
 #ifndef CORE_ENGINELOOP_H
 #define CORE_ENGINELOOP_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Logger.h"
 
 #include "Modules/InputModule.h"

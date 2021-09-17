@@ -1,7 +1,7 @@
 #ifndef CORE_LOGGER_H
 #define CORE_LOGGER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Singleton.h"
 #include "Object.h"
 #include "ObjectTag.h"

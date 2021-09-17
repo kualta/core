@@ -1,7 +1,7 @@
 #ifndef CORE_IMPORTER_H
 #define CORE_IMPORTER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <Corrade/PluginManager/Manager.h>
 #include <Magnum/Trade/AbstractImporter.h>

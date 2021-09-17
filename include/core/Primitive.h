@@ -4,8 +4,9 @@
 #ifndef CORE_PRIMITIVE_H
 #define CORE_PRIMITIVE_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Model.h"
+#include "SceneData.h"
 
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/Primitives/Cube.h>
@@ -23,27 +24,23 @@ typedef struct Rect {
     float w, h;
 } Rect;
 
-class Cube : public Mesh {
-public:
-//    Cube() {
-//        GL::Mesh glMesh = MeshTools::compile(Primitives::cubeSolid());
-//        mesh = &glMesh;
-//    }
+struct Cube : public Mesh {
+    Cube() { mesh = MeshTools::compile(Primitives::cubeSolid()); }
 };
-
-class Sphere : public Mesh {
-public:
-//    Sphere() { mesh = MeshTools::compile(Primitives::uvSphereSolid(25, 25)); }
+struct Sphere : public Mesh {
+    explicit Sphere(uint32_t rings = 25, uint32_t segments = 25) {
+        mesh = MeshTools::compile(Primitives::uvSphereSolid(rings, segments));
+    }
 };
-
-class Cone : public Mesh {
-public:
-//    Cone() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
+struct Cone : public Mesh {
+    explicit Cone(uint32_t rings = 25, uint32_t segments = 25, float length = 1) {
+        mesh = MeshTools::compile(Primitives::coneSolid(rings, segments, length));
+    }
 };
-
-class Cylinder : public Mesh {
-public:
-//    Cylinder() { mesh = MeshTools::compile(Primitives::coneSolid(25, 25, 1)); }
+struct Cylinder : public Mesh {
+    explicit Cylinder(uint32_t rings = 25, uint32_t segments = 25, float length = 1) {
+        mesh = MeshTools::compile(Primitives::cylinderSolid(rings, segments, length));
+    }
 };
 }
 

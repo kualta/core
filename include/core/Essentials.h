@@ -1,8 +1,8 @@
 /**
  * This header contains forward-declarations for core and bgfx classes
  */
-#ifndef CORE_ESSENTIAL_H
-#define CORE_ESSENTIAL_H
+#ifndef CORE_ESSENTIALS_H
+#define CORE_ESSENTIALS_H
 
 // ### Core defines ###
 #ifndef SDL_MAIN_HANDLED
@@ -47,7 +47,6 @@ namespace core {
 
 class IComponent;
 class Core;
-class Cube;
 class CoreConfig;
 class EngineLoop;
 class Entity;
@@ -83,9 +82,13 @@ template<typename T> class TypeMap;
 template <class T, class D> class ModuleContainer;
 
 typedef struct Rect Rect;
+struct Cube;
+struct Sphere;
+struct Cone;
+struct Cylinder;
 
 typedef std::string string;
 
 } // namespace core
 
-#endif //CORE_ESSENTIAL_H
+#endif //CORE_ESSENTIALS_H

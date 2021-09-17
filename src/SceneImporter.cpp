@@ -1,4 +1,6 @@
 #include <core/SceneImporter.h>
+#include <core/Components/Transform.h>
+#include <core/Components/Renderer.h>
 #include <core/Logger.h>
 
 namespace core {
@@ -14,7 +16,7 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
     }
 
     /* Add the object to the scene and set its transformation */
-    Entity* object = new Entity { parent };
+    Entity* object = new Entity(importer->object3DName(id), parent);
     object->setTransformation(objectData->transformation());
     object->AddComponent<Transform>();
 
@@ -26,20 +28,20 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
 
         /* Material not available / not loaded, use a default material */
         if(materialId == -1 || !data.materials[materialId]) {
-            model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
+            model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
             Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
             if(texture) {
-                model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::texturedShader));
+                model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::texturedShader));
             } else {
-                model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
+                model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
             }
 
             /* Color-only material */
         } else {
-            model = new Model(new Mesh(&(*data.meshes[objectData->instance()])), new Shader(&Shader::coloredShader));
+            model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
         }
 
         object->AddComponent<Renderer>(model);
@@ -66,13 +68,13 @@ void SceneImporter::ImportObjectsFromScene(SceneData& data) {
         /* The format has no scene support, display just the first loaded mesh with
            a default material and be done with it */
     } else if (!data.meshes.empty() && data.meshes[0]) {
-        Entity* object = new Entity { Scene::Get() };
-        Model* model = new Model(new Mesh(&(*data.meshes[0])), new Shader(&Shader::coloredShader));
+        Entity* object = new Entity("Entity", Scene::Get());
+        Model* model = new Model(&(*data.meshes[0]), new Shader(&Shader::coloredShader));
 
         object->AddComponent<Transform>();
         object->AddComponent<Renderer>(model);
     } else {
-
+        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
     }
 }
 void SceneImporter::LoadImporter() {
@@ -146,7 +148,7 @@ void SceneImporter::ImportMaterials(SceneData &data) {
     }
 }
 void SceneImporter::ImportMeshes(SceneData& data) {
-    data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
+    data.meshes = Containers::Array<Containers::Optional<Mesh>> { importer->meshCount() };
     for(UnsignedInt i = 0; i != importer->meshCount(); ++i) {
         Logger::Log(IMPORT, INFO) << "Importing mesh " << i << " " << importer->meshName(i);
 
@@ -157,7 +159,7 @@ void SceneImporter::ImportMeshes(SceneData& data) {
         }
 
         /* Compile the mesh */
-        data.meshes[i] = MeshTools::compile(*meshData);
+        data.meshes[i] = Mesh(MeshTools::compile(*meshData));
     }
 }
 void SceneImporter::OpenFile(const string& filepath) {

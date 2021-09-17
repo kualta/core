@@ -1,7 +1,7 @@
 #ifndef CORE_PUBLISHER_H
 #define CORE_PUBLISHER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Logger.h"
 
 #include <vector>

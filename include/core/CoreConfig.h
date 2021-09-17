@@ -5,7 +5,7 @@
 #ifndef CORE_CORECONFIG_H
 #define CORE_CORECONFIG_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "ModuleContainer.h"
 #include "Core.h"
 

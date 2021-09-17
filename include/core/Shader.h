@@ -1,7 +1,7 @@
 #ifndef CORE_SHADER_H
 #define CORE_SHADER_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "FileSystem.h"
 #include "Mesh.h"
 #include "Math.h"
@@ -16,6 +16,7 @@ namespace core {
 
 class Shader {
 public:
+    Shader();
     Shader(Shaders::PhongGL* shader);
 
     void Draw(Mesh* mesh);

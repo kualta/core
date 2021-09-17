@@ -1,7 +1,7 @@
 #include <core/Components/Renderer.h>
+#include <core/Components/Transform.h>
 #include <core/Components/Camera.h>
 #include <core/Model.h>
-#include <core/Entity.h>
 
 namespace core {
 

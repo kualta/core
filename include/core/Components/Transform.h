@@ -1,7 +1,7 @@
 #ifndef CORE_COMPONENT_TRANSFORM_H
 #define CORE_COMPONENT_TRANSFORM_H
 
-#include <core/Essential.h>
+#include <core/Essentials.h>
 #include <core/IComponent.h>
 #include <core/Math.h>
 
@@ -21,7 +21,7 @@ public:
     /**
      * Vector representing rotation of the entity along x, y and z axis
      */
-    Vector3 rotation { 0, 0, 0 };
+    Vector3 rotation { 1, 0, 0 };
 
     /**
      * Vector representing scale of the entity by x, y and z axis

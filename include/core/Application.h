@@ -1,7 +1,7 @@
 #ifndef CORE_APPLICATION_H
 #define CORE_APPLICATION_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Primitive.h"
 
 #include <Magnum/Platform/Sdl2Application.h>

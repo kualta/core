@@ -1,7 +1,7 @@
 #ifndef CORE_EVENT_H
 #define CORE_EVENT_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 namespace core {
 

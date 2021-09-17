@@ -1,7 +1,7 @@
 #ifndef CORE_ICOMPONENT_H
 #define CORE_ICOMPONENT_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "ITicker.h"
 #include "Object.h"
 

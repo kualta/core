@@ -6,6 +6,11 @@ namespace core {
 Shaders::PhongGL Shader::coloredShader { NoCreate };
 Shaders::PhongGL Shader::texturedShader { NoCreate };
 
+Shader::Shader() {
+    texturedShader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture };
+    coloredShader = Shaders::PhongGL { };
+    shader = &coloredShader;
+}
 Shader::Shader(Shaders::PhongGL* shader)
 : shader(shader)
 {

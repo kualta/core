@@ -1,7 +1,7 @@
 #ifndef CORE_POOL_H
 #define CORE_POOL_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Object.h"
 
 #include <memory>

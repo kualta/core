@@ -3,17 +3,9 @@
 
 namespace core {
 
-Entity::Entity(Entity& parent, const string& name, std::vector<std::shared_ptr<IComponent>> c)
-: core::Object(name), GraphObject(&parent), components(std::move(c))
-{
-
-}
-Entity::Entity(GraphObject* parent, const string &name, std::vector<std::shared_ptr<IComponent>> c)
+Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c)
 : core::Object(name), GraphObject(parent), components(std::move(c))
 {
-
-}
-Entity::~Entity() {
 
 }
 bool Entity::operator!=(const Entity &rhs) const {

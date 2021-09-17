@@ -1,7 +1,7 @@
 #ifndef CORE_SCRIPTBEHAVIOUR_H
 #define CORE_SCRIPTBEHAVIOUR_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Entity.h"
 #include "ITicker.h"
 

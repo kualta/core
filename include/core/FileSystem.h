@@ -1,7 +1,7 @@
 #ifndef CORE_FILESYSTEM_H
 #define CORE_FILESYSTEM_H
 
-#include "Essential.h"
+#include "Essentials.h"
 #include "Logger.h"
 
 namespace core {

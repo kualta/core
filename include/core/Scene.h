@@ -1,7 +1,7 @@
 #ifndef CORE_SCENE_H
 #define CORE_SCENE_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <Magnum/SceneGraph/Object.h>
 #include <Magnum/SceneGraph/Scene.h>

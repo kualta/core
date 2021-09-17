@@ -1,4 +1,6 @@
 #include <core/Components/Camera.h>
+#include <core/Components/Transform.h>
+#include <core/Components/Renderer.h>
 #include <core/Color.h>
 #include <core/Math.h>
 #include <core/Scene.h>

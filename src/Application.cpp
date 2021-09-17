@@ -14,7 +14,6 @@ Application::Application(const string& title, Rect rect, int args)
                             .setTitle(title)
                             .setWindowFlags(Configuration::WindowFlag::Resizable)
                             .setSize(Magnum::Vector2i(rect.w, rect.h)))
-
 {
     GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
@@ -25,6 +24,7 @@ Application::Application(const string& title, Rect rect, int args)
 }
 void Application::drawEvent() {
     swapBuffers();
+    redraw();
 }
 void Application::resetEvent() {
     GL::defaultFramebuffer.clear(GL::FramebufferClear::Color|GL::FramebufferClear::Depth);

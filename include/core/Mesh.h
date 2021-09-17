@@ -1,7 +1,7 @@
 #ifndef CORE_MESH_H
 #define CORE_MESH_H
 
-#include "Essential.h"
+#include "Essentials.h"
 
 #include <Magnum/GL/DefaultFramebuffer.h>
 #include <Magnum/Shaders/VertexColorGL.h>
@@ -17,13 +17,13 @@ namespace core {
 class Mesh {
 public:
     Mesh();
-    Mesh(GL::Mesh* glMesh);
+    Mesh(GL::Mesh&& glMesh);
 
     GL::Mesh* GetGLMesh();
 
 protected:
 
-    GL::Mesh* mesh;
+    GL::Mesh mesh;
 
 };
 
