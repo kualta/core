@@ -1,4 +1,4 @@
-<img alt="Core Engine" height=115 align="right" valign="middle" src="CoreLogo.png">
+<img alt="Core Engine" height=110 align="right" valign="middle" src="CoreLogo.png">
 
 ## FINALLY, A NEAT GAME ENGINE
 
