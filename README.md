@@ -5,6 +5,12 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
 
+## Development 
+### See **[Core Engine Roadmap](https://github.com/lectroMathew/Core/projects/1)** to get a grasp on current development status and future updates 
+#### Check out **[dev](https://github.com/lectroMathew/Core/tree/dev)** branch for latest development updates
+
+
+
 ## Usage
 
 ### Building 
@@ -25,6 +31,7 @@ add_subdirectory(Core)
 target_link_libraries(MyApplication PUBLIC core)
 ```
 3. Generate & Build your application
+> Note: **master** branch is guaranteed to build
 ```
 cmake -G <Your generator> ./
 cmake --build ./build --target MyApplication
@@ -33,6 +40,8 @@ cmake --build ./build --target MyApplication
 > **MSVC** compilation is possible, but not guaranteed
  
 > Note: Make sure you're using 64bit version of your compiler of choice
+
+If you experience any problems with building the engine feel free to open an issue. This would help us make building process as smooth as possible
 
 
 ### Using the engine
@@ -73,19 +82,15 @@ int main() {
 Congratulations, you've successfully built your `Core` and put it to work!   
 Find out how to make more exciting stuff with **Core Engine** by reading architecture guides on our wiki:
 
-### **[Engine Architecture](https://github.com/lectroMathew/Core/wiki/Architecture)** introduction
+### **[Engine Architecture](https://github.com/lectroMathew/Core/wiki/Architecture)** introduction   
+<br>
 
 Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information and guides
 
 ## Contributing
 Get involved into **Core Engine** development, read **[Contributing](https://github.com/lectroMathew/Core/wiki/Contributing)** guidelines
 
-## Last but not least
-* Check out **[dev branch](https://github.com/lectroMathew/Core/tree/dev)** for latest development updates
-* **master** branch is guaranteed to build, **dev** branch is not
-* If you experience any problems with building the engine feel free to open an issue. This would help us make building process as smooth as possible
-
-### License
+## License
 **Core Engine** is destributed under **MIT License**, check [LICENSE](LICENSE) for details
 
 <br>
