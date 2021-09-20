@@ -33,7 +33,7 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
             Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
-            if(texture) {
+            if (texture) {
                 model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::texturedShader));
             } else {
                 model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));

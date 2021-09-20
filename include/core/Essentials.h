@@ -86,6 +86,10 @@ struct Cube;
 struct Sphere;
 struct Cone;
 struct Cylinder;
+struct WireCube;
+struct WireSphere;
+struct WireCone;
+struct WireCylinder;
 
 typedef std::string string;
 

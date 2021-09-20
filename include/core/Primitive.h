@@ -27,9 +27,17 @@ typedef struct Rect {
 struct Cube : public Mesh {
     Cube() { mesh = MeshTools::compile(Primitives::cubeSolid()); }
 };
+struct WireCube : public Mesh {
+    WireCube() { mesh = MeshTools::compile(Primitives::cubeWireframe()); }
+};
 struct Sphere : public Mesh {
     explicit Sphere(uint32_t rings = 25, uint32_t segments = 25) {
         mesh = MeshTools::compile(Primitives::uvSphereSolid(rings, segments));
+    }
+};
+struct WireSphere : public Mesh {
+    explicit WireSphere(uint32_t rings = 16, uint32_t segments = 16) {
+        mesh = MeshTools::compile(Primitives::uvSphereWireframe(rings, segments));
     }
 };
 struct Cone : public Mesh {
@@ -37,9 +45,19 @@ struct Cone : public Mesh {
         mesh = MeshTools::compile(Primitives::coneSolid(rings, segments, length));
     }
 };
+struct WireCone : public Mesh {
+    explicit WireCone(uint32_t segments = 16, float length = 1) {
+        mesh = MeshTools::compile(Primitives::coneWireframe(segments, length));
+    }
+};
 struct Cylinder : public Mesh {
     explicit Cylinder(uint32_t rings = 25, uint32_t segments = 25, float length = 1) {
         mesh = MeshTools::compile(Primitives::cylinderSolid(rings, segments, length));
+    }
+};
+struct WireCylinder : public Mesh {
+    explicit WireCylinder(uint32_t rings = 16, uint32_t segments = 16, float length = 1) {
+        mesh = MeshTools::compile(Primitives::cylinderWireframe(rings, segments, length));
     }
 };
 }
