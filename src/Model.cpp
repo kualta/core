@@ -31,10 +31,5 @@ void Model::Draw(Matrix4& transformMtx, Camera& camera) {
     shader->SetProjectionMatrix(camera.projectionMatrix());
     shader->Draw(mesh);
 }
-void Model::Load(const string& filepath) {
-    SceneImporter sceneImporter;
-    SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    sceneImporter.ImportObjectsFromScene(*sceneData);
-}
 
 }

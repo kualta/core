@@ -97,6 +97,12 @@ public:
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;
 
+    /**
+     * Imports and adds model to the scene
+     * @param filepath - path to model file
+     */
+    static void Load(const string& filepath);
+
 protected:
 
     ComponentsContainer components;
@@ -107,6 +113,9 @@ protected:
 
 
 #include "Entity.tpp"
+#include "Shader.h"
+#include "Mesh.h"
+#include "Math.h"
 
 
 #endif //INTERFACERS_ENTITY_H

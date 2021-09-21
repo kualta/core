@@ -16,12 +16,6 @@ public:
 
     void Draw(Matrix4 &transformMtx, Camera &camera);
 
-    /**
-     * Imports and adds model to the scene
-     * @param filepath - path to model file
-     */
-    static void Load(const string& filepath);
-
     Color3  color;
     Mesh*   mesh;
     Shader* shader;
