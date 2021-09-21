@@ -39,6 +39,8 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <memory>
+#include <utility>
 #include <cstdint>
 #include <cassert>
 // Core includes
@@ -92,6 +94,11 @@ struct WireCone;
 struct WireCylinder;
 
 typedef std::string string;
+
+template <typename T>
+using shared = std::shared_ptr<T>;
+
+using std::make_shared;
 
 } // namespace core
 

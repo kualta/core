@@ -3,6 +3,8 @@
 #include <core/Components/Renderer.h>
 #include <core/Logger.h>
 
+#include <memory>
+
 namespace core {
 
 void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id)
@@ -22,26 +24,26 @@ void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedI
 
     Model* model;
 
-    /* Add a drawable if the object has a mesh and the mesh is loaded */
+    /* The object has a mesh and the mesh is loaded */
     if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && data.meshes[objectData->instance()]) {
         const Int materialId = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
 
         /* Material not available / not loaded, use a default material */
         if(materialId == -1 || !data.materials[materialId]) {
-            model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
+            model = new Model(shared<Mesh>(&(*data.meshes[objectData->instance()])), std::make_shared<Shader>(&Shader::coloredShader));
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
             Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
             if (texture) {
-                model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::texturedShader));
+                model = new Model(shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::texturedShader));
             } else {
-                model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
+                model = new Model(shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::coloredShader));
             }
 
             /* Color-only material */
         } else {
-            model = new Model(&(*data.meshes[objectData->instance()]), new Shader(&Shader::coloredShader));
+            model = new Model(shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::coloredShader));
         }
 
         object->AddComponent<Renderer>(model);
@@ -69,7 +71,7 @@ void SceneImporter::ImportObjectsFromScene(SceneData& data) {
            a default material and be done with it */
     } else if (!data.meshes.empty() && data.meshes[0]) {
         Entity* object = new Entity("Entity", Scene::Get());
-        Model* model = new Model(&(*data.meshes[0]), new Shader(&Shader::coloredShader));
+        Model* model = new Model(shared<Mesh>(&(*data.meshes[0])), make_shared<Shader>(&Shader::coloredShader));
 
         object->AddComponent<Transform>();
         object->AddComponent<Renderer>(model);

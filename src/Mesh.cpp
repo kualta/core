@@ -10,8 +10,5 @@ Mesh::Mesh(GL::Mesh&& glMesh)
 {
 
 }
-Mesh::Mesh() {
-
-}
 
 }

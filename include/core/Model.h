@@ -10,15 +10,16 @@ namespace core {
 
 class Model {
 public:
-    Model(Mesh* mesh, Shader* shader);
-    Model();
-    ~Model();
+    Model(const shared<Mesh>& mesh, const shared<Shader>& shader);
 
     void Draw(Matrix4 &transformMtx, Camera &camera);
 
-    Color3  color;
-    Mesh*   mesh;
-    Shader* shader;
+protected:
+
+    Color3         color;
+    shared<Mesh>   mesh;
+    shared<Shader> shader;
+
 };
 
 } // namespace core

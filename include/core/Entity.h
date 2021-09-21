@@ -29,7 +29,7 @@ typedef std::vector<std::shared_ptr<core::IComponent>> ComponentsContainer;
  */
 class Entity final : public Object, public GraphObject, public Instantiable<Entity> {
 public:
-    explicit Entity(const string &name = "Entity", GraphObject *parent = Scene::Get(), ComponentsContainer c = { });
+    explicit Entity(const string& name = "Entity", GraphObject* parent = Scene::Get(), ComponentsContainer c = { });
 
     /**
      * Updates all components of this entity
@@ -98,7 +98,7 @@ public:
     bool operator!=(const Entity &rhs) const;
 
     /**
-     * Imports and adds model to the scene
+     * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */
     static void Load(const string& filepath);
@@ -111,11 +111,6 @@ protected:
 
 } // namespace core
 
-
 #include "Entity.tpp"
-#include "Shader.h"
-#include "Mesh.h"
-#include "Math.h"
-
 
 #endif //INTERFACERS_ENTITY_H

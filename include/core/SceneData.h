@@ -11,6 +11,8 @@
 #include <Magnum/GL/TextureFormat.h>
 #include <Magnum/Trade/PhongMaterialData.h>
 
+#include <core/Logger.h>
+
 using namespace Magnum;
 namespace core {
 
