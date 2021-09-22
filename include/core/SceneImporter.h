@@ -23,6 +23,8 @@ public:
 
     void CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id);
     void ImportObjectsFromScene(SceneData& data);
+    void AddModel(vector<shared<Model>>& models, SceneData& data, UnsignedInt id);
+    vector<shared<Model>> ImportModelsFromScene(SceneData& data);
 
 protected:
 
@@ -32,6 +34,7 @@ protected:
     void ImportTextures(SceneData& data);
     void ImportMaterials(SceneData& data);
     void ImportMeshes(SceneData& data);
+    void ImportChildrenData(SceneData& data);
 
     Containers::Pointer<Trade::AbstractImporter> importer;
 

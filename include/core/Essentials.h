@@ -93,12 +93,16 @@ struct WireSphere;
 struct WireCone;
 struct WireCylinder;
 
-typedef std::string string;
 
+//      std typedefs
 template <typename T>
 using shared = std::shared_ptr<T>;
-
+template <typename T>
+using unique = std::unique_ptr<T>;
 using std::make_shared;
+using std::vector;
+using std::string;
+
 
 } // namespace core
 

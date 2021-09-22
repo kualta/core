@@ -14,6 +14,8 @@ public:
 
     void Draw(Matrix4 &transformMtx, Camera &camera);
 
+    static vector<shared<Model>> Load(const string& filepath);
+
 protected:
 
     Color3         color;

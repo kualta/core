@@ -17,6 +17,7 @@ namespace core {
 class Shader {
 public:
     explicit Shader(Shaders::PhongGL* shader);
+    ~Shader() { };
 
     void Draw(Mesh* mesh);
 

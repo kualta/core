@@ -1,6 +1,8 @@
 #include <core/Model.h>
 #include <core/Logger.h>
 #include <core/Components/Camera.h>
+#include <core/SceneImporter.h>
+#include <core/SceneData.h>
 
 using namespace Magnum;
 using namespace Math::Literals;
@@ -22,6 +24,11 @@ void Model::Draw(Matrix4& transformMtx, Camera& camera) {
     shader->SetNormalMatrix(transformMtx);
     shader->SetProjectionMatrix(camera.projectionMatrix());
     shader->Draw(mesh.get());
+}
+vector<shared<Model>> Model::Load(const string& filepath) {
+    SceneImporter sceneImporter;
+    SceneData* sceneData = sceneImporter.ImportScene(filepath);
+    return sceneImporter.ImportModelsFromScene(*sceneData);
 }
 
 }

@@ -10,6 +10,7 @@
 #include <Magnum/GL/Texture.h>
 #include <Magnum/GL/TextureFormat.h>
 #include <Magnum/Trade/PhongMaterialData.h>
+#include <Magnum/Trade/SceneData.h>
 
 #include <core/Logger.h>
 
@@ -17,9 +18,10 @@ using namespace Magnum;
 namespace core {
 
 struct SceneData {
-    Containers::Array<Containers::Optional<Mesh>> meshes { };
-    Containers::Array<Containers::Optional<GL::Texture2D>> textures { };
-    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials { };
+    Containers::Optional<Trade::SceneData> childrenData;
+    Containers::Array<Containers::Optional<GL::Mesh>> meshes;
+    Containers::Array<Containers::Optional<GL::Texture2D>> textures;
+    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials;
 };
 
 }
