@@ -5,8 +5,8 @@ namespace core {
 GL::Mesh* Mesh::GetGLMesh() {
     return mesh;
 }
-Mesh::Mesh(GL::Mesh *glMesh)
-: mesh(glMesh)
+Mesh::Mesh(const GL::Mesh* glMesh)
+: mesh(const_cast<GL::Mesh*>(glMesh))
 {
 
 }

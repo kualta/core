@@ -28,7 +28,7 @@ void Model::Draw(Matrix4& transformMtx, Camera& camera) {
 vector<shared<Model>> Model::Load(const string& filepath) {
     SceneImporter sceneImporter;
     SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    return sceneImporter.ImportModelsFromScene(*sceneData);
+    return sceneImporter.ImportModels(*sceneData);
 }
 
 }

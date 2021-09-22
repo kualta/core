@@ -21,23 +21,23 @@ public:
      */
     SceneData* ImportScene(const string& filepath);
 
-    void CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id);
-    void ImportObjectsFromScene(SceneData& data);
-    void AddModel(vector<shared<Model>>& models, SceneData& data, UnsignedInt id);
-    vector<shared<Model>> ImportModelsFromScene(SceneData& data);
+    vector<shared<Entity>> ImportEntities(const SceneData& sceneData);
+    vector<shared<Model>> ImportModels(const SceneData& sceneData);
 
 protected:
 
-    void LoadImporter();
+    void InitImporter();
     void OpenFile(const string& filepath);
-
-    void ImportTextures(SceneData& data);
-    void ImportMaterials(SceneData& data);
-    void ImportMeshes(SceneData& data);
     void ImportChildrenData(SceneData& data);
+    void ImportMaterials(SceneData& data);
+    void ImportTextures(SceneData& data);
+    void ImportMeshes(SceneData& data);
+    void AddEntity(vector <shared<Entity>>& container, const SceneData& sceneData, GraphObject* parent, uint32_t id);
+    void AddModel(vector<shared<Model>>& container, const SceneData& sceneData, uint32_t id);
+
+    shared<Model> LoadModel(const SceneData& data, const unique<Trade::ObjectData3D>& objectData) const;
 
     Containers::Pointer<Trade::AbstractImporter> importer;
-
 };
 
 }

@@ -101,7 +101,7 @@ public:
      * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */
-    static void Load(const string& filepath);
+    static vector<shared<Entity>> Load(const string& filepath);
 
 protected:
 

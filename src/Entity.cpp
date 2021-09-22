@@ -24,10 +24,10 @@ void Entity::Tick() {
 bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();
 }
-void Entity::Load(const string& filepath) {
+vector<shared<Entity>> Entity::Load(const string& filepath) {
     SceneImporter sceneImporter;
     SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    sceneImporter.ImportObjectsFromScene(*sceneData);
+    return sceneImporter.ImportEntities(*sceneData);
 }
 
 } // namespace core

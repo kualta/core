@@ -11,7 +11,7 @@ namespace core {
 class Renderer : public IComponent, public Instantiable<Renderer> {
 public:
     Renderer(Entity& parent,
-             Model* model,
+             const shared<Model>& model,
              const string& name = "Renderer");
 
     /**
@@ -25,7 +25,7 @@ public:
 protected:
     void Tick() override;
 
-    Model*     model;
+    shared<Model>     model;
     Transform* transform { nullptr };
 
 };
