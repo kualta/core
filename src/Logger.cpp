@@ -11,12 +11,12 @@ Logger::Logger() : Object("Logger") {
 }
 Log Logger::Log(objectTag tag, logLevel level, const LogPlace& place) {
     switch (level) {
-        case   ERR: return core::Log(std::cout, ERR,   tag, place);
-        case  WARN: return core::Log(std::cout, WARN,  tag, place);
-        case  INFO: return core::Log(std::cout, INFO,  tag, place);
-        case DEBUG: return core::Log(std::cout, DEBUG, tag, place);
+        case   ERR: return core::Log { std::cout, ERR,   tag, place };
+        case  WARN: return core::Log { std::cout, WARN,  tag, place };
+        case  INFO: return core::Log { std::cout, INFO,  tag, place };
+        case DEBUG: return core::Log { std::cout, DEBUG, tag, place };
     }
-    return core::Log(std::cout, ERR, INTERNAL);
+    return core::Log { std::cout, ERR, INTERNAL };
 }
 string Logger::GetPassText(passInfo success) {
    string text;
@@ -136,10 +136,10 @@ Log::~Log() {
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace) :
-output(out),
-level(level),
-logPlace(std::move(logPlace))
+Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace)
+: level(level),
+logPlace(std::move(logPlace)),
+output(out)
 {
     logStream << "- ";
     Logger::LogTimeStamp(logStream);

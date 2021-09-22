@@ -108,10 +108,7 @@ public:
 
 class Log {
 public:
-    Log(std::ostream& out,
-        logLevel level = INFO,
-        objectTag tag  = GENERAL,
-        LogPlace place = LogPlace());
+    Log(std::ostream& out, logLevel level = INFO, objectTag tag  = GENERAL, LogPlace place = LogPlace());
     ~Log();
 
     template<class T>

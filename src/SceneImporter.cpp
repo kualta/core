@@ -8,7 +8,39 @@
 
 namespace core {
 
-void SceneImporter::LoadImporter() {
+vector<shared<Entity>> SceneImporter::ImportEntities(const SceneData& sceneData) {
+    vector<shared<Entity>> container;
+    if (sceneData.childrenData) {
+        for (uint32_t id : sceneData.childrenData->children3D()) {
+            AddEntity(container, sceneData, Scene::Get(), id);
+        }
+    } else if (!sceneData.meshes.empty() && sceneData.meshes[0]) {
+        shared<Entity> object = std::make_shared<Entity>("Entity", Scene::Get());
+        object->AddComponent<Transform>();
+        object->AddComponent<Renderer>(std::make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])),
+                                                               make_shared<Shader>(&Shader::coloredShader)));
+        container.push_back(std::move(object));
+    } else {
+        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
+    }
+
+    return container;
+}
+vector<shared<Model>> SceneImporter::ImportModels(const SceneData& sceneData) {
+    vector<shared<Model>> models;
+    if (sceneData.childrenData) {
+        for (uint32_t id : sceneData.childrenData->children3D()) {
+            AddModel(models, sceneData, id);
+        }
+    } else if (!sceneData.meshes.empty() && sceneData.meshes[0]) {
+        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])), make_shared<Shader>(&Shader::coloredShader)));
+    } else {
+        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes or scene sceneData";
+    }
+
+    return models;
+}
+void SceneImporter::InitImporter() {
     importer = manager.loadAndInstantiate("AnySceneImporter");
     if (!importer) {
         Logger::Log(IMPORT, ERR_HERE) << "Failed to load or instantiate importer";
@@ -16,8 +48,15 @@ void SceneImporter::LoadImporter() {
     }
     Logger::Log(IMPORT, DEBUG) << "Loaded model importer successfully";
 }
+void SceneImporter::OpenFile(const string& filepath) {
+    if (!importer->openFile(filepath)) {
+        Logger::Log(IMPORT, ERR_HERE) << "Failed to open file " << filepath;
+        throw std::runtime_error("Failed to open file " + filepath);
+    }
+    Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
+}
 SceneData* SceneImporter::ImportScene(const string& filepath) {
-    if (!importer) { LoadImporter(); }
+    if (!importer) { InitImporter(); }
     OpenFile(filepath);
 
     SceneData* data = new SceneData();
@@ -103,125 +142,63 @@ void SceneImporter::ImportChildrenData(SceneData &data) {
         }
     }
 }
-void SceneImporter::OpenFile(const string& filepath) {
-    if (!importer->openFile(filepath)) {
-        Logger::Log(IMPORT, ERR_HERE) << "Failed to open file " << filepath;
-        throw std::runtime_error("Failed to open file " + filepath);
-    }
-    Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
-}
-void SceneImporter::CreateObject(GraphObject* parent, SceneData& data, UnsignedInt id)
+void SceneImporter::AddEntity(vector <shared<Entity>>& container, const SceneData& sceneData, GraphObject* parent, uint32_t id)
 {
-    Logger::Log(IMPORT, INFO) << "Importing object " << id << " " << importer->object3DName(id);
-
-    Containers::Pointer<Trade::ObjectData3D> objectData = importer->object3D(id);
+    Logger::Log(IMPORT, INFO) << "Importing entity " << id << " " << importer->object3DName(id);
+    unique<Trade::ObjectData3D> objectData = importer->object3D(id);
     if (!objectData) {
-        Logger::Log(IMPORT, ERR_HERE) << "Cannot import object, skipping";
+        Logger::Log(IMPORT, ERR_HERE) << "Cannot import entity with id " << id << ", skipping";
         return;
     }
 
-    /* Add the object to the scene and set its transformation */
-    Entity* object = new Entity(importer->object3DName(id), parent);
-    object->setTransformation(objectData->transformation());
-    object->AddComponent<Transform>();
-
-    Model* model;
-
-    /* The object has a cubeMesh and the cubeMesh is loaded */
-    if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && data.meshes[objectData->instance()]) {
-        const int32_t materialId = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
-
-        /* Material not available / not loaded, use a default material */
-        if(materialId == -1 || !data.materials[materialId]) {
-            model = new Model(std::make_shared<Mesh>(&(*data.meshes[id])), std::make_shared<Shader>(&Shader::coloredShader));
-
-            /* Textured material. If the texture failed to load, again just use a default colored material. */
-        } else if(data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
-            Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
-            if (texture) {
-                model = new Model(std::make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::texturedShader));
-            } else {
-                model = new Model(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::coloredShader));
-            }
-
-            /* Color-only material */
-        } else {
-            model = new Model(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::coloredShader));
-        }
-
-        object->AddComponent<Renderer>(model);
-    }
+    shared<Entity> entity = std::make_shared<Entity>(importer->object3DName(id), parent);
+    entity->AddComponent<Transform>();
+    entity->AddComponent<Renderer>(LoadModel(sceneData, objectData));
+    entity->setTransformation(objectData->transformation());
+    container.push_back(std::move(entity));
 
     /* Recursively add children */
     for(std::size_t childId : objectData->children())
-        CreateObject(object, data, childId);
+        AddEntity(container, sceneData, entity.get(), childId);
 }
-void SceneImporter::ImportObjectsFromScene(SceneData& data) {
-    if (data.childrenData) {
-        for (uint32_t id : data.childrenData->children3D()) {
-            CreateObject(Scene::Get(), data, id);
-        }
-    } else if (!data.meshes.empty() && data.meshes[0]) {
-        Entity* object = new Entity("Entity", Scene::Get());
-        Model* model = new Model(make_shared<Mesh>(&(*data.meshes[0])), make_shared<Shader>(&Shader::coloredShader));
-
-        object->AddComponent<Transform>();
-        object->AddComponent<Renderer>(model);
-    } else {
-        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
-    }
-}
-void SceneImporter::AddModel(vector<shared<Model>>& models, SceneData& data, uint32_t id) {
-    shared<Model> model;
-
+void SceneImporter::AddModel(vector<shared<Model>>& container, const SceneData& sceneData, uint32_t id) {
     Logger::Log(IMPORT, INFO) << "Importing object " << id << " " << importer->object3DName(id);
     unique<Trade::ObjectData3D> objectData = importer->object3D(id);
     if (!objectData) {
         Logger::Log(IMPORT, ERR_HERE) << "Cannot import object with id " << id << ", skipping";
         return;
     }
+    container.push_back(LoadModel(sceneData, objectData));
 
-    /* The object has a cubeMesh and the cubeMesh is loaded */
-    if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && objectData->instance() != -1 && data.meshes[objectData->instance()]) {
-        const Int materialId = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
+    for(std::size_t childId : objectData->children())
+        AddModel(container, sceneData, childId);
+}
+shared<Model> SceneImporter::LoadModel(const SceneData& data, const unique<Trade::ObjectData3D>& objectData) const {
+    shared<Model> model;
+    int32_t id = objectData->instance();
+
+    if(objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && id != -1 && data.meshes[id]) {
+        const int32_t materialId = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
 
         /* Material not available / not loaded, use a default material */
         if (materialId == -1 || !data.materials[materialId]) {
-            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[objectData->instance()])), std::make_shared<Shader>(&Shader::coloredShader));
+            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::coloredShader));
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if (data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
-            Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
+            const Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
+
             if (texture) {
-                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::texturedShader));
+                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::texturedShader));
             } else {
-                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::coloredShader));
+                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::coloredShader));
             }
         } else {
-            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[objectData->instance()])), make_shared<Shader>(&Shader::coloredShader));
+            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>(&Shader::coloredShader));
         }
     }
 
-    models.push_back(std::move(model));
-
-    for(std::size_t childId : objectData->children())
-        AddModel(models, data, childId);
-}
-vector<shared<Model>> SceneImporter::ImportModelsFromScene(SceneData& data) {
-    vector<shared<Model>> models;
-    if (data.childrenData) {
-
-        for (uint32_t id : data.childrenData->children3D()) {
-            AddModel(models, data, id);
-        }
-
-    } else if (!data.meshes.empty() && data.meshes[0]) {
-        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*data.meshes[0])), make_shared<Shader>(&Shader::coloredShader)));
-    } else {
-        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes or scene data";
-    }
-
-    return models;
+    return model;
 }
 
 }

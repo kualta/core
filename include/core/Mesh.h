@@ -16,7 +16,7 @@ namespace core {
 
 class Mesh {
 public:
-    explicit Mesh(GL::Mesh *glMesh);
+    explicit Mesh(const GL::Mesh* glMesh);
 
     GL::Mesh* GetGLMesh();
 

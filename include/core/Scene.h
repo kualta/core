@@ -44,6 +44,7 @@ namespace core {
 class Scene : public SceneGraph::Scene<SceneGraph::MatrixTransformation3D>, public Singleton<Scene> {
 public:
 
+    // TODO: Add Scene::Root()
     static SceneGraph::DrawableGroup3D drawables;
 
 };

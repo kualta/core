@@ -5,7 +5,7 @@
 
 namespace core {
 
-Renderer::Renderer(Entity& parent, Model* model, const string& name)
+Renderer::Renderer(Entity& parent, const shared<Model>& model, const string& name)
 : IComponent(parent, name),
   model(model)
 {
