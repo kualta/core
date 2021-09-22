@@ -21,7 +21,19 @@ public:
      */
     SceneData* ImportScene(const string& filepath);
 
+    /**
+     * Creates entities with models from SceneData
+     * @note Each Entity in return vector has Transform and Renderer components added
+     * @param sceneData - SceneData to import from
+     * @return vector<shared<Entity>>
+     */
     vector<shared<Entity>> ImportEntities(const SceneData& sceneData);
+
+    /**
+     * Imports models from SceneData
+     * @param sceneData - SceneData to import from
+     * @return vector<shared<Model>>
+     */
     vector<shared<Model>> ImportModels(const SceneData& sceneData);
 
 protected:
