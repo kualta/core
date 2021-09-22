@@ -16,14 +16,13 @@ namespace core {
 
 class Mesh {
 public:
-    Mesh();
-    Mesh(GL::Mesh&& glMesh);
+    explicit Mesh(GL::Mesh *glMesh);
 
     GL::Mesh* GetGLMesh();
 
 protected:
 
-    GL::Mesh mesh;
+    GL::Mesh* mesh;
 
 };
 

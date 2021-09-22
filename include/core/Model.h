@@ -10,21 +10,18 @@ namespace core {
 
 class Model {
 public:
-    Model(Mesh* mesh, Shader* shader);
-    Model();
-    ~Model();
+    Model(const shared<Mesh>& mesh, const shared<Shader>& shader);
 
     void Draw(Matrix4 &transformMtx, Camera &camera);
 
-    /**
-     * Imports and adds model to the scene
-     * @param filepath - path to model file
-     */
-    static void Load(const string& filepath);
+    static vector<shared<Model>> Load(const string& filepath);
 
-    Color3  color;
-    Mesh*   mesh;
-    Shader* shader;
+protected:
+
+    Color3         color;
+    shared<Mesh>   mesh;
+    shared<Shader> shader;
+
 };
 
 } // namespace core

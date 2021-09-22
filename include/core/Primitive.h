@@ -25,23 +25,27 @@ typedef struct Rect {
 } Rect;
 
 struct Cube : public Mesh {
-    Cube() { mesh = MeshTools::compile(Primitives::cubeSolid()); }
+    explicit Cube() : Mesh(&cubeMesh) { }
+
+    static GL::Mesh cubeMesh;
 };
 struct Sphere : public Mesh {
-    explicit Sphere(uint32_t rings = 25, uint32_t segments = 25) {
-        mesh = MeshTools::compile(Primitives::uvSphereSolid(rings, segments));
-    }
+    explicit Sphere() : Mesh(&sphereMesh) { }
+
+    static GL::Mesh sphereMesh;
 };
 struct Cone : public Mesh {
-    explicit Cone(uint32_t rings = 25, uint32_t segments = 25, float length = 1) {
-        mesh = MeshTools::compile(Primitives::coneSolid(rings, segments, length));
-    }
+    explicit Cone() : Mesh(&coneMesh) { }
+
+    static GL::Mesh coneMesh;
 };
 struct Cylinder : public Mesh {
-    explicit Cylinder(uint32_t rings = 25, uint32_t segments = 25, float length = 1) {
-        mesh = MeshTools::compile(Primitives::cylinderSolid(rings, segments, length));
-    }
+    explicit Cylinder() : Mesh(&cylinderMesh) { }
+
+    static GL::Mesh cylinderMesh;
 };
+
+
 }
 
 

@@ -3,14 +3,11 @@
 namespace core {
 
 GL::Mesh* Mesh::GetGLMesh() {
-    return &mesh;
+    return mesh;
 }
-Mesh::Mesh(GL::Mesh&& glMesh)
-: mesh(std::move(glMesh))
+Mesh::Mesh(GL::Mesh *glMesh)
+: mesh(glMesh)
 {
-
-}
-Mesh::Mesh() {
 
 }
 

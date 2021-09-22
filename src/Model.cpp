@@ -1,20 +1,14 @@
 #include <core/Model.h>
 #include <core/Logger.h>
-#include <core/SceneImporter.h>
 #include <core/Components/Camera.h>
+#include <core/SceneImporter.h>
+#include <core/SceneData.h>
 
 using namespace Magnum;
 using namespace Math::Literals;
 namespace core {
 
-Model::~Model() {
-    delete mesh;
-    delete shader;
-}
-Model::Model() {
-
-}
-Model::Model(Mesh* mesh, Shader* shader)
+Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
 : mesh(mesh), shader(shader)
 {
     color = Color3::fromHsv({333.0_degf, 0.5f, 1.0f});
@@ -29,12 +23,12 @@ void Model::Draw(Matrix4& transformMtx, Camera& camera) {
     shader->SetTransformMatrix(transformMtx);
     shader->SetNormalMatrix(transformMtx);
     shader->SetProjectionMatrix(camera.projectionMatrix());
-    shader->Draw(mesh);
+    shader->Draw(mesh.get());
 }
-void Model::Load(const string& filepath) {
+vector<shared<Model>> Model::Load(const string& filepath) {
     SceneImporter sceneImporter;
     SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    sceneImporter.ImportObjectsFromScene(*sceneData);
+    return sceneImporter.ImportModelsFromScene(*sceneData);
 }
 
 }
