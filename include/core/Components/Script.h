@@ -3,27 +3,29 @@
 
 #include <core/Essentials.h>
 #include <core/IComponent.h>
-#include <core/ScriptBehaviour.h>
+#include <core/ScriptedBehaviour.h>
 
 namespace core {
 
 template<typename T>
 class Script : public IComponent {
-    static_assert(std::is_base_of<core::ScriptBehaviour, T>::value, "Script T must inherit from ScriptBehaviour");
+    static_assert(std::is_base_of<core::ScriptedBehaviour, T>::value, "Script T must inherit from ScriptedBehaviour");
 
 public:
     Script(Entity& parent, const string& name = "Script");
     ~Script();
 
-    void FixedTick() { scriptObj->FixedTick(); }
+    void FixedTick() override { scriptObj->FixedTick(); }
 
-    void Tick() { scriptObj->Tick(); };
+    void EarlyTick() override { scriptObj->EarlyTick(); };
 
-    void LateTick() { scriptObj->LateTick(); }
+    void Tick()      override { scriptObj->Tick(); };
+
+    void LateTick()  override { scriptObj->LateTick(); }
 
 protected:
 
-    ScriptBehaviour* scriptObj;
+    ScriptedBehaviour* scriptObj;
 };
 
 template<typename T>

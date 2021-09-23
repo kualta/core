@@ -10,16 +10,21 @@ namespace core {
 class ApplicationModule : public IModule {
 public:
     ApplicationModule();
-    ~ApplicationModule();
 
-    void CreateApplication(const string &title = "Core Application",
-                           Rect rect = { 0, 0, 1280, 720 });
+    void CreateApplication(const string &title = "Core Application", Rect rect = { 0, 0, 1280, 720 });
+
+    Vector2 GetWindowDpiScale(uint32_t id = 0);
+    Vector2i GetWindowSize(uint32_t id = 0);
+    Vector2i GetFrameBufferSize(uint32_t id = 0);
+
+    void SwapRedraw();
+    void Redraw();
 
 protected:
 
     void EarlyTick() override;
     void Tick() override;
-    void UpdateApps();
+    void LateTick() override;
 
 private:
 

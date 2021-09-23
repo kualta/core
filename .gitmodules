@@ -10,7 +10,12 @@
 [submodule "lib/magnum-plugins"]
 	path = lib/magnum-plugins
 	url = https://github.com/lectroMathew/magnum-plugins.git
-
 [submodule "lib/assimp"]
 	path = lib/assimp
 	url = https://github.com/lectroMathew/assimp.git
+[submodule "lib/imgui"]
+	path = lib/imgui
+	url = https://github.com/lectroMathew/imgui
+[submodule "lib/magnum-integration"]
+	path = lib/magnum-integration
+	url = https://github.com/lectroMathew/magnum-integration

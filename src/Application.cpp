@@ -17,8 +17,15 @@ Application::Application(const string& title, Rect rect, int args)
 {
     GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
+    GL::Renderer::enable(GL::Renderer::Feature::Blending);
+    GL::Renderer::enable(GL::Renderer::Feature::ScissorTest);
+
     GL::Renderer::enable(GL::Renderer::Feature::DebugOutput);
     GL::Renderer::enable(GL::Renderer::Feature::DebugOutputSynchronous);
+
+    GL::Renderer::setBlendEquation(GL::Renderer::BlendEquation::Add, GL::Renderer::BlendEquation::Add);
+    GL::Renderer::setBlendFunction(GL::Renderer::BlendFunction::SourceAlpha, GL::Renderer::BlendFunction::OneMinusSourceAlpha);
+
     GL::DebugOutput::setDefaultCallback();
     Logger::Log(WINDOW, INFO) << "Created Application";
 }
@@ -40,6 +47,21 @@ void Application::mouseMoveEvent(MouseMoveEvent& event) {
 }
 void Application::viewportEvent(ViewportEvent& event) {
 
+}
+Vector2i Application::GetWindowSize() {
+    return windowSize();
+}
+Vector2 Application::GetDpiScaling() {
+    return dpiScaling();
+}
+Vector2i Application::GetFrameBufferSize() {
+    return framebufferSize();
+}
+void Application::SwapBuffers() {
+    swapBuffers();
+}
+void Application::Redraw() {
+    redraw();
 }
 
 

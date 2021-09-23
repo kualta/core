@@ -8,12 +8,14 @@ namespace core {
 
 /**
  * Base ticker class, defines update calls.
- *
- * @remark Update flow usually means that higher-ticked object pass
- * the tick down to their updatable children
  */
 class ITicker {
 public:
+
+    /**
+     * Called before main loop is entered, but after Core has been built
+     */
+    virtual void Start() { };
 
     /**
      * Update with fixed delta, called before Tick()
@@ -29,7 +31,7 @@ public:
     /**
      * Main update function
      *      @Includes Modules update
-     *      @Includes Input update
+     *      @Includes inputModule update
      *      @Includes Window update
      *      @Includes Rendering
      */
@@ -39,6 +41,11 @@ public:
      * Late update function, called after current frame has been rendered
      */
     virtual void LateTick() { };
+
+    /**
+     * Called after main loop exit is requested
+     */
+    virtual void Stop() { };
 
 };
 

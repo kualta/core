@@ -14,38 +14,27 @@ int32_t EngineLoop::Enter() {
 
     while ( isRunning ) {
 
-        /*
-         * Called before the frame is drawn
-         */
+        /** Called before the frame is drawn */
         this->EarlyTickModules();
 
-        /*
-         * This will call Tick() function on every module added to the core.
-         * The modules lower in the dependency hierarchy are guaranteed to be updated before
-         * their dependants.
-         */
+        /** Update modules & draw frame */
         this->TickModules();
 
+        /** Called after the frame has been drawn */
+        this->LateTickModules();
+
         if ( inputModule->exitRequested ) {
-            Logger::Log(INTERNAL, INFO) << "Main loop exit requested: ";
-
-            this->StopModules();
-            Logger::Log(INTERNAL, INFO) << " | Modules stopped";
-
+            Logger::Log(INTERNAL, INFO) << "Main loop exit requested";
             this->Stop();
-            Logger::Log(INTERNAL, INFO) << " | Main loop stopped";
         }
 
     } // main loop
 
     return 0;
 }
-void EngineLoop::Stop() {
-    isRunning = false;
-}
-void EngineLoop::TickModules() {
+void EngineLoop::StartModules() {
     std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
-        module->Tick();
+        module->Start();
     });
 }
 void EngineLoop::StopModules() {
@@ -57,6 +46,19 @@ void EngineLoop::EarlyTickModules() {
     std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
         module->EarlyTick();
     });
+}
+void EngineLoop::TickModules() {
+    std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
+        module->Tick();
+    });
+}
+void EngineLoop::LateTickModules() {
+    std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
+        module->LateTick();
+    });
+}
+void EngineLoop::Stop() {
+    isRunning = false;
 }
 
 }

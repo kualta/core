@@ -8,5 +8,6 @@
 #include <core/Modules/EngineModule.h>
 #include <core/Modules/InputModule.h>
 #include <core/Modules/SceneModule.h>
+#include <core/Modules/GUIModule.h>
 
 #endif //CORE_MODULES_H

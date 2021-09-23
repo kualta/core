@@ -24,10 +24,6 @@ enum M_STATUS {
 class IModule : public Instantiable<IModule>, public Object, public ITicker {
 public:
 
-    /**
-     * Called after main loop exit is requested
-     */
-    virtual void Stop() { };
 
     objectTag tag { GENERAL };
 
