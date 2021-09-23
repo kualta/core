@@ -1,5 +1,5 @@
-#ifndef CORE_SCRIPTBEHAVIOUR_H
-#define CORE_SCRIPTBEHAVIOUR_H
+#ifndef CORE_SCRIPTEDBEHAVIOUR_H
+#define CORE_SCRIPTEDBEHAVIOUR_H
 
 #include "Essentials.h"
 #include "Entity.h"
@@ -7,8 +7,9 @@
 
 namespace core {
 
-class ScriptBehaviour : public ITicker {
+class ScriptedBehaviour : public ITicker {
 public:
+    virtual ~ScriptedBehaviour() = default;
 
     void SetEntity(Entity* e) {
         entity = e;
@@ -21,4 +22,4 @@ protected:
 
 }
 
-#endif //CORE_SCRIPTBEHAVIOUR_H
+#endif //CORE_SCRIPTEDBEHAVIOUR_H

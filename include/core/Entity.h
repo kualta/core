@@ -9,7 +9,7 @@
 #include "IComponent.h"
 #include "Object.h"
 #include "Scene.h"
-#include "ScriptBehaviour.h"
+#include "ScriptedBehaviour.h"
 
 #include <Magnum/SceneGraph/MatrixTransformation3D.h>
 #include <Magnum/SceneGraph/Scene.h>
@@ -27,14 +27,21 @@ typedef std::vector<std::shared_ptr<core::IComponent>> ComponentsContainer;
  *  Class of every object appearing on the scene.
  *  @note Not derivable, use Component system instead
  */
-class Entity final : public Object, public GraphObject, public Instantiable<Entity> {
+class Entity final : public Object, public GraphObject, public ITicker, public Instantiable<Entity> {
 public:
     explicit Entity(const string& name = "Entity", GraphObject* parent = Scene::Get(), ComponentsContainer c = { });
 
-    /**
-     * Updates all components of this entity
-     */
-    void Tick();
+    /** Passes FixedTick to all components of this entity */
+    void FixedTick() override;
+
+    /** Passes EarlyTick to all components of this entity */
+    void EarlyTick() override;
+
+    /** Updates all components of this entity */
+    void Tick() override;
+
+    /** Passes LateTick to all components of this entity */
+    void LateTick() override;
 
     /**
      * Creates new Component c and adds it to Entity,
@@ -94,14 +101,15 @@ public:
     template<typename T>
     void assertExistingComponent();
 
-    bool operator==(const Entity &rhs) const;
-    bool operator!=(const Entity &rhs) const;
-
     /**
      * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */
     static vector<shared<Entity>> Load(const string& filepath);
+
+
+    bool operator==(const Entity &rhs) const;
+    bool operator!=(const Entity &rhs) const;
 
 protected:
 

@@ -11,15 +11,14 @@ namespace core {
 class EngineModule : public IModule {
 public:
     explicit EngineModule(InputModule* input);
-    ~EngineModule();
 
     void Tick() override;
-
     int32_t Main();
 
 protected:
-    std::unique_ptr<EngineLoop> mainLoop;
-    InputModule*                Input;
+
+    std::unique_ptr<EngineLoop> engineLoop;
+    InputModule*                inputModule;
 
 };
 

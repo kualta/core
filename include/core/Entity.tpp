@@ -4,6 +4,8 @@
 
 #include "Logger.h"
 #include "IComponent.h"
+#include "Entity.h"
+
 
 namespace core {
 

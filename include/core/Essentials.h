@@ -63,7 +63,7 @@ class Mesh;
 class Model;
 class Object;
 class Scene;
-class ScriptBehaviour;
+class ScriptedBehaviour;
 class Shader;
 
 // Core Module classes

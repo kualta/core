@@ -14,12 +14,17 @@ Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c)
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
 }
+void Entity::FixedTick() {
+    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->FixedTick(); });
+}
+void Entity::EarlyTick() {
+    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->EarlyTick(); });
+}
 void Entity::Tick() {
-    std::for_each(components.begin(),
-                  components.end(),
-                  [&](std::shared_ptr<IComponent> &c) {
-        c->Tick();
-    });
+    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->Tick(); });
+}
+void Entity::LateTick() {
+    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->LateTick(); });
 }
 bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();

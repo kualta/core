@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.6)
 project(Core VERSION 0.1.0 DESCRIPTION "Core engine" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/" ${CMAKE_MODULE_PATH})
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/")
 
 
 #       Build options
@@ -20,6 +22,7 @@ option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
 #       core
 set( CORE_INCLUDE_DIR include )
+set( CORE_LIB_DIR     lib )
 set( CORE_SRC_DIR     src )
 
 set( CORE_ENGINE_RES  )
@@ -57,39 +60,41 @@ set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
 
 
 #       assimp
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_NO_EXPORT ON CACHE BOOL "" FORCE)
-# If you won't be accessing Assimp outside of the plugin, build it as static to
-# have the plugin binary self-contained
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-# The following is important to avoid Assimp appending `d` to all your
-# binaries. You need Assimp >= 5.0.0 for this to work, also note that after
-# 5.0.1 this option is prefixed with ASSIMP_, so better set both variants.
-set(INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS   OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_TESTS          OFF CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT            ON CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS           OFF CACHE BOOL "" FORCE)
+set(INJECT_DEBUG_POSTFIX        OFF CACHE BOOL "" FORCE)
 set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
-add_subdirectory(lib/assimp EXCLUDE_FROM_ALL)
 
+
+#       Dear ImGUI
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/imgui")
+set(IMGUI_DIR lib/imgui)
 
 
 #       magnum
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
-
 set(MAGNUM_PLUGINS_DIR lib/magnum-plugins)
-
-set(WITH_SDL2APPLICATION  ON CACHE BOOL "" FORCE)
 set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
 set(WITH_ANYIMAGEIMPORTER ON CACHE BOOL "" FORCE)
-set(WITH_OBJIMPORTER      ON CACHE BOOL "" FORCE)
 set(WITH_STBIMAGEIMPORTER ON CACHE BOOL "" FORCE)
 set(WITH_TINYGLTFIMPORTER ON CACHE BOOL "" FORCE)
+set(WITH_SDL2APPLICATION  ON CACHE BOOL "" FORCE)
 set(WITH_ASSIMPIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_OBJIMPORTER      ON CACHE BOOL "" FORCE)
+set(WITH_IMGUI            ON CACHE BOOL "" FORCE)
 
-add_subdirectory(lib/corrade EXCLUDE_FROM_ALL)
-add_subdirectory(lib/magnum EXCLUDE_FROM_ALL)
-add_subdirectory(lib/magnum-plugins EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/assimp EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/corrade EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/magnum EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/magnum-plugins EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/magnum-integration EXCLUDE_FROM_ALL)
 
 add_dependencies(core MagnumPlugins::StbImageImporter)
+
+find_package(MagnumIntegration REQUIRED
+        ImGui)
 
 find_package(Magnum REQUIRED
         GL
@@ -115,7 +120,8 @@ target_link_libraries(core PUBLIC
         Magnum::Application
         Magnum::Sdl2Application
         Magnum::AnySceneImporter
-        MagnumPlugins::AssimpImporter)
+        MagnumPlugins::AssimpImporter
+        MagnumIntegration::ImGui)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
@@ -124,6 +130,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W3" )
+
     # required by corrade
     set(MSVC2019_COMPATIBILITY ON)
 endif()

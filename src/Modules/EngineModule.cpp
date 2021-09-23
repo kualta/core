@@ -3,16 +3,22 @@
 namespace core {
 
 EngineModule::EngineModule(InputModule* input)
-: IModule("Engine", INTERNAL), Input(input), mainLoop(std::make_unique<EngineLoop>(input)) {
-
-}
-EngineModule::~EngineModule() {
+: IModule("Engine", INTERNAL), engineLoop(std::make_unique<EngineLoop>(input)), inputModule(input) {
 
 }
 int32_t EngineModule::Main() {
 
-    // Main engine loop
-    mainLoop->Enter();
+    /** Start all modules */
+    engineLoop->StartModules();
+    Logger::Log(INTERNAL, INFO) << "All Modules Started";
+
+    /** Enter the Main Loop */
+    engineLoop->Enter();
+
+    /** Stop all modules */
+    engineLoop->StopModules();
+    Logger::Log(INTERNAL, INFO) << "All Modules Stopped";
+
 
     return 0;
 }

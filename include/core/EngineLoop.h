@@ -10,6 +10,7 @@
 namespace core {
 
 class EngineLoop {
+    friend class EngineModule;
 public:
     explicit EngineLoop(InputModule* inputModule);
 
@@ -25,6 +26,10 @@ public:
 
 protected:
 
+    /**
+     * Start all modules
+     */
+    void StartModules();
 
     /**
      * Early update all modules
@@ -32,7 +37,8 @@ protected:
     void EarlyTickModules();
 
     /**
-     * Updates all modules
+     * This will call Tick() function on every module added to the Core
+     * @note The modules lower in the dependency hierarchy are guaranteed to be updated before * their dependants.
      */
     void TickModules();
 
@@ -44,6 +50,7 @@ protected:
     static bool  isRunning;
     InputModule* inputModule;
 
+    void LateTickModules();
 };
 
 }
