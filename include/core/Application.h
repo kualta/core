@@ -6,6 +6,7 @@
 
 #include <Magnum/Platform/Sdl2Application.h>
 #include <Magnum/Trade/AbstractImporter.h>
+#include <Magnum/ImGuiIntegration/Context.hpp>
 #include <Corrade/PluginManager/Manager.h>
 
 using namespace Magnum;
@@ -23,17 +24,25 @@ public:
     Vector2i GetFrameBufferSize();
 
     void SwapBuffers();
+    void ClearBuffers();
     void Redraw();
-
+    void SetGuiContext(ImGuiIntegration::Context* context);
 
 protected:
 
-    virtual void resetEvent();
-    virtual void drawEvent();
     virtual void mousePressEvent(MouseEvent& event);
     virtual void mouseReleaseEvent(MouseEvent& event);
     virtual void mouseMoveEvent(MouseMoveEvent& event);
+    virtual void mouseScrollEvent(MouseScrollEvent& event);
     virtual void viewportEvent(ViewportEvent& event);
+    virtual void keyPressEvent(KeyEvent& event);
+    virtual void textInputEvent(TextInputEvent& event);
+
+    ImGuiIntegration::Context* gui;
+
+private:
+
+    virtual void drawEvent() { };
 };
 
 }

@@ -14,6 +14,7 @@ void GUIModule::Start() {
     Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
 
     imgui = ImGuiIntegration::Context(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    appModule->SetGuiContext(&imgui, 0);
 }
 void GUIModule::EarlyTick() {
     imgui.newFrame();

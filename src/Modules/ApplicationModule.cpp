@@ -8,7 +8,10 @@ ApplicationModule::ApplicationModule()
 
 }
 void ApplicationModule::EarlyTick() {
-    EarlyUpdateApps();
+    for (auto app : apps) {
+        app->ClearBuffers();
+        app->mainLoopIteration();
+    }
 }
 void ApplicationModule::Tick() {
 
@@ -18,12 +21,6 @@ void ApplicationModule::LateTick() {
 }
 void ApplicationModule::CreateApplication(const string &title, Rect rect) {
     apps.push_back(new Application(title, rect));
-}
-void ApplicationModule::EarlyUpdateApps() {
-    for (auto app : apps) {
-        // TODO rename
-        app->resetEvent();
-    }
 }
 void ApplicationModule::SwapRedraw() {
     for (auto app : apps) {
@@ -44,6 +41,9 @@ Vector2 ApplicationModule::GetWindowDpiScale(uint32_t id) {
 }
 Vector2i ApplicationModule::GetFrameBufferSize(uint32_t id) {
     return apps[id]->GetFrameBufferSize();
+}
+void ApplicationModule::SetGuiContext(ImGuiIntegration::Context* context, uint32_t id) {
+    apps[id]->SetGuiContext(context);
 }
 
 }
