@@ -24,6 +24,10 @@ protected:
 
     ImGuiIntegration::Context imgui { NoCreate };
     ApplicationModule* appModule;
+
+    void SetStandardStyle();
+
+    void SetStandardFont(const float ratio);
 };
 
 }

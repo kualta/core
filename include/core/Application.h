@@ -36,6 +36,7 @@ protected:
     virtual void mouseScrollEvent(MouseScrollEvent& event);
     virtual void viewportEvent(ViewportEvent& event);
     virtual void keyPressEvent(KeyEvent& event);
+    virtual void keyReleaseEvent(KeyEvent& event);
     virtual void textInputEvent(TextInputEvent& event);
 
     ImGuiIntegration::Context* gui;
