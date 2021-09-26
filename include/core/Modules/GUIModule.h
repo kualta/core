@@ -13,6 +13,12 @@ class GUIModule : public IModule {
 public:
     explicit GUIModule(ApplicationModule* appModule);
 
+    template<class KeyEvent>
+    bool HandleKeyEvent(KeyEvent& event, bool value);
+
+    template<class MouseEvent>
+    bool HandleMouseEvent(MouseEvent& event, bool value);
+
 protected:
 
     void UpdateGUI();
@@ -27,8 +33,10 @@ protected:
 
     void SetStandardStyle();
 
-    void SetStandardFont(const float ratio);
+    void SetStandardFont(float ratio);
 };
+
+#include "GUIModule.tpp"
 
 }
 

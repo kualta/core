@@ -30,20 +30,20 @@ public:
 
 protected:
 
-    virtual void mousePressEvent(MouseEvent& event);
-    virtual void mouseReleaseEvent(MouseEvent& event);
-    virtual void mouseMoveEvent(MouseMoveEvent& event);
-    virtual void mouseScrollEvent(MouseScrollEvent& event);
-    virtual void viewportEvent(ViewportEvent& event);
-    virtual void keyPressEvent(KeyEvent& event);
-    virtual void keyReleaseEvent(KeyEvent& event);
-    virtual void textInputEvent(TextInputEvent& event);
+    void mousePressEvent(MouseEvent& event) override;
+    void mouseReleaseEvent(MouseEvent& event) override;
+    void mouseMoveEvent(MouseMoveEvent& event) override;
+    void mouseScrollEvent(MouseScrollEvent& event) override;
+    void viewportEvent(ViewportEvent& event) override;
+    void keyPressEvent(KeyEvent& event) override;
+    void keyReleaseEvent(KeyEvent& event) override;
+    void textInputEvent(TextInputEvent& event) override;
 
     ImGuiIntegration::Context* gui;
 
 private:
 
-    virtual void drawEvent() { };
+    void drawEvent() override { };
 };
 
 }

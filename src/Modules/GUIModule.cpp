@@ -144,4 +144,5 @@ void GUIModule::SetStandardStyle() {
     colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
 
+
 }
