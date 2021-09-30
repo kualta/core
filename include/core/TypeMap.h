@@ -1,4 +1,4 @@
-/**
+/*
  * This is a stand-alone header file, no TypeMap.cpp is presented.
  */
 #ifndef CORE_TYPEMAP_H

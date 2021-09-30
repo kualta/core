@@ -12,7 +12,7 @@ void GUIModule::Start() {
     const Vector2 dpiScale = appModule->GetWindowDpiScale(0);
     const Vector2i windowSize = appModule->GetWindowSize(0);
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
-    const float supersamplingRatio = frameBufferSize.x()/windowSize.x();
+    const float supersamplingRatio = frameBufferSize.x() / windowSize.x();
 
     gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
     appModule->SetGuiContext(&gui, 0);
@@ -82,7 +82,7 @@ void GUIModule::SetStandardStyle() {
     style.WindowMenuButtonPosition  = ImGuiDir_None;
     style.ColorButtonPosition       = ImGuiDir_Right;
 
-    ImVec4* colors                  = style.Colors;
+    ImVec4* colors                          = style.Colors;
     colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.63f, 0.63f, 0.63f, 1.00f);
     colors[ImGuiCol_WindowBg]               = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);

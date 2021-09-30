@@ -5,11 +5,6 @@
 
 namespace core {
 
-class Event {
-public:
-
-
-};
 
 }
 
