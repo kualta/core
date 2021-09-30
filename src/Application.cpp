@@ -52,7 +52,7 @@ void Application::textInputEvent(TextInputEvent &event) {
 }
 void Application::viewportEvent(ViewportEvent& event) {
     GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()});
-    gui->Relayout(Vector2{event.windowSize()}/event.dpiScaling(), event.windowSize(), event.framebufferSize());
+    gui->Relayout(Vector2{event.windowSize()} / event.dpiScaling(), event.windowSize(), event.framebufferSize());
 }
 Vector2i Application::GetWindowSize() {
     return windowSize();
