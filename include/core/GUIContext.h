@@ -168,8 +168,8 @@ public:
      * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
      * wants to capture the mouse (so the event shouldn't be further propagated to the rest of the application),
      * false otherwise. */
-    template<class MouseEvent> bool
-    HandleMouseReleaseEvent(MouseEvent& event);
+    template<class MouseEvent>
+    bool HandleMouseReleaseEvent(MouseEvent& event);
 
     /**
      * Handle mouse scroll event
