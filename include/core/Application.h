@@ -3,6 +3,7 @@
 
 #include "Essentials.h"
 #include "Primitive.h"
+#include "GUIContext.h"
 
 #include <Magnum/Platform/Sdl2Application.h>
 #include <Magnum/Trade/AbstractImporter.h>
@@ -26,7 +27,7 @@ public:
     void SwapBuffers();
     void ClearBuffers();
     void Redraw();
-    void SetGuiContext(ImGuiIntegration::Context* context);
+    void SetGuiContext(core::GUIContext *context);
 
 protected:
 
@@ -39,7 +40,7 @@ protected:
     void keyReleaseEvent(KeyEvent& event) override;
     void textInputEvent(TextInputEvent& event) override;
 
-    ImGuiIntegration::Context* gui;
+    GUIContext* gui;
 
 private:
 

@@ -15,14 +15,14 @@ void GUIModule::Start() {
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x()/windowSize.x();
 
-    imgui = ImGuiIntegration::Context(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    imgui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
     appModule->SetGuiContext(&imgui, 0);
 
     SetStandardFont(supersamplingRatio);
     SetStandardStyle();
 }
 void GUIModule::EarlyTick() {
-    imgui.newFrame();
+    imgui.NewFrame();
 }
 void GUIModule::Tick() {
     UpdateGUI();
@@ -39,7 +39,7 @@ void GUIModule::DrawGUI() {
     GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
 
-    imgui.drawFrame();
+    imgui.DrawFrame();
 
     GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
     GL::Renderer::disable(GL::Renderer::Feature::Blending);

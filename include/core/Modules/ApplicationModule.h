@@ -16,7 +16,7 @@ public:
     Vector2 GetWindowDpiScale(uint32_t id = 0);
     Vector2i GetWindowSize(uint32_t id = 0);
     Vector2i GetFrameBufferSize(uint32_t id = 0);
-    void SetGuiContext(ImGuiIntegration::Context* context, uint32_t id = 0);
+    void SetGuiContext(GUIContext* context, uint32_t id = 0);
 
     void SwapRedraw();
     void Redraw();
