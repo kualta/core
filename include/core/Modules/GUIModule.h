@@ -5,6 +5,7 @@
 #include <core/IModule.h>
 
 #include <Magnum/ImGuiIntegration/Context.hpp>
+#include <core/GUIContext.h>
 
 using namespace Magnum;
 namespace core {
@@ -22,12 +23,12 @@ protected:
     void EarlyTick() override;
     void Tick() override;
 
-    ImGuiIntegration::Context imgui { NoCreate };
+    GUIContext gui { NoCreate };
     ApplicationModule* appModule;
 
     void SetStandardStyle();
 
-    void SetStandardFont(const float ratio);
+    void SetStandardFont(float ratio);
 };
 
 }

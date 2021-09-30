@@ -3,6 +3,7 @@
 #include <core/Components/Camera.h>
 
 #include <Magnum/GL/DebugOutput.h>
+#include <core/GUIContext.h>
 #include "Magnum/GL/Renderer.h"
 #include "Magnum/Math/Vector2.h"
 
@@ -29,29 +30,29 @@ Application::Application(const string& title, Rect rect, int args)
     Logger::Log(WINDOW, INFO) << "Created Application";
 }
 void Application::mousePressEvent(MouseEvent &event) {
-    if (gui->handleMousePressEvent(event)) return;
+    if (gui->HandleMousePressEvent(event)) return;
 }
 void Application::mouseReleaseEvent(MouseEvent& event) {
-    if (gui->handleMouseReleaseEvent(event)) return;
+    if (gui->HandleMouseReleaseEvent(event)) return;
 }
 void Application::mouseMoveEvent(MouseMoveEvent& event) {
-    if (gui->handleMouseMoveEvent(event)) return;
+    if (gui->HandleMouseMoveEvent(event)) return;
 }
 void Application::mouseScrollEvent(MouseScrollEvent &event) {
-    if (gui->handleMouseScrollEvent(event)) { return; }
+    if (gui->HandleMouseScrollEvent(event)) { return; }
 }
 void Application::keyPressEvent(KeyEvent &event) {
-    if (gui->handleKeyPressEvent(event)) return;
+    if (gui->HandleKeyPressEvent(event)) return;
 }
 void Application::keyReleaseEvent(KeyEvent &event) {
-    if (gui->handleKeyReleaseEvent(event)) return;
+    if (gui->HandleKeyReleaseEvent(event)) return;
 }
 void Application::textInputEvent(TextInputEvent &event) {
-    if (gui->handleTextInputEvent(event)) return;
+    if (gui->HandleTextInputEvent(event)) return;
 }
 void Application::viewportEvent(ViewportEvent& event) {
     GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()});
-    gui->relayout(Vector2{event.windowSize()}/event.dpiScaling(), event.windowSize(), event.framebufferSize());
+    gui->Relayout(Vector2{event.windowSize()}/event.dpiScaling(), event.windowSize(), event.framebufferSize());
 }
 Vector2i Application::GetWindowSize() {
     return windowSize();
@@ -71,7 +72,7 @@ void Application::Redraw() {
 void Application::ClearBuffers() {
     GL::defaultFramebuffer.clear(GL::FramebufferClear::Color | GL::FramebufferClear::Depth);
 }
-void Application::SetGuiContext(ImGuiIntegration::Context* context) {
+void Application::SetGuiContext(GUIContext *context) {
     gui = context;
 }
 

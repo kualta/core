@@ -1,7 +1,6 @@
 #include <core/Modules/GUIModule.h>
 #include <core/Modules/ApplicationModule.h>
 #include <core/GUIBehaviour.h>
-#include <Magnum/Text/AbstractFont.h>
 
 namespace core {
 
@@ -15,14 +14,14 @@ void GUIModule::Start() {
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x()/windowSize.x();
 
-    imgui = ImGuiIntegration::Context(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
-    appModule->SetGuiContext(&imgui, 0);
+    gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    appModule->SetGuiContext(&gui, 0);
 
     SetStandardFont(supersamplingRatio);
     SetStandardStyle();
 }
 void GUIModule::EarlyTick() {
-    imgui.newFrame();
+    gui.NewFrame();
 }
 void GUIModule::Tick() {
     UpdateGUI();
@@ -39,7 +38,7 @@ void GUIModule::DrawGUI() {
     GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
 
-    imgui.drawFrame();
+    gui.DrawFrame();
 
     GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
     GL::Renderer::disable(GL::Renderer::Feature::Blending);
@@ -49,46 +48,41 @@ void GUIModule::DrawGUI() {
 void GUIModule::SetStandardFont(const float ratio) {
     // FIXME: ummm? It just doesnt work for some bizarre reason!
 //    ImGui::GetIO().Fonts->Clear();
-//    ImGui::GetIO().Fonts->AddFontFromFileTTF("C:\\Users\\Dio\\Documents\\Projects\\Interfacers\\lib\\Core\\lib\\other\\DejaVuSans.ttf", 16.0f*ratio);
+//    ImGui::GetIO().Fonts->AddFontFromFileTTF("DejaVuSans.ttf", 16.0f*ratio);
 //    ImGui::GetIO().Fonts->Build();
 }
 void GUIModule::SetStandardStyle() {
     const int rounding = 4;
 
-    ImGuiStyle& style = ImGui::GetStyle();
-    style.FrameRounding = 4;
-    style.WindowPadding = ImVec2(7, 7);
-    style.FramePadding = ImVec2(6, 3);
-    style.CellPadding = ImVec2(6, 3);
-    style.ItemSpacing = ImVec2(8, 4);
-    style.ItemInnerSpacing = ImVec2(6, 6);
-    style.IndentSpacing = 15;
-    style.ScrollbarSize = 12;
-    style.GrabMinSize = 12;
+    ImGuiStyle& style               = ImGui::GetStyle();
+    style.WindowPadding             = ImVec2(7, 7);
+    style.FramePadding              = ImVec2(6, 3);
+    style.CellPadding               = ImVec2(6, 3);
+    style.ItemSpacing               = ImVec2(8, 4);
+    style.ItemInnerSpacing          = ImVec2(6, 6);
+    style.IndentSpacing             = 15;
+    style.ScrollbarSize             = 12;
+    style.GrabMinSize               = 12;
+    style.WindowBorderSize          = 1;
+    style.ChildBorderSize           = 1;
+    style.PopupBorderSize           = 0;
+    style.FrameBorderSize           = 0;
+    style.TabBorderSize             = 0;
+    style.ScrollbarRounding         = 8;
+    style.WindowRounding            = rounding;
+    style.ChildRounding             = rounding;
+    style.FrameRounding             = rounding;
+    style.PopupRounding             = rounding;
+    style.GrabRounding              = rounding;
+    style.LogSliderDeadzone         = rounding;
+    style.TabRounding               = rounding;
+    style.WindowTitleAlign          = ImVec2(0, 0.5f);
+    style.ButtonTextAlign           = ImVec2(0.5f, 0.5f);
+    style.DisplaySafeAreaPadding    = ImVec2(3, 3);
+    style.WindowMenuButtonPosition  = ImGuiDir_None;
+    style.ColorButtonPosition       = ImGuiDir_Right;
 
-    style.WindowBorderSize = 1;
-    style.ChildBorderSize = 1;
-    style.PopupBorderSize = 0;
-    style.FrameBorderSize = 0;
-    style.TabBorderSize = 0;
-
-    style.WindowRounding = rounding;
-    style.ChildRounding = rounding;
-    style.FrameRounding = rounding;
-    style.PopupRounding = rounding;
-    style.ScrollbarRounding = 8;
-    style.GrabRounding = rounding;
-    style.LogSliderDeadzone = rounding;
-    style.TabRounding = rounding;
-
-    style.WindowTitleAlign = ImVec2(0, 0.5f);
-    style.WindowMenuButtonPosition = ImGuiDir_None;
-    style.ColorButtonPosition = ImGuiDir_Right;
-    style.ButtonTextAlign = ImVec2(0.5f, 0.5f);
-
-    style.DisplaySafeAreaPadding = ImVec2(3, 3);
-
-    ImVec4* colors = style.Colors;
+    ImVec4* colors                  = style.Colors;
     colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.63f, 0.63f, 0.63f, 1.00f);
     colors[ImGuiCol_WindowBg]               = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
@@ -143,5 +137,6 @@ void GUIModule::SetStandardStyle() {
     colors[ImGuiCol_NavWindowingDimBg]      = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
     colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
+
 
 }
