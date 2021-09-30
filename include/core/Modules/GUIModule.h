@@ -23,7 +23,7 @@ protected:
     void EarlyTick() override;
     void Tick() override;
 
-    GUIContext imgui { NoCreate };
+    GUIContext gui { NoCreate };
     ApplicationModule* appModule;
 
     void SetStandardStyle();

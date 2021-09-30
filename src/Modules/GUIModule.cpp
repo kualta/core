@@ -1,7 +1,6 @@
 #include <core/Modules/GUIModule.h>
 #include <core/Modules/ApplicationModule.h>
 #include <core/GUIBehaviour.h>
-#include <Magnum/Text/AbstractFont.h>
 
 namespace core {
 
@@ -15,14 +14,14 @@ void GUIModule::Start() {
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x()/windowSize.x();
 
-    imgui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
-    appModule->SetGuiContext(&imgui, 0);
+    gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    appModule->SetGuiContext(&gui, 0);
 
     SetStandardFont(supersamplingRatio);
     SetStandardStyle();
 }
 void GUIModule::EarlyTick() {
-    imgui.NewFrame();
+    gui.NewFrame();
 }
 void GUIModule::Tick() {
     UpdateGUI();
@@ -39,7 +38,7 @@ void GUIModule::DrawGUI() {
     GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
 
-    imgui.DrawFrame();
+    gui.DrawFrame();
 
     GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
     GL::Renderer::disable(GL::Renderer::Feature::Blending);
@@ -49,7 +48,7 @@ void GUIModule::DrawGUI() {
 void GUIModule::SetStandardFont(const float ratio) {
     // FIXME: ummm? It just doesnt work for some bizarre reason!
 //    ImGui::GetIO().Fonts->Clear();
-//    ImGui::GetIO().Fonts->AddFontFromFileTTF("C:\\Users\\Dio\\Documents\\Projects\\Interfacers\\lib\\Core\\lib\\other\\DejaVuSans.ttf", 16.0f*ratio);
+//    ImGui::GetIO().Fonts->AddFontFromFileTTF("DejaVuSans.ttf", 16.0f*ratio);
 //    ImGui::GetIO().Fonts->Build();
 }
 void GUIModule::SetStandardStyle() {
