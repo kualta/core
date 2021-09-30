@@ -3,8 +3,8 @@
 
 namespace core {
 
-template <class KeyEvent>
-bool Context::HandleKeyEvent(KeyEvent& event, bool value) {
+template<class KeyEvent>
+bool GUIContext::HandleKeyEvent(KeyEvent& event, bool value) {
     ImGui::SetCurrentContext(context);
 
     ImGuiIO &io = ImGui::GetIO();
@@ -96,8 +96,8 @@ bool Context::HandleKeyEvent(KeyEvent& event, bool value) {
     return io.WantCaptureKeyboard;
 }
 
-template <class MouseEvent>
-bool Context::HandleMouseEvent(MouseEvent& event, bool value) {
+template<class MouseEvent>
+bool GUIContext::HandleMouseEvent(MouseEvent& event, bool value) {
     ImGui::SetCurrentContext(context);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -126,23 +126,23 @@ bool Context::HandleMouseEvent(MouseEvent& event, bool value) {
        happens with SDL2 on macOS -- press delayed by a significant amount of
        time */
     mousePressed.set(buttonId, value);
-    if(value) mousePressedInThisFrame.set(buttonId, true);
+    if (value) mousePressedInThisFrame.set(buttonId, true);
 
     return io.WantCaptureMouse;
 }
 
-template <class MouseEvent>
-bool Context::HandleMousePressEvent(MouseEvent& event) {
+template<class MouseEvent>
+bool GUIContext::HandleMousePressEvent(MouseEvent& event) {
     return HandleMouseEvent(event, true);
 }
 
-template <class MouseEvent>
-bool Context::HandleMouseReleaseEvent(MouseEvent& event) {
+template<class MouseEvent>
+bool GUIContext::HandleMouseReleaseEvent(MouseEvent& event) {
     return HandleMouseEvent(event, false);
 }
 
-template <class MouseScrollEvent>
-bool Context::HandleMouseScrollEvent(MouseScrollEvent& event) {
+template<class MouseScrollEvent>
+bool GUIContext::HandleMouseScrollEvent(MouseScrollEvent& event) {
     /* Ensure we use the context we're linked to */
     ImGui::SetCurrentContext(context);
 
@@ -153,8 +153,8 @@ bool Context::HandleMouseScrollEvent(MouseScrollEvent& event) {
     return io.WantCaptureMouse;
 }
 
-template <class MouseMoveEvent>
-bool Context::HandleMouseMoveEvent(MouseMoveEvent& event) {
+template<class MouseMoveEvent>
+bool GUIContext::HandleMouseMoveEvent(MouseMoveEvent& event) {
     /* Ensure we use the context we're linked to */
     ImGui::SetCurrentContext(context);
 
@@ -163,20 +163,19 @@ bool Context::HandleMouseMoveEvent(MouseMoveEvent& event) {
     return io.WantCaptureMouse;
 }
 
-template <class KeyEvent>
-bool Context::HandleKeyPressEvent(KeyEvent& event) {
+template<class KeyEvent>
+bool GUIContext::HandleKeyPressEvent(KeyEvent& event) {
     return HandleKeyEvent(event, true);
 }
 
-template <class KeyEvent>
-bool Context::HandleKeyReleaseEvent(KeyEvent& event) {
+template<class KeyEvent>
+bool GUIContext::HandleKeyReleaseEvent(KeyEvent& event) {
     return HandleKeyEvent(event, false);
 }
 
-template <class TextInputEvent>
-bool Context::HandleTextInputEvent(TextInputEvent& event) {
+template<class TextInputEvent>
+bool GUIContext::HandleTextInputEvent(TextInputEvent& event) {
     ImGui::SetCurrentContext(context);
-
     ImGui::GetIO().AddInputCharactersUTF8(event.text().data());
     return false;
 }
