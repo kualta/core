@@ -5,7 +5,7 @@
     This file is part of Magnum.
 
     Copyright © 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
-                2020, 2021 Vladimír Vondruš <mosra@centrum.cz>
+                2020, 2021 Vladimír Vondruš <mosrantrum.cz>
     Copyright © 2019 Marco Melorio <m.melorio@icloud.com>
 
     Permission is hereby granted, free of charge, to any person obtaining a
@@ -31,7 +31,9 @@
 
 namespace core {
 
-/** Base for input events */
+/**
+ * Base for input events
+ */
 class InputEvent {
 public:
 
@@ -68,8 +70,7 @@ public:
         CapsLock = KMOD_CAPS,
 
         /**
-         * Num lock
-         * */
+         * Num lock */
         NumLock = KMOD_NUM
     };
 
@@ -91,12 +92,12 @@ public:
     InputEvent& operator=(InputEvent&&) = delete;
 
     /**  Whether the event is accepted */
-    bool isAccepted() const { return _accepted; }
+    bool IsAccepted() const { return accepted; }
 
     /**
      * Set event as accepted
      * If the event is ignored (i.e., not set as accepted), it might be propagated elsewhere */
-    void setAccepted(bool accepted = true) { _accepted = accepted; }
+    void SetAccepted(bool eventAccepted = true) { accepted = eventAccepted; }
 
     /**
      *  Underlying SDL event
@@ -106,19 +107,20 @@ public:
      *         `SDL_MOUSEWHEEL`                            for MouseScrollEvent,
      *         `SDL_MOUSEMOTION`                           for MouseMoveEvent.
      */
-    const SDL_Event& event() const { return _event; }
+    const SDL_Event& GetEvent() const { return event; }
 
 #ifndef DOXYGEN_GENERATING_OUTPUT
 protected:
-    explicit InputEvent(const SDL_Event& event): _event(event), _accepted(false) { }
+    explicit InputEvent(const SDL_Event& event): event(event), accepted(false) { }
 
     ~InputEvent() = default;
 #endif
 
 private:
-    const SDL_Event& _event;
-    bool _accepted;
+    const SDL_Event& event;
+    bool accepted;
 };
-}
+
+} // namespace core
 
 #endif //CORE_INPUTEVENT_H
