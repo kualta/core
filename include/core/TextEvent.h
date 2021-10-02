@@ -27,6 +27,7 @@
 #define CORE_TEXTEVENT_H
 
 #include "InputEvent.h"
+#include "Event.h"
 
 namespace core {
 
@@ -74,7 +75,7 @@ private:
 
   textEditingEvent()
 */
-class TextEditingEvent {
+class TextEditingEvent : public Event<TextEditingEvent> {
 public:
     /**  Copying is not allowed */
     TextEditingEvent(const TextEditingEvent&) = delete;

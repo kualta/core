@@ -49,16 +49,22 @@ void InputModule::PollEvents() {
                         break;
                 } break;
 
-            case SDL_KEYDOWN:
+            case SDL_KEYDOWN: {
+                KeyEvent keyEvent { event, static_cast<KeyEvent::Key>(event.key.keysym.sym), fixedModifiers(event.key.keysym.mod), event.key.repeat != 0 };
+                OnKeyPressEvent.Trigger(keyEvent);
+            } break;
             case SDL_KEYUP: {
                 KeyEvent keyEvent { event, static_cast<KeyEvent::Key>(event.key.keysym.sym), fixedModifiers(event.key.keysym.mod), event.key.repeat != 0 };
-                OnKeyEvent.Trigger(keyEvent);
+                OnKeyReleaseEvent.Trigger(keyEvent);
             } break;
 
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONDOWN: {
+                MouseEvent mouseEvent {event, static_cast<MouseEvent::Button>(event.button.button), { event.button.x, event.button.y }, event.button.clicks};
+                OnMousePressEvent.Trigger(mouseEvent);
+            } break;
             case SDL_MOUSEBUTTONUP: {
                 MouseEvent mouseEvent{event, static_cast<MouseEvent::Button>(event.button.button), { event.button.x, event.button.y }, event.button.clicks};
-                OnMouseEvent.Trigger(mouseEvent);
+                OnMouseReleaseEvent.Trigger(mouseEvent);
             } break;
 
             case SDL_MOUSEWHEEL: {

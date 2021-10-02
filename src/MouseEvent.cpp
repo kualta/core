@@ -3,7 +3,7 @@
 
 namespace core {
 
-InputEvent::Modifiers fixedModifiers(Uint16 mod) {
+InputEvent::Modifiers FixedModifiers(Uint16 mod) {
     InputEvent::Modifiers modifiers(static_cast<InputEvent::Modifier>(mod));
     if (modifiers & InputEvent::Modifier::Shift) modifiers |= InputEvent::Modifier::Shift;
     if (modifiers & InputEvent::Modifier::Ctrl)  modifiers |= InputEvent::Modifier::Ctrl;
@@ -13,11 +13,11 @@ InputEvent::Modifiers fixedModifiers(Uint16 mod) {
 }
 InputEvent::Modifiers MouseEvent::modifiers() {
     if(_modifiers) return *_modifiers;
-    return *(_modifiers = fixedModifiers(Uint16(SDL_GetModState())));
+    return *(_modifiers = FixedModifiers(Uint16(SDL_GetModState())));
 }
 InputEvent::Modifiers MouseMoveEvent::modifiers() {
     if(_modifiers) return *_modifiers;
-    return *(_modifiers = fixedModifiers(Uint16(SDL_GetModState())));
+    return *(_modifiers = FixedModifiers(Uint16(SDL_GetModState())));
 }
 Vector2i MouseScrollEvent::position() {
     if(_position) return *_position;
@@ -27,7 +27,7 @@ Vector2i MouseScrollEvent::position() {
 }
 InputEvent::Modifiers MouseScrollEvent::modifiers() {
     if(_modifiers) return *_modifiers;
-    return *(_modifiers = fixedModifiers(Uint16(SDL_GetModState())));
+    return *(_modifiers = FixedModifiers(Uint16(SDL_GetModState())));
 }
 
 }

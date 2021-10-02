@@ -11,7 +11,6 @@ ApplicationModule::ApplicationModule()
 void ApplicationModule::EarlyTick() {
     for (auto app : apps) {
         app->ClearBuffers();
-        app->mainLoopIteration();
     }
 }
 void ApplicationModule::Tick() {

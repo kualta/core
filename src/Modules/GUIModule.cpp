@@ -2,23 +2,38 @@
 #include <core/Modules/ApplicationModule.h>
 #include <core/GUIBehaviour.h>
 
+#include <functional>
+
 namespace core {
 
-GUIModule::GUIModule(ApplicationModule *appModule)
-: IModule("GUI", WINDOW), appModule(appModule) {
+GUIModule::GUIModule(ApplicationModule* appModule, InputModule* inputModule)
+: IModule("GUI", WINDOW), appModule(appModule), inputModule(inputModule) {
 
 }
 void GUIModule::Start() {
-    const Vector2 dpiScale = appModule->GetWindowDpiScale(0);
-    const Vector2i windowSize = appModule->GetWindowSize(0);
+    const Vector2 dpiScale         = appModule->GetWindowDpiScale(0);
+    const Vector2i windowSize      = appModule->GetWindowSize(0);
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x() / windowSize.x();
 
     gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    SubscribeToEvents();
+
     appModule->SetGuiContext(&gui, 0);
 
     SetStandardFont(supersamplingRatio);
     SetStandardStyle();
+}
+void GUIModule::SubscribeToEvents() {
+    inputModule->OnMouseMoveEvent.Subscribe([&](MouseMoveEvent& event)     { gui.HandleMouseMoveEvent(event);    } );
+    inputModule->OnTextInputEvent.Subscribe([&](TextInputEvent& event)     { gui.HandleTextInputEvent(event);    } );
+    inputModule->OnMousePressEvent.Subscribe([&](MouseEvent& event)        { gui.HandleMousePressEvent(event);   } );
+    inputModule->OnMouseReleaseEvent.Subscribe([&](MouseEvent& event)      { gui.HandleMouseReleaseEvent(event); } );
+    inputModule->OnMouseScrollEvent.Subscribe([&](MouseScrollEvent& event) { gui.HandleMouseScrollEvent(event);  } );
+    inputModule->OnKeyPressEvent.Subscribe([&](KeyEvent& event)            { gui.HandleKeyPressEvent(event);     } );
+    inputModule->OnKeyReleaseEvent.Subscribe([&](KeyEvent& event)          { gui.HandleKeyReleaseEvent(event);   } );
+    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.windowSize());
+                                                                             GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()}); } );
 }
 void GUIModule::EarlyTick() {
     gui.NewFrame();

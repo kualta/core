@@ -29,31 +29,6 @@ Application::Application(const string& title, Rect rect, int args)
     GL::DebugOutput::setDefaultCallback();
     Logger::Log(WINDOW, INFO) << "Created Application";
 }
-void Application::mousePressEvent(MouseEvent &event) {
-    if (gui->HandleMousePressEvent(event)) return;
-}
-void Application::mouseReleaseEvent(MouseEvent& event) {
-    if (gui->HandleMouseReleaseEvent(event)) return;
-}
-void Application::mouseMoveEvent(MouseMoveEvent& event) {
-    if (gui->HandleMouseMoveEvent(event)) return;
-}
-void Application::mouseScrollEvent(MouseScrollEvent &event) {
-    if (gui->HandleMouseScrollEvent(event)) { return; }
-}
-void Application::keyPressEvent(KeyEvent &event) {
-    if (gui->HandleKeyPressEvent(event)) return;
-}
-void Application::keyReleaseEvent(KeyEvent &event) {
-    if (gui->HandleKeyReleaseEvent(event)) return;
-}
-void Application::textInputEvent(TextInputEvent &event) {
-    if (gui->HandleTextInputEvent(event)) return;
-}
-void Application::viewportEvent(ViewportEvent& event) {
-    GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()});
-    gui->Relayout(Vector2{event.windowSize()} / event.dpiScaling(), event.windowSize(), event.framebufferSize());
-}
 Vector2i Application::GetWindowSize() {
     return windowSize();
 }

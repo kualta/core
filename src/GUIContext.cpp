@@ -65,22 +65,22 @@ GUIContext::GUIContext(ImGuiContext& context, const Vector2i& size)
 GUIContext::GUIContext(NoCreateT) noexcept
 : context      { nullptr  },
   shader       { NoCreate },
+  mesh         { NoCreate },
   texture      { NoCreate },
   vertexBuffer { NoCreate },
-  indexBuffer  { NoCreate },
-  mesh         { NoCreate } { }
+  indexBuffer  { NoCreate } { }
 
 GUIContext::GUIContext(GUIContext&& other) noexcept
 :
 context            { other.context                 },
 shader             { std::move(other.shader)       },
+timeline           { std::move(other.timeline)     },
+eventScaling       { other.eventScaling            },
+supersamplingRatio { other.supersamplingRatio      },
+mesh               { std::move(other.mesh)         },
 texture            { std::move(other.texture)      },
 vertexBuffer       { std::move(other.vertexBuffer) },
-indexBuffer        { std::move(other.indexBuffer)  },
-timeline           { std::move(other.timeline)     },
-mesh               { std::move(other.mesh)         },
-supersamplingRatio { other.supersamplingRatio      },
-eventScaling       { other.eventScaling            }
+indexBuffer        { std::move(other.indexBuffer)  }
 {
     other.context = nullptr;
     /* Update the pointer to texture */

@@ -15,7 +15,7 @@ class Event {
 public:
     using callbackList = std::vector<std::function<void(T&, Args...)>>;
 
-    void Subscribe(const std::function<void(T&, Args...)>& callback);
+    void Subscribe(std::function<void(T&, Args...)> callback);
     void Trigger(T& obj, Args... args);
 
 protected:

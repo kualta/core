@@ -2,11 +2,11 @@
 
 namespace core {
 
-template<typename E, typename... args>
-std::atomic<uint32_t> Event<E, args...>::eventCounter { 0 };
+template<typename T, typename... Args>
+std::atomic<uint32_t> Event<T, Args...>::eventCounter { 0 };
 
-template<typename E, typename... args>
-void Event<E, args...>::Subscribe(const std::function<void(E&, args...)>& callback) {
+template<typename T, typename... Args>
+void Event<T, Args...>::Subscribe(std::function<void(T&, Args...)> callback) {
     callbacks.emplace_back(callback);
 }
 template<typename T, typename... Args>

@@ -27,9 +27,11 @@ public:
 
     bool exitRequested { false };
 
-    Event<KeyEvent>          OnKeyEvent;
+    Event<KeyEvent>          OnKeyPressEvent;
+    Event<KeyEvent>          OnKeyReleaseEvent;
     Event<ViewportEvent>     OnViewportEvent;
-    Event<MouseEvent>        OnMouseEvent;
+    Event<MouseEvent>        OnMouseReleaseEvent;
+    Event<MouseEvent>        OnMousePressEvent;
     Event<MouseMoveEvent>    OnMouseMoveEvent;
     Event<MouseScrollEvent>  OnMouseScrollEvent;
     Event<MultiGestureEvent> OnMultigestureEvent;
