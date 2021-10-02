@@ -30,6 +30,7 @@
 #define CORE_VIEWPORTEVENT_H
 
 #include "Essentials.h"
+#include "Math.h"
 
 namespace core {
 
@@ -77,7 +78,7 @@ public:
     const SDL_Event& event() const { return _event; }
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit ViewportEvent(const SDL_Event& event,
                            const Vector2i& windowSize,

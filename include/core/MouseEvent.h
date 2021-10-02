@@ -27,6 +27,7 @@
 #define CORE_MOUSEEVENT_H
 
 #include "InputEvent.h"
+#include "Math.h"
 
 namespace core {
 
@@ -62,7 +63,7 @@ public:
     Modifiers modifiers();
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit MouseEvent(const SDL_Event& event, Button button, const Vector2i& position, Int clickCount )
     : InputEvent { event },
@@ -113,7 +114,7 @@ public:
     Modifiers modifiers();
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit MouseMoveEvent(const SDL_Event& event,
                             const Vector2i& position,
@@ -148,7 +149,7 @@ public:
     Modifiers modifiers();
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit MouseScrollEvent(const SDL_Event& event, const Vector2& offset)
     : InputEvent { event }, _offset { offset } { }

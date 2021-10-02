@@ -26,12 +26,21 @@
 #ifndef CORE_KEYEVENT_H
 #define CORE_KEYEVENT_H
 
+#include "Essentials.h"
 #include "InputEvent.h"
+
+#include <SDL_keycode.h>
+#include <SDL_mouse.h>
+#include <SDL_version.h>
+#include <SDL_video.h>
+#include <SDL_scancode.h>
+
+union SDL_Event;
 
 namespace core {
 
 /** Key event */
-class KeyEvent: public InputEvent {
+class KeyEvent : public InputEvent {
 public:
 
     /** Key */
@@ -156,7 +165,7 @@ public:
         B = SDLK_b,                 /**< Letter B */
         C = SDLK_c,                 /**< Letter C */
         D = SDLK_d,                 /**< Letter D */
-        E = SDLK_e,                 /**< Letter E */
+        E = SDLK_e,                 /**< Letter T */
         F = SDLK_f,                 /**< Letter F */
         G = SDLK_g,                 /**< Letter G */
         H = SDLK_h,                 /**< Letter H */
@@ -201,16 +210,16 @@ public:
     /**
      * Name for given key
      *
-     * Human-readable localized UTF-8 name for given key, intended for displaying to the user in e.g. key binding
+     * Human-readable localized UTF-8 name for given key, intended for displaying to the user in mouseEvent.g. key binding
      * configuration. If there is no name for given key, empty string is returned. */
-    static std::string keyName(Key key);
+    static string keyName(Key key);
 
     /**
      * Key name
      *
-     * Human-readable localized UTF-8 name for the key returned by key(), intended for displaying to the user in e.g.
+     * Human-readable localized UTF-8 name for the key returned by key(), intended for displaying to the user in mouseEvent.g.
      * key binding configuration. If there is no name for that key, empty string is returned. */
-    std::string keyName() const;
+    string keyName() const;
 
     /** Key */
     Key key() const { return _key; }
@@ -225,13 +234,13 @@ public:
     bool isRepeated() const { return _repeated; }
 
 private:
-    friend Sdl2Application;
+    friend class InputModule;
 
     explicit KeyEvent(const SDL_Event& event, Key key, Modifiers modifiers, bool repeated)
             : InputEvent { event },
-              _key         { key },
-              _modifiers   { modifiers },
-              _repeated    { repeated } { }
+              _key       { key },
+              _modifiers { modifiers },
+              _repeated  { repeated } { }
 
     const Key _key;
     const Modifiers _modifiers;

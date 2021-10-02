@@ -2,7 +2,7 @@
 
 namespace core {
 
-void Publisher::SubscribeTo(const char* name, std::function<void()> callback) {
+void Publisher::SubscribeTo(const char* name, const std::function<void()>& callback) {
     if ( !this->HasEvent(name) ) {
         Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
         throw std::runtime_error("Publisher does not have event \"" + string(name) + "\"");
@@ -26,7 +26,7 @@ bool Publisher::HasEvent(const string &name) {
 void Publisher::Trigger(const string& name) {
     if ( !this->HasEvent(name) ) {
         Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
-        throw std::runtime_error("Publisher does not have event \"" + string(name) + "\"");
+        throw std::runtime_error("Publisher does not have event \"" + name + "\"");
     }
 
     auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e) { return e.first == name; } );

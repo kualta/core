@@ -3,6 +3,13 @@
 
 #include <core/IModule.h>
 #include <core/Publisher.h>
+#include <core/Event.h>
+#include <core/KeyEvent.h>
+#include <core/MouseEvent.h>
+#include <core/ViewportEvent.h>
+#include <core/TextEvent.h>
+#include <core/GestureEvent.h>
+#include <core/ExitEvent.h>
 
 #include <SDL.h>
 #include <memory>
@@ -20,19 +27,21 @@ public:
 
     bool exitRequested { false };
 
+    Event<KeyEvent>          OnKeyEvent;
+    Event<ViewportEvent>     OnViewportEvent;
+    Event<MouseEvent>        OnMouseEvent;
+    Event<MouseMoveEvent>    OnMouseMoveEvent;
+    Event<MouseScrollEvent>  OnMouseScrollEvent;
+    Event<MultiGestureEvent> OnMultigestureEvent;
+    Event<TextEditingEvent>  OnTextEditingEvent;
+    Event<TextInputEvent>    OnTextInputEvent;
+    Event<ExitEvent>         OnExitEvent;
+
 protected:
     void PollEvents();
 
     SDL_Event       event;
     const uint8_t*  keystate;
-
-private:
-
-    void CreateEvents();
-
-    void OnExitRequest();
-    void OnWindowResize();
-
 
 };
 

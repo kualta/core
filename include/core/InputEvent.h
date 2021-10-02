@@ -29,6 +29,20 @@
 #ifndef CORE_INPUTEVENT_H
 #define CORE_INPUTEVENT_H
 
+#include "Essentials.h"
+
+#include <SDL_keycode.h>
+#include <SDL_mouse.h>
+#include <SDL_version.h>
+#include <SDL_video.h>
+#include <SDL_scancode.h>
+
+#include <Corrade/Containers/ArrayView.h>
+#include <Corrade/Containers/EnumSet.h>
+#include <Corrade/Containers/Optional.h>
+
+union SDL_Event;
+
 namespace core {
 
 /**
@@ -77,7 +91,7 @@ public:
     /**
      *  Set of modifiers
      *   KeyEvent::modifiers(),  MouseEvent::modifiers(), MouseMoveEvent::modifiers() */
-    typedef Containers::EnumSet<Modifier> Modifiers;
+    typedef Corrade::Containers::EnumSet<Modifier> Modifiers;
 
     /**  Copying is not allowed */
     InputEvent(const InputEvent&) = delete;
@@ -109,14 +123,14 @@ public:
      */
     const SDL_Event& GetEvent() const { return event; }
 
-#ifndef DOXYGEN_GENERATING_OUTPUT
 protected:
-    explicit InputEvent(const SDL_Event& event): event(event), accepted(false) { }
+
+    explicit InputEvent(const SDL_Event& event) : event(event), accepted(false) { }
 
     ~InputEvent() = default;
-#endif
 
 private:
+
     const SDL_Event& event;
     bool accepted;
 };

@@ -1,4 +1,7 @@
 /*
+ * This is a stand-alone header file. No GestureEvent.cpp is presented
+ */
+/*
     This file is part of Magnum.
 
     Copyright © 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
@@ -81,7 +84,7 @@ public:
     const SDL_Event& event() const { return _event; }
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit MultiGestureEvent(const SDL_Event& event,
                                const Vector2& center,
