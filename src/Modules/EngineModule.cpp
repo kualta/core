@@ -6,6 +6,9 @@ EngineModule::EngineModule(InputModule* input)
 : IModule("Engine", INTERNAL), engineLoop(std::make_unique<EngineLoop>(input)), inputModule(input) {
 
 }
+void EngineModule::Start() {
+    inputModule->OnExitEvent.Subscribe([&](ExitEvent& event) { engineLoop->Stop(); });
+}
 int32_t EngineModule::Main() {
 
     /** Start all modules */
@@ -21,9 +24,6 @@ int32_t EngineModule::Main() {
 
 
     return 0;
-}
-void EngineModule::Tick() {
-
 }
 
 }

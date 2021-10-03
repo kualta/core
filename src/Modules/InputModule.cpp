@@ -19,8 +19,6 @@ InputEvent::Modifiers fixedModifiers(Uint16 mod) {
     if (modifiers & InputEvent::Modifier::Super) modifiers |= InputEvent::Modifier::Alt;
     return modifiers;
 }
-
-
 InputModule::InputModule() : IModule("Input", INPUT_T) {
 
 }
