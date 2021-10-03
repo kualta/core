@@ -4,8 +4,8 @@ namespace core {
 
 void Publisher::SubscribeTo(const char* name, const std::function<void()>& callback) {
     if ( !this->HasEvent(name) ) {
-        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
-        throw std::runtime_error("Publisher does not have event \"" + string(name) + "\"");
+        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have GetEvent \"" << name << "\"";
+        throw std::runtime_error("Publisher does not have GetEvent \"" + string(name) + "\"");
     }
 
     auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e) { return e.first == name; } );
@@ -13,7 +13,7 @@ void Publisher::SubscribeTo(const char* name, const std::function<void()>& callb
 }
 void Publisher::AddEvent(const string& name) {
     if (this->HasEvent(name)) {
-        Logger::Log(GENERAL, WARN_HERE) << "Cannot add new event \"" << name << "\" to publisher: event with same name already exists";
+        Logger::Log(GENERAL, WARN_HERE) << "Cannot add new GetEvent \"" << name << "\" to publisher: GetEvent with same name already exists";
         return;
     }
 
@@ -25,8 +25,8 @@ bool Publisher::HasEvent(const string &name) {
 }
 void Publisher::Trigger(const string& name) {
     if ( !this->HasEvent(name) ) {
-        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have event \"" << name << "\"";
-        throw std::runtime_error("Publisher does not have event \"" + name + "\"");
+        Logger::Log(GENERAL, ERR_HERE) << "Publisher does not have GetEvent \"" << name << "\"";
+        throw std::runtime_error("Publisher does not have GetEvent \"" + name + "\"");
     }
 
     auto e = std::find_if(eventList.begin(), eventList.end(), [&](event& e) { return e.first == name; } );

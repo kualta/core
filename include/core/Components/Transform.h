@@ -14,7 +14,7 @@ public:
     void Tick() override;
 
     /**
-     * Vector representing position of the entity
+     * Vector representing GetPosition of the entity
      */
     Vector3 position { 0, 0, 0 };
 

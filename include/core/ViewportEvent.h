@@ -34,8 +34,9 @@
 
 namespace core {
 
-/** Viewport event */
+/** Viewport GetEvent */
 class ViewportEvent {
+    friend InputModule;
 public:
     /**  Copying is not allowed */
     ViewportEvent(const ViewportEvent&) = delete;
@@ -50,49 +51,45 @@ public:
     ViewportEvent& operator=(ViewportEvent&&) = delete;
 
     /**
-     * Window size
-     * On some platforms with HiDPI displays, window size can be different from framebufferSize(). */
-    Vector2i windowSize() const { return _windowSize; }
+     * @returns window size
+     * @note On some platforms with HiDPI displays, window size can be different from GetFramebufferSize(). */
+    Vector2i GetWindowSize() const { return windowSize; }
 
     /**
-     * Framebuffer size
-     * On some platforms with HiDPI displays, framebuffer size can be different from  windowSize(). */
-    Vector2i framebufferSize() const { return _framebufferSize; }
+     * @returns framebuffer size of Viewport
+     * @note On some platforms with HiDPI displays, framebuffer size can be different from  GetWindowSize(). */
+    Vector2i GetFramebufferSize() const { return framebufferSize; }
 
     /**
-     *  DPI scaling
-     *
-     * On some platforms moving an app between displays can result in DPI
-     * scaling value being changed in tandem with a window/framebuffer
-     * size. Simply resizing a window doesn't change the DPI scaling value.
+     * @returns DPI scaling of Viewport
+     * @note On some platforms moving an app between displays can result in DPI scaling value being changed in tandem with a
+     * window / framebuffer size. Simply resizing a window doesn't change the DPI scaling value.
      */
-    Vector2 dpiScaling() const { return _dpiScaling; }
+    Vector2 GetDpiScaling() const { return dpiScaling; }
 
     /**
-     *  Underlying SDL event
+     *  Underlying SDL GetEvent
      *
      * Of type `SDL_WINDOWEVENT`.
      * @note Not available in  CORRADE_TARGET_EMSCRIPTEN "Emscripten".
      *   Sdl2Application::anyEvent()
      */
-    const SDL_Event& event() const { return _event; }
+    const SDL_Event& GetEvent() const { return event; }
 
 private:
-    friend InputModule;
-
     explicit ViewportEvent(const SDL_Event& event,
                            const Vector2i& windowSize,
                            const Vector2i& framebufferSize,
                            const Vector2& dpiScaling)
-                           : _event(event),
-                           _windowSize { windowSize },
-                           _framebufferSize { framebufferSize },
-                           _dpiScaling { dpiScaling } { }
+                           : event(event),
+                             windowSize      { windowSize },
+                             framebufferSize { framebufferSize },
+                             dpiScaling      { dpiScaling } { }
 
-    const SDL_Event& _event;
-    const Vector2i _windowSize;
-    const Vector2i _framebufferSize;
-    const Vector2 _dpiScaling;
+    const SDL_Event& event;
+    const Vector2i windowSize;
+    const Vector2i framebufferSize;
+    const Vector2 dpiScaling;
 };
 
 } // namespace core

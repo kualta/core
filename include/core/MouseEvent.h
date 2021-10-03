@@ -31,8 +31,9 @@
 
 namespace core {
 
-/** Mouse event */
+/** Mouse GetEvent */
 class MouseEvent : public InputEvent {
+    friend InputModule;
 public:
 
     /** Mouse button */
@@ -49,36 +50,38 @@ public:
     };
 
     /** Button */
-    Button button() const { return _button; }
+    Button GetButton() const { return button; }
 
     /** Position */
-    Vector2i position() const { return _position; }
+    Vector2i GetPosition() const { return position; }
 
     /** Click count */
-    Int clickCount() const { return _clickCount; }
+    int32_t GetClickCount() const { return clickCount; }
 
     /**
      * Modifiers
      * Lazily populated on first request. */
-    Modifiers modifiers();
+    Modifiers GetModifiers();
 
 private:
-    friend InputModule;
+    explicit MouseEvent(const SDL_Event& event,
+                        Button button,
+                        const Vector2i& position,
+                        int32_t clickCount)
+                        : InputEvent  { event },
+                          button      { button },
+                          position    { position },
+                          clickCount  { clickCount } { }
 
-    explicit MouseEvent(const SDL_Event& event, Button button, const Vector2i& position, Int clickCount )
-    : InputEvent { event },
-    _button      { button },
-    _position    { position },
-    _clickCount  { clickCount } { }
-
-    const Button _button;
-    const Vector2i _position;
-    const Int _clickCount;
-    Containers::Optional<Modifiers> _modifiers;
+    const Button button;
+    const Vector2i position;
+    const int32_t clickCount;
+    Containers::Optional<Modifiers> modifiers;
 };
 
-/** Mouse move event */
+/** Mouse move GetEvent */
 class MouseMoveEvent : public InputEvent {
+    friend InputModule;
 public:
 
     /** Mouse button */
@@ -94,69 +97,71 @@ public:
         X2 = SDL_BUTTON_X2MASK
     };
 
-    /** Set of mouse buttons */
+    /** Set of mouse GetButtons */
     typedef Containers::EnumSet<Button> Buttons;
 
     /** Position */
-    Vector2i position() const { return _position; }
+    Vector2i GetPosition() const { return position; }
 
     /**
-     * Relative position
-     * Position relative to previous move event. */
-    Vector2i relativePosition() const { return _relativePosition; }
+     * Relative Position of MouseEvent
+     * @note: Position relative to previous move GetEvent.
+     */
+    Vector2i GetRelativePosition() const { return relativePosition; }
 
-    /**  Mouse buttons */
-    Buttons buttons() const { return _buttons; }
+    /** Mouse GetButtons */
+    Buttons GetButtons() const { return buttons; }
 
     /**
-     * Modifiers
-     * Lazily populated on first request. */
-    Modifiers modifiers();
+     * Returns Modifiers of MouseEvent
+     * @note: Lazily populated on first request. */
+    Modifiers GetModifiers();
 
 private:
-    friend InputModule;
-
     explicit MouseMoveEvent(const SDL_Event& event,
                             const Vector2i& position,
                             const Vector2i& relativePosition,
                             Buttons buttons)
-                            : InputEvent        { event },
-                              _position         { position },
-                              _relativePosition { relativePosition },
-                              _buttons          { buttons } { }
+                            : InputEvent       { event },
+                              position         { position },
+                              relativePosition { relativePosition },
+                              buttons          { buttons } { }
 
-    const Vector2i _position;
-    const Vector2i _relativePosition;
-    const Buttons _buttons;
-    Containers::Optional<Modifiers> _modifiers;
+    const Vector2i position;
+    const Vector2i relativePosition;
+    const Buttons buttons;
+    Containers::Optional<Modifiers> modifiers;
 };
 
-/** Mouse scroll event */
+/** Mouse scroll GetEvent */
 class MouseScrollEvent : public InputEvent {
+    friend InputModule;
 public:
 
     /** Scroll offset */
-    Vector2 offset() const { return _offset; }
+    Vector2 GetOffset() const { return offset; }
 
     /**
-     * Position
-     * Lazily populated on first request. */
-    Vector2i position();
+     * @retunrs Position of MouseScrollEvent
+     * @note Lazily populated on first request.
+     */
+    Vector2i GetPosition();
 
     /**
-     * Modifiers
-     * Lazily populated on first request. */
-    Modifiers modifiers();
+     * @returns Modifiers of MouseScrollEvent
+     * @note Lazily populated on first request.
+     */
+    Modifiers GetModifiers();
 
 private:
-    friend InputModule;
+    explicit MouseScrollEvent(const SDL_Event& event,
+                              const Vector2& offset)
+                              : InputEvent { event },
+                                offset { offset } { }
 
-    explicit MouseScrollEvent(const SDL_Event& event, const Vector2& offset)
-    : InputEvent { event }, _offset { offset } { }
-
-    const Vector2 _offset;
-    Containers::Optional<Vector2i> _position;
-    Containers::Optional<Modifiers> _modifiers;
+    const Vector2 offset;
+    Containers::Optional<Vector2i> position;
+    Containers::Optional<Modifiers> modifiers;
 };
 
 } // namespace core

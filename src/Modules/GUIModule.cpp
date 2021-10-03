@@ -29,7 +29,7 @@ void GUIModule::SubscribeToEvents() {
     inputModule->OnMouseScrollEvent.Subscribe([&](MouseScrollEvent& event) { gui.HandleMouseScrollEvent(event);  } );
     inputModule->OnKeyPressEvent.Subscribe([&](KeyEvent& event)            { gui.HandleKeyPressEvent(event);     } );
     inputModule->OnKeyReleaseEvent.Subscribe([&](KeyEvent& event)          { gui.HandleKeyReleaseEvent(event);   } );
-    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.windowSize());   } );
+    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.GetWindowSize());   } );
 }
 void GUIModule::EarlyTick() {
     gui.NewFrame();
