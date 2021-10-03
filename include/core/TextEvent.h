@@ -75,7 +75,7 @@ private:
 
   textEditingEvent()
 */
-class TextEditingEvent : public Event<TextEditingEvent> {
+class TextEditingEvent {
 public:
     /**  Copying is not allowed */
     TextEditingEvent(const TextEditingEvent&) = delete;

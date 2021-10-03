@@ -24,10 +24,7 @@ InputEvent::Modifiers fixedModifiers(Uint16 mod) {
 InputModule::InputModule() : IModule("Input", INPUT_T) {
 
 }
-InputModule::~InputModule() {
-
-}
-void InputModule::Tick() {
+void InputModule::EarlyTick() {
     PollEvents();
     keystate = SDL_GetKeyboardState(nullptr);
 }
@@ -50,46 +47,66 @@ void InputModule::PollEvents() {
                 } break;
 
             case SDL_KEYDOWN: {
-                KeyEvent keyEvent { event, static_cast<KeyEvent::Key>(event.key.keysym.sym), fixedModifiers(event.key.keysym.mod), event.key.repeat != 0 };
+                KeyEvent keyEvent { event,
+                                    static_cast<KeyEvent::Key>(event.key.keysym.sym),
+                                    fixedModifiers(event.key.keysym.mod),
+                                    event.key.repeat != 0 };
                 OnKeyPressEvent.Trigger(keyEvent);
             } break;
             case SDL_KEYUP: {
-                KeyEvent keyEvent { event, static_cast<KeyEvent::Key>(event.key.keysym.sym), fixedModifiers(event.key.keysym.mod), event.key.repeat != 0 };
+                KeyEvent keyEvent { event,
+                                    static_cast<KeyEvent::Key>(event.key.keysym.sym),
+                                    fixedModifiers(event.key.keysym.mod),
+                                    event.key.repeat != 0 };
                 OnKeyReleaseEvent.Trigger(keyEvent);
             } break;
 
             case SDL_MOUSEBUTTONDOWN: {
-                MouseEvent mouseEvent {event, static_cast<MouseEvent::Button>(event.button.button), { event.button.x, event.button.y }, event.button.clicks};
+                MouseEvent mouseEvent { event,
+                                        static_cast<MouseEvent::Button>(event.button.button),
+                                        { event.button.x, event.button.y },
+                                        event.button.clicks };
                 OnMousePressEvent.Trigger(mouseEvent);
             } break;
             case SDL_MOUSEBUTTONUP: {
-                MouseEvent mouseEvent{event, static_cast<MouseEvent::Button>(event.button.button), { event.button.x, event.button.y }, event.button.clicks};
+                MouseEvent mouseEvent { event,
+                                        static_cast<MouseEvent::Button>(event.button.button),
+                                        { event.button.x, event.button.y },
+                                        event.button.clicks };
                 OnMouseReleaseEvent.Trigger(mouseEvent);
             } break;
 
             case SDL_MOUSEWHEEL: {
-                MouseScrollEvent mouseScrollEvent { event, { Float(event.wheel.x), Float(event.wheel.y) } };
+                MouseScrollEvent mouseScrollEvent { event,
+                                                    { Float(event.wheel.x), Float(event.wheel.y) } };
                 OnMouseScrollEvent.Trigger(mouseScrollEvent);
             } break;
 
             case SDL_MOUSEMOTION: {
-                MouseMoveEvent mouseMoveEvent{event, {event.motion.x, event.motion.y}, {event.motion.xrel, event.motion.yrel}, static_cast<MouseMoveEvent::Button>(event.motion.state)};
+                MouseMoveEvent mouseMoveEvent { event,
+                                                { event.motion.x, event.motion.y },
+                                                { event.motion.xrel, event.motion.yrel },
+                                                static_cast<MouseMoveEvent::Button>(event.motion.state) };
                 OnMouseMoveEvent.Trigger(mouseMoveEvent);
             } break;
 
             case SDL_MULTIGESTURE: {
                 MultiGestureEvent multiGestureEvent { event, { event.mgesture.x, event.mgesture.y },
-                                                     event.mgesture.dTheta, event.mgesture.dDist, event.mgesture.numFingers };
+                                                      event.mgesture.dTheta,
+                                                      event.mgesture.dDist,
+                                                      event.mgesture.numFingers };
                 OnMultigestureEvent.Trigger(multiGestureEvent);
             } break;
 
             case SDL_TEXTINPUT: {
-                TextInputEvent textInputEvent {event, { event.text.text, std::strlen(event.text.text) } };
+                TextInputEvent textInputEvent { event,
+                                                { event.text.text, std::strlen(event.text.text) } };
                 OnTextInputEvent.Trigger(textInputEvent);
             } break;
 
             case SDL_TEXTEDITING: {
-                TextEditingEvent textEditingEvent { event, { event.edit.text, std::strlen(event.text.text) },
+                TextEditingEvent textEditingEvent { event,
+                                                    { event.edit.text, std::strlen(event.text.text) },
                                                     event.edit.start,
                                                     event.edit.length };
                 OnTextEditingEvent.Trigger(textEditingEvent);

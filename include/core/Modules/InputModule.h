@@ -21,9 +21,8 @@ namespace core {
 class InputModule : public IModule, public Publisher {
 public:
     InputModule();
-    ~InputModule();
 
-    void Tick() override;
+    void EarlyTick() override;
 
     bool exitRequested { false };
 
