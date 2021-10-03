@@ -23,11 +23,6 @@ int32_t EngineLoop::Enter() {
         /** Called after the frame has been drawn */
         this->LateTickModules();
 
-        if ( inputModule->exitRequested ) {
-            Logger::Log(INTERNAL, INFO) << "Main loop exit requested";
-            this->Stop();
-        }
-
     } // main loop
 
     return 0;
@@ -58,6 +53,7 @@ void EngineLoop::LateTickModules() {
     });
 }
 void EngineLoop::Stop() {
+    Logger::Log(INTERNAL, INFO) << "Main loop exit requested";
     isRunning = false;
 }
 

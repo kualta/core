@@ -27,20 +27,6 @@ public:
     void SwapBuffers();
     void ClearBuffers();
     void Redraw();
-    void SetGuiContext(core::GUIContext *context);
-
-protected:
-
-    void mousePressEvent(MouseEvent& event) override;
-    void mouseReleaseEvent(MouseEvent& event) override;
-    void mouseMoveEvent(MouseMoveEvent& event) override;
-    void mouseScrollEvent(MouseScrollEvent& event) override;
-    void viewportEvent(ViewportEvent& event) override;
-    void keyPressEvent(KeyEvent& event) override;
-    void keyReleaseEvent(KeyEvent& event) override;
-    void textInputEvent(TextInputEvent& event) override;
-
-    GUIContext* gui;
 
 private:
 

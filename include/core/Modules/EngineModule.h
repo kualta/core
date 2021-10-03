@@ -12,7 +12,8 @@ class EngineModule : public IModule {
 public:
     explicit EngineModule(InputModule* input);
 
-    void Tick() override;
+    void Start() override;
+
     int32_t Main();
 
 protected:

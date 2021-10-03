@@ -9,27 +9,27 @@ namespace core {
 
 class ApplicationModule : public IModule {
 public:
-    ApplicationModule();
+    ApplicationModule(InputModule* inputModule);
 
     void CreateApplication(const string &title = "Core Application", Rect rect = { 0, 0, 1280, 720 });
 
     Vector2 GetWindowDpiScale(uint32_t id = 0);
     Vector2i GetWindowSize(uint32_t id = 0);
     Vector2i GetFrameBufferSize(uint32_t id = 0);
-    void SetGuiContext(GUIContext* context, uint32_t id = 0);
 
     void SwapRedraw();
     void Redraw();
 
 protected:
 
+    void Start() override;
     void EarlyTick() override;
-    void Tick() override;
     void LateTick() override;
 
 private:
 
     std::vector<Application*> apps;
+    InputModule* inputModule;
 };
 
 }

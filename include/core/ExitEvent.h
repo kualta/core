@@ -65,7 +65,7 @@ public:
     const SDL_Event& event() const { return _event; }
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit ExitEvent(const SDL_Event& event): _event(event), _accepted(false) {}
 

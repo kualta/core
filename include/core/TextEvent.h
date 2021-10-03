@@ -27,6 +27,7 @@
 #define CORE_TEXTEVENT_H
 
 #include "InputEvent.h"
+#include "Event.h"
 
 namespace core {
 
@@ -59,7 +60,7 @@ public:
     const SDL_Event& event() const { return _event; }
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
     explicit TextInputEvent(const SDL_Event& event, Containers::ArrayView<const char> text)
     : _event(event), _text{ text }, _accepted{ false } { }
@@ -74,7 +75,7 @@ private:
 
   textEditingEvent()
 */
-class Sdl2Application::TextEditingEvent {
+class TextEditingEvent {
 public:
     /**  Copying is not allowed */
     TextEditingEvent(const TextEditingEvent&) = delete;
@@ -94,7 +95,7 @@ public:
     /**
      *  Set event as accepted
      *
-     * If the event is ignored (i.e., not set as accepted), it might be
+     * If the event is ignored (i.mouseEvent., not set as accepted), it might be
      * propagated elsewhere, for example to another screen when using
      *  BasicScreenedApplication "ScreenedApplication". By default is
      * each event ignored and thus propagated.
@@ -110,18 +111,14 @@ public:
     /**  Number of characters to edit from the start point */
     Int length() const { return _length; }
 
-    /**
-     *  Underlying SDL event
-     *
-     * Of type `SDL_TEXTEDITING`.
-     *   Sdl2Application::anyEvent()
-     */
+    /** Underlying SDL event of type SDL_TEXTEDITING. */
     const SDL_Event& event() const { return _event; }
 
 private:
-    friend Sdl2Application;
+    friend InputModule;
 
-    explicit TextEditingEvent(const SDL_Event& event, Containers::ArrayView<const char> text, Int start, Int length): _event(event), _text{text}, _start{start}, _length{length}, _accepted{false} {}
+    explicit TextEditingEvent(const SDL_Event& event, Containers::ArrayView<const char> text, Int start, Int length)
+    : _event(event), _text{text}, _start{start}, _length{length}, _accepted{false} { }
 
     const SDL_Event& _event;
     const Containers::ArrayView<const char> _text;

@@ -1,21 +1,22 @@
 #include <core/Modules/ApplicationModule.h>
 #include <core/GUIContext.h>
+#include <core/Modules/InputModule.h>
 
 namespace core {
 
-ApplicationModule::ApplicationModule()
-: IModule("Application", WINDOW)
+ApplicationModule::ApplicationModule(InputModule* inputModule)
+: IModule("Application", WINDOW), inputModule(inputModule)
 {
 
+}
+void ApplicationModule::Start() {
+    inputModule->OnViewportEvent.Subscribe([&] (ViewportEvent& event)
+                                           { GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()}); } );
 }
 void ApplicationModule::EarlyTick() {
     for (auto app : apps) {
         app->ClearBuffers();
-        app->mainLoopIteration();
     }
-}
-void ApplicationModule::Tick() {
-
 }
 void ApplicationModule::LateTick() {
     SwapRedraw();
@@ -42,9 +43,6 @@ Vector2 ApplicationModule::GetWindowDpiScale(uint32_t id) {
 }
 Vector2i ApplicationModule::GetFrameBufferSize(uint32_t id) {
     return apps[id]->GetFrameBufferSize();
-}
-void ApplicationModule::SetGuiContext(GUIContext* context, uint32_t id) {
-    apps[id]->SetGuiContext(context);
 }
 
 }
