@@ -18,9 +18,6 @@ void GUIModule::Start() {
 
     gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
     SubscribeToEvents();
-
-    appModule->SetGuiContext(&gui, 0);
-
     SetStandardFont(supersamplingRatio);
     SetStandardStyle();
 }
@@ -32,8 +29,7 @@ void GUIModule::SubscribeToEvents() {
     inputModule->OnMouseScrollEvent.Subscribe([&](MouseScrollEvent& event) { gui.HandleMouseScrollEvent(event);  } );
     inputModule->OnKeyPressEvent.Subscribe([&](KeyEvent& event)            { gui.HandleKeyPressEvent(event);     } );
     inputModule->OnKeyReleaseEvent.Subscribe([&](KeyEvent& event)          { gui.HandleKeyReleaseEvent(event);   } );
-    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.windowSize());
-                                                                             GL::defaultFramebuffer.setViewport({{ }, event.framebufferSize()}); } );
+    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.windowSize());   } );
 }
 void GUIModule::EarlyTick() {
     gui.NewFrame();

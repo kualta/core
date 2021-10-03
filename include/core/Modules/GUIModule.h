@@ -4,6 +4,7 @@
 #include <core/Essentials.h>
 #include <core/GUIContext.h>
 #include <core/IModule.h>
+
 #include <core/Modules/InputModule.h>
 
 using namespace Magnum;
@@ -22,16 +23,15 @@ protected:
     void EarlyTick() override;
     void Tick() override;
 
-    GUIContext gui { NoCreate };
+    void SetStandardStyle();
+    void SetStandardFont(float ratio);
+    void SubscribeToEvents();
 
+
+    GUIContext   gui { NoCreate };
     ApplicationModule* appModule;
     InputModule* inputModule;
 
-    void SetStandardStyle();
-
-    void SetStandardFont(float ratio);
-
-    void SubscribeToEvents();
 };
 
 }

@@ -27,11 +27,6 @@ public:
     void SwapBuffers();
     void ClearBuffers();
     void Redraw();
-    void SetGuiContext(core::GUIContext *context);
-
-protected:
-
-    GUIContext* gui;
 
 private:
 

@@ -47,9 +47,5 @@ void Application::Redraw() {
 void Application::ClearBuffers() {
     GL::defaultFramebuffer.clear(GL::FramebufferClear::Color | GL::FramebufferClear::Depth);
 }
-void Application::SetGuiContext(GUIContext *context) {
-    gui = context;
-}
-
 
 }

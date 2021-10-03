@@ -22,7 +22,6 @@ int32_t EngineModule::Main() {
     engineLoop->StopModules();
     Logger::Log(INTERNAL, INFO) << "All Modules Stopped";
 
-
     return 0;
 }
 
