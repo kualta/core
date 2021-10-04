@@ -30,8 +30,9 @@
 
 namespace core {
 
-/** Exit event */
+/** Exit GetEvent */
 class ExitEvent {
+    friend class InputModule;
 public:
     /**  Copying is not allowed */
     ExitEvent(const ExitEvent&) = delete;
@@ -45,32 +46,13 @@ public:
     /**  Moving is not allowed */
     ExitEvent& operator=(ExitEvent&&) = delete;
 
-    /**  Whether the event is accepted */
-    bool isAccepted() const { return _accepted; }
-
-    /**
-     *  Set event as accepted
-     *
-     * If the event is ignored (i.e., not set as accepted) in
-     *  exitEvent(), the application won't exit. Default implementation
-     * of  exitEvent() accepts the event.
-     */
-    void setAccepted(bool accepted = true) { _accepted = accepted; }
-
-    /**
-     *  Underlying SDL event
-     *
-     * Of type `SDL_QUIT`.
-     */
-    const SDL_Event& event() const { return _event; }
+    /** Underlying SDL GetEvent Of type SDL_QUIT. */
+    const SDL_Event& GetEvent() const { return event; }
 
 private:
-    friend InputModule;
+    explicit ExitEvent(const SDL_Event& event) : event(event) { }
 
-    explicit ExitEvent(const SDL_Event& event): _event(event), _accepted(false) {}
-
-    const SDL_Event& _event;
-    bool _accepted;
+    const SDL_Event& event;
 };
 
 }

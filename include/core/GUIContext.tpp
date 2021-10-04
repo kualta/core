@@ -9,7 +9,7 @@ bool GUIContext::HandleKeyEvent(KeyEvent& event, bool value) {
 
     ImGuiIO &io = ImGui::GetIO();
 
-    switch (event.key()) {
+    switch (event.GetKey()) {
         case KeyEvent::Key::LeftShift:
         case KeyEvent::Key::RightShift:
             io.KeyShift = value;
@@ -89,7 +89,7 @@ bool GUIContext::HandleKeyEvent(KeyEvent& event, bool value) {
             break;
             /* LCOV_EXCL_STOP */
 
-            /* Unknown key, do nothing */
+            /* Unknown GetKey, do nothing */
             default: return false;
     }
 
@@ -101,10 +101,10 @@ bool GUIContext::HandleMouseEvent(MouseEvent& event, bool value) {
     ImGui::SetCurrentContext(context);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.MousePos = ImVec2(Vector2(event.position())*eventScaling);
+    io.MousePos = ImVec2(Vector2(event.GetPosition()) * eventScaling);
 
     std::size_t buttonId;
-    switch(event.button()) {
+    switch(event.GetButton()) {
         case MouseEvent::Button::Left:
             buttonId = 0;
             break;
@@ -147,9 +147,9 @@ bool GUIContext::HandleMouseScrollEvent(MouseScrollEvent& event) {
     ImGui::SetCurrentContext(context);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.MousePos = ImVec2(Vector2(event.position())*eventScaling);
-    io.MouseWheel += event.offset().y();
-    io.MouseWheelH += event.offset().x();
+    io.MousePos = ImVec2(Vector2(event.GetPosition()) * eventScaling);
+    io.MouseWheel += event.GetOffset().y();
+    io.MouseWheelH += event.GetOffset().x();
     return io.WantCaptureMouse;
 }
 
@@ -159,7 +159,7 @@ bool GUIContext::HandleMouseMoveEvent(MouseMoveEvent& event) {
     ImGui::SetCurrentContext(context);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.MousePos = ImVec2(Vector2(event.position())*eventScaling);
+    io.MousePos = ImVec2(Vector2(event.GetPosition()) * eventScaling);
     return io.WantCaptureMouse;
 }
 
@@ -176,7 +176,7 @@ bool GUIContext::HandleKeyReleaseEvent(KeyEvent& event) {
 template<class TextInputEvent>
 bool GUIContext::HandleTextInputEvent(TextInputEvent& event) {
     ImGui::SetCurrentContext(context);
-    ImGui::GetIO().AddInputCharactersUTF8(event.text().data());
+    ImGui::GetIO().AddInputCharactersUTF8(event.GetText().data());
     return false;
 }
 

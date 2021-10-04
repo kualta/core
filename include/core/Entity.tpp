@@ -11,7 +11,7 @@ namespace core {
 
 template<template<typename> typename T, typename S, typename ...Args>
 Entity& Entity::AddComponent(Args... args) {
-    static_assert(std::is_base_of<core::IComponent, T<S>>::value, "Component S must inherit from core::Component");
+    static_assert(std::is_base_of<core::IComponent, T<S>>::value, "Component S must inherit from core::IComponent");
 
     // Create a copy of provided component, to ensure heap allocation of all children
     std::shared_ptr<T<S>> component = std::make_shared<T<S>>(*this, args...);
@@ -21,7 +21,7 @@ Entity& Entity::AddComponent(Args... args) {
 };
 template<typename T, typename... Args>
 Entity& Entity::AddComponent(Args... args) {
-    static_assert(std::is_base_of<core::IComponent, T>::value, "Component T must inherit from core::Component");
+    static_assert(std::is_base_of<core::IComponent, T>::value, "Component T must inherit from core::IComponent");
 
     // Create a copy of provided component, to ensure heap allocation of all children
     auto component = std::make_shared<T>(*this, args...);

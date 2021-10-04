@@ -16,6 +16,7 @@
 [submodule "lib/imgui"]
 	path = lib/imgui
 	url = https://github.com/lectroMathew/imgui
+	branch = docking
 [submodule "lib/magnum-integration"]
 	path = lib/magnum-integration
 	url = https://github.com/lectroMathew/magnum-integration

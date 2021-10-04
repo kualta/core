@@ -3,12 +3,12 @@
 
 namespace core {
 
-string KeyEvent::keyName(const Key key) {
+string KeyEvent::KeyName(Key key) {
     return SDL_GetKeyName(SDL_Keycode(key));
 }
 
-string KeyEvent::keyName() const {
-    return keyName(_key);
+string KeyEvent::KeyName() const {
+    return KeyName(key);
 }
 
 }

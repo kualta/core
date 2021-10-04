@@ -31,8 +31,9 @@
 
 namespace core {
 
-/** Text input event */
+/** Text input Event */
 class TextInputEvent {
+    friend InputModule;
 public:
 
     /** Copying is not allowed */
@@ -47,35 +48,25 @@ public:
     /** Moving is not allowed */
     TextInputEvent& operator=(TextInputEvent&&) = delete;
 
-    /** Whether the event is accepted */
-    bool isAccepted() const { return _accepted; }
+    /** Input GetText in UTF-8 */
+    Containers::ArrayView<const char> GetText() const { return text; }
 
-    /** Set event as accepted */
-    void setAccepted(bool accepted = true) { _accepted = accepted; }
-
-    /** Input text in UTF-8 */
-    Containers::ArrayView<const char> text() const { return _text; }
-
-    /** Underlying SDL event of type SDL_TEXTINPUT. */
-    const SDL_Event& event() const { return _event; }
+    /** Underlying SDL GetEvent of type SDL_TEXTINPUT. */
+    const SDL_Event& GetEvent() const { return event; }
 
 private:
-    friend InputModule;
+    explicit TextInputEvent(const SDL_Event& event,
+                            Containers::ArrayView<const char> text)
+                            : event(event),
+                            text { text } { }
 
-    explicit TextInputEvent(const SDL_Event& event, Containers::ArrayView<const char> text)
-    : _event(event), _text{ text }, _accepted{ false } { }
-
-    const SDL_Event& _event;
-    const Containers::ArrayView<const char> _text;
-    bool _accepted;
+    const SDL_Event& event;
+    const Containers::ArrayView<const char> text;
 };
 
-/**
- Text editing event
-
-  textEditingEvent()
-*/
+/** Text editing Event */
 class TextEditingEvent {
+    friend InputModule;
 public:
     /**  Copying is not allowed */
     TextEditingEvent(const TextEditingEvent&) = delete;
@@ -89,43 +80,34 @@ public:
     /**  Moving is not allowed */
     TextEditingEvent& operator=(TextEditingEvent&&) = delete;
 
-    /**  Whether the event is accepted */
-    bool isAccepted() const { return _accepted; }
-
-    /**
-     *  Set event as accepted
-     *
-     * If the event is ignored (i.mouseEvent., not set as accepted), it might be
-     * propagated elsewhere, for example to another screen when using
-     *  BasicScreenedApplication "ScreenedApplication". By default is
-     * each event ignored and thus propagated.
-     */
-    void setAccepted(bool accepted = true) { _accepted = accepted; }
-
     /**  Input text in UTF-8 */
-    Containers::ArrayView<const char> text() const { return _text; }
+    Containers::ArrayView<const char> GetText() const { return text; }
 
     /**  Location to begin editing from */
-    Int start() const { return _start; }
+    int32_t GetStartLocation() const { return start; }
 
-    /**  Number of characters to edit from the start point */
-    Int length() const { return _length; }
+    /**  Number of characters to edit from the GetStartLocation point */
+    int32_t GetLength() const { return length; }
 
-    /** Underlying SDL event of type SDL_TEXTEDITING. */
-    const SDL_Event& event() const { return _event; }
+    /**  Underlying SDL GetEvent of type SDL_TEXTEDITING. */
+    const SDL_Event& GetEvent() const { return event; }
 
 private:
-    friend InputModule;
+    explicit TextEditingEvent(const SDL_Event& event,
+                              Containers::ArrayView<const char> text,
+                              int32_t start,
+                              int32_t length)
+                              : event(event),
+                                text    { text },
+                                start   { start },
+                                length  { length } { }
 
-    explicit TextEditingEvent(const SDL_Event& event, Containers::ArrayView<const char> text, Int start, Int length)
-    : _event(event), _text{text}, _start{start}, _length{length}, _accepted{false} { }
-
-    const SDL_Event& _event;
-    const Containers::ArrayView<const char> _text;
-    const Int _start;
-    const Int _length;
-    bool _accepted;
+    const SDL_Event& event;
+    const Containers::ArrayView<const char> text;
+    const int32_t start;
+    const int32_t length;
 };
-}
+
+} // namespace core
 
 #endif //CORE_TEXTEVENT_H

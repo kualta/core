@@ -143,7 +143,7 @@ public:
      * Start a new frame
      *
      * Calls cpp ImGui::SetGUIContextCurent() on context() and initializes a new ImGui frame using ImGui::NewFrame().
-     * This function also decides if a text input needs to be enabled */
+     * This function also decides if a GetText input needs to be enabled */
     void NewFrame();
 
     /**
@@ -154,64 +154,64 @@ public:
     void DrawFrame();
 
     /**
-     * Handle mouse press event
+     * Handle mouse press GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on GUIContext() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the mouse (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on GUIContext() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the mouse (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class MouseEvent>
     bool HandleMousePressEvent(MouseEvent& event);
 
     /**
-     * Handle mouse release event
+     * Handle mouse release GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the mouse (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the mouse (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class MouseEvent>
     bool HandleMouseReleaseEvent(MouseEvent& event);
 
     /**
-     * Handle mouse scroll event
+     * Handle mouse scroll GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the mouse (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the mouse (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class MouseScrollEvent>
     bool HandleMouseScrollEvent(MouseScrollEvent& event);
 
     /**
-     * Handle mouse move event
+     * Handle mouse move GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the mouse (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the mouse (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class MouseMoveEvent>
     bool HandleMouseMoveEvent(MouseMoveEvent& event);
 
     /**
-     * Handle key press event
+     * Handle GetKey press GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the keyboard (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the keyboard (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class KeyEvent>
     bool HandleKeyPressEvent(KeyEvent& event);
 
     /**
-     * Handle key release event
+     * Handle GetKey release GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the keyboard (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the keyboard (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class KeyEvent>
     bool HandleKeyReleaseEvent(KeyEvent& event);
 
     /**
-     * Handle text input event
+     * Handle GetText input GetEvent
      *
-     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the event to ImGui. Returns true if ImGui
-     * wants to capture the keyboard (so the event shouldn't be further propagated to the rest of the application),
+     * Calls ImGui::SetGUIContextCurent() on context() first and then propagates the GetEvent to ImGui. Returns true if ImGui
+     * wants to capture the keyboard (so the GetEvent shouldn't be further propagated to the rest of the application),
      * false otherwise. */
     template<class TextInputEvent>
     bool HandleTextInputEvent(TextInputEvent& event);

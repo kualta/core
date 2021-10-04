@@ -66,6 +66,10 @@ class Scene;
 class ScriptedBehaviour;
 class Shader;
 
+// Core GUI classes
+class GUIBehaviour;
+class GUIContext;
+
 // Core Module classes
 class ApplicationModule;
 class EngineModule;

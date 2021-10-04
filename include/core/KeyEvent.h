@@ -39,14 +39,15 @@ union SDL_Event;
 
 namespace core {
 
-/** Key event */
+/** Key GetEvent */
 class KeyEvent : public InputEvent {
+    friend class InputModule;
 public:
 
     /** Key */
     enum class Key: SDL_Keycode {
 
-        /**< Unknown key */
+        /**< Unknown GetKey */
         Unknown = SDLK_UNKNOWN,
 
         /**
@@ -80,12 +81,12 @@ public:
         RightAlt = SDLK_RALT,
 
         /**
-         * Left Super key (Windows/⌘)
+         * Left Super GetKey (Windows/⌘)
          *   InputEvent::Modifier::Super */
         LeftSuper = SDLK_LGUI,
 
         /**
-         * Right Super key (Windows/⌘)
+         * Right Super GetKey (Windows/⌘)
          *   InputEvent::Modifier::Super */
         RightSuper = SDLK_RGUI,
 
@@ -208,43 +209,44 @@ public:
     };
 
     /**
-     * Name for given key
+     * Name for given GetKey
      *
-     * Human-readable localized UTF-8 name for given key, intended for displaying to the user in mouseEvent.g. key binding
-     * configuration. If there is no name for given key, empty string is returned. */
-    static string keyName(Key key);
+     * Human-readable localized UTF-8 name for given GetKey, intended for displaying to the user in e.g. key binding
+     * configuration. If there is no name for given GetKey, empty string is returned. */
+    static string KeyName(Key key);
 
     /**
      * Key name
      *
-     * Human-readable localized UTF-8 name for the key returned by key(), intended for displaying to the user in mouseEvent.g.
-     * key binding configuration. If there is no name for that key, empty string is returned. */
-    string keyName() const;
+     * Human-readable localized UTF-8 name for the key returned by GetKey(), intended for displaying to the user in mouseEvent.g.
+     * GetKey binding configuration. If there is no name for that key, empty string is returned. */
+    string KeyName() const;
 
-    /** Key */
-    Key key() const { return _key; }
+    /** Returns Key in KeyEvent */
+    Key GetKey() const { return key; }
 
     /** Modifiers */
-    Modifiers modifiers() const { return _modifiers; }
+    Modifiers GetModifiers() const { return modifiers; }
 
     /**
-     * Whether the key press is repeated
+     * Whether the Key press is repeated
      *
-     * Returns true if the key press event is repeated, false if not or if this was key release event. */
-    bool isRepeated() const { return _repeated; }
+     * Returns true if the key press GetEvent is repeated, false if not or if this was GetKey release GetEvent. */
+    bool IsRepeated() const { return repeated; }
 
 private:
-    friend class InputModule;
+    explicit KeyEvent(const SDL_Event& event,
+                      Key key,
+                      Modifiers modifiers,
+                      bool repeated)
+                      : InputEvent { event },
+                        key        { key },
+                        modifiers  { modifiers },
+                        repeated   { repeated } { }
 
-    explicit KeyEvent(const SDL_Event& event, Key key, Modifiers modifiers, bool repeated)
-            : InputEvent { event },
-              _key       { key },
-              _modifiers { modifiers },
-              _repeated  { repeated } { }
-
-    const Key _key;
-    const Modifiers _modifiers;
-    const bool _repeated;
+    const Key key;
+    const Modifiers modifiers;
+    const bool repeated;
 };
 
 }

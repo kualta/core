@@ -120,11 +120,11 @@ void SceneImporter::ImportMaterials(SceneData &data) {
 void SceneImporter::ImportMeshes(SceneData& data) {
     data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
     for(UnsignedInt i = 0; i != importer->meshCount(); ++i) {
-        Logger::Log(IMPORT, INFO) << "Importing cubeMesh " << i << " " << importer->meshName(i);
+        Logger::Log(IMPORT, INFO) << "Importing mesh " << i << " " << importer->meshName(i);
 
         Containers::Optional<Trade::MeshData> meshData = importer->mesh(i);
         if(!meshData || !meshData->hasAttribute(Trade::MeshAttribute::Normal) || meshData->primitive() != MeshPrimitive::Triangles) {
-            Logger::Log(IMPORT, WARN_HERE) << "Cannot load the cubeMesh, skipping";
+            Logger::Log(IMPORT, WARN_HERE) << "Cannot load the mesh, skipping";
             continue;
         }
 

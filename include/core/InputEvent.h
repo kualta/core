@@ -69,7 +69,7 @@ public:
         Alt = KMOD_ALT,
 
         /**
-         * Super key (Windows/⌘)
+         * Super GetKey (Windows/⌘)
          *   KeyEvent::Key::LeftSuper,  KeyEvent::Key::RightSuper */
         Super = KMOD_GUI,
 
@@ -88,9 +88,7 @@ public:
         NumLock = KMOD_NUM
     };
 
-    /**
-     *  Set of modifiers
-     *   KeyEvent::modifiers(),  MouseEvent::modifiers(), MouseMoveEvent::modifiers() */
+    /** Set of Modifiers */
     typedef Corrade::Containers::EnumSet<Modifier> Modifiers;
 
     /**  Copying is not allowed */
@@ -105,16 +103,8 @@ public:
     /**  Moving is not allowed */
     InputEvent& operator=(InputEvent&&) = delete;
 
-    /**  Whether the event is accepted */
-    bool IsAccepted() const { return accepted; }
-
     /**
-     * Set event as accepted
-     * If the event is ignored (i.e., not set as accepted), it might be propagated elsewhere */
-    void SetAccepted(bool eventAccepted = true) { accepted = eventAccepted; }
-
-    /**
-     *  Underlying SDL event
+     *  Underlying SDL GetEvent
      *
      * Of type `SDL_KEYDOWN`       / `SDL_KEYUP`           for KeyEvent,
      *         `SDL_MOUSEBUTTONUP` / `SDL_MOUSEBUTTONDOWN` for MouseEvent,
@@ -124,15 +114,12 @@ public:
     const SDL_Event& GetEvent() const { return event; }
 
 protected:
-
-    explicit InputEvent(const SDL_Event& event) : event(event), accepted(false) { }
-
+    explicit InputEvent(const SDL_Event& event) : event(event) { }
     ~InputEvent() = default;
 
 private:
 
     const SDL_Event& event;
-    bool accepted;
 };
 
 } // namespace core

@@ -33,8 +33,9 @@
 
 namespace core {
 
-/** Multi gesture event */
+/** Multi gesture GetEvent */
 class MultiGestureEvent {
+    friend InputModule;
 public:
     /** Copying is not allowed */
     MultiGestureEvent(const MultiGestureEvent&) = delete;
@@ -48,63 +49,46 @@ public:
     /** Moving is not allowed */
     MultiGestureEvent& operator=(MultiGestureEvent&&) = delete;
 
-    /** Whether the event is accepted */
-    bool isAccepted() const { return _accepted; }
-
-    /** Set event as accepted */
-    void setAccepted(bool accepted = true) { _accepted = accepted; }
-
-    /**  Gesture center */
-    Vector2 center() const { return _center; }
+    /** Gesture center */
+    Vector2 GetGestureCenter() const { return gestureCenter; }
 
     /**
-     * Relative rotation
-     *
-     * Rotation relative to previous event.
+     * Rotation relative to previous GetEvent.
      */
-    Float relativeRotation() const { return _relativeRotation; }
+    float GetRelativeRotation() const { return relativeRotation; }
 
     /**
-     * Relative distance
-     *
-     * Distance of the fingers relative to previous event.
+     * Distance of the fingers relative to previous GetEvent.
      */
-    Float relativeDistance() const { return _relativeDistance; }
+    float GetRelativeDistance() const { return relativeDistance; }
 
     /**
-     * Finger count
-     *
      * Count of fingers performing the gesture.
      */
-    Int fingerCount() const { return _fingerCount; }
+    int32_t GetFingerCount() const { return fingerCount; }
 
     /**
-     * Underlying SDL event of type SDL_MULTIGESTURE.
+     * Underlying SDL GetEvent of type SDL_MULTIGESTURE.
      */
-    const SDL_Event& event() const { return _event; }
+    const SDL_Event& GetEvent() const { return event; }
 
 private:
-    friend InputModule;
-
     explicit MultiGestureEvent(const SDL_Event& event,
                                const Vector2& center,
-                               Float relativeRotation,
-                               Float relativeDistance,
-                               Int fingerCount)
-                               : _event(event),
-                               _center           { center },
-                               _relativeRotation { relativeRotation },
-                               _relativeDistance { relativeDistance },
-                               _fingerCount      { fingerCount },
-                               _accepted         { false } { }
+                               float relativeRotation,
+                               float relativeDistance,
+                               int32_t fingerCount)
+                               : event(event),
+                                 relativeRotation { relativeRotation },
+                                 relativeDistance { relativeDistance },
+                                 fingerCount      { fingerCount },
+                                 gestureCenter    { center } { }
 
-    const SDL_Event& _event;
-
-    const Float _relativeRotation;
-    const Float _relativeDistance;
-    const Int _fingerCount;
-    const Vector2 _center;
-    bool _accepted;
+    const SDL_Event& event;
+    const float relativeRotation;
+    const float relativeDistance;
+    const int32_t fingerCount;
+    const Vector2 gestureCenter;
 };
 
 }
