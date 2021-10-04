@@ -1,5 +1,7 @@
 #include <core/Editor/EditorModule.h>
-#include <core/Editor/SceneGraphEditorWindow.h>
+#include <core/Editor/HierarchyEditorWindow.h>
+#include <core/Editor/ProfilerEditorWindow.h>
+#include <core/Editor/InspectorEditorWindow.h>
 
 namespace core {
 
@@ -39,11 +41,15 @@ void EditorModule::ConstructDockSpace() {
 
     {
         dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
+        ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), dockSpaceFlags);
+
         ImGui::DockBuilderRemoveNode(dockSpaceID); // clear any previous layout
         ImGui::DockBuilderAddNode(dockSpaceID, dockSpaceFlags | ImGuiDockNodeFlags_DockSpace);
         ImGui::DockBuilderSetNodeSize(dockSpaceID, viewport->Size);
 
-        ImGuiID sceneGraphID = AddWindow<SceneGraphEditorWindow>(dockSpaceID, "Scene Graph", ImGuiDir_Left, 0.2f);
+        ImGuiID inspectorID = AddWindow<InspectorEditorWindow>(dockSpaceID, "Inspector", ImGuiDir_Right, 0.35f);
+        ImGuiID profilerID = AddWindow<ProfilerEditorWindow>(dockSpaceID, "Profiler", ImGuiDir_Down, 0.2f);
+        ImGuiID sceneGraphID = AddWindow<HierarchyEditorWindow>(dockSpaceID, "Hierarchy", ImGuiDir_Left, 0.25f);
 
         // Dock windows into the docking nodes
         for (auto& window : windows) {

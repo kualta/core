@@ -1,9 +1,12 @@
 #include <core/Editor/EditorWindow.h>
+#include <core/Logger.h>
+
+#include <utility>
 
 namespace core {
 
-EditorWindow::EditorWindow(ImGuiID parent, const string& title, ImGuiDir direction, float size)
-: parentID(parent), title(title), direction(direction), size(size)
+EditorWindow::EditorWindow(ImGuiID& parent, string title, ImGuiDir direction, float size)
+: parentID(parent), title(std::move(title)), direction(direction), size(size)
 {
     dockID = ImGui::DockBuilderSplitNode(parent, direction, size, nullptr, &parent);
 }
