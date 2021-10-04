@@ -18,7 +18,7 @@ public:
     void OnGUI() override;
 
     template<typename T>
-    ImGuiID AddWindow(ImGuiID &parent, const string& title, ImGuiDir direction, float size = 0.5f);
+    ImGuiID AddWindow(ImGuiID &parent, ImGuiDir direction, float size = 0.5f);
 
 protected:
 

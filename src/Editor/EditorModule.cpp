@@ -1,7 +1,7 @@
 #include <core/Editor/EditorModule.h>
-#include <core/Editor/HierarchyEditorWindow.h>
-#include <core/Editor/ProfilerEditorWindow.h>
-#include <core/Editor/InspectorEditorWindow.h>
+#include <core/Editor/HierarchyEditor.h>
+#include <core/Editor/ProfilerEditor.h>
+#include <core/Editor/InspectorEditor.h>
 
 namespace core {
 
@@ -47,9 +47,10 @@ void EditorModule::ConstructDockSpace() {
         ImGui::DockBuilderAddNode(dockSpaceID, dockSpaceFlags | ImGuiDockNodeFlags_DockSpace);
         ImGui::DockBuilderSetNodeSize(dockSpaceID, viewport->Size);
 
-        ImGuiID inspectorID = AddWindow<InspectorEditorWindow>(dockSpaceID, "Inspector", ImGuiDir_Right, 0.35f);
-        ImGuiID profilerID = AddWindow<ProfilerEditorWindow>(dockSpaceID, "Profiler", ImGuiDir_Down, 0.2f);
-        ImGuiID sceneGraphID = AddWindow<HierarchyEditorWindow>(dockSpaceID, "Hierarchy", ImGuiDir_Left, 0.25f);
+        // TODO: Change AddWindow to take dock space instead of creating it
+        ImGuiID inspectorID = AddWindow<InspectorEditor>(dockSpaceID, ImGuiDir_Right, 0.35f);
+        ImGuiID profilerID = AddWindow<ProfilerEditor>(dockSpaceID, ImGuiDir_Down, 0.2f);
+        ImGuiID sceneGraphID = AddWindow<HierarchyEditor>(dockSpaceID, ImGuiDir_Left, 0.25f);
 
         // Dock windows into the docking nodes
         for (auto& window : windows) {
