@@ -9,5 +9,6 @@
 #include <core/Modules/InputModule.h>
 #include <core/Modules/SceneModule.h>
 #include <core/Modules/GUIModule.h>
+#include <core/Modules/EditorModule.h>
 
 #endif //CORE_MODULES_H

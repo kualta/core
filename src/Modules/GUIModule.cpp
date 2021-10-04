@@ -19,17 +19,18 @@ void GUIModule::Start() {
     gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
     SubscribeToEvents();
     SetStandardFont(supersamplingRatio);
+    SetDefaultConfig();
     SetStandardStyle();
 }
 void GUIModule::SubscribeToEvents() {
-    inputModule->OnMouseMoveEvent.Subscribe([&](MouseMoveEvent& event)     { gui.HandleMouseMoveEvent(event);    } );
-    inputModule->OnTextInputEvent.Subscribe([&](TextInputEvent& event)     { gui.HandleTextInputEvent(event);    } );
-    inputModule->OnMousePressEvent.Subscribe([&](MouseEvent& event)        { gui.HandleMousePressEvent(event);   } );
-    inputModule->OnMouseReleaseEvent.Subscribe([&](MouseEvent& event)      { gui.HandleMouseReleaseEvent(event); } );
-    inputModule->OnMouseScrollEvent.Subscribe([&](MouseScrollEvent& event) { gui.HandleMouseScrollEvent(event);  } );
-    inputModule->OnKeyPressEvent.Subscribe([&](KeyEvent& event)            { gui.HandleKeyPressEvent(event);     } );
-    inputModule->OnKeyReleaseEvent.Subscribe([&](KeyEvent& event)          { gui.HandleKeyReleaseEvent(event);   } );
-    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.GetWindowSize());   } );
+    inputModule->OnMouseMoveEvent.Subscribe([&](MouseMoveEvent& event)     { gui.HandleMouseMoveEvent(event);     } );
+    inputModule->OnTextInputEvent.Subscribe([&](TextInputEvent& event)     { gui.HandleTextInputEvent(event);     } );
+    inputModule->OnMousePressEvent.Subscribe([&](MouseEvent& event)        { gui.HandleMousePressEvent(event);    } );
+    inputModule->OnMouseReleaseEvent.Subscribe([&](MouseEvent& event)      { gui.HandleMouseReleaseEvent(event);  } );
+    inputModule->OnMouseScrollEvent.Subscribe([&](MouseScrollEvent& event) { gui.HandleMouseScrollEvent(event);   } );
+    inputModule->OnKeyPressEvent.Subscribe([&](KeyEvent& event)            { gui.HandleKeyPressEvent(event);      } );
+    inputModule->OnKeyReleaseEvent.Subscribe([&](KeyEvent& event)          { gui.HandleKeyReleaseEvent(event);    } );
+    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event)       { gui.Relayout(event.GetWindowSize()); } );
 }
 void GUIModule::EarlyTick() {
     gui.NewFrame();
@@ -148,6 +149,8 @@ void GUIModule::SetStandardStyle() {
     colors[ImGuiCol_NavWindowingDimBg]      = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
     colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
+void GUIModule::SetDefaultConfig() {
 
+}
 
 }

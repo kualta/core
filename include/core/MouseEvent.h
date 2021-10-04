@@ -33,7 +33,7 @@ namespace core {
 
 /** Mouse GetEvent */
 class MouseEvent : public InputEvent {
-    friend InputModule;
+    friend class InputModule;
 public:
 
     /** Mouse button */
@@ -81,7 +81,7 @@ private:
 
 /** Mouse move GetEvent */
 class MouseMoveEvent : public InputEvent {
-    friend InputModule;
+    friend class InputModule;
 public:
 
     /** Mouse button */
@@ -135,7 +135,7 @@ private:
 
 /** Mouse scroll GetEvent */
 class MouseScrollEvent : public InputEvent {
-    friend InputModule;
+    friend class InputModule;
 public:
 
     /** Scroll offset */
