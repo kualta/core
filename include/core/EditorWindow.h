@@ -8,15 +8,26 @@ namespace core {
 
 class EditorWindow {
 public:
-    explicit EditorWindow(const string& title = "EditorWindow");
+    explicit EditorWindow(ImGuiID parent,
+                          const string& title = "EditorWindow",
+                          ImGuiDir direction = ImGuiDir_Right,
+                          float size = 0.5f);
 
     string GetTitle();
+    ImGuiID GetDockID();
+
+    virtual void Draw() final;
+
+protected:
+
+    float size;
+    string title;
+    ImGuiID dockID;
+    ImGuiID parentID;
+    ImGuiDir direction;
 
 private:
-    virtual void Draw() final;
     virtual void DrawWindowContent() = 0;
-
-    string title;
 };
 
 }

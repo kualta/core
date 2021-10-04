@@ -69,13 +69,14 @@ private:
 /**
  * Helper factory function that creates instance of module
  * and passes all parameters to its constructor.
- * @tparam InstanceType - Moduletype to create
+ * @tparam T - Moduletype to create
  * @tparam Deps - Parameters to pass to new module (dependencies)
  * @return std::unique_ptr<InstanceType>
  */
-template <class InstanceType, class ...Deps>
-std::unique_ptr<InstanceType> NewModule(Deps*... deps) {
-    return std::make_unique<InstanceType>(deps...);
+template <class T, class ...Deps>
+std::unique_ptr<T> NewModule(Deps*... deps) {
+    static_assert(std::is_base_of<core::IModule, T>::value, "Module T must inherit from core::IModule");
+    return std::make_unique<T>(deps...);
 }
 
 

@@ -1,9 +1,11 @@
 #include <core/Modules/EditorModule.h>
+#include <core/SceneGraphEditorWindow.h>
 
 namespace core {
 
-ImGuiDockNodeFlags EditorModule::dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
-ImGuiWindowFlags EditorModule::windowFlags =
+const string        EditorModule::editorDockSpaceName { "EditorDockSpace" };
+ImGuiDockNodeFlags  EditorModule::dockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+ImGuiWindowFlags    EditorModule::windowFlags =
           ImGuiWindowFlags_MenuBar
         | ImGuiWindowFlags_NoDocking
         | ImGuiWindowFlags_NoTitleBar
@@ -14,63 +16,77 @@ ImGuiWindowFlags EditorModule::windowFlags =
         | ImGuiWindowFlags_NoNavFocus
         | ImGuiWindowFlags_NoBackground;
 
-EditorModule::EditorModule(GUIModule *guiModule) : guiModule(guiModule) {
+EditorModule::EditorModule(GUIModule* guiModule, InputModule* inputModule)
+: guiModule(guiModule), inputModule(inputModule)
+{
 
 }
 void EditorModule::Start() {
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
+    inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event) {
+        viewport = ImGui::GetMainViewport();
+        viewportNeedsReload = true;
+    });
+
     ConstructDockSpace();
 }
 void EditorModule::ConstructDockSpace() {
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    viewport = ImGui::GetMainViewport();
 
     ImGui::NewFrame();
     ImGui::Begin("DockSpace", nullptr, windowFlags);
 
     {
-        dockspaceId = ImGui::GetID("MainDockSpace");
-        ImGui::DockBuilderRemoveNode(dockspaceId); // clear any previous layout
-        ImGui::DockBuilderAddNode(dockspaceId, dockspaceFlags | ImGuiDockNodeFlags_DockSpace);
-        ImGui::DockBuilderSetNodeSize(dockspaceId, viewport->Size);
+        dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
+        ImGui::DockBuilderRemoveNode(dockSpaceID); // clear any previous layout
+        ImGui::DockBuilderAddNode(dockSpaceID, dockSpaceFlags | ImGuiDockNodeFlags_DockSpace);
+        ImGui::DockBuilderSetNodeSize(dockSpaceID, viewport->Size);
 
-        // split the dockspace into 2 nodes -- DockBuilderSplitNode takes in the following args in the following order
-        // window ID to split, direction, fraction (between 0 and 1), the final two setting lets us choose which id we
-        // want (whichever one we DON'T set as NULL, will be returned by the function) out_id_at_dir is the id of the
-        // node in the direction we specified earlier, out_id_at_opposite_dir is in the opposite direction
-        auto dock_id_left = ImGui::DockBuilderSplitNode(dockspaceId, ImGuiDir_Left, 0.2f, nullptr, &dockspaceId);
-        auto dock_id_down = ImGui::DockBuilderSplitNode(dockspaceId, ImGuiDir_Down, 0.25f, nullptr, &dockspaceId);
+        ImGuiID sceneGraphID = AddWindow<SceneGraphEditorWindow>(dockSpaceID, "Scene Graph", ImGuiDir_Left, 0.2f);
 
-        // we now dock our windows into the docking node we made above
-        ImGui::DockBuilderDockWindow("Down", dock_id_down);
-        ImGui::DockBuilderDockWindow("Left", dock_id_left);
-        ImGui::DockBuilderFinish(dockspaceId);
+        // Dock windows into the docking nodes
+        for (auto& window : windows) {
+            ImGui::DockBuilderDockWindow(window->GetTitle().c_str(), window->GetDockID());
+        }
+
+        ImGui::DockBuilderFinish(dockSpaceID);
     }
 
     ImGui::End();
     ImGui::EndFrame();
 }
 void EditorModule::OnGUI() {
+    if (viewportNeedsReload) { ReloadViewport(); }
+
+    PushDockStyle();
+    BeginEditorDockSpace();
+    PopDockStyle();
+
+    for (auto &editorWindow : windows) {
+        editorWindow->Draw();
+    }
+}
+void EditorModule::PopDockStyle() const {
+    ImGui::PopStyleVar();
+    ImGui::PopStyleVar();
+    ImGui::PopStyleVar();
+}
+void EditorModule::BeginEditorDockSpace() {
+    ImGui::Begin("DockSpace", nullptr, windowFlags);
+    dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
+    ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), dockSpaceFlags);
+    ImGui::End();
+}
+void EditorModule::ReloadViewport() const {
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+}
+void EditorModule::PushDockStyle() const {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-
-    ImGui::Begin("DockSpace", nullptr, windowFlags);
-    ImGui::PopStyleVar();
-    ImGui::PopStyleVar(2);
-
-    dockspaceId = ImGui::GetID("MainDockSpace");
-    ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
-
-    ImGui::End();
-
-    ImGui::Begin("Left");
-    ImGui::Text("Hello, left!");
-    ImGui::End();
-
-    ImGui::Begin("Down");
-    ImGui::Text("Hello, down!");
-    ImGui::End();
 }
 
 }
