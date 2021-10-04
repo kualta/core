@@ -5,24 +5,19 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
 
-## Development 
-### See **[Core Engine Roadmap](https://github.com/lectroMathew/Core/projects/1)** to get a grasp on current development status and future updates 
-#### Check out **[dev](https://github.com/lectroMathew/Core/tree/dev)** branch for latest development updates
+### Check out **[Core Engine Roadmap](https://github.com/lectroMathew/Core/projects/1)**
 
 
-
-## Usage
-
-### Building 
+## Building 
 _For full guide, read **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine_
 1. Clone the main repository:
 ```
 git clone --recursive https://github.com/lectroMathew/Core.git
 ```
-1.1 On **Unix*** systems, make sure you have **sdl2** library installed:
+1.1 On **Unix-like** systems, make sure you have **sdl2** library installed:
 ```
-sudo pacman -S sdl2             # on ArchLinux
 sudo apt install libsdl2-dev    # on Ubuntu / Debian
+sudo pacman -S sdl2             # on ArchLinux
 brew install sdl2               # on macOS (via Homebrew)
 ```
 2. Add **Core Engine** to your `CMakeLists.txt` as subdirectory and link against `core` target:
@@ -30,27 +25,19 @@ brew install sdl2               # on macOS (via Homebrew)
 add_subdirectory(Core)
 target_link_libraries(MyApplication PUBLIC core)
 ```
-3. Generate & Build your application
-> Note: **master** branch is guaranteed to build
+3. Generate & Build your application like you usually do
 ```
-cmake -G <Your generator> ./
+cmake -G "CodeBlocks - NMake Makefiles" ./
 cmake --build ./build --target MyApplication
 ```
-> Note: on Unix* systems use **gcc** or **g++** to compile, on Windows **MinGW** is recommended, 
-> **MSVC** compilation is possible, but not guaranteed
- 
-> Note: Make sure you're using 64bit version of your compiler of choice
-
-If you experience any problems with building the engine feel free to open an issue. This would help us make building process as smooth as possible
+> Note: Make sure you're using 64bit version of your compiler
 
 
-### Using the engine
+## Using the engine
 _For full guide, read **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers_
 1. In your application, `#include` all module files you wish to use, together with `CoreConfig.h` header:
 ````c++
-#include <core/Modules/ApplicationModule.h>
-#include <core/Modules/EngineModule.h>
-#include <core/Modules/SceneModule.h>
+#include <core/Modules.h>
 #include <core/CoreConfig.h>
 ````
 2. Use `CoreConfig` to configure your `Core` and then build it:
@@ -79,11 +66,9 @@ int main() {
 ```
 4. You're amazing!   
 
-Congratulations, you've successfully built your `Core` and put it to work!   
-Find out how to make more exciting stuff with **Core Engine** by reading architecture guides on our wiki:
+Congratulations, you've successfully built your first `Core` and put it to work!   
 
-### **[Engine Architecture](https://github.com/lectroMathew/Core/wiki/Architecture)** introduction   
-<br>
+Find out how to make more exciting stuff with **Core Engine** by reading architecture guides: **[Engine Architecture](https://github.com/lectroMathew/Core/wiki/Architecture)** introduction
 
 Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information and guides
 
