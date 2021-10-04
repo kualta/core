@@ -1,3 +1,6 @@
+/*
+ * This is a stand-alone header file. No SceneGraphEditorWinodw.cpp is presented.
+ */
 #ifndef CORE_SCENEGRAPHEDITORWINDOW_H
 #define CORE_SCENEGRAPHEDITORWINDOW_H
 

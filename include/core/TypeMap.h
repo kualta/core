@@ -1,5 +1,5 @@
 /*
- * This is a stand-alone header file, no TypeMap.cpp is presented.
+ * This is a stand-alone header file. No TypeMap.cpp is presented.
  */
 #ifndef CORE_TYPEMAP_H
 #define CORE_TYPEMAP_H
