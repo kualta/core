@@ -1,5 +1,5 @@
 #include <core/Components/Camera.h>
-#include <core/SceneImporter.h>
+#include <core/Scene/SceneImporter.h>
 #include <core/Model.h>
 #include <core/Entity.h>
 #include <core/Logger.h>

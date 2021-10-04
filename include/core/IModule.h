@@ -1,5 +1,5 @@
 /*
- * This is a stand-alone header file, no IModule.cpp is presented.
+ * This is a stand-alone header file. No IModule.cpp is presented.
  */
 #ifndef CORE_IMODULE_H
 #define CORE_IMODULE_H

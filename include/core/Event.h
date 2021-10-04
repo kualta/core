@@ -1,7 +1,7 @@
 #ifndef CORE_EVENT_H
 #define CORE_EVENT_H
 
-#include "Essentials.h"
+#include "core/Essentials.h"
 
 #include <vector>
 #include <utility>

@@ -6,7 +6,7 @@
 
 #include "Essentials.h"
 #include "Model.h"
-#include "SceneData.h"
+#include "core/Scene/SceneData.h"
 
 #include <Magnum/Trade/MeshData.h>
 #include <Magnum/Primitives/Cube.h>

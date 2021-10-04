@@ -1,5 +1,5 @@
 /*
- * This is a stand-alone header file, no ModuleContainer.cpp is presented
+ * This is a stand-alone header file. No ModuleContainer.cpp is presented.
  */
 #ifndef CORE_MODULECONTAINER_H
 #define CORE_MODULECONTAINER_H

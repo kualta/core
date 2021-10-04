@@ -3,7 +3,7 @@
 #include <core/Components/Renderer.h>
 #include <core/Color.h>
 #include <core/Math.h>
-#include <core/Scene.h>
+#include <core/Scene/Scene.h>
 
 namespace core {
 

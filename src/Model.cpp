@@ -1,8 +1,8 @@
 #include <core/Model.h>
 #include <core/Logger.h>
 #include <core/Components/Camera.h>
-#include <core/SceneImporter.h>
-#include <core/SceneData.h>
+#include <core/Scene/SceneImporter.h>
+#include <core/Scene/SceneData.h>
 
 using namespace Magnum;
 using namespace Math::Literals;

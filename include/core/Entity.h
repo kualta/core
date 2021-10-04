@@ -8,7 +8,7 @@
 #include "Instantiable.h"
 #include "IComponent.h"
 #include "Object.h"
-#include "Scene.h"
+#include "core/Scene/Scene.h"
 #include "ScriptedBehaviour.h"
 
 #include <Magnum/SceneGraph/MatrixTransformation3D.h>
