@@ -20,14 +20,16 @@ option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
 
-#       core
+#       Core Engine
 set( CORE_INCLUDE_DIR include )
 set( CORE_LIB_DIR     lib )
 set( CORE_SRC_DIR     src )
 
-set( CORE_ENGINE_RES  )
+file( GLOB_RECURSE CORE_SOURCES
+        ${CORE_INCLUDE_DIR}/core/*.h
+        ${CORE_INCLUDE_DIR}/core/*.hpp
+        ${CORE_SRC_DIR}/*.cpp )
 
-file( GLOB_RECURSE CORE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/include/core/ ${CMAKE_CURRENT_LIST_DIR}/src/ "src/*.cpp" "core/*.hpp" "core/*.h" )
 add_library( core STATIC ${CORE_SOURCES} )
 target_include_directories( core PUBLIC ${CORE_INCLUDE_DIR} )
 
@@ -62,7 +64,7 @@ set(SDL_SHARED     OFF CACHE BOOL "" FORCE)
 #       assimp
 set(ASSIMP_BUILD_ASSIMP_TOOLS   OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_TESTS          OFF CACHE BOOL "" FORCE)
-set(ASSIMP_NO_EXPORT            ON CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT            ON  CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS           OFF CACHE BOOL "" FORCE)
 set(INJECT_DEBUG_POSTFIX        OFF CACHE BOOL "" FORCE)
 set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
@@ -76,19 +78,20 @@ set(IMGUI_DIR lib/imgui)
 #       magnum
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 set(MAGNUM_PLUGINS_DIR lib/magnum-plugins)
-set(WITH_ANYSCENEIMPORTER ON CACHE BOOL "" FORCE)
-set(WITH_ANYIMAGEIMPORTER ON CACHE BOOL "" FORCE)
-set(WITH_STBIMAGEIMPORTER ON CACHE BOOL "" FORCE)
-set(WITH_TINYGLTFIMPORTER ON CACHE BOOL "" FORCE)
-set(WITH_SDL2APPLICATION  ON CACHE BOOL "" FORCE)
-set(WITH_ASSIMPIMPORTER   ON CACHE BOOL "" FORCE)
-set(WITH_OBJIMPORTER      ON CACHE BOOL "" FORCE)
-set(WITH_IMGUI            ON CACHE BOOL "" FORCE)
 
-add_subdirectory(${CORE_LIB_DIR}/assimp EXCLUDE_FROM_ALL)
-add_subdirectory(${CORE_LIB_DIR}/corrade EXCLUDE_FROM_ALL)
-add_subdirectory(${CORE_LIB_DIR}/magnum EXCLUDE_FROM_ALL)
-add_subdirectory(${CORE_LIB_DIR}/magnum-plugins EXCLUDE_FROM_ALL)
+set(WITH_ANYSCENEIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_ANYIMAGEIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_STBIMAGEIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_TINYGLTFIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_SDL2APPLICATION    ON CACHE BOOL "" FORCE)
+set(WITH_ASSIMPIMPORTER     ON CACHE BOOL "" FORCE)
+set(WITH_OBJIMPORTER        ON CACHE BOOL "" FORCE)
+set(WITH_IMGUI              ON CACHE BOOL "" FORCE)
+
+add_subdirectory(${CORE_LIB_DIR}/assimp             EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/corrade            EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/magnum             EXCLUDE_FROM_ALL)
+add_subdirectory(${CORE_LIB_DIR}/magnum-plugins     EXCLUDE_FROM_ALL)
 add_subdirectory(${CORE_LIB_DIR}/magnum-integration EXCLUDE_FROM_ALL)
 
 add_dependencies(core MagnumPlugins::StbImageImporter)

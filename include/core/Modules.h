@@ -4,11 +4,11 @@
 #ifndef CORE_MODULES_H
 #define CORE_MODULES_H
 
-#include <core/Modules/ApplicationModule.h>
-#include <core/Modules/EngineModule.h>
-#include <core/Modules/InputModule.h>
-#include <core/Modules/SceneModule.h>
-#include <core/Modules/GUIModule.h>
-#include <core/Modules/EditorModule.h>
+#include <core/Application/ApplicationModule.h>
+#include <core/Engine/EngineModule.h>
+#include <core/Input/InputModule.h>
+#include <core/Scene/SceneModule.h>
+#include <core/GUI/GUIModule.h>
+#include <core/Editor/EditorModule.h>
 
 #endif //CORE_MODULES_H
