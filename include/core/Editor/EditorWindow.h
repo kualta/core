@@ -8,8 +8,8 @@ namespace core {
 
 class EditorWindow {
 public:
-    explicit EditorWindow(ImGuiID parent,
-                          const string& title = "EditorWindow",
+    explicit EditorWindow(ImGuiID &parent,
+                          string  title = "EditorWindow",
                           ImGuiDir direction = ImGuiDir_Right,
                           float size = 0.5f);
 
