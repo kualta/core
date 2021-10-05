@@ -9,20 +9,17 @@
 
 namespace core {
 
-class HierarchyEditorWindow : public EditorWindow {
+class HierarchyEditor : public EditorWindow {
 public:
-    HierarchyEditorWindow(ImGuiID& parent,
-                          const string& title,
-                          ImGuiDir direction,
-                          float size)
-    : EditorWindow(parent, title, direction, size)
+    HierarchyEditor(ImGuiID& parent, ImGuiDir direction, float size)
+    : EditorWindow(parent, "Hierarchy", direction, size)
     {
 
     }
 
     void DrawWindowContent() override {
         ImGui::Text("Wow Hierarchy!");
-        // TODO: Add hierarchy
+        // TODO: Implement Hierarchy window
     }
 
 };

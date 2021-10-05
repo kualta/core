@@ -6,7 +6,7 @@
 namespace core {
 
 EditorWindow::EditorWindow(ImGuiID& parent, string title, ImGuiDir direction, float size)
-: parentID(parent), title(std::move(title)), direction(direction), size(size)
+: size(size), title(std::move(title)), parentID(parent), direction(direction)
 {
     dockID = ImGui::DockBuilderSplitNode(parent, direction, size, nullptr, &parent);
 }

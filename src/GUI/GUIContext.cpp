@@ -125,9 +125,9 @@ GUIContext& GUIContext::operator=(GUIContext&& other) noexcept {
 }
 
 ImGuiContext* GUIContext::Release() {
-    ImGuiContext* context = context;
+    ImGuiContext* oldContext = context;
     context = nullptr;
-    return context;
+    return oldContext;
 }
 
 void GUIContext::Relayout(const Vector2& size, const Vector2i& windowSize, const Vector2i& framebufferSize) {
@@ -217,11 +217,9 @@ void GUIContext::Relayout(const Vector2& size, const Vector2i& windowSize, const
     /* io.DisplayFramebufferScale is currently not used by imgui (1.66b), so
        why bother */
 }
-
 void GUIContext::Relayout(const Vector2i& size) {
     Relayout(Vector2 { size }, size, size);
 }
-
 void GUIContext::NewFrame() {
     /* Ensure we use the context we're linked to */
     ImGui::SetCurrentContext(context);

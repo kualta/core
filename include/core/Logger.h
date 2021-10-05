@@ -14,18 +14,18 @@
 
 #ifndef LOG_HERE
 #   ifdef CORE_LOG_FULL_PATH
-#       define LOG_HERE LogPlace(true, __FILE__, __FUNCTION__, __LINE__)
+#       define LOG_HERE LogPlace { true, __FILE__, __FUNCTION__, __LINE__ }
 #   else
-#       define LOG_HERE LogPlace(true, __FILENAME__, __FUNCTION__, __LINE__)
+#       define LOG_HERE LogPlace { true, __FILENAME__, __FUNCTION__, __LINE__ }
 #   endif
 #endif
 
 #ifndef WARN_HERE
-#   define WARN_HERE logLevel::WARN, LOG_HERE
+#   define WARN_HERE LogLevel::WARN, LOG_HERE
 #endif
 
 #ifndef ERR_HERE
-#   define ERR_HERE logLevel::ERR, LOG_HERE
+#   define ERR_HERE LogLevel::ERR, LOG_HERE
 #endif
 
 #ifndef INFO_HERE
@@ -42,27 +42,23 @@
 
 namespace core {
 
-enum logLevel {
+enum LogLevel {
     DEBUG,
     INFO,
     WARN,
     ERR,
 };
-enum passInfo {
+enum PassInfo {
     SUCCESS,
     NO_INFO,
     FAIL,
 };
 
 struct LogPlace {
-    LogPlace() { };
-    LogPlace(bool exist, string file, string func, int32_t line)
-        : exist(exist), fileName(std::move(file)), functionName(std::move(func)), lineNumber(line) { };
-
-    bool        exist = false;
-    std::string fileName;
-    std::string functionName;
-    int32_t     lineNumber;
+    bool    exist = false;
+    string  fileName;
+    string  functionName;
+    int32_t lineNumber;
 };
 
 class Logger : public Singleton<Logger>, public Object {
@@ -74,9 +70,7 @@ public:
      * @warning At every Log object destruction the stream flushes. Might cause
      * performance issues
      */
-    static Log Log(objectTag tag = GENERAL,
-                   logLevel level = INFO,
-                   const LogPlace& place = LogPlace());
+    static LogEntry Log(ObjectTag tag = GENERAL, LogLevel level = INFO, const LogPlace& place = { });
 
     /**
      * Adds current time stamp to string stream
@@ -85,9 +79,9 @@ public:
      */
     static std::stringstream& LogTimeStamp(std::stringstream& stream);
 
-    static std::stringstream& LogTagText(std::stringstream& stream, objectTag tag);
+    static std::stringstream& LogTagText(std::stringstream& stream, ObjectTag tag);
 
-    static std::stringstream& LogLevelText(std::stringstream& stream, logLevel level);
+    static std::stringstream& LogLevelText(std::stringstream& stream, LogLevel level);
 
     /**
      * Sets width and fill char for next value in stream
@@ -98,31 +92,37 @@ public:
      */
     static std::stringstream& FillWidth(std::stringstream& stream, const char& ch, const int8_t& width);
 
-    static string GetLogTypeText(objectTag tag);
-    static string GetLogLevelText(logLevel level);
+    static string GetLogTypeText(ObjectTag tag);
+    static string GetLogLevelText(LogLevel level);
     static string GetPlaceText(const LogPlace& place);
-    static string GetPassText(passInfo success);
+    static string GetPassText(PassInfo success);
     static string ToUpper(string str);
 
 }; // class Logger
 
-class Log {
+class LogEntry {
 public:
-    Log(std::ostream& out, logLevel level = INFO, objectTag tag  = GENERAL, LogPlace place = LogPlace());
-    ~Log();
+    LogEntry(std::ostream& out, LogLevel level = INFO, ObjectTag tag = GENERAL, LogPlace place = { });
+    ~LogEntry();
 
     template<class T>
-    Log& operator<<(const T& thing) {
+    LogEntry& operator<<(const T& thing) {
         logStream << thing;
         return *this;
     };
 
 private:
-    logLevel level;
+    LogLevel level;
     LogPlace logPlace;
     std::stringstream logStream;
     std::ostream& output;
 }; // class Log
+
+/**
+ * Global wraper of Logger::Log for rapid development
+ */
+LogEntry Log(ObjectTag tag = GENERAL, LogLevel level = INFO, const LogPlace& place = { });
+
 
 }
 

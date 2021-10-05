@@ -9,16 +9,16 @@ namespace core {
 Logger::Logger() : Object("Logger") {
 
 }
-Log Logger::Log(objectTag tag, logLevel level, const LogPlace& place) {
+LogEntry Logger::Log(ObjectTag tag, LogLevel level, const LogPlace& place) {
     switch (level) {
-        case   ERR: return core::Log { std::cout, ERR,   tag, place };
-        case  WARN: return core::Log { std::cout, WARN,  tag, place };
-        case  INFO: return core::Log { std::cout, INFO,  tag, place };
-        case DEBUG: return core::Log { std::cout, DEBUG, tag, place };
+        case   ERR: return core::LogEntry {std::cout, ERR, tag, place };
+        case  WARN: return core::LogEntry {std::cout, WARN, tag, place };
+        case  INFO: return core::LogEntry {std::cout, INFO, tag, place };
+        case DEBUG: return core::LogEntry {std::cout, DEBUG, tag, place };
     }
-    return core::Log { std::cout, ERR, INTERNAL };
+    return core::LogEntry {std::cout, ERR, INTERNAL };
 }
-string Logger::GetPassText(passInfo success) {
+string Logger::GetPassText(PassInfo success) {
    string text;
 
     switch (success) {
@@ -29,19 +29,19 @@ string Logger::GetPassText(passInfo success) {
 
     return text;
 }
-string Logger::GetLogLevelText(logLevel level) {
+string Logger::GetLogLevelText(LogLevel level) {
     string text;
 
     switch (level) {
         case   ERR: text = " ERROR! "; break;
-        case  WARN: text = " WARN: "; break;
+        case  WARN: text = " WARN: ";  break;
         case  INFO: text = " ";        break;
         case DEBUG: text = " ";        break;
     }
 
     return text;
 }
-string Logger::GetLogTypeText(objectTag tag) {
+string Logger::GetLogTypeText(ObjectTag tag) {
     string text;
 
     switch (tag) {
@@ -51,8 +51,8 @@ string Logger::GetLogTypeText(objectTag tag) {
         case   MEMORY: text = "   |MEM|"; break;
         case INTERNAL: text = "  |CORE|"; break;
         case  PHYSICS: text = "  |PHYS|"; break;
-        case  INPUT_T: text = " |INPUT|"; break;
         case    SCENE: text = " |SCENE|"; break;
+        case   MODULE: text = "|MODULE|"; break;
         case   IMPORT: text = "|IMPORT|"; break;
         case   RENDER: text = "|RENDER|"; break;
         case   WINDOW: text = "|WINDOW|"; break;
@@ -76,9 +76,8 @@ string Logger::GetPlaceText(const LogPlace& place) {
 
     return text;
 }
+// FIXME: That's way too heavy for every single log, refactoring needed
 std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
-    // FIXME: THIS IS SO HEAVY! For every log?! Refactoring needed!
-
     auto now = std::chrono::system_clock::now();
 
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
@@ -86,14 +85,14 @@ std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
 
     const std::time_t cnow = std::chrono::system_clock::to_time_t(now);
-    const std::tm localTime = *std::localtime(std::addressof(cnow) );
+    const std::tm localTime = *std::localtime(std::addressof(cnow));
 
     // Macro is defined by CORE_LOG_DATE option in CMake
     #ifdef CORE_LOG_DATE
         stream << localTime.tm_year + 1900 << "/" << localTime.tm_mon + 1 << "/" << localTime.tm_mday << " ";
     #endif
 
-    // FIXME: Ugly, Refactoring needed!
+    // FIXME: Ugly, refactoring needed!
     FillWidth(stream, '0', 2);
     stream << localTime.tm_hour << ":";
 
@@ -110,12 +109,12 @@ std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
 
     return stream;
 }
-std::stringstream &Logger::LogTagText(std::stringstream &stream, objectTag tag) {
+std::stringstream &Logger::LogTagText(std::stringstream &stream, ObjectTag tag) {
     stream << GetLogTypeText(tag);
 
     return stream;
 }
-std::stringstream &Logger::LogLevelText(std::stringstream &stream, logLevel level) {
+std::stringstream &Logger::LogLevelText(std::stringstream &stream, LogLevel level) {
     stream << GetLogLevelText(level);
 
     return stream;
@@ -130,13 +129,13 @@ string Logger::ToUpper(string str) {
     std::transform(str.begin(), str.end(), str.begin(), ::toupper);
     return std::move(str);
 }
-Log::~Log() {
+LogEntry::~LogEntry() {
     logStream << Logger::GetPlaceText(logPlace);
     logStream << "\n";
     output << logStream.rdbuf();
     output.flush();
 }
-Log::Log(std::ostream &out, logLevel level, objectTag tag, LogPlace logPlace)
+LogEntry::LogEntry(std::ostream &out, LogLevel level, ObjectTag tag, LogPlace logPlace)
 : level(level),
 logPlace(std::move(logPlace)),
 output(out)
@@ -145,6 +144,10 @@ output(out)
     Logger::LogTimeStamp(logStream);
     Logger::LogTagText(logStream, tag);
     Logger::LogLevelText(logStream, level);
+}
+
+LogEntry Log(ObjectTag tag, LogLevel level, const LogPlace &place) {
+    return Logger::Log(tag, level, place);
 }
 
 } // namespace core

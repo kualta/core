@@ -27,6 +27,7 @@ protected:
     ImGuiDir direction;
 
 private:
+
     virtual void DrawWindowContent() = 0;
 };
 

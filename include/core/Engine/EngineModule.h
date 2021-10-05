@@ -14,9 +14,14 @@ public:
 
     void Start() override;
 
+    static void SetTargetFrameRate(int32_t fps);
+    static int32_t GetTargetFrameRate();
+
     int32_t Main();
 
 protected:
+
+    static int32_t              targetFrameRate;
 
     std::unique_ptr<EngineLoop> engineLoop;
     InputModule*                inputModule;
