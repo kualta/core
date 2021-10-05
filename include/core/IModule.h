@@ -6,29 +6,22 @@
 
 #include "Essentials.h"
 #include "Instantiable.h"
+#include "ObjectTag.h"
 #include "ITicker.h"
 #include "Logger.h"
-#include "ObjectTag.h"
 
 #include <utility>
 
 namespace core {
 
-enum M_STATUS {
-    C_SUCCESS = 0,
-    C_ERR_STARTUP_FAILED,
-    C_ERR_UNRESOLVED_DEPENDENCY,
-    C_ERR_INVALID_INPUT,
-};
-
 class IModule : public Instantiable<IModule>, public Object, public ITicker {
 public:
 
 
-    objectTag tag { GENERAL };
+    ObjectTag tag {GENERAL };
 
 protected:
-    explicit IModule(const string& moduleName = "Unnamed", objectTag moduleTag = GENERAL)
+    explicit IModule(const string& moduleName = "Unnamed", ObjectTag moduleTag = GENERAL)
     : Object(moduleName + " module"), tag(moduleTag)
     {
         Logger::Log(tag, INFO) << "Initialized " << name;

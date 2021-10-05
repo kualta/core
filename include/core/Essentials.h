@@ -58,7 +58,7 @@ class IModuleContainer;
 class Renderer;
 class ITicker;
 class Logger;
-class Log;
+class LogEntry;
 class Mesh;
 class Model;
 class Object;
@@ -98,7 +98,7 @@ struct WireCone;
 struct WireCylinder;
 
 
-//      std typedefs
+//      std
 template <typename T>
 using shared = std::shared_ptr<T>;
 template <typename T>
@@ -106,6 +106,9 @@ using unique = std::unique_ptr<T>;
 using std::make_shared;
 using std::vector;
 using std::string;
+
+
+
 
 
 } // namespace core
