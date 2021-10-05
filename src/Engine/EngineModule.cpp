@@ -2,6 +2,8 @@
 
 namespace core {
 
+int32_t EngineModule::targetFrameRate = 60;
+
 EngineModule::EngineModule(InputModule* input)
 : IModule("Engine", INTERNAL), engineLoop(std::make_unique<EngineLoop>(input)), inputModule(input) {
 
@@ -23,6 +25,12 @@ int32_t EngineModule::Main() {
     Logger::Log(INTERNAL, INFO) << "All Modules Stopped";
 
     return 0;
+}
+void EngineModule::SetTargetFrameRate(int32_t fps) {
+    targetFrameRate = fps;
+}
+int32_t EngineModule::GetTargetFrameRate() {
+    return targetFrameRate;
 }
 
 }

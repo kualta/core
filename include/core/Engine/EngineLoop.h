@@ -3,8 +3,9 @@
 
 #include "core/Essentials.h"
 #include "core/Logger.h"
-
+#include "core/Engine/EngineClock.h"
 #include "core/Input/InputModule.h"
+
 #include <forward_list>
 
 namespace core {

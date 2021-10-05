@@ -14,6 +14,8 @@ int32_t EngineLoop::Enter() {
 
     while ( isRunning ) {
 
+        EngineClock::MarkLoopStart();
+
         /** Called before the frame is drawn */
         this->EarlyTickModules();
 
@@ -22,6 +24,11 @@ int32_t EngineLoop::Enter() {
 
         /** Called after the frame has been drawn */
         this->LateTickModules();
+
+        EngineClock::MarkLoopEnd();
+
+        /** Pauses engine execution to match EngineModule::targetFrameRate */
+        EngineClock::WaitNextTick();
 
     } // main loop
 

@@ -18,7 +18,7 @@ public:
     }
 
     void DrawWindowContent() override {
-        ImGui::Text("Omg Profiler??");
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0/Double(ImGui::GetIO().Framerate), Double(ImGui::GetIO().Framerate));
         // TODO: Implement Profiler
     }
 
