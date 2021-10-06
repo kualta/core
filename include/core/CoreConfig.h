@@ -15,8 +15,6 @@
 
 namespace core {
 
-typedef std::unique_ptr<Core> CoreContainer;
-
 class CoreConfig {
     using initializer_fn = std::function<void(Core &)>;
 
