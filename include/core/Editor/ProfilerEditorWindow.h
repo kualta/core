@@ -1,17 +1,17 @@
 /*
  * This is a stand-alone header file. No ProfilerEditorWinodw.cpp is presented.
  */
-#ifndef CORE_PROFILEREDITOR_H
-#define CORE_PROFILEREDITOR_H
+#ifndef CORE_PROFILEREDITORWINDOW_H
+#define CORE_PROFILEREDITORWINDOW_H
 
 #include "core/Essentials.h"
 #include "EditorWindow.h"
 
 namespace core {
 
-class ProfilerEditor : public EditorWindow {
+class ProfilerEditorWindow : public EditorWindow {
 public:
-    ProfilerEditor(ImGuiID& parent, ImGuiDir direction, float size)
+    ProfilerEditorWindow(ImGuiID& parent, ImGuiDir direction, float size)
     : EditorWindow(parent, "Profiler", direction, size)
     {
 
@@ -26,4 +26,4 @@ public:
 
 } // namespace core
 
-#endif //CORE_PROFILEREDITOR_H
+#endif //CORE_PROFILEREDITORWINDOW_H

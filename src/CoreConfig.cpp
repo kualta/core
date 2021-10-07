@@ -20,8 +20,8 @@ uint16_t CoreConfig::CoreInfo::majorVersion { CORE_MAJOR_VERSION };
 uint16_t CoreConfig::CoreInfo::minorVersion { CORE_MINOR_VERSION };
 uint16_t CoreConfig::CoreInfo::patchVersion { CORE_PATCH_VERSION };
 
-CoreContainer CoreConfig::Build() {
-    CoreContainer coreContaner = std::unique_ptr<Core>(new Core);
+unique<Core> CoreConfig::Build() {
+    unique<Core> coreContaner = std::unique_ptr<Core>(new Core);
     std::stack<initializer_fn*> initializers;
 
     std::unordered_set<int> unmarkedNodes;

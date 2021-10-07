@@ -35,7 +35,7 @@ public:
      * Creates new Core object from this config
      * @return core::Core object
      */
-    CoreContainer Build();
+    unique<Core> Build();
 
     struct AppInfo {
         static void SetVersion(uint16_t major, uint16_t minor, uint16_t patch);

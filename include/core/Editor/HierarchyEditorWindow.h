@@ -9,9 +9,9 @@
 
 namespace core {
 
-class HierarchyEditor : public EditorWindow {
+class HierarchyEditorWindow : public EditorWindow {
 public:
-    HierarchyEditor(ImGuiID& parent, ImGuiDir direction, float size)
+    HierarchyEditorWindow(ImGuiID& parent, ImGuiDir direction, float size)
     : EditorWindow(parent, "Hierarchy", direction, size)
     {
 

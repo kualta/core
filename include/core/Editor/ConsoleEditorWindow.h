@@ -1,5 +1,5 @@
-#ifndef CORE_CONSOLEEDITOR_H
-#define CORE_CONSOLEEDITOR_H
+#ifndef CORE_CONSOLEEDITORWINDOW_H
+#define CORE_CONSOLEEDITORWINDOW_H
 
 #include "core/Essentials.h"
 #include "core/Editor/EditorWindow.h"
@@ -22,4 +22,4 @@ class ConsoleWindow : public EditorWindow {
 };
 }
 
-#endif //CORE_CONSOLEEDITOR_H
+#endif //CORE_CONSOLEEDITORWINDOW_H

@@ -22,13 +22,11 @@ public:
 
 protected:
 
-
     void PushDockStyle() const;
     void PopDockStyle() const;
     void ReloadViewport() const;
     void BeginEditorDockSpace();
     void ConstructDockSpace();
-
 
     GUIModule*      guiModule;
     InputModule*    inputModule;
