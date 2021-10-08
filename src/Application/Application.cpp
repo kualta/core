@@ -4,6 +4,7 @@
 
 #include <Magnum/GL/DebugOutput.h>
 #include <core/GUI/GUIContext.h>
+#include <core/Scene/SceneView.h>
 #include "Magnum/GL/Renderer.h"
 #include "Magnum/Math/Vector2.h"
 
@@ -14,7 +15,7 @@ Application::Application(const string& title, Rect rect, int args)
                         Configuration { }
                             .setTitle(title)
                             .setWindowFlags(Configuration::WindowFlag::Resizable)
-                            .setSize(Magnum::Vector2i(rect.w, rect.h)))
+                            .setSize(Vector2i(rect.w, rect.h)))
 {
     GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);

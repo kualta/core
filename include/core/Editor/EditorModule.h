@@ -7,6 +7,7 @@
 #include <core/IModule.h>
 #include <core/GUI/GUI.h>
 #include <core/Editor/EditorWindow.h>
+#include <core/Scene/SceneView.h>
 
 namespace core {
 
@@ -18,10 +19,9 @@ public:
     void OnGUI() override;
 
     template<typename T>
-    ImGuiID AddWindow(ImGuiID &parent, ImGuiDir direction, float size = 0.5f);
+    ImGuiID AddWindow(ImGuiID dockID);
 
 protected:
-
 
     void PushDockStyle() const;
     void PopDockStyle() const;
@@ -29,16 +29,16 @@ protected:
     void BeginEditorDockSpace();
     void ConstructDockSpace();
 
+    ImGuiViewport*      viewport;
+    InputModule*        inputModule;
+    GUIModule*          guiModule;
+    SceneView           sceneView;
+    ImGuiID             dockSpaceID;
+    string              editorDockSpaceName;
+    bool                viewportNeedsReload { true };
 
-    GUIModule*      guiModule;
-    InputModule*    inputModule;
-    ImGuiViewport*  viewport;
-    ImGuiID         dockSpaceID;
-    bool            viewportNeedsReload { true };
-
-    static const string         editorDockSpaceName;
-    static ImGuiDockNodeFlags   dockSpaceFlags;
-    static ImGuiWindowFlags     windowFlags;
+    ImGuiDockNodeFlags  dockSpaceFlags;
+    ImGuiWindowFlags    windowFlags;
 
     std::vector<unique<EditorWindow>> windows;
 

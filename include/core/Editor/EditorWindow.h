@@ -8,29 +8,38 @@ namespace core {
 
 class EditorWindow {
 public:
-    explicit EditorWindow(ImGuiID &parent,
-                          string  title = "EditorWindow",
-                          ImGuiDir direction = ImGuiDir_Right,
-                          float size = 0.5f);
+    explicit EditorWindow(ImGuiID dockID, string title = "EditorWindow");
 
     string GetTitle();
     ImGuiID GetDockID();
 
     virtual void Draw() final;
 
+    void AddCustomStyle(ImGuiCol colorVar, ImVec4 newvalue);
+    void ApplyCustomStyles();
+    void RemoveCustomStyles();
+
 protected:
 
-    float size;
-    string title;
-    ImGuiID dockID;
-    ImGuiID parentID;
-    ImGuiDir direction;
+
+    struct customStyle {
+        ImGuiCol colorVar;
+        ImVec4   newvalue;
+        ImVec4   oldValue;
+    };
+
+    string              title;
+    ImGuiID             dockID;
+    bool                isOpen  { true };
+    ImGuiWindowFlags    flags   { 0 };
+    std::vector<customStyle> customStyles;
 
 private:
 
     virtual void DrawWindowContent() = 0;
+
 };
 
-}
+} // namespace core
 
 #endif //CORE_EDITORWINDOW_H

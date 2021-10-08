@@ -1,19 +1,17 @@
 /*
  * This is a stand-alone header file. No SceneGraphEditorWinodw.cpp is presented.
  */
-#ifndef CORE_INSPECTOREDITOR_H
-#define CORE_INSPECTOREDITOR_H
+#ifndef CORE_INSPECTOREDITORWINDOW_H
+#define CORE_INSPECTOREDITORWINDOW_H
 
 #include "core/Essentials.h"
 #include "EditorWindow.h"
 
 namespace core {
 
-class InspectorEditor : public EditorWindow {
+class InspectorEditorWindow : public EditorWindow {
 public:
-    InspectorEditor(ImGuiID& parent, ImGuiDir direction, float size)
-    : EditorWindow(parent, "Inspector", direction, size)
-    {
+    InspectorEditorWindow(ImGuiID& dockID) : EditorWindow(dockID, "Inspector") {
 
     }
 
@@ -26,4 +24,4 @@ public:
 
 }
 
-#endif //CORE_INSPECTOREDITOR_H
+#endif //CORE_INSPECTOREDITORWINDOW_H

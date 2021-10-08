@@ -97,7 +97,7 @@ void GUIModule::SetStandardStyle() {
     ImVec4* colors = ImGui::GetStyle().Colors;
     colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.63f, 0.63f, 0.63f, 1.00f);
-    colors[ImGuiCol_WindowBg]               = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
+    colors[ImGuiCol_WindowBg]               = ImVec4(0.00f, 0.00f, 0.00f, 0.00f); // temporary made transparent, read comments in EditorModule.cpp
     colors[ImGuiCol_ChildBg]                = ImVec4(0.22f, 0.22f, 0.22f, 1.00f);
     colors[ImGuiCol_PopupBg]                = ImVec4(0.13f, 0.13f, 0.13f, 1.00f);
     colors[ImGuiCol_Border]                 = ImVec4(0.27f, 0.27f, 0.27f, 1.00f);
