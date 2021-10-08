@@ -45,6 +45,8 @@ void Camera::Draw() {
         renderer->Draw(*this);
     }
 
+    SceneView::BindColor();
+
     GL::defaultFramebuffer.bind();
 }
 

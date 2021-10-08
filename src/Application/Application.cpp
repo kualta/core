@@ -40,7 +40,6 @@ Vector2i Application::GetFrameBufferSize() {
     return framebufferSize();
 }
 void Application::SwapBuffers() {
-    SceneView::BindColor();
     swapBuffers();
 }
 void Application::Redraw() {

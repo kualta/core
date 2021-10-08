@@ -8,9 +8,7 @@ namespace core {
 
 class ConsoleWindowEditorWindow : public EditorWindow {
 public:
-    ConsoleWindowEditorWindow(ImGuiID& dockID)
-    : EditorWindow(dockID, "Console")
-    {
+    ConsoleWindowEditorWindow(ImGuiID& dockID) : EditorWindow(dockID, "Console") {
 
     }
 

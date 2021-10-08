@@ -11,9 +11,7 @@ namespace core {
 
 class ProfilerEditorWindow : public EditorWindow {
 public:
-    ProfilerEditorWindow(ImGuiID& dockID)
-    : EditorWindow(dockID, "Profiler")
-    {
+    ProfilerEditorWindow(ImGuiID& dockID) : EditorWindow(dockID, "Profiler") {
 
     }
 

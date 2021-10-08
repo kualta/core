@@ -11,9 +11,7 @@ namespace core {
 
 class HierarchyEditorWindow : public EditorWindow {
 public:
-    HierarchyEditorWindow(ImGuiID& dockID)
-    : EditorWindow(dockID, "Hierarchy")
-    {
+    HierarchyEditorWindow(ImGuiID& dockID) : EditorWindow(dockID, "Hierarchy") {
 
     }
 

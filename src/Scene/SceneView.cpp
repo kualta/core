@@ -32,7 +32,7 @@ void SceneView::Resize(Vector2i pos, Vector2i size) {
     color.setStorage(GL::RenderbufferFormat::RGBA8, bufferSize);
     depthStencil.setStorage(GL::RenderbufferFormat::Depth24Stencil8, bufferSize);
 
-    framebuffer = GL::Framebuffer{ { {0, 0}, bufferSize } };
+    framebuffer = GL::Framebuffer{ { { 0, 0 }, bufferSize } };
     framebuffer.attachRenderbuffer(GL::Framebuffer::ColorAttachment { 0 }, color);
     framebuffer.attachRenderbuffer(GL::Framebuffer::BufferAttachment::DepthStencil, depthStencil);
 }
@@ -53,12 +53,12 @@ void SceneView::BindColor() {
     }
 
     // FIXME: Refactoring needed, this could be done better
-    Vector2i oglPosition = Vector2i{bufferPos.x(), GL::defaultFramebuffer.viewport().size().y() - bufferPos.y()};
+    Vector2i oglPosition = Vector2i { bufferPos.x(), GL::defaultFramebuffer.viewport().size().y() - bufferPos.y() };
     GL::Framebuffer::blit(framebuffer,
                           GL::defaultFramebuffer,
                           { { 0, 0 }, bufferSize },
                           { oglPosition - (bufferSize * Vector2i{-1, 1}), oglPosition },
-                          GL::FramebufferBlit::Color,
+                          GL::FramebufferBlit::Color | GL::FramebufferBlit::Depth | GL::FramebufferBlit::Stencil,
                           GL::FramebufferBlitFilter::Nearest);
 }
 GL::Framebuffer& SceneView::GetFrameBuffer() {

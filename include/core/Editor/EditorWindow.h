@@ -15,20 +15,31 @@ public:
 
     virtual void Draw() final;
 
-    std::vector<std::pair<ImGuiCol, const ImVec4&>> styles;
+    void AddCustomStyle(ImGuiCol colorVar, ImVec4 newvalue);
+    void ApplyCustomStyles();
+    void RemoveCustomStyles();
 
 protected:
 
-    string title;
-    ImGuiID dockID;
-    ImGuiWindowFlags flags { 0 };
-    bool* isOpen;
+
+    struct customStyle {
+        ImGuiCol colorVar;
+        ImVec4   newvalue;
+        ImVec4   oldValue;
+    };
+
+    string              title;
+    ImGuiID             dockID;
+    bool                isOpen  { true };
+    ImGuiWindowFlags    flags   { 0 };
+    std::vector<customStyle> customStyles;
 
 private:
 
     virtual void DrawWindowContent() = 0;
+
 };
 
-}
+} // namespace core
 
 #endif //CORE_EDITORWINDOW_H

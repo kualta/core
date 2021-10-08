@@ -30,8 +30,7 @@ void EditorModule::Start() {
         viewportNeedsReload = true;
     });
 
-    sceneView = SceneView{{}, {}};
-
+    sceneView = SceneView{{0, 0}, {0, 0}};
     ConstructDockSpace();
 }
 void EditorModule::ConstructDockSpace() {
@@ -74,11 +73,12 @@ void EditorModule::OnGUI() {
     PopDockStyle();
 
     for (auto &editorWindow : windows) {
-        for (auto& style : editorWindow->styles ) {
-//            ImGui::PushStyleColor(style.first, style.second);
-        }
+        // CustomStyles were added to make SceneView window render no background, since FrameBuffer is rendered
+        // behind it, yet it doesn't work because of some ImGui internal holes. Currently making all floating windows
+        // transparent as temporary solution, but, please, FIXME!
+        editorWindow->ApplyCustomStyles();
         editorWindow->Draw();
-//        ImGui::PopStyleColor(editorWindow->styles.size());
+        editorWindow->RemoveCustomStyles();
     }
 }
 void EditorModule::PopDockStyle() const {
