@@ -11,6 +11,7 @@ enum ObjectTag {
     NETWORK,    // Network module
     PHYSICS,    // Physics module
     WINDOW,     // Window module
+    EDITOR,     // Editor module
     MODULE,     // Generic module
     SCENE,      // Scene module
 

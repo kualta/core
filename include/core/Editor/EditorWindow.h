@@ -8,23 +8,21 @@ namespace core {
 
 class EditorWindow {
 public:
-    explicit EditorWindow(ImGuiID &parent,
-                          string  title = "EditorWindow",
-                          ImGuiDir direction = ImGuiDir_Right,
-                          float size = 0.5f);
+    explicit EditorWindow(ImGuiID dockID, string title = "EditorWindow");
 
     string GetTitle();
     ImGuiID GetDockID();
 
     virtual void Draw() final;
 
+    std::vector<std::pair<ImGuiCol, const ImVec4&>> styles;
+
 protected:
 
-    float size;
     string title;
     ImGuiID dockID;
-    ImGuiID parentID;
-    ImGuiDir direction;
+    ImGuiWindowFlags flags { 0 };
+    bool* isOpen;
 
 private:
 

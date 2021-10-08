@@ -5,10 +5,10 @@
 
 namespace core {
 
-EditorWindow::EditorWindow(ImGuiID& parent, string title, ImGuiDir direction, float size)
-: size(size), title(std::move(title)), parentID(parent), direction(direction)
+EditorWindow::EditorWindow(ImGuiID dockID, string title)
+: title(std::move(title)), dockID(dockID)
 {
-    dockID = ImGui::DockBuilderSplitNode(parent, direction, size, nullptr, &parent);
+    ImGui::DockBuilderDockWindow(GetTitle().c_str(), dockID);
 }
 string EditorWindow::GetTitle() {
     return title;
@@ -17,7 +17,7 @@ ImGuiID EditorWindow::GetDockID() {
     return dockID;
 }
 void EditorWindow::Draw() {
-    ImGui::Begin(title.c_str());
+    ImGui::Begin(title.c_str(), isOpen, flags);
         DrawWindowContent();
     ImGui::End();
 }

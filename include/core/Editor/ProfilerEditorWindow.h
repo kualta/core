@@ -11,8 +11,8 @@ namespace core {
 
 class ProfilerEditorWindow : public EditorWindow {
 public:
-    ProfilerEditorWindow(ImGuiID& parent, ImGuiDir direction, float size)
-    : EditorWindow(parent, "Profiler", direction, size)
+    ProfilerEditorWindow(ImGuiID& dockID)
+    : EditorWindow(dockID, "Profiler")
     {
 
     }

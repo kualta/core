@@ -1,9 +1,10 @@
 #include <core/Components/Camera.h>
 #include <core/Components/Transform.h>
 #include <core/Components/Renderer.h>
+#include <core/Scene/SceneView.h>
+#include <core/Scene/Scene.h>
 #include <core/Color.h>
 #include <core/Math.h>
-#include <core/Scene/Scene.h>
 
 namespace core {
 
@@ -37,9 +38,14 @@ void Camera::Tick() {
 void Camera::Draw() {
     // TODO: Add drawing by layers
     // NOTE: Temporary solution
+
+    SceneView::BindBuffer();
+
     for (auto renderer : Renderer::instances) {
         renderer->Draw(*this);
     }
+
+    GL::defaultFramebuffer.bind();
 }
 
 }

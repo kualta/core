@@ -10,10 +10,13 @@ class SceneModule : public IModule {
 public:
     SceneModule();
 
+protected:
+
     void FixedTick() override;
     void EarlyTick() override;
     void Tick() override;
     void LateTick() override;
+
 };
 
 }

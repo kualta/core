@@ -11,8 +11,8 @@ namespace core {
 
 class InspectorEditorWindow : public EditorWindow {
 public:
-    InspectorEditorWindow(ImGuiID& parent, ImGuiDir direction, float size)
-    : EditorWindow(parent, "Inspector", direction, size)
+    InspectorEditorWindow(ImGuiID& dockID)
+    : EditorWindow(dockID, "Inspector")
     {
 
     }

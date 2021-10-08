@@ -56,6 +56,7 @@ string Logger::GetLogTypeText(ObjectTag tag) {
         case   IMPORT: text = "|IMPORT|"; break;
         case   RENDER: text = "|RENDER|"; break;
         case   WINDOW: text = "|WINDOW|"; break;
+        case   EDITOR: text = "|EDITOR|"; break;
     }
 
     return text;

@@ -29,11 +29,11 @@
 #endif
 
 #ifndef INFO_HERE
-#   define INFO_HERE logLevel::INFO, LOG_HERE
+#   define INFO_HERE LogLevel::INFO, LOG_HERE
 #endif
 
 #ifndef DEBUG_HERE
-#   define DEBUG_HERE logLevel::DEBUG, LOG_HERE
+#   define DEBUG_HERE LogLevel::DEBUG, LOG_HERE
 #endif
 
 #ifndef NEW_LINE

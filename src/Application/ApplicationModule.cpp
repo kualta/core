@@ -10,6 +10,8 @@ ApplicationModule::ApplicationModule(InputModule* inputModule)
 
 }
 void ApplicationModule::Start() {
+    inputModule->OnViewportEvent.Subscribe([&] (ViewportEvent& event)
+                                           { GL::defaultFramebuffer.setViewport({{ }, event.GetFramebufferSize()}); } );
 }
 void ApplicationModule::EarlyTick() {
     for (auto app : apps) {

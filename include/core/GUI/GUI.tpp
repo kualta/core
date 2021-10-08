@@ -28,7 +28,7 @@ bool GUI::Input(const string& label, T* value) {
 }
 template<typename T>
 bool GUI::InputMatrix(const string &label, T* mtx) {
-    bool updated;
+    bool updated = false;
     size_t cols = mtx->Cols;
 
     for (int i = 0; i < cols; i++) {

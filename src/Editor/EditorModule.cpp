@@ -2,26 +2,25 @@
 #include <core/Editor/HierarchyEditorWindow.h>
 #include <core/Editor/ProfilerEditorWindow.h>
 #include <core/Editor/InspectorEditorWindow.h>
+#include <core/Editor/ConsoleEditorWindow.h>
+#include <core/Editor/SceneViewEditorWindow.h>
 
 namespace core {
 
-const string        EditorModule::editorDockSpaceName { "EditorDockSpace" };
-ImGuiDockNodeFlags  EditorModule::dockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
-ImGuiWindowFlags    EditorModule::windowFlags =
-          ImGuiWindowFlags_MenuBar
-        | ImGuiWindowFlags_NoDocking
-        | ImGuiWindowFlags_NoTitleBar
-        | ImGuiWindowFlags_NoCollapse
-        | ImGuiWindowFlags_NoResize
-        | ImGuiWindowFlags_NoMove
-        | ImGuiWindowFlags_NoBringToFrontOnFocus
-        | ImGuiWindowFlags_NoNavFocus
-        | ImGuiWindowFlags_NoBackground;
-
 EditorModule::EditorModule(GUIModule* guiModule, InputModule* inputModule)
-: guiModule(guiModule), inputModule(inputModule)
+: IModule("Editor", EDITOR), inputModule(inputModule), guiModule(guiModule)
 {
-
+    editorDockSpaceName = "EditorDockSpace";
+    dockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+    windowFlags = ImGuiWindowFlags_MenuBar
+                | ImGuiWindowFlags_NoDocking
+                | ImGuiWindowFlags_NoTitleBar
+                | ImGuiWindowFlags_NoCollapse
+                | ImGuiWindowFlags_NoResize
+                | ImGuiWindowFlags_NoMove
+                | ImGuiWindowFlags_NoBringToFrontOnFocus
+                | ImGuiWindowFlags_NoNavFocus
+                | ImGuiWindowFlags_NoBackground;
 }
 void EditorModule::Start() {
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -30,6 +29,8 @@ void EditorModule::Start() {
         viewport = ImGui::GetMainViewport();
         viewportNeedsReload = true;
     });
+
+    sceneView = SceneView{{}, {}};
 
     ConstructDockSpace();
 }
@@ -48,14 +49,16 @@ void EditorModule::ConstructDockSpace() {
         ImGui::DockBuilderSetNodeSize(dockSpaceID, viewport->Size);
 
         // TODO: Change AddWindow to take dock space instead of creating it
-        ImGuiID inspectorID = AddWindow<InspectorEditorWindow>(dockSpaceID, ImGuiDir_Right, 0.35f);
-        ImGuiID profilerID = AddWindow<ProfilerEditorWindow>(dockSpaceID, ImGuiDir_Down, 0.2f);
-        ImGuiID sceneGraphID = AddWindow<HierarchyEditorWindow>(dockSpaceID, ImGuiDir_Left, 0.25f);
+        ImGuiID centerSplitID = dockSpaceID;
+        ImGuiID rightSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Right, 0.35, nullptr, &centerSplitID);
+        ImGuiID downSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Down, 0.2, nullptr, &centerSplitID);
+        ImGuiID leftSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Left, 0.25, nullptr, &centerSplitID);
 
-        // Dock windows into the docking nodes
-        for (auto& window : windows) {
-            ImGui::DockBuilderDockWindow(window->GetTitle().c_str(), window->GetDockID());
-        }
+        AddWindow<InspectorEditorWindow>(rightSplitID);
+        AddWindow<ProfilerEditorWindow>(downSplitID);
+        AddWindow<ConsoleWindowEditorWindow>(downSplitID);
+        AddWindow<HierarchyEditorWindow>(leftSplitID);
+        AddWindow<SceneViewEditorWindow>(centerSplitID);
 
         ImGui::DockBuilderFinish(dockSpaceID);
     }
@@ -71,13 +74,15 @@ void EditorModule::OnGUI() {
     PopDockStyle();
 
     for (auto &editorWindow : windows) {
+        for (auto& style : editorWindow->styles ) {
+//            ImGui::PushStyleColor(style.first, style.second);
+        }
         editorWindow->Draw();
+//        ImGui::PopStyleColor(editorWindow->styles.size());
     }
 }
 void EditorModule::PopDockStyle() const {
-    ImGui::PopStyleVar();
-    ImGui::PopStyleVar();
-    ImGui::PopStyleVar();
+    ImGui::PopStyleVar(3);
 }
 void EditorModule::BeginEditorDockSpace() {
     ImGui::Begin("DockSpace", nullptr, windowFlags);

@@ -6,12 +6,15 @@
 
 namespace core {
 
-class ConsoleWindow : public EditorWindow {
-    ConsoleWindow(ImGuiID& parent, ImGuiDir direction, float size)
-    : EditorWindow(parent, "Console", direction, size)
+class ConsoleWindowEditorWindow : public EditorWindow {
+public:
+    ConsoleWindowEditorWindow(ImGuiID& dockID)
+    : EditorWindow(dockID, "Console")
     {
 
     }
+
+protected:
 
     void DrawWindowContent() override {
         ImGui::Text("Console... Logging... Beep Boop...");
