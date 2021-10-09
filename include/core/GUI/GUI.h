@@ -4,7 +4,6 @@
 #include "core/Essentials.h"
 #include "core/Math.h"
 
-#include <atomic>
 #include <imgui.h>
 #include <imgui_internal.h>
 
