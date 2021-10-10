@@ -66,8 +66,8 @@ void GUIModule::SetStandardFont(const float ratio) {
 
     ImFontConfig thinFontConfig;
     thinFontConfig.OversampleH = 3;
-    thinFontConfig.OversampleV = 1;
-    thinFontConfig.RasterizerMultiply = 2.0f;
+    thinFontConfig.OversampleV = 2;
+    thinFontConfig.RasterizerMultiply = 1.9f;
 
     ImGui::GetIO().Fonts->Clear();
     ImGui::GetIO().Fonts->AddFontFromFileTTF((fontsPath + "DejaVuSans-ExtraLight.ttf").c_str(), 14.0f * ratio, &thinFontConfig);
