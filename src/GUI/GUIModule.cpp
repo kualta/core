@@ -16,9 +16,11 @@ void GUIModule::Start() {
     const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x() / windowSize.x();
 
-    gui = GUIContext(Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+    ImGui::CreateContext();
+    SetStandardFont(supersamplingRatio); // Order is important here, ImGui Context, Fonts, GUIContext
+    gui = GUIContext(*ImGui::GetCurrentContext(), Vector2(windowSize) / dpiScale, windowSize, frameBufferSize);
+
     SubscribeToEvents();
-    SetStandardFont(supersamplingRatio);
     SetDefaultConfig();
     SetStandardStyle();
 }
@@ -58,10 +60,19 @@ void GUIModule::DrawGUI() {
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
 }
 void GUIModule::SetStandardFont(const float ratio) {
-    // FIXME: ummm? It just doesnt work for some bizarre reason!
-//    ImGui::GetIO().Fonts->Clear();
-//    ImGui::GetIO().Fonts->AddFontFromFileTTF("DejaVuSans.ttf", 16.0f*ratio);
-//    ImGui::GetIO().Fonts->Build();
+    string filePath = __FILE__;
+    string dirPath = filePath.substr(0, filePath.rfind("\\"));
+    string fontsPath = dirPath + "/../../lib/other/";
+
+    ImFontConfig thinFontConfig;
+    thinFontConfig.OversampleH = 3;
+    thinFontConfig.OversampleV = 1;
+    thinFontConfig.RasterizerMultiply = 2.0f;
+
+    ImGui::GetIO().Fonts->Clear();
+    ImGui::GetIO().Fonts->AddFontFromFileTTF((fontsPath + "DejaVuSans-ExtraLight.ttf").c_str(), 14.0f * ratio, &thinFontConfig);
+    ImGui::GetIO().Fonts->AddFontFromFileTTF((fontsPath + "DejaVuSansMono.ttf").c_str(), 14.0f * ratio);
+    ImGui::GetIO().Fonts->Build();
 }
 void GUIModule::SetStandardStyle() {
     const int rounding = 4;

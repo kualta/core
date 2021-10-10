@@ -13,11 +13,23 @@ class GUI {
 public:
 
     static bool Button(const string& label = "Button", Vector2 size = { 0, 0 } );
-    static bool CheckBox(const string& label, bool* value);
+    static bool CheckBox(const string& label, bool& value);
     static void Text(const string& text);
+    static void TextLabel(const string& text, const string& label);
+    static void Tooltip(const string& text);
+
+    static bool Box(bool& value);
+    static void EndBox();
 
     template<typename T>
     static bool Input(const string& label, T *value);
+
+    template<typename T>
+    static bool Slider(const string& label, T* value, float min, float max);
+
+    static bool IsHovered();
+    static bool IsActive();
+    static bool IsFocused();
 
 protected:
 
@@ -26,8 +38,7 @@ protected:
 
 };
 
-
-}
+} // namespace core
 
 #include "GUI.tpp"
 
