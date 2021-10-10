@@ -270,9 +270,9 @@ void GUIContext::DrawFrame() {
     drawData->ScaleClipRects(io.DisplayFramebufferScale);
 
     const Matrix3 projection =
-            Matrix3::translation({-1.0f, 1.0f})
-            * Matrix3::scaling({2.0f/Vector2(io.DisplaySize)})
-            * Matrix3::scaling({1.0f, -1.0f});
+              Matrix3::translation( { -1.0f, 1.0f } )
+            * Matrix3::scaling( { 2.0f / Vector2(io.DisplaySize) } )
+            * Matrix3::scaling( { 1.0f, -1.0f } );
     shader.setTransformationProjectionMatrix(projection);
 
     for (std::int_fast32_t n = 0; n < drawData->CmdListsCount; ++n) {

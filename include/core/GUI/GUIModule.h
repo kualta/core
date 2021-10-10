@@ -26,12 +26,12 @@ protected:
     void SetStandardStyle();
     void SetStandardFont(float ratio);
     void SubscribeToEvents();
+    void SetDefaultConfig();
 
-    GUIContext         gui { NoCreate };
+    GUIContext         gui         { NoCreate };
     ApplicationModule* appModule;
     InputModule*       inputModule;
 
-    void SetDefaultConfig();
 };
 
 }
