@@ -8,9 +8,9 @@ namespace core {
 bool GUI::Button(const string& label, Vector2 size) {
     return ImGui::Button(label.c_str(), ImVec2(size));
 }
-bool GUI::CheckBox(const string& label, bool* value) {
+bool GUI::CheckBox(const string& label, bool& value) {
     ImGui::PushID(value);
-    bool out = ImGui::Checkbox(label.c_str(), value);
+    bool out = ImGui::Checkbox(label.c_str(), &value);
     ImGui::PopID();
     return out;
 }
@@ -31,6 +31,15 @@ void GUI::Tooltip(const string& text) {
 }
 void GUI::TextLabel(const string& text, const string& label) {
     ImGui::LabelText(label.c_str(), text.c_str());
+}
+bool GUI::Box(bool& isOpen) {
+    ImGui::PushID(isOpen);
+    bool out = ImGui::BeginChild("Box", { 0, 0 }, false, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse );
+    return out;
+}
+void GUI::EndBox() {
+    ImGui::EndChild();
+    ImGui::PopID();
 }
 
 }

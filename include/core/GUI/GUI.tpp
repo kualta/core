@@ -22,8 +22,8 @@ bool GUI::Input(const string& label, T* value) {
     else if constexpr(std::is_same<Vector2i, T>::value) { updated = ImGui::InputInt2(label.c_str(), value->data()); }
     else if constexpr(std::is_same<Matrix4, T>::value)  { updated = GUI::InputMatrix(label, value); }
     else if constexpr(std::is_same<Matrix3, T>::value)  { updated = GUI::InputMatrix(label, value); }
-    else if constexpr(std::is_same<Color3, T>::value) { updated = ImGui::ColorEdit3(label.c_str(), value->data()); }
-    else if constexpr(std::is_same<Color4, T>::value) { updated = ImGui::ColorEdit4(label.c_str(), value->data(), ImGuiColorEditFlags_AlphaBar); }
+    else if constexpr(std::is_same<Color3, T>::value)   { updated = ImGui::ColorEdit3(label.c_str(), value->data()); }
+    else if constexpr(std::is_same<Color4, T>::value)   { updated = ImGui::ColorEdit4(label.c_str(), value->data(), ImGuiColorEditFlags_AlphaBar); }
 
     ImGui::PopID();
     return updated;
