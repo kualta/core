@@ -11,6 +11,7 @@ public:
 
     static uint64_t GetTicks();
     static float GetDeltaTime();
+    static float GetFixedDeltaTime();
 
 protected:
 

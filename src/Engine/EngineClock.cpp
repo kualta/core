@@ -32,5 +32,8 @@ void EngineClock::WaitNextTick() {
 
     SDL_Delay(delayTime);
 }
+float EngineClock::GetFixedDeltaTime() {
+    return 1.0f / EngineModule::fixedTickRate;
+}
 
 }

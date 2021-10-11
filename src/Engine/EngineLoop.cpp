@@ -1,7 +1,10 @@
 #include <core/Engine/EngineLoop.h>
+#include <core/Engine/EngineModule.h>
 
 #include <SDL.h>
 #include <SDL_syswm.h>
+#include <thread>
+#include <chrono>
 
 namespace core {
 
@@ -11,6 +14,8 @@ EngineLoop::EngineLoop(InputModule* inputModule) : inputModule(inputModule) {
 
 }
 int32_t EngineLoop::Enter() {
+
+    std::thread fixedLoopThread(&EngineLoop::FixedTickLoop, this);
 
     while ( isRunning ) {
 
@@ -31,6 +36,8 @@ int32_t EngineLoop::Enter() {
         EngineClock::WaitNextTick();
 
     } // main loop
+
+    fixedLoopThread.join();
 
     return 0;
 }
@@ -59,9 +66,30 @@ void EngineLoop::LateTickModules() {
         module->LateTick();
     });
 }
+void EngineLoop::FixedTickModules() {
+    std::for_each(IModule::instances.begin(), IModule::instances.end(), [&](IModule* module) {
+        module->FixedTick();
+    });
+}
 void EngineLoop::Stop() {
     Logger::Log(INTERNAL, INFO) << "Main loop exit requested";
     isRunning = false;
+}
+void EngineLoop::FixedTickLoop() {
+    Logger::Log(INTERNAL, INFO) << "Fixed Tick loop started";
+
+    using delta = std::chrono::duration<std::int64_t, std::ratio<1, EngineModule::fixedTickRate>>;
+    auto nextTick = std::chrono::steady_clock::now() + delta { 1 };
+
+    while ( isRunning ) {
+
+        /** Call FixedTick() on modules */
+        this->FixedTickModules();
+
+        std::this_thread::sleep_until(nextTick);
+        nextTick += delta { 1 };
+    }
+    Logger::Log(INTERNAL, INFO) << "Fixed Tick loop stopped";
 }
 
 }
