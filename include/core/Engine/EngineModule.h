@@ -19,9 +19,11 @@ public:
 
     int32_t Main();
 
+    static constexpr int32_t fixedTickRate = 30;   // < Target ticks per second
+
 protected:
 
-    static int32_t              targetFrameRate;
+    static int32_t              targetFrameRate; // < Target frames per second
 
     std::unique_ptr<EngineLoop> engineLoop;
     InputModule*                inputModule;

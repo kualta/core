@@ -28,6 +28,11 @@ public:
 protected:
 
     /**
+     * Loop that is kept in charge of FixedTick()
+     */
+    void FixedTickLoop();
+
+    /**
      * Start all modules
      */
     void StartModules();
@@ -42,6 +47,12 @@ protected:
      * @note The modules lower in the dependency hierarchy are guaranteed to be updated before * their dependants.
      */
     void TickModules();
+
+    /**
+     * Updates modules in fixed time periods
+     * @note See EngineClock::fixedDeltaTime
+     */
+    void FixedTickModules();
 
     /**
      * Stops all modules
