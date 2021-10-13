@@ -20,7 +20,8 @@ Layer* Layer::CreateNewLayer(const string& name) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
     }
-    layers.emplace_back(name);
+    Layer layer = Layer(name);
+    layers.push_back(std::move(layer));
     return &layers.back();
 }
 bool Layer::LayerExist(const string& name) {

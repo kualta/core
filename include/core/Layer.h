@@ -2,19 +2,19 @@
 #define CORE_LAYER_H
 
 #include "Essentials.h"
+#include "Instantiable.h"
 
 namespace core {
 
-class Layer {
+class Layer : public Instantiable<Layer> {
 public:
-    explicit Layer(const string& name);
+    Layer(Layer&& other) = default;
 
     /** Copying is not allowed */
     Layer(const Layer& other) = delete;
 
-    Layer(Layer&& other) = default;
-
     static bool LayerExist(const string& name);
+    static Layer* CreateNewLayer(const string& name);
     static Layer* Get(const string& name);
 
     void AddEntity(Entity& entity);
@@ -23,12 +23,11 @@ public:
 
 protected:
 
-    static Layer* CreateNewLayer(const string& name);
-
     std::vector<Entity*> entities;
     string               name;
 
 private:
+    explicit Layer(const string& name);
 
     static std::vector<Layer> layers;
 
