@@ -33,7 +33,7 @@ public:
     explicit Entity(const string& name = "Entity",
                     GraphObject* parent = Scene::Get(),
                     ComponentsContainer c = { },
-                    Layer& layer = Layer::Get("General") );
+                    Layer* layer = Layer::Get("General") );
     ~Entity();
 
     /**
@@ -94,6 +94,18 @@ public:
     void assertExistingComponent();
 
     /**
+     * Add this Entity to layer
+     * @param name - Name of the layer
+     */
+    void SetLayer(const string& name);
+
+    /**
+     * Add this Entity to layer newLayer
+     * @param newLayer - Layer* to add this Entity to
+     */
+    void SetLayer(Layer* newLayer);
+
+    /**
      * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */
@@ -120,7 +132,7 @@ protected:
 
 
     ComponentsContainer components;
-    Layer&              layer;
+    Layer*              layer;
 };
 
 } // namespace core

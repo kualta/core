@@ -7,21 +7,26 @@ namespace core {
 
 class Layer {
 public:
-    static bool Exist(const string& name);
-    static Layer& Get(const string& name);
+    explicit Layer(const string& name);
+
+    /** Copying is not allowed */
+    Layer(const Layer& other) = delete;
+
+    Layer(Layer&& other) = default;
+
+    static bool LayerExist(const string& name);
+    static Layer* Get(const string& name);
 
     void AddEntity(Entity& entity);
     bool HasEntity(Entity& entity);
     void RemoveEntity(Entity& entity);
 
-    const string name;
-
-    explicit Layer(const string& name);
 protected:
 
-    static Layer& CreateNewLayer(const string& name);
+    static Layer* CreateNewLayer(const string& name);
 
     std::vector<Entity*> entities;
+    string               name;
 
 private:
 
@@ -29,7 +34,6 @@ private:
 
 };
 
-
-}
+} // namespace core
 
 #endif //CORE_LAYER_H

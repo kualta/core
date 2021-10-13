@@ -6,13 +6,13 @@
 
 namespace core {
 
-Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c, Layer& layer)
+Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c, Layer* layer)
 : core::Object(name), GraphObject(parent), components(std::move(c)), layer(layer)
 {
-    layer.AddEntity(*this);
+    layer->AddEntity(*this);
 }
 Entity::~Entity() {
-    layer.RemoveEntity(*this);
+    layer->RemoveEntity(*this);
 }
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
@@ -36,6 +36,17 @@ vector<shared<Entity>> Entity::Load(const string& filepath) {
     SceneImporter sceneImporter;
     SceneData* sceneData = sceneImporter.ImportScene(filepath);
     return sceneImporter.ImportEntities(*sceneData);
+}
+void Entity::SetLayer(const string& name) {
+    layer->RemoveEntity(*this);
+    Layer* newLayer = Layer::Get(name);
+    newLayer->AddEntity(*this);
+    layer = newLayer;
+}
+void Entity::SetLayer(Layer* newLayer) {
+    layer->RemoveEntity(*this);
+    newLayer->AddEntity(*this);
+    layer = newLayer;
 }
 
 } // namespace core

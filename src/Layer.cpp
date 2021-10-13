@@ -9,24 +9,27 @@ namespace core {
 
 std::vector<Layer> Layer::layers;
 
-Layer::Layer(const string &name) {
-
+Layer::Layer(const string &name) : name(name) {
+    if (LayerExist(name)) {
+        Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
+        throw std::runtime_error("Layer " + name + " already exists");
+    }
 }
-Layer& Layer::CreateNewLayer(const string& name) {
-    if (Exist(name)) {
+Layer* Layer::CreateNewLayer(const string& name) {
+    if (LayerExist(name)) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
     }
     layers.emplace_back(name);
-    return layers.back();
+    return &layers.back();
 }
-bool Layer::Exist(const string& name) {
+bool Layer::LayerExist(const string& name) {
     return std::any_of(layers.begin(), layers.end(), [&](const Layer& layer) { return layer.name == name; } ) ? true : false;
 }
-Layer& Layer::Get(const string& layerName) {
+Layer* Layer::Get(const string& layerName) {
     auto layer = std::find_if(layers.begin(), layers.end(), [&](const Layer& l) { return l.name == layerName; });
     if (layer != layers.end()) {
-        return *layer;
+        return &(*layer);
     } else {
         Logger::Log(INTERNAL, DEBUG_HERE) << "Creating new layer " << std::quoted(layerName);
         return CreateNewLayer(layerName);
