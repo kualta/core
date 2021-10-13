@@ -57,6 +57,7 @@ class IModule;
 class IModuleContainer;
 class Renderer;
 class ITicker;
+class Layer;
 class Logger;
 class LogEntry;
 class Mesh;

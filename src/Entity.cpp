@@ -6,10 +6,13 @@
 
 namespace core {
 
-Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c)
-: core::Object(name), GraphObject(parent), components(std::move(c))
+Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c, Layer& layer)
+: core::Object(name), GraphObject(parent), components(std::move(c)), layer(layer)
 {
-
+    layer.AddEntity(*this);
+}
+Entity::~Entity() {
+    layer.RemoveEntity(*this);
 }
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
