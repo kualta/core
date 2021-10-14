@@ -29,11 +29,11 @@ public:
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;
 
-    string name;
-
 protected:
     explicit Object(string name = "");
     virtual ~Object();
+
+    const string name;
 
 private:
     static std::atomic<uint32_t> objectCounter;

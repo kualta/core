@@ -9,7 +9,7 @@ namespace core {
 
 std::vector<Layer> Layer::layers;
 
-Layer::Layer(const string &name) : name(name) {
+Layer::Layer(const string &name) : Object(name) {
     if (LayerExist(name)) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
@@ -21,14 +21,16 @@ Layer* Layer::CreateNewLayer(const string& name) {
         throw std::runtime_error("Layer " + name + " already exists");
     }
     Layer layer = Layer(name);
+    Log() << "HERE";
     layers.push_back(std::move(layer));
+    Log() << "THERE";
     return &layers.back();
 }
 bool Layer::LayerExist(const string& name) {
     return std::any_of(layers.begin(), layers.end(), [&](const Layer& layer) { return layer.name == name; } ) ? true : false;
 }
 Layer* Layer::Get(const string& layerName) {
-    auto layer = std::find_if(layers.begin(), layers.end(), [&](const Layer& l) { return l.name == layerName; });
+    auto layer = std::find_if(layers.begin(), layers.end(), [&](Layer& l) { return l.name == layerName; });
     if (layer != layers.end()) {
         return &(*layer);
     } else {
@@ -49,6 +51,9 @@ bool Layer::HasEntity(Entity& entity) {
 }
 void Layer::RemoveEntity(Entity& entity) {
     entities.erase(std::remove_if(entities.begin(), entities.end(), [&](Entity* e) { return *e == entity; }), entities.end());
+}
+const string& Layer::GetName() {
+    return name;
 }
 
 }

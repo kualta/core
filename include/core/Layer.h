@@ -3,10 +3,11 @@
 
 #include "Essentials.h"
 #include "Instantiable.h"
+#include "Object.h"
 
 namespace core {
 
-class Layer : public Instantiable<Layer> {
+class Layer : public Object, public Instantiable<Layer> {
 public:
     Layer(Layer&& other) = default;
 
@@ -17,6 +18,7 @@ public:
     static Layer* CreateNewLayer(const string& name);
     static Layer* Get(const string& name);
 
+    const string& GetName();
     void AddEntity(Entity& entity);
     bool HasEntity(Entity& entity);
     void RemoveEntity(Entity& entity);
@@ -24,7 +26,6 @@ public:
 protected:
 
     std::vector<Entity*> entities;
-    string               name;
 
 private:
     explicit Layer(const string& name);

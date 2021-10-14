@@ -5,11 +5,7 @@
 #include <core/IComponent.h>
 #include <core/Entity.h>
 #include <core/Math.h>
-
-#include <Magnum/SceneGraph/Camera.h>
-#include <Magnum/SceneGraph/Drawable.h>
-#include <Magnum/SceneGraph/MatrixTransformation3D.h>
-#include <Magnum/SceneGraph/Scene.h>
+#include <core/Layer.h>
 
 namespace core {
 
@@ -38,10 +34,13 @@ public:
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
 
-    void SetProjectionMatrix(Matrix4&& projMtx);
-    void SetProjectionMatrix(Matrix4& projMtx);
+    void LinkLayer(const string& name);
+    void UnlinkLayer(const string& name);
 
 protected:
+
+    void SetProjectionMatrix(Matrix4&& projMtx);
+    void SetProjectionMatrix(Matrix4& projMtx);
 
     void UpdatePerspectiveMatrix();
     void FixAspectRatio();
@@ -64,8 +63,9 @@ protected:
     /** Sister transform */
     Transform* transform;
 
-    Matrix4 perspectiveMtx;
-    Matrix4 projectionMtx;
+    Matrix4         perspectiveMtx;
+    Matrix4         projectionMtx;
+    vector<Layer*>  linkedLayers;
 };
 
 }

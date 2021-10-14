@@ -109,5 +109,11 @@ void Camera::FixAspectRatio() {
 
     projectionMtx = scale * projectionMtx;
 }
+void Camera::LinkLayer(const string &name) {
+    linkedLayers.emplace_back(Layer::Get(name));
+}
+void Camera::UnlinkLayer(const string &name) {
+    linkedLayers.erase(std::remove_if(linkedLayers.begin(), linkedLayers.end(), [&](Layer* l) { return l->GetName() == name; }), linkedLayers.end());
+}
 
 }
