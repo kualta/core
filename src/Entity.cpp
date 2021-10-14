@@ -43,10 +43,5 @@ void Entity::SetLayer(const string& name) {
     newLayer->AddEntity(*this);
     layer = newLayer;
 }
-void Entity::SetLayer(Layer* newLayer) {
-    layer->RemoveEntity(*this);
-    newLayer->AddEntity(*this);
-    layer = newLayer;
-}
 
 } // namespace core

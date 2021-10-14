@@ -34,7 +34,7 @@ public:
                     GraphObject* parent = Scene::Get(),
                     ComponentsContainer c = { },
                     Layer* layer = Layer::Get("General") );
-    ~Entity();
+    ~Entity() final;
 
     /**
      * Creates new Component c and adds it to Entity,
@@ -98,12 +98,6 @@ public:
      * @param name - Name of the layer
      */
     void SetLayer(const string& name);
-
-    /**
-     * Add this Entity to layer newLayer
-     * @param newLayer - Layer* to add this Entity to
-     */
-    void SetLayer(Layer* newLayer);
 
     /**
      * Imports and adds Entities from the file to the scene

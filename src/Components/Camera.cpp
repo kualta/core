@@ -8,31 +8,45 @@
 
 namespace core {
 
-Camera::Camera(
-        Entity& parent,
-        float fov,
-        float width,
-        float height,
-        float farPlane,
-        float nearPlane,
-        const string& name)
-: IComponent(parent, name),
+Camera::Camera(Entity& parent,
+               float   aspectRatio,
+               Deg     fov,
+               float   farPlane,
+               float   nearPlane)
+: IComponent(parent, "Camera"),
   SceneGraph::Camera3D(parent),
   fov(fov),
-  width(width),
-  height(height),
-  aspectRatio(width/height),
+  aspectRatio(aspectRatio),
   nearPlane(nearPlane),
   farPlane(farPlane)
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
 
-    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend);
-    setViewport(GL::defaultFramebuffer.viewport().size());
+    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Clip);
+    RecalculatePerspective();
+}
+Camera::Camera(Entity &parent,
+               Vector2 viewport,
+               Deg     fov,
+               float   farPlane,
+               float   nearPlane)
+: IComponent(parent, "Camera"),
+  SceneGraph::Camera3D(parent),
+  fov(fov),
+  aspectRatio(viewport.aspectRatio()),
+  nearPlane(nearPlane),
+  farPlane(farPlane)
+{
+    parent.assertRequiredComponent<Transform>(this);
+    transform = parent.GetComponent<Transform>();
+
+    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Clip);
+    RecalculatePerspective();
 }
 void Camera::Tick() {
-    setProjectionMatrix(Matrix4::perspectiveProjection(Deg(fov), aspectRatio, nearPlane, farPlane) * Matrix4::translation(transform->position));
+    setProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
+    SetViewport(SceneView::GetFrameBuffer().viewport().size());
     Draw();
 }
 void Camera::Draw() {
@@ -48,6 +62,32 @@ void Camera::Draw() {
     SceneView::BindColor();
 
     GL::defaultFramebuffer.bind();
+}
+void Camera::SetViewport(Vector2i viewport) {
+    aspectRatio = (float)viewport.x() / (float)viewport.y();
+    setViewport(viewport);
+}
+void Camera::SetFOV(Deg FOV) {
+    fov = FOV;
+    RecalculatePerspective();
+}
+void Camera::SetNearPlane(float distance) {
+    nearPlane = distance;
+    RecalculatePerspective();
+}
+void Camera::SetFarPlane(float distance) {
+    farPlane = distance;
+    RecalculatePerspective();
+}
+void Camera::RecalculatePerspective() {
+    perspectiveMtx = Matrix4::perspectiveProjection(fov, aspectRatio, nearPlane, farPlane);
+}
+Matrix4& Camera::GetPerspectiveMatrix() {
+    return perspectiveMtx;
+}
+Matrix4& Camera::GetProjectionMatrix() {
+    projectionMtx = projectionMatrix();
+    return projectionMtx;
 }
 
 }

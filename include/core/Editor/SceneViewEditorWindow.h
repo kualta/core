@@ -16,7 +16,6 @@ class SceneViewEditorWindow : public EditorWindow {
 public:
     SceneViewEditorWindow(ImGuiID& dockID) : EditorWindow(dockID, "Scene View") {
         flags |= ImGuiWindowFlags_NoBackground;
-//        AddCustomStyle(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
     }
 
     void DrawWindowContent() override {
