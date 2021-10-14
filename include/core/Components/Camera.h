@@ -13,7 +13,7 @@
 
 namespace core {
 
-class Camera : public IComponent, protected SceneGraph::Camera3D {
+class Camera : public IComponent {
 public:
     explicit Camera(Entity &parent,
                     float   aspectRatio = 16.0f / 9.0f,
@@ -38,12 +38,19 @@ public:
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
 
+    void SetProjectionMatrix(Matrix4&& projMtx);
+    void SetProjectionMatrix(Matrix4& projMtx);
+
 protected:
 
-    void RecalculatePerspective();
+    void UpdatePerspectiveMatrix();
+    void FixAspectRatio();
 
-    /** Field of View by Y axis */
+    /** Field of View */
     Deg fov;
+
+    /** Camera viewport dimentions */
+    Vector2i viewport;
 
     /** Camera boundaries aspect ratio */
     float aspectRatio;

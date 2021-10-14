@@ -14,7 +14,6 @@ Camera::Camera(Entity& parent,
                float   farPlane,
                float   nearPlane)
 : IComponent(parent, "Camera"),
-  SceneGraph::Camera3D(parent),
   fov(fov),
   aspectRatio(aspectRatio),
   nearPlane(nearPlane),
@@ -22,9 +21,7 @@ Camera::Camera(Entity& parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
-
-    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Clip);
-    RecalculatePerspective();
+    UpdatePerspectiveMatrix();
 }
 Camera::Camera(Entity &parent,
                Vector2 viewport,
@@ -32,7 +29,6 @@ Camera::Camera(Entity &parent,
                float   farPlane,
                float   nearPlane)
 : IComponent(parent, "Camera"),
-  SceneGraph::Camera3D(parent),
   fov(fov),
   aspectRatio(viewport.aspectRatio()),
   nearPlane(nearPlane),
@@ -40,12 +36,10 @@ Camera::Camera(Entity &parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
-
-    setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Clip);
-    RecalculatePerspective();
+    UpdatePerspectiveMatrix();
 }
 void Camera::Tick() {
-    setProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
+    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
     SetViewport(SceneView::GetFrameBuffer().viewport().size());
     Draw();
 }
@@ -63,31 +57,57 @@ void Camera::Draw() {
 
     GL::defaultFramebuffer.bind();
 }
-void Camera::SetViewport(Vector2i viewport) {
+void Camera::SetViewport(Vector2i vp) {
+    if (vp.x() == 0 || vp.y() == 0) {
+        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << vp.x() << 'x' << vp.y() << " are invalid";
+//        throw std::logic_error("Viewport dimentions are invalid");
+        return;
+    }
+    viewport = vp;
     aspectRatio = (float)viewport.x() / (float)viewport.y();
-    setViewport(viewport);
 }
 void Camera::SetFOV(Deg FOV) {
     fov = FOV;
-    RecalculatePerspective();
+    UpdatePerspectiveMatrix();
 }
 void Camera::SetNearPlane(float distance) {
     nearPlane = distance;
-    RecalculatePerspective();
+    UpdatePerspectiveMatrix();
 }
 void Camera::SetFarPlane(float distance) {
     farPlane = distance;
-    RecalculatePerspective();
+    UpdatePerspectiveMatrix();
 }
-void Camera::RecalculatePerspective() {
+void Camera::UpdatePerspectiveMatrix() {
     perspectiveMtx = Matrix4::perspectiveProjection(fov, aspectRatio, nearPlane, farPlane);
 }
 Matrix4& Camera::GetPerspectiveMatrix() {
     return perspectiveMtx;
 }
 Matrix4& Camera::GetProjectionMatrix() {
-    projectionMtx = projectionMatrix();
     return projectionMtx;
+}
+void Camera::SetProjectionMatrix(Matrix4&& projMtx) {
+    projectionMtx = projMtx;
+    FixAspectRatio();
+}
+void Camera::SetProjectionMatrix(Matrix4& projMtx) {
+    projectionMtx = projMtx;
+    FixAspectRatio();
+}
+void Camera::FixAspectRatio() {
+    const Vector2& projectionScale = { Math::abs(projectionMtx[0].x()), Math::abs(projectionMtx[1].y()) };
+    const Vector2& relativeAspectRatio = Vector2(viewport) * projectionScale;
+    if ( projectionScale.x() == 0 || projectionScale.y() == 0 ) { return; }
+
+    /* Extend on larger side = scale larger side down,
+       Clip on smaller side = scale smaller side up  */
+    Matrix4 scale = Matrix4::scaling( Vector3::pad(
+            (relativeAspectRatio.x() < relativeAspectRatio.y())                   ?
+            Vector2(relativeAspectRatio.y() / relativeAspectRatio.x(), 1.0f)      :
+            Vector2(1.0f, relativeAspectRatio.x() / relativeAspectRatio.y()), 1.0f) );
+
+    projectionMtx = scale * projectionMtx;
 }
 
 }
