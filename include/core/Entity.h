@@ -31,7 +31,7 @@ class Entity final : public Object, public GraphObject, public ITicker, public I
 public:
     explicit Entity(const string& name = "Entity",
                     GraphObject* parent = Scene::Get(),
-                    Layer* layer = Layer::Get("General") );
+                    Layer* layer = Layer::Get("Default") );
     ~Entity() final;
 
     /**

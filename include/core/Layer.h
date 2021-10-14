@@ -35,7 +35,7 @@ protected:
 
 private:
 
-    static std::vector<shared<Layer>> layers;
+    static std::vector<unique<Layer>> layers;
 
 };
 

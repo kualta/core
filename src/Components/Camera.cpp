@@ -22,6 +22,7 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
+    LinkLayer("Default");
 }
 Camera::Camera(Entity& parent,
                Vector2 viewport,
@@ -37,6 +38,7 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
+    LinkLayer("Default");
 }
 void Camera::Tick() {
     SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
