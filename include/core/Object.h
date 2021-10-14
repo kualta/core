@@ -14,6 +14,11 @@ namespace core {
  */
 class Object {
 public:
+    /** Copying is not allowed */
+    Object(const Object&) = delete;
+
+    /** Move constructor */
+    Object(Object&&) = default;
 
     /**
      * @return uint32_t ID of an object
@@ -26,14 +31,21 @@ public:
      */
     string GetInfo() const;
 
+    /** Copying is not allowed */
+    Object& operator=(const Object&) = delete;
+
+    /** Move assignment */
+    Object& operator=(Object&&) noexcept = default;
+
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;
+
 
 protected:
     explicit Object(string name = "");
     virtual ~Object();
 
-    const string name;
+    string name;
 
 private:
     static std::atomic<uint32_t> objectCounter;

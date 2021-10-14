@@ -42,25 +42,24 @@ Camera::Camera(Entity& parent,
 }
 void Camera::Tick() {
     SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
-    SetViewport(SceneView::GetFrameBuffer().viewport().size());
+    SetViewport(SceneView::Get()->GetFrameBuffer().viewport().size());
     Draw();
 }
 void Camera::Draw() {
 
-    SceneView::BindBuffer();
+    SceneView::Get()->Bind();
 
     for (Layer* layer : linkedLayers) {
         layer->Draw(*this);
     }
 
-    SceneView::BindColor();
+    SceneView::Get()->Blit();
 
     GL::defaultFramebuffer.bind();
 }
 void Camera::SetViewport(Vector2i vp) {
     if (vp.x() == 0 || vp.y() == 0) {
         Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << vp.x() << 'x' << vp.y() << " are invalid";
-//        throw std::logic_error("Viewport dimentions are invalid");
         return;
     }
     viewport = vp;

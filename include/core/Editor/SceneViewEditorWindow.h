@@ -24,10 +24,8 @@ public:
         if (currentSize.x != size.x || currentSize.y != size.y || currentPos.x != pos.x || currentPos.y != pos.y) {
             size = currentSize;
             pos = currentPos;
-            SceneView::Resize(Vector2i(pos.x, pos.y), Vector2i(size.x, size.y));
+            SceneView::Get()->Resize(Vector2i(pos.x, pos.y), Vector2i(size.x, size.y));
         }
-
-
 
     }
 

@@ -11,30 +11,43 @@ namespace core {
 template <typename T> class Singleton {
 public:
 
+    /** Copuing is not allowed */
     Singleton(const Singleton<T>&) = delete;
+
+    /** Move constructor */
+    Singleton(Singleton<T>&& other) noexcept {
+        singleton = static_cast<T*>(this);
+    };
+
+    /** Copuing is not allowed */
     Singleton& operator=(const Singleton<T>&) = delete;
 
-    Singleton() {
+    /** Move assignment operator */
+    Singleton& operator=(Singleton<T>&& other) noexcept {
         singleton = static_cast<T*>(this);
-    }
+        return *this;
+    };
+
+    Singleton() { singleton = static_cast<T*>(this); }
     ~Singleton() {
+
+        // Do nothing, because singleton was moved
+        if (singleton != static_cast<T*>(this)) { return; }
+
         singleton = nullptr;
     }
+
     static T* Get();
     static T& GetInstance();
 
-protected:
-    static T* singleton;
-
 private:
+
+    static T* singleton;
 
 };
 
-
 } // namespace core
 
-
 #include "Singleton.tpp"
-
 
 #endif //CORE_SINGLETON_H
