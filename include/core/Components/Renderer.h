@@ -4,11 +4,12 @@
 #include <core/Essentials.h>
 #include <core/Instantiable.h>
 #include <core/IComponent.h>
+#include <core/IDrawable.h>
 #include <core/Shader.h>
 
 namespace core {
 
-class Renderer : public IComponent, public Instantiable<Renderer> {
+class Renderer : public IComponent, public ICamDrawable {
 public:
     Renderer(Entity& parent,
              const shared<Model>& model,
@@ -20,7 +21,7 @@ public:
      * uses provided projMtx as projection matrix
      * @param camera - projection matrix
      */
-    void Draw(Camera &camera);
+    void Draw(Camera &camera) override;
 
 protected:
     void Tick() override;

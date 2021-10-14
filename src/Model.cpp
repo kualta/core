@@ -22,7 +22,7 @@ void Model::Draw(Matrix4& transformMtx, Camera& camera) {
     shader->SetDiffuseColor(color);
     shader->SetTransformMatrix(transformMtx);
     shader->SetNormalMatrix(transformMtx);
-    shader->SetProjectionMatrix(camera.projectionMatrix());
+    shader->SetProjectionMatrix(camera.GetProjectionMatrix());
     shader->Draw(mesh.get());
 }
 vector<shared<Model>> Model::Load(const string& filepath) {

@@ -8,8 +8,9 @@
 #include "Instantiable.h"
 #include "IComponent.h"
 #include "Object.h"
-#include "core/Scene/Scene.h"
-#include "ScriptedBehaviour.h"
+#include "Layer.h"
+#include "Scene/Scene.h"
+#include "IDrawable.h"
 
 #include <Magnum/SceneGraph/MatrixTransformation3D.h>
 #include <Magnum/SceneGraph/Scene.h>
@@ -21,7 +22,6 @@
 namespace core {
 
 typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> GraphObject;
-typedef std::vector<std::shared_ptr<core::IComponent>> ComponentsContainer;
 
 /**
  *  Class of every object appearing on the scene.
@@ -29,19 +29,10 @@ typedef std::vector<std::shared_ptr<core::IComponent>> ComponentsContainer;
  */
 class Entity final : public Object, public GraphObject, public ITicker, public Instantiable<Entity> {
 public:
-    explicit Entity(const string& name = "Entity", GraphObject* parent = Scene::Get(), ComponentsContainer c = { });
-
-    /** Passes FixedTick to all components of this entity */
-    void FixedTick() override;
-
-    /** Passes EarlyTick to all components of this entity */
-    void EarlyTick() override;
-
-    /** Updates all components of this entity */
-    void Tick() override;
-
-    /** Passes LateTick to all components of this entity */
-    void LateTick() override;
+    explicit Entity(const string& name = "Entity",
+                    GraphObject* parent = Scene::Get(),
+                    Layer* layer = Layer::Get("General") );
+    ~Entity() final;
 
     /**
      * Creates new Component c and adds it to Entity,
@@ -85,8 +76,7 @@ public:
     bool HasComponent();
 
     /**
-     * Checks if entity has component of type T, required by component of type C,
-     * logs error & throws if it does not
+     * Checks if entity has component of type T, required by component of type C, logs error & throws if it does not
      * @param caller - Pointer to calling component
      * @throw std::logic_error, if does not contain needed component
      */
@@ -102,6 +92,12 @@ public:
     void assertExistingComponent();
 
     /**
+     * Add this Entity to layer
+     * @param name - Name of the layer
+     */
+    void SetLayer(const string& name);
+
+    /**
      * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */
@@ -112,9 +108,30 @@ public:
     bool operator!=(const Entity &rhs) const;
 
 protected:
+    friend class SceneModule;
+    friend class Layer;
 
-    ComponentsContainer components;
+    /** Passes FixedTick to all components of this entity */
+    void FixedTick() override;
 
+    /** Passes EarlyTick to all components of this entity */
+    void EarlyTick() override;
+
+    /** Updates all components of this entity */
+    void Tick() override;
+
+    /** Passes LateTick to all components of this entity */
+    void LateTick() override;
+
+
+    struct ComponentsListing {
+        vector<shared<IComponent>>  bases         { };
+        vector<ITicker*>            tickers       { };
+        vector<IDrawable*>          drawables     { };
+        vector<ICamDrawable*>       camDrawables  { };
+    } components;
+
+    Layer* layer;
 };
 
 } // namespace core

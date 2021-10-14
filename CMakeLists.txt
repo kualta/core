@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(Core VERSION 0.2.0 DESCRIPTION "Core Engine" LANGUAGES CXX)
+project(Core VERSION 0.3.0 DESCRIPTION "Core Engine" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -129,8 +129,11 @@ target_link_libraries(core PUBLIC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    add_link_options(-pthread -lpthread)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W3" )
 

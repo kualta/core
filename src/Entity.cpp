@@ -6,25 +6,28 @@
 
 namespace core {
 
-Entity::Entity(const string& name, GraphObject* parent, ComponentsContainer c)
-: core::Object(name), GraphObject(parent), components(std::move(c))
+Entity::Entity(const string& name, GraphObject* parent, Layer* layer)
+: core::Object(name), GraphObject(parent), layer(layer)
 {
-
+    layer->AddEntity(*this);
+}
+Entity::~Entity() {
+    layer->RemoveEntity(*this);
 }
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
 }
 void Entity::FixedTick() {
-    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->FixedTick(); });
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->FixedTick(); });
 }
 void Entity::EarlyTick() {
-    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->EarlyTick(); });
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->EarlyTick(); });
 }
 void Entity::Tick() {
-    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->Tick(); });
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->Tick(); });
 }
 void Entity::LateTick() {
-    std::for_each(components.begin(), components.end(), [&](std::shared_ptr<IComponent> &c) { c->LateTick(); });
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->LateTick(); });
 }
 bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();
@@ -33,6 +36,13 @@ vector<shared<Entity>> Entity::Load(const string& filepath) {
     SceneImporter sceneImporter;
     SceneData* sceneData = sceneImporter.ImportScene(filepath);
     return sceneImporter.ImportEntities(*sceneData);
+}
+void Entity::SetLayer(const string& name) {
+    Layer* newLayer = Layer::Get(name);
+
+    layer->RemoveEntity(*this);
+    newLayer->AddEntity(*this);
+    layer = newLayer;
 }
 
 } // namespace core
