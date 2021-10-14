@@ -8,9 +8,9 @@
 #include "Instantiable.h"
 #include "IComponent.h"
 #include "Object.h"
-#include "Scene/Scene.h"
-#include "ScriptedBehaviour.h"
 #include "Layer.h"
+#include "Scene/Scene.h"
+#include "IDrawable.h"
 
 #include <Magnum/SceneGraph/MatrixTransformation3D.h>
 #include <Magnum/SceneGraph/Scene.h>
@@ -22,7 +22,6 @@
 namespace core {
 
 typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> GraphObject;
-typedef std::vector<std::shared_ptr<core::IComponent>> ComponentsContainer;
 
 /**
  *  Class of every object appearing on the scene.
@@ -32,7 +31,6 @@ class Entity final : public Object, public GraphObject, public ITicker, public I
 public:
     explicit Entity(const string& name = "Entity",
                     GraphObject* parent = Scene::Get(),
-                    ComponentsContainer c = { },
                     Layer* layer = Layer::Get("General") );
     ~Entity() final;
 
@@ -111,6 +109,7 @@ public:
 
 protected:
     friend class SceneModule;
+    friend class Layer;
 
     /** Passes FixedTick to all components of this entity */
     void FixedTick() override;
@@ -125,8 +124,14 @@ protected:
     void LateTick() override;
 
 
-    ComponentsContainer components;
-    Layer*              layer;
+    struct ComponentsListing {
+        vector<shared<IComponent>>  bases         { };
+        vector<ITicker*>            tickers       { };
+        vector<IDrawable*>          drawables     { };
+        vector<ICamDrawable*>       camDrawables  { };
+    } components;
+
+    Layer* layer;
 };
 
 } // namespace core

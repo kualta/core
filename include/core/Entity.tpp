@@ -11,22 +11,26 @@ namespace core {
 
 template<template<typename> typename T, typename S, typename ...Args>
 Entity& Entity::AddComponent(Args... args) {
-    static_assert(std::is_base_of<core::IComponent, T<S>>::value, "Component S must inherit from core::IComponent");
+    static_assert(std::is_base_of<IComponent, T<S>>::value, "Component S must inherit from core::IComponent");
 
-    // Create a copy of provided component, to ensure heap allocation of all children
-    std::shared_ptr<T<S>> component = std::make_shared<T<S>>(*this, args...);
+    shared<T<S>> component = std::make_shared<T<S>>(*this, args...);
+    if constexpr(std::is_base_of<ITicker, T<S>>::value)      { components.tickers.emplace_back(static_cast<ITicker*>(&(*component))); };
+    if constexpr(std::is_base_of<IDrawable, T<S>>::value)    { components.drawables.emplace_back(static_cast<IDrawable*>(&(*component))); };
+    if constexpr(std::is_base_of<ICamDrawable, T<S>>::value) { components.camDrawables.emplace_back(static_cast<ICamDrawable*>(&(*component))); };
+    components.bases.push_back(std::move(component));
 
-    components.push_back(std::move(component));
     return *this;
 };
 template<typename T, typename... Args>
 Entity& Entity::AddComponent(Args... args) {
     static_assert(std::is_base_of<core::IComponent, T>::value, "Component T must inherit from core::IComponent");
 
-    // Create a copy of provided component, to ensure heap allocation of all children
     auto component = std::make_shared<T>(*this, args...);
+    if constexpr(std::is_base_of<ITicker, T>::value)         { components.tickers.emplace_back(static_cast<ITicker*>(&(*component))); };
+    if constexpr(std::is_base_of<IDrawable, T>::value)       { components.drawables.emplace_back(static_cast<IDrawable*>(&(*component))); };
+    if constexpr(std::is_base_of<ICamDrawable, T>::value)    { components.camDrawables.emplace_back(static_cast<ICamDrawable*>(&(*component))); };
+    components.bases.push_back(std::move(component));
 
-    components.push_back(std::move(component));
     return *this;
 }
 template<typename T, typename C>
@@ -49,12 +53,11 @@ void Entity::assertExistingComponent() {
 
 template<typename T>
 T* Entity::GetComponent() {
-    auto it = std::find_if(components.begin(),
-                           components.end(),
-                           [&](std::shared_ptr<IComponent> const& p) {
-                               return typeid(*p).hash_code() == typeid(T).hash_code();
-                           });
-    if ( it != components.end() ) {
+    auto it = std::find_if(components.bases.begin(),
+                           components.bases.end(),
+                           [&](std::shared_ptr<IComponent> const& p)
+                           { return typeid(*p).hash_code() == typeid(T).hash_code(); });
+    if ( it != components.bases.end() ) {
         return dynamic_cast<T*>(it->get());
     } else {
         return nullptr;
@@ -62,8 +65,9 @@ T* Entity::GetComponent() {
 }
 template<typename T>
 bool Entity::HasComponent() {
-    return std::any_of(components.begin(), components.end(),
-                       [&](std::shared_ptr<IComponent> &c) { return typeid(*c).hash_code() == typeid(T).hash_code(); } );
+    return std::any_of(components.bases.begin(), components.bases.end(),
+                       [&](std::shared_ptr<IComponent> &c)
+                       { return typeid(*c).hash_code() == typeid(T).hash_code(); });
 }
 
 } // namespace core

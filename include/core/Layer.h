@@ -3,12 +3,16 @@
 
 #include "Essentials.h"
 #include "Instantiable.h"
+#include "IDrawable.h"
 #include "Object.h"
 
 namespace core {
 
-class Layer : public Object, public Instantiable<Layer> {
+class Layer : public Object, public ICamDrawable {
+    friend class Camera;
 public:
+    explicit Layer(const string& name);
+
     Layer(Layer&& other) = default;
 
     /** Copying is not allowed */
@@ -27,10 +31,11 @@ protected:
 
     std::vector<Entity*> entities;
 
-private:
-    explicit Layer(const string& name);
+    void Draw(Camera& camera) override;
 
-    static std::vector<Layer> layers;
+private:
+
+    static std::vector<shared<Layer>> layers;
 
 };
 

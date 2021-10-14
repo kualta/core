@@ -7,7 +7,7 @@
 
 namespace core {
 
-std::vector<Layer> Layer::layers;
+std::vector<shared<Layer>> Layer::layers { };
 
 Layer::Layer(const string &name) : Object(name) {
     if (LayerExist(name)) {
@@ -20,19 +20,17 @@ Layer* Layer::CreateNewLayer(const string& name) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
     }
-    Layer layer = Layer(name);
-    Log() << "HERE";
+    shared<Layer> layer = make_shared<Layer>(name);
     layers.push_back(std::move(layer));
-    Log() << "THERE";
-    return &layers.back();
+    return &(*layers.back());
 }
 bool Layer::LayerExist(const string& name) {
-    return std::any_of(layers.begin(), layers.end(), [&](const Layer& layer) { return layer.name == name; } ) ? true : false;
+    return std::any_of(layers.begin(), layers.end(), [&](const shared<Layer>& layer) { return layer->name == name; } ) ? true : false;
 }
 Layer* Layer::Get(const string& layerName) {
-    auto layer = std::find_if(layers.begin(), layers.end(), [&](Layer& l) { return l.name == layerName; });
+    auto layer = std::find_if(layers.begin(), layers.end(), [&](const shared<Layer>& l) { return l->name == layerName; });
     if (layer != layers.end()) {
-        return &(*layer);
+        return &(*(*layer));
     } else {
         Logger::Log(INTERNAL, DEBUG_HERE) << "Creating new layer " << std::quoted(layerName);
         return CreateNewLayer(layerName);
@@ -54,6 +52,13 @@ void Layer::RemoveEntity(Entity& entity) {
 }
 const string& Layer::GetName() {
     return name;
+}
+void Layer::Draw(Camera &camera) {
+    for (Entity* entity : entities) {
+        for (ICamDrawable* drawable : entity->components.camDrawables) {
+            drawable->Draw(camera);
+        }
+    }
 }
 
 }

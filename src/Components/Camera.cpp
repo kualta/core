@@ -23,7 +23,7 @@ Camera::Camera(Entity& parent,
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
 }
-Camera::Camera(Entity &parent,
+Camera::Camera(Entity& parent,
                Vector2 viewport,
                Deg     fov,
                float   farPlane,
@@ -44,13 +44,11 @@ void Camera::Tick() {
     Draw();
 }
 void Camera::Draw() {
-    // TODO: Add drawing by layers
-    // NOTE: Temporary solution
 
     SceneView::BindBuffer();
 
-    for (auto renderer : Renderer::instances) {
-        renderer->Draw(*this);
+    for (Layer* layer : linkedLayers) {
+        layer->Draw(*this);
     }
 
     SceneView::BindColor();
@@ -110,7 +108,7 @@ void Camera::FixAspectRatio() {
     projectionMtx = scale * projectionMtx;
 }
 void Camera::LinkLayer(const string &name) {
-    linkedLayers.emplace_back(Layer::Get(name));
+    linkedLayers.push_back(Layer::Get(name));
 }
 void Camera::UnlinkLayer(const string &name) {
     linkedLayers.erase(std::remove_if(linkedLayers.begin(), linkedLayers.end(), [&](Layer* l) { return l->GetName() == name; }), linkedLayers.end());
