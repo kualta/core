@@ -7,7 +7,7 @@
 
 namespace core {
 
-std::vector<shared<Layer>> Layer::layers { };
+std::vector<unique<Layer>> Layer::layers { };
 
 Layer::Layer(const string &name) : Object(name) {
     if (LayerExist(name)) {
@@ -20,15 +20,15 @@ Layer* Layer::CreateNewLayer(const string& name) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
     }
-    shared<Layer> layer = make_shared<Layer>(name);
+    unique<Layer> layer = std::make_unique<Layer>(name);
     layers.push_back(std::move(layer));
     return &(*layers.back());
 }
 bool Layer::LayerExist(const string& name) {
-    return std::any_of(layers.begin(), layers.end(), [&](const shared<Layer>& layer) { return layer->name == name; } ) ? true : false;
+    return std::any_of(layers.begin(), layers.end(), [&](const unique<Layer>& layer) { return layer->name == name; } ) ? true : false;
 }
 Layer* Layer::Get(const string& layerName) {
-    auto layer = std::find_if(layers.begin(), layers.end(), [&](const shared<Layer>& l) { return l->name == layerName; });
+    auto layer = std::find_if(layers.begin(), layers.end(), [&](const unique<Layer>& l) { return l->name == layerName; });
     if (layer != layers.end()) {
         return &(*(*layer));
     } else {

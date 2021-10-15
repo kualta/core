@@ -8,7 +8,7 @@
 namespace core {
 
 EditorModule::EditorModule(GUIModule* guiModule, InputModule* inputModule)
-: IModule("Editor", EDITOR), inputModule(inputModule), guiModule(guiModule)
+: IModule("Editor", EDITOR), inputModule(inputModule), guiModule(guiModule), sceneView(NoCreate)
 {
     editorDockSpaceName = "EditorDockSpace";
     dockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
@@ -30,7 +30,8 @@ void EditorModule::Start() {
         viewportNeedsReload = true;
     });
 
-    sceneView = SceneView{{0, 0}, {0, 0}};
+    sceneView = SceneView({ 0, 0 }, { 100, 100 } );
+
     ConstructDockSpace();
 }
 void EditorModule::ConstructDockSpace() {
