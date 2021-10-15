@@ -22,7 +22,10 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
+
+    // by default, all cams draw on Default layer, to SceneView view
     LinkLayer("Default");
+    SetView(SceneView::Get());
 }
 Camera::Camera(Entity& parent,
                Vector2 viewport,
@@ -38,31 +41,31 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
+
+    // by default, all cams draw on Default layer, to SceneView view
     LinkLayer("Default");
+    SetView(SceneView::Get());
 }
 void Camera::Tick() {
     SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
-    SetViewport(SceneView::Get()->GetFrameBuffer().viewport().size());
+    SetViewport(attachedView->GetFrameBuffer().viewport().size());
     Draw();
 }
 void Camera::Draw() {
-
-    SceneView::Get()->Bind();
-
+    attachedView->Bind();
     for (Layer* layer : linkedLayers) {
         layer->Draw(*this);
     }
-
-    SceneView::Get()->Blit();
+    attachedView->Blit();
 
     GL::defaultFramebuffer.bind();
 }
-void Camera::SetViewport(Vector2i vp) {
-    if (vp.x() == 0 || vp.y() == 0) {
-        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << vp.x() << 'x' << vp.y() << " are invalid";
+void Camera::SetViewport(Vector2i v) {
+    if (v.x() == 0 || v.y() == 0) {
+        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << v.x() << 'x' << v.y() << " are invalid";
         return;
     }
-    viewport = vp;
+    viewport = v;
     aspectRatio = (float)viewport.x() / (float)viewport.y();
 }
 void Camera::SetFOV(Deg FOV) {
@@ -113,6 +116,10 @@ void Camera::LinkLayer(const string &name) {
 }
 void Camera::UnlinkLayer(const string &name) {
     linkedLayers.erase(std::remove_if(linkedLayers.begin(), linkedLayers.end(), [&](Layer* l) { return l->GetName() == name; }), linkedLayers.end());
+}
+void Camera::SetView(View* view) {
+    if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
+    attachedView = view;
 }
 
 }

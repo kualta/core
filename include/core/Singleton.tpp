@@ -13,9 +13,5 @@ template<typename T>
 T* Singleton<T>::Get() {
     return singleton;
 }
-template<typename T>
-T& Singleton<T>::GetInstance() {
-    return (*singleton);
-}
 
 } // namespace core

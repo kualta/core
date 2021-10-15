@@ -6,6 +6,7 @@
 #include <core/Entity.h>
 #include <core/Math.h>
 #include <core/Layer.h>
+#include <core/View.h>
 
 namespace core {
 
@@ -33,6 +34,7 @@ public:
     void SetNearPlane(float distance);
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
+    void SetView(View* view);
 
     void LinkLayer(const string& name);
     void UnlinkLayer(const string& name);
@@ -41,7 +43,6 @@ protected:
 
     void SetProjectionMatrix(Matrix4&& projMtx);
     void SetProjectionMatrix(Matrix4& projMtx);
-
     void UpdatePerspectiveMatrix();
     void FixAspectRatio();
 
@@ -62,6 +63,9 @@ protected:
 
     /** Sister transform */
     Transform* transform;
+
+    /** Attached View camera draws onto */
+    View* attachedView;
 
     Matrix4         perspectiveMtx;
     Matrix4         projectionMtx;

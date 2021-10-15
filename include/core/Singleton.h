@@ -5,7 +5,6 @@
 #ifndef CORE_SINGLETON_H
 #define CORE_SINGLETON_H
 
-
 namespace core {
 
 template <typename T> class Singleton {
@@ -38,7 +37,6 @@ public:
     }
 
     static T* Get();
-    static T& GetInstance();
 
 private:
 
