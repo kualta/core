@@ -10,15 +10,14 @@ namespace core {
 
 /**
  *  Base class of every countable class
- *  @note All singleton classes inherit from this as well.
  */
 class Object {
 public:
+    /** Move constructor */
+    Object(Object&& other) noexcept;
+
     /** Copying is not allowed */
     Object(const Object&) = delete;
-
-    /** Move constructor */
-    Object(Object&&) = default;
 
     /**
      * @return uint32_t ID of an object
@@ -35,21 +34,24 @@ public:
     Object& operator=(const Object&) = delete;
 
     /** Move assignment */
-    Object& operator=(Object&&) noexcept = default;
+    Object& operator=(Object&& other) noexcept;
 
     bool operator==(const Object &rhs) const;
     bool operator!=(const Object &rhs) const;
 
-
 protected:
-    explicit Object(string name = "");
+
+    explicit Object(string name = "") noexcept;
     virtual ~Object();
 
     string name;
 
 private:
+
     static std::atomic<uint32_t> objectCounter;
+
     uint32_t id;
+
 };
 
 } // namespace core
