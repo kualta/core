@@ -1,5 +1,4 @@
-
-#include "LayerLinked.h"
+#include "Layer.h"
 
 namespace core {
 

@@ -2,7 +2,6 @@
 #define CORE_LAYER_H
 
 #include "Essentials.h"
-#include "LayerLinked.h"
 #include "IDrawable.h"
 #include "Instantiable.h"
 #include "Object.h"

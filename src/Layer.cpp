@@ -1,6 +1,7 @@
 #include <core/Layer.h>
 #include <core/Logger.h>
 #include <core/Entity.h>
+#include <core/LayerLinked.h>
 #include <core/Components/Camera.h>
 
 #include <algorithm>

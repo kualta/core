@@ -12,7 +12,7 @@ Object::Object(string name) noexcept
     Logger::Log(OBJECT, INFO) << "Created object " << GetInfo();
 }
 Object::Object(Object &&other) noexcept
-: id(other.id), name(std::move(other.name))
+: name(std::move(other.name)), id(other.id)
 {
     other.id = 0;
 }
