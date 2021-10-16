@@ -6,21 +6,35 @@
 #include "Mesh.h"
 #include "Math.h"
 
+
 namespace core {
 
 class Model {
 public:
     Model(const shared<Mesh>& mesh, const shared<Shader>& shader);
 
-    void Draw(Matrix4 &transformMtx, Camera &camera);
-
     static vector<shared<Model>> Load(const string& filepath);
 
+    void SetProjectionMatrix(Matrix4& mtx);
+    void SetTrasfromMatrix(Matrix4& mtx);
+    void SetNormalMatrix(Matrix4& mtx);
+    void SetDiffuseColor(Color4& color);
+    void SetLightColor(Color3& color);
+
 protected:
+    friend class Renderer;
+
+    void Draw(Matrix4& transformMtx, Camera& camera);
 
     Color3         color;
     shared<Mesh>   mesh;
     shared<Shader> shader;
+
+    GL::Buffer transformUniform;
+    GL::Buffer projectionUniform;
+    GL::Buffer materialUniform;
+    GL::Buffer lightUniform;
+    GL::Buffer drawUniform;
 
 };
 

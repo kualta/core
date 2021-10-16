@@ -6,7 +6,7 @@ namespace core {
 
 std::atomic<uint32_t> Object::objectCounter { 0 };
 
-Object::Object(string name)
+Object::Object(string name) noexcept
 : name(std::move(name)), id(++objectCounter)
 {
     Logger::Log(OBJECT, INFO) << "Created object " << GetInfo();

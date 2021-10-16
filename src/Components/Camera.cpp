@@ -47,7 +47,7 @@ Camera::Camera(Entity& parent,
     SetView(SceneView::Get());
 }
 void Camera::Tick() {
-    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
+    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)); // FIXME optimize if same
     SetViewport(attachedView->GetFrameBuffer().viewport().size());
     Draw();
 }

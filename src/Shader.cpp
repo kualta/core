@@ -1,40 +1,28 @@
 #include <core/Shader.h>
 
-using namespace Math::Literals;
 namespace core {
 
-Shaders::PhongGL Shader::coloredShader { NoCreate };
-Shaders::PhongGL Shader::texturedShader { NoCreate };
-
-Shader::Shader(Shaders::PhongGL* shader)
-: shader(shader)
-{
-    texturedShader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture };
-    coloredShader = Shaders::PhongGL { };
+Shader::Shader() {
+    shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
+                              | Shaders::PhongGL::Flag::UniformBuffers };
 }
-void Shader::Draw(Mesh* mesh) {
-    coloredShader.draw(*mesh->GetGLMesh());
+void Shader::Draw(Mesh& mesh) {
+    shader.draw(*mesh.GetGLMesh());
 }
-void Shader::SetDiffuseColor(Color3 color) {
-    coloredShader.setDiffuseColor(color);
+void Shader::BindMaterialBuffer(GL::Buffer& buffer) {
+    shader.bindMaterialBuffer(buffer);
 }
-void Shader::SetAmbientColor(Color3 color) {
-    coloredShader.setAmbientColor(Color3::fromHsv({color.hue(), 1.0f, 0.3f}));
+void Shader::BindTransformBuffer(GL::Buffer& buffer) {
+    shader.bindTransformationBuffer(buffer);
 }
-void Shader::SetTransformMatrix(Matrix4& mtx) {
-    coloredShader.setTransformationMatrix(mtx);
+void Shader::BindProjectionBuffer(GL::Buffer& buffer) {
+    shader.bindProjectionBuffer(buffer);
 }
-void Shader::SetProjectionMatrix(Matrix4& mtx) {
-    coloredShader.setProjectionMatrix(mtx);
+void Shader::BindLightBuffer(GL::Buffer& buffer) {
+    shader.bindLightBuffer(buffer);
 }
-void Shader::SetProjectionMatrix(Matrix4&& mtx) {
-    coloredShader.setProjectionMatrix(mtx);
-}
-void Shader::SetNormalMatrix(Matrix4& mtx) {
-    coloredShader.setNormalMatrix(mtx.normalMatrix());
-}
-void Shader::SetLightPositions(Vector4& pos) {
-    coloredShader.setLightPositions({ pos });
+void Shader::BindDrawBuffer(GL::Buffer& buffer) {
+    shader.bindDrawBuffer(buffer);
 }
 
 }
