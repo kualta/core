@@ -32,5 +32,8 @@ void Renderer::SetTransformMatrix(Matrix4& mtx) {
     model->SetTransformMatrix(mtx);
     model->SetNormalMatrix(mtx);
 }
+void Renderer::SetLight(Light& light) {
+    model->SetLight(light);
+}
 
 }

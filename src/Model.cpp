@@ -11,7 +11,7 @@ namespace core {
 Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
 : mesh(mesh), shader(shader)
 {
-    color = Color3::fromHsv({333.0_degf, 0.5f, 1.4f});
+    color = Color3::fromHsv({333.0_degf, 0.5f, 0.4f});
     Vector4 lightPositions = {0.4f, 0.0f, 0.75f, 0.0f};
 
 //    SetLightColor(color);
@@ -46,12 +46,12 @@ void Model::SetDiffuseColor(Color3& diffuseColor) {
         .setAmbientColor(diffuseColor)
     });
 }
-void Model::SetLightColor(Light& light) {
+void Model::SetLight(Light& light) {
     lightUniform.setData({ Shaders::PhongLightUniform{ }
         .setColor(light.color)
         .setRange(light.range)
         .setSpecularColor(light.specularColor)
-        .setPosition({light.transform->position, 1.0f})
+        .setPosition({0.0f, 0.0f, 1.0f, 0.0f}) // FIXME: handle actual data
     });
 }
 

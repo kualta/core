@@ -25,6 +25,11 @@ public:
     /** Attenuation range. */
     float range;
 
+protected:
+    friend class Model;     // <To access transform
+
+    void Tick() override;
+
     Transform* transform { nullptr };
 
 };

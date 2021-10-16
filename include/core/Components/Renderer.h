@@ -30,6 +30,7 @@ protected:
 
     void SetProjectionMatrix(Matrix4& mtx) override;
     void SetTransformMatrix(Matrix4& mtx) override;
+    void SetLight(Light& light) override;
 
     shared<Model>   model;
     Transform*      transform { nullptr };

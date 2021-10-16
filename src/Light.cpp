@@ -10,5 +10,10 @@ Light::Light(Entity &parent, Color3 color, Color3 specular, float range, const s
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
 }
+void Light::Tick() {
+    for (auto layer : linkedLayers) {
+        layer->SetLight(*this);
+    }
+}
 
 }

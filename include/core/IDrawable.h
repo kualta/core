@@ -9,8 +9,11 @@ class IDrawable {
 public:
 
     virtual void Draw() = 0;
+
+    // these three should not be here idk what to do with them
     virtual void SetProjectionMatrix(Matrix4& mtx) = 0;
     virtual void SetTransformMatrix(Matrix4& mtx) = 0;
+    virtual void SetLight(Light& light) = 0;
 
 };
 

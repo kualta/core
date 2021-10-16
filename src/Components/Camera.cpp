@@ -46,7 +46,11 @@ Camera::~Camera() {
     CameraList::Get()->Unregister(this);
 }
 void Camera::Tick() {
-    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)); // FIXME optimize if same
+    // FIXME optimize if same
+    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)
+                                       * Matrix4::rotationX(transform->rotation.x())
+                                       * Matrix4::rotationY(transform->rotation.y())
+                                       * Matrix4::rotationZ(transform->rotation.z()));
     SetViewport(attachedView->GetFrameBuffer().viewport().size());
 }
 void Camera::Draw() {
