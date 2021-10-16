@@ -19,8 +19,8 @@ public:
 
     static vector<shared<Model>> Load(const string& filepath);
 
-    void SetProjectionMatrix(Matrix4& mtx);
-    void SetTrasfromMatrix(Matrix4& mtx);
+    void SetProjectionMatrix(Matrix4& mtx) override;
+    void SetTransformMatrix(Matrix4& mtx) override;
     void SetNormalMatrix(Matrix4& mtx);
     void SetDiffuseColor(Color3& color);
     void SetLightColor(Light& light);

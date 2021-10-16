@@ -18,7 +18,7 @@ public:
     bool isActive = true;
 
     /* Entity object this component is attached to */
-    Entity* entity { nullptr };
+    Entity*  entity { nullptr };
 
 protected:
     explicit IComponent(Entity& parent, const string& name = "Unnamed");

@@ -34,11 +34,11 @@ vector<shared<Model>> Model::Load(const string& filepath) {
 void Model::SetProjectionMatrix(Matrix4& mtx) {
     projectionUniform.setData({ Shaders::ProjectionUniform3D{ }.setProjectionMatrix(mtx) });
 }
-void Model::SetTrasfromMatrix(Matrix4& mtx) {
-    transformUniform.setData({ Shaders::TransformationUniform3D{ }.setTransformationMatrix(mtx) });
-}
 void Model::SetNormalMatrix(Matrix4& mtx) {
     drawUniform.setData({ Shaders::PhongDrawUniform{ }.setNormalMatrix(mtx.normalMatrix()) });
+}
+void Model::SetTransformMatrix(Matrix4 &mtx) {
+    transformUniform.setData({ Shaders::TransformationUniform3D{ }.setTransformationMatrix(mtx) });
 }
 void Model::SetDiffuseColor(Color3& diffuseColor) {
     materialUniform.setData({ Shaders::PhongMaterialUniform{ }

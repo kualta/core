@@ -116,5 +116,11 @@ void Camera::UpdateLayersProjectionMatrix() {
         layer->SetProjectionMatrix(projectionMtx);
     }
 }
+void Camera::BindAttachedView() {
+    attachedView->Bind();
+}
+void Camera::BlitAttachedView() {
+    attachedView->Blit();
+}
 
 }

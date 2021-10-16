@@ -36,6 +36,8 @@ public:
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
     void SetView(View* view);
+    void BindAttachedView();
+    void BlitAttachedView();
 
 protected:
 

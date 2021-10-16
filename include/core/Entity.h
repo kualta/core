@@ -98,6 +98,12 @@ public:
     void SetLayer(const string& name);
 
     /**
+     * Get Layer this entity is attached to
+     * @return pointer to Layer
+     */
+    Layer* GetLayer();
+
+    /**
      * Imports and adds Entities from the file to the scene
      * @param filepath - path to model file
      */

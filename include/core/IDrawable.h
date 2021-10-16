@@ -10,6 +10,7 @@ public:
 
     virtual void Draw() = 0;
     virtual void SetProjectionMatrix(Matrix4& mtx) = 0;
+    virtual void SetTransformMatrix(Matrix4& mtx) = 0;
 
 };
 

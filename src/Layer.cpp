@@ -1,6 +1,7 @@
 #include <core/Layer.h>
 #include <core/Logger.h>
 #include <core/Entity.h>
+#include <core/Components/Camera.h>
 
 #include <algorithm>
 #include <iomanip>
@@ -38,16 +39,29 @@ Layer* Layer::Get(const string& layerName) {
     }
 }
 void Layer::Draw() {
+
+    /** For every entity attached to this layer */
     for (Entity* entity : entities) {
+
+        /** Draw each IDrawable attached to the Entity */
         for (IDrawable* drawable : entity->components.drawables) {
             drawable->Draw();
         }
+
     }
+
 }
 void Layer::SetProjectionMatrix(Matrix4& mtx) {
     for (Entity* entity : entities) {
         for (IDrawable* drawable : entity->components.drawables) {
             drawable->SetProjectionMatrix(mtx);
+        }
+    }
+}
+void Layer::SetTransformMatrix(Matrix4& mtx) {
+    for (Entity* entity : entities) {
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->SetTransformMatrix(mtx);
         }
     }
 }

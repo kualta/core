@@ -32,6 +32,10 @@ public:
     template<typename T>
     bool IsLinked(T& obj);
 
+    void Draw() override;
+    void SetProjectionMatrix(Matrix4& mtx) override;
+    void SetTransformMatrix(Matrix4& mtx) override;
+
 protected:
     friend class Camera;
 
@@ -41,9 +45,6 @@ protected:
     std::vector<Entity*> entities;
     std::vector<Camera*> cameras;
     std::vector<Light*>  lights;
-
-    void Draw() override;
-    void SetProjectionMatrix(Matrix4& mtx) override;
 
 private:
 

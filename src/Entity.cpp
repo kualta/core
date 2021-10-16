@@ -44,5 +44,8 @@ void Entity::SetLayer(const string& name) {
 
     layer = newLayer;
 }
+Layer* Entity::GetLayer() {
+    return layer;
+}
 
 } // namespace core

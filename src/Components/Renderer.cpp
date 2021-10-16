@@ -14,20 +14,23 @@ Renderer::Renderer(Entity& parent, const shared<Model>& model, const string& nam
 }
 void Renderer::Tick() {
     // FIXME: Move draw call from Camera to Renderer::Tick()
-}
-void Renderer::Draw() {
     Matrix4 transformMtx = Matrix4::translation(transform->position)
                          * Matrix4::rotationX(transform->rotation.x())
                          * Matrix4::rotationY(transform->rotation.y())
                          * Matrix4::rotationZ(transform->rotation.z())
                          * Matrix4::scaling(transform->scale);
 
-    model->SetTrasfromMatrix(transformMtx);
-    model->SetNormalMatrix(transformMtx);
+    SetTransformMatrix(transformMtx);
+}
+void Renderer::Draw() {
     model->Draw();
 }
 void Renderer::SetProjectionMatrix(Matrix4& mtx) {
     model->SetProjectionMatrix(mtx);
+}
+void Renderer::SetTransformMatrix(Matrix4& mtx) {
+    model->SetTransformMatrix(mtx);
+    model->SetNormalMatrix(mtx);
 }
 
 }

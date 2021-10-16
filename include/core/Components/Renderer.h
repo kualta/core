@@ -29,6 +29,7 @@ protected:
     void Draw() override;
 
     void SetProjectionMatrix(Matrix4& mtx) override;
+    void SetTransformMatrix(Matrix4& mtx) override;
 
     shared<Model>   model;
     Transform*      transform { nullptr };
