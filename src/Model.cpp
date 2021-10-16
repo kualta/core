@@ -1,5 +1,6 @@
 #include <core/Model.h>
 #include <core/Logger.h>
+#include <core/Components/Camera.h>
 #include <core/Scene/SceneImporter.h>
 #include <core/Scene/SceneData.h>
 
@@ -10,10 +11,17 @@ namespace core {
 Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
 : mesh(mesh), shader(shader)
 {
-    color = Color3::fromHsv({333.0_degf, 0.5f, 1.0f});
-    Vector4 lightPositions = {1.4f, 1.0f, 0.75f, 0.0f};
+    color = Color3::fromHsv({333.0_degf, 0.5f, 1.4f});
+    Vector4 lightPositions = {0.4f, 0.0f, 0.75f, 0.0f};
+
+    SetLightColor(color,lightPositions);
+    SetDiffuseColor(color);
+//    shader->SetAmbientColor(Color3::fromHsv({ color.hue(), 1.0f, 0.3f }));
 }
 void Model::Draw(Matrix4& transformMtx, Camera& camera) {
+    SetTrasfromMatrix(transformMtx);
+    SetNormalMatrix(transformMtx);
+    SetProjectionMatrix(camera.GetProjectionMatrix());
     shader->BindProjectionBuffer(projectionUniform);
     shader->BindTransformBuffer(transformUniform);
     shader->BindLightBuffer(lightUniform);
@@ -35,11 +43,17 @@ void Model::SetTrasfromMatrix(Matrix4& mtx) {
 void Model::SetNormalMatrix(Matrix4& mtx) {
     drawUniform.setData({ Shaders::PhongDrawUniform{ }.setNormalMatrix(mtx.normalMatrix()) });
 }
-void Model::SetDiffuseColor(Color4& diffuseColor) {
-    materialUniform.setData({ Shaders::PhongMaterialUniform{ }.setDiffuseColor(diffuseColor) });
+void Model::SetDiffuseColor(Color3& diffuseColor) {
+    materialUniform.setData({ Shaders::PhongMaterialUniform{ }
+        .setDiffuseColor(diffuseColor)
+        .setAmbientColor(diffuseColor)
+    });
 }
-void Model::SetLightColor(Color3& lightColor) {
-    lightUniform.setData({ Shaders::PhongLightUniform{ }.setColor(lightColor) });
+void Model::SetLightColor(Color3& lightColor, Vector4& lightPos) {
+    lightUniform.setData({ Shaders::PhongLightUniform{ }.setColor(lightColor).setPosition(lightPos) });
+}
+void Model::SetAmbientColor(Color4& ambientColor) {
+
 }
 
 }

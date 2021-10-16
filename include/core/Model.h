@@ -18,8 +18,9 @@ public:
     void SetProjectionMatrix(Matrix4& mtx);
     void SetTrasfromMatrix(Matrix4& mtx);
     void SetNormalMatrix(Matrix4& mtx);
-    void SetDiffuseColor(Color4& color);
-    void SetLightColor(Color3& color);
+    void SetDiffuseColor(Color3& color);
+    void SetAmbientColor(Color4& color);
+    void SetLightColor(Color3& color, Vector4& lightPos);
 
 protected:
     friend class Renderer;
