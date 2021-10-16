@@ -8,6 +8,8 @@ namespace core {
 
 template<typename T> class LayerLinked {
 public:
+    LayerLinked();
+    virtual ~LayerLinked();
 
     virtual void LinkLayer(const string& name);
     virtual void UnlinkLayer(const string& name);

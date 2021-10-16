@@ -1,5 +1,16 @@
+
+#include "LayerLinked.h"
+
 namespace core {
 
+template<typename T>
+LayerLinked<T>::LayerLinked() {
+    LinkLayer("Default");
+}
+template<typename T>
+LayerLinked<T>::~LayerLinked() {
+    UnlinkLayer("Default");
+}
 template<typename T>
 void LayerLinked<T>::LinkLayer(const string& name) {
     Layer* layer = Layer::Get(name);

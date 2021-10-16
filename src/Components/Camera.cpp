@@ -22,9 +22,6 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
-
-    // by default, all cams draw on Default layer, to SceneView view
-    LinkLayer("Default");
     SetView(SceneView::Get());
 }
 Camera::Camera(Entity& parent,
@@ -41,9 +38,6 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
-
-    // by default, all cams draw on Default layer, to SceneView view
-    LinkLayer("Default");
     SetView(SceneView::Get());
 }
 void Camera::Tick() {
