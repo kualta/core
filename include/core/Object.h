@@ -20,12 +20,17 @@ public:
     Object(const Object&) = delete;
 
     /**
-     * @return uint32_t ID of an object
+     * @return std::string Name of the object
+     */
+    const string& GetName();
+
+    /**
+     * @return uint32_t ID of the object
      */
     uint32_t GetId() const;
 
     /**
-     * @return string containing name and ID of this object
+     * @return string with name and ID of the object
      * @details format: "name" ID(123)
      */
     string GetInfo() const;

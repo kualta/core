@@ -10,31 +10,27 @@
 #include <fstream>
 
 #include <Magnum/Shaders/PhongGL.h>
+#include <Magnum/Shaders/Generic.h>
+#include <Magnum/Shaders/Phong.h>
 
 using namespace Magnum;
 namespace core {
 
 class Shader {
 public:
-    explicit Shader(Shaders::PhongGL* shader);
-    ~Shader() { };
+    Shader();
 
-    void Draw(Mesh* mesh);
+    void Draw(Mesh& mesh);
 
-    void SetLightPositions(Vector4& pos);
-    void SetDiffuseColor(Color3 color);
-    void SetAmbientColor(Color3 color);
-    void SetTransformMatrix(Matrix4& mtx);
-    void SetProjectionMatrix(Matrix4& mtx);
-    void SetProjectionMatrix(Matrix4&& mtx);
-    void SetNormalMatrix(Matrix4& mtx);
-
-    static Shaders::PhongGL coloredShader;
-    static Shaders::PhongGL texturedShader;
+    void BindLightBuffer(GL::Buffer& buffer);
+    void BindDrawBuffer(GL::Buffer& buffer);
+    void BindMaterialBuffer(GL::Buffer& buffer);
+    void BindTransformBuffer(GL::Buffer& buffer);
+    void BindProjectionBuffer(GL::Buffer& buffer);
 
 protected:
 
-    Shaders::PhongGL* shader;
+    Shaders::PhongGL shader;
 
 };
 

@@ -1,9 +1,12 @@
 #include <core/Layer.h>
 #include <core/Logger.h>
 #include <core/Entity.h>
+#include <core/LayerLinked.h>
+#include <core/Components/Camera.h>
 
 #include <algorithm>
 #include <iomanip>
+
 
 namespace core {
 
@@ -20,6 +23,7 @@ Layer* Layer::CreateNewLayer(const string& name) {
         Logger::Log(INTERNAL, ERR_HERE) << "Layer " << name << " already exists";
         throw std::runtime_error("Layer " + name + " already exists");
     }
+    Logger::Log(INTERNAL, DEBUG) << "Creating new layer " << std::quoted(name);
     unique<Layer> layer = std::make_unique<Layer>(name);
     layers.push_back(std::move(layer));
     return &(*layers.back());
@@ -32,31 +36,33 @@ Layer* Layer::Get(const string& layerName) {
     if (layer != layers.end()) {
         return &(*(*layer));
     } else {
-        Logger::Log(INTERNAL, DEBUG_HERE) << "Creating new layer " << std::quoted(layerName);
         return CreateNewLayer(layerName);
     }
 }
-void Layer::AddEntity(Entity& entity) {
-    if (HasEntity(entity)) {
-        Logger::Log(INTERNAL, WARN_HERE) << "Layer " << std::quoted(name) << " already has entity " << entity.GetInfo();
-        return;
-    }
-    entities.push_back(&entity);
-}
-bool Layer::HasEntity(Entity& entity) {
-    auto e = std::find(entities.begin(), entities.end(), &entity);
-    return e != entities.end() ? true : false;
-}
-void Layer::RemoveEntity(Entity& entity) {
-    entities.erase(std::remove_if(entities.begin(), entities.end(), [&](Entity* e) { return *e == entity; }), entities.end());
-}
-const string& Layer::GetName() {
-    return name;
-}
-void Layer::Draw(Camera &camera) {
+void Layer::Draw() {
+
+    /** For every entity attached to this layer */
     for (Entity* entity : entities) {
-        for (ICamDrawable* drawable : entity->components.camDrawables) {
-            drawable->Draw(camera);
+
+        /** Draw each IDrawable attached to the Entity */
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->Draw();
+        }
+
+    }
+
+}
+void Layer::SetProjectionMatrix(Matrix4& mtx) {
+    for (Entity* entity : entities) {
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->SetProjectionMatrix(mtx);
+        }
+    }
+}
+void Layer::SetTransformMatrix(Matrix4& mtx) {
+    for (Entity* entity : entities) {
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->SetTransformMatrix(mtx);
         }
     }
 }

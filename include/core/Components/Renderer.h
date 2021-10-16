@@ -9,11 +9,16 @@
 
 namespace core {
 
-class Renderer : public IComponent, public ICamDrawable {
+class Renderer : public IComponent, public IDrawable {
 public:
     Renderer(Entity& parent,
              const shared<Model>& model,
              const string& name = "Renderer");
+
+
+protected:
+
+    void Tick() override;
 
     /**
      * Draws attached Model
@@ -21,13 +26,13 @@ public:
      * uses provided projMtx as projection matrix
      * @param camera - projection matrix
      */
-    void Draw(Camera &camera) override;
+    void Draw() override;
 
-protected:
-    void Tick() override;
+    void SetProjectionMatrix(Matrix4& mtx) override;
+    void SetTransformMatrix(Matrix4& mtx) override;
 
-    shared<Model>     model;
-    Transform* transform { nullptr };
+    shared<Model>   model;
+    Transform*      transform { nullptr };
 
 };
 

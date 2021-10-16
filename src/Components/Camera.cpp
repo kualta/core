@@ -22,10 +22,8 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
-
-    // by default, all cams draw on Default layer, to SceneView view
-    LinkLayer("Default");
     SetView(SceneView::Get());
+    CameraList::Get()->Register(this);
 }
 Camera::Camera(Entity& parent,
                Vector2 viewport,
@@ -41,20 +39,20 @@ Camera::Camera(Entity& parent,
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
-
-    // by default, all cams draw on Default layer, to SceneView view
-    LinkLayer("Default");
     SetView(SceneView::Get());
+    CameraList::Get()->Register(this);
+}
+Camera::~Camera() {
+    CameraList::Get()->Unregister(this);
 }
 void Camera::Tick() {
-    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position));
+    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)); // FIXME optimize if same
     SetViewport(attachedView->GetFrameBuffer().viewport().size());
-    Draw();
 }
 void Camera::Draw() {
     attachedView->Bind();
     for (Layer* layer : linkedLayers) {
-        layer->Draw(*this);
+        layer->Draw();
     }
     attachedView->Blit();
 
@@ -92,10 +90,12 @@ Matrix4& Camera::GetProjectionMatrix() {
 void Camera::SetProjectionMatrix(Matrix4&& projMtx) {
     projectionMtx = projMtx;
     FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 void Camera::SetProjectionMatrix(Matrix4& projMtx) {
     projectionMtx = projMtx;
     FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 void Camera::FixAspectRatio() {
     const Vector2& projectionScale = { Math::abs(projectionMtx[0].x()), Math::abs(projectionMtx[1].y()) };
@@ -111,15 +111,20 @@ void Camera::FixAspectRatio() {
 
     projectionMtx = scale * projectionMtx;
 }
-void Camera::LinkLayer(const string &name) {
-    linkedLayers.push_back(Layer::Get(name));
-}
-void Camera::UnlinkLayer(const string &name) {
-    linkedLayers.erase(std::remove_if(linkedLayers.begin(), linkedLayers.end(), [&](Layer* l) { return l->GetName() == name; }), linkedLayers.end());
-}
 void Camera::SetView(View* view) {
     if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
     attachedView = view;
+}
+void Camera::UpdateLayersProjectionMatrix() {
+    for (Layer* layer : linkedLayers) {
+        layer->SetProjectionMatrix(projectionMtx);
+    }
+}
+void Camera::BindAttachedView() {
+    attachedView->Bind();
+}
+void Camera::BlitAttachedView() {
+    attachedView->Blit();
 }
 
 }

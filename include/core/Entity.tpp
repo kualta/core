@@ -16,27 +16,25 @@ Entity& Entity::AddComponent(Args... args) {
     shared<T<S>> component = std::make_shared<T<S>>(*this, args...);
     if constexpr(std::is_base_of<ITicker, T<S>>::value)      { components.tickers.emplace_back(static_cast<ITicker*>(&(*component))); };
     if constexpr(std::is_base_of<IDrawable, T<S>>::value)    { components.drawables.emplace_back(static_cast<IDrawable*>(&(*component))); };
-    if constexpr(std::is_base_of<ICamDrawable, T<S>>::value) { components.camDrawables.emplace_back(static_cast<ICamDrawable*>(&(*component))); };
     components.bases.push_back(std::move(component));
 
     return *this;
 };
 template<typename T, typename... Args>
 Entity& Entity::AddComponent(Args... args) {
-    static_assert(std::is_base_of<core::IComponent, T>::value, "Component T must inherit from core::IComponent");
+    static_assert(std::is_base_of<IComponent, T>::value, "Component T must inherit from core::IComponent");
 
     auto component = std::make_shared<T>(*this, args...);
     if constexpr(std::is_base_of<ITicker, T>::value)         { components.tickers.emplace_back(static_cast<ITicker*>(&(*component))); };
     if constexpr(std::is_base_of<IDrawable, T>::value)       { components.drawables.emplace_back(static_cast<IDrawable*>(&(*component))); };
-    if constexpr(std::is_base_of<ICamDrawable, T>::value)    { components.camDrawables.emplace_back(static_cast<ICamDrawable*>(&(*component))); };
     components.bases.push_back(std::move(component));
 
     return *this;
 }
 template<typename T, typename C>
 void Entity::assertRequiredComponent(C* caller) {
-    static_assert(std::is_base_of<core::IComponent, T>::value, "Component T must inherit from core::IComponent");
-    static_assert(std::is_base_of<core::IComponent, C>::value, "Component C must inherit from core::IComponent");
+    static_assert(std::is_base_of<IComponent, T>::value, "Component T must inherit from core::IComponent");
+    static_assert(std::is_base_of<IComponent, C>::value, "Component C must inherit from core::IComponent");
     if ( !this->HasComponent<T>() ) {
         Logger::Log(OBJECT, ERR_HERE) << "Entity " << this->GetInfo() << " does not have component " << typeid(T).name() << ", required by " << caller->GetInfo();
         throw std::logic_error("Entity " + this->GetInfo() + " does not have component " + typeid(T).name() + ", required by " + caller->GetInfo());

@@ -17,7 +17,8 @@ View::View(const string& name, Vector2i pos, Vector2i size)
     Resize(pos, size);
 }
 View::View(NoCreateT)
-: frameBuffer(NoCreate),
+: Object("Uninitialized View"),
+  frameBuffer(NoCreate),
   colorBuffer(NoCreate),
   depthStencil(NoCreate)
 {

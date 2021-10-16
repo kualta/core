@@ -1,16 +1,18 @@
 #ifndef CORE_CAMERA_H
 #define CORE_CAMERA_H
 
-#include <core/Essentials.h>
-#include <core/IComponent.h>
-#include <core/Entity.h>
-#include <core/Math.h>
-#include <core/Layer.h>
-#include <core/View.h>
+#include "core/Essentials.h"
+#include "core/IComponent.h"
+#include "core/LayerLinked.h"
+#include "core/CameraList.h"
+#include "core/Entity.h"
+#include "core/Layer.h"
+#include "core/Math.h"
+#include "core/View.h"
 
 namespace core {
 
-class Camera : public IComponent {
+class Camera : public IComponent, public LayerLinked<Camera> {
 public:
     explicit Camera(Entity &parent,
                     float   aspectRatio = 16.0f / 9.0f,
@@ -24,6 +26,8 @@ public:
                     float   farPlane    = 100.0f,
                     float   nearPlane   = 0.1f);
 
+    virtual ~Camera();
+
     void Tick() override;
     void Draw();
 
@@ -35,15 +39,15 @@ public:
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
     void SetView(View* view);
-
-    void LinkLayer(const string& name);
-    void UnlinkLayer(const string& name);
+    void BindAttachedView();
+    void BlitAttachedView();
 
 protected:
 
     void SetProjectionMatrix(Matrix4&& projMtx);
     void SetProjectionMatrix(Matrix4& projMtx);
     void UpdatePerspectiveMatrix();
+    void UpdateLayersProjectionMatrix();
     void FixAspectRatio();
 
     /** Field of View */
@@ -69,7 +73,6 @@ protected:
 
     Matrix4         perspectiveMtx;
     Matrix4         projectionMtx;
-    vector<Layer*>  linkedLayers;
 };
 
 }
