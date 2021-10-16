@@ -37,10 +37,17 @@ Layer* Layer::Get(const string& layerName) {
         return CreateNewLayer(layerName);
     }
 }
-void Layer::Draw(Camera &camera) {
+void Layer::Draw() {
     for (Entity* entity : entities) {
-        for (ICamDrawable* drawable : entity->components.camDrawables) {
-            drawable->Draw(camera);
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->Draw();
+        }
+    }
+}
+void Layer::SetProjectionMatrix(Matrix4& mtx) {
+    for (Entity* entity : entities) {
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->SetProjectionMatrix(mtx);
         }
     }
 }

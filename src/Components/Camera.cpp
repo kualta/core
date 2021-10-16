@@ -48,7 +48,7 @@ void Camera::Tick() {
 void Camera::Draw() {
     attachedView->Bind();
     for (Layer* layer : linkedLayers) {
-        layer->Draw(*this);
+        layer->Draw();
     }
     attachedView->Blit();
 
@@ -86,10 +86,12 @@ Matrix4& Camera::GetProjectionMatrix() {
 void Camera::SetProjectionMatrix(Matrix4&& projMtx) {
     projectionMtx = projMtx;
     FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 void Camera::SetProjectionMatrix(Matrix4& projMtx) {
     projectionMtx = projMtx;
     FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 void Camera::FixAspectRatio() {
     const Vector2& projectionScale = { Math::abs(projectionMtx[0].x()), Math::abs(projectionMtx[1].y()) };
@@ -108,6 +110,11 @@ void Camera::FixAspectRatio() {
 void Camera::SetView(View* view) {
     if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
     attachedView = view;
+}
+void Camera::UpdateLayersProjectionMatrix() {
+    for (Layer* layer : linkedLayers) {
+        layer->SetProjectionMatrix(projectionMtx);
+    }
 }
 
 }

@@ -9,7 +9,7 @@
 
 namespace core {
 
-class Layer : public Object, public ICamDrawable {
+class Layer : public Object, public IDrawable {
 public:
     explicit Layer(const string& name);
 
@@ -42,7 +42,8 @@ protected:
     std::vector<Camera*> cameras;
     std::vector<Light*>  lights;
 
-    void Draw(Camera& camera) override;
+    void Draw() override;
+    void SetProjectionMatrix(Matrix4& mtx) override;
 
 private:
 

@@ -128,7 +128,6 @@ protected:
         vector<shared<IComponent>>  bases         { };
         vector<ITicker*>            tickers       { };
         vector<IDrawable*>          drawables     { };
-        vector<ICamDrawable*>       camDrawables  { };
     } components;
 
     Layer* layer;

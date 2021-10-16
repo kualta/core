@@ -42,6 +42,7 @@ protected:
     void SetProjectionMatrix(Matrix4&& projMtx);
     void SetProjectionMatrix(Matrix4& projMtx);
     void UpdatePerspectiveMatrix();
+    void UpdateLayersProjectionMatrix();
     void FixAspectRatio();
 
     /** Field of View */

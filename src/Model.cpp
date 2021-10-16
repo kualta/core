@@ -18,10 +18,7 @@ Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
     SetDiffuseColor(color);
 //    shader->SetAmbientColor(Color3::fromHsv({ color.hue(), 1.0f, 0.3f }));
 }
-void Model::Draw(Matrix4& transformMtx, Camera& camera) {
-    SetTrasfromMatrix(transformMtx);
-    SetNormalMatrix(transformMtx);
-    SetProjectionMatrix(camera.GetProjectionMatrix());
+void Model::Draw() {
     shader->BindProjectionBuffer(projectionUniform);
     shader->BindTransformBuffer(transformUniform);
     shader->BindLightBuffer(lightUniform);
