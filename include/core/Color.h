@@ -6,14 +6,12 @@
 using namespace Magnum;
 namespace core {
 
-typedef Math::Color3<Float> Color3;
-typedef Math::Color4<Float> Color4;
-typedef Math::Color3<Half> Color3h;
-typedef Math::Color4<Half> Color4h;
-typedef Math::Color3<UnsignedByte> Color3ub;
-typedef Math::Color4<UnsignedByte> Color4ub;
-typedef Math::Color3<UnsignedShort> Color3us;
-typedef Math::Color4<UnsignedShort> Color4us;
+typedef Math::Color3<float> Color3;
+typedef Math::Color4<float> Color4;
+typedef Math::Color3<uint8_t> Color3ub;
+typedef Math::Color4<uint8_t> Color4ub;
+typedef Math::Color3<uint16_t> Color3us;
+typedef Math::Color4<uint16_t> Color4us;
 
 }
 

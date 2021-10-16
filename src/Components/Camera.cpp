@@ -111,12 +111,6 @@ void Camera::FixAspectRatio() {
 
     projectionMtx = scale * projectionMtx;
 }
-void Camera::LinkLayer(const string &name) {
-    linkedLayers.push_back(Layer::Get(name));
-}
-void Camera::UnlinkLayer(const string &name) {
-    linkedLayers.erase(std::remove_if(linkedLayers.begin(), linkedLayers.end(), [&](Layer* l) { return l->GetName() == name; }), linkedLayers.end());
-}
 void Camera::SetView(View* view) {
     if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
     attachedView = view;

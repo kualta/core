@@ -2,17 +2,18 @@
 #define CORE_LAYER_H
 
 #include "Essentials.h"
-#include "Instantiable.h"
+#include "LayerLinked.h"
 #include "IDrawable.h"
+#include "Instantiable.h"
 #include "Object.h"
 
 namespace core {
 
 class Layer : public Object, public ICamDrawable {
-    friend class Camera;
 public:
     explicit Layer(const string& name);
 
+    /** Move constructor */
     Layer(Layer&& other) = default;
 
     /** Copying is not allowed */
@@ -22,23 +23,39 @@ public:
     static Layer* CreateNewLayer(const string& name);
     static Layer* Get(const string& name);
 
-    const string& GetName();
-    void AddEntity(Entity& entity);
-    bool HasEntity(Entity& entity);
-    void RemoveEntity(Entity& entity);
+    template<typename T>
+    void Link(T& obj);
+
+    template<typename T>
+    void Unlink(T& obj);
+
+    template<typename T>
+    bool IsLinked(T& obj);
 
 protected:
+    friend class Camera;
+
+    template<typename T>
+    vector<T*>& GetContainerForType();
 
     std::vector<Entity*> entities;
+    std::vector<Camera*> cameras;
+    std::vector<Light*>  lights;
 
     void Draw(Camera& camera) override;
 
 private:
+
+    template<typename T>
+    void assertSupportedType();
+
 
     static std::vector<unique<Layer>> layers;
 
 };
 
 } // namespace core
+
+#include "Layer.tpp"
 
 #endif //CORE_LAYER_H

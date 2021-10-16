@@ -34,13 +34,16 @@ bool Object::operator==(const Object &rhs) const {
 bool Object::operator!=(const Object &rhs) const {
     return !(id == rhs.id);
 }
-Object &Object::operator=(Object &&other) noexcept {
+Object& Object::operator=(Object &&other) noexcept {
     if (this != &other) {
         id = other.id;
         other.id = 0;
         name = std::move(other.name);
     }
     return *this;
+}
+const string& Object::GetName() {
+    return name;
 }
 
 }

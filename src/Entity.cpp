@@ -9,10 +9,10 @@ namespace core {
 Entity::Entity(const string& name, GraphObject* parent, Layer* layer)
 : core::Object(name), GraphObject(parent), layer(layer)
 {
-    layer->AddEntity(*this);
+    layer->Link(*this);
 }
 Entity::~Entity() {
-    layer->RemoveEntity(*this);
+    layer->Unlink(*this);
 }
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
@@ -39,9 +39,9 @@ vector<shared<Entity>> Entity::Load(const string& filepath) {
 }
 void Entity::SetLayer(const string& name) {
     Layer* newLayer = Layer::Get(name);
+    layer->Unlink(*this);
+    newLayer->Link(*this);
 
-    layer->RemoveEntity(*this);
-    newLayer->AddEntity(*this);
     layer = newLayer;
 }
 

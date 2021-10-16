@@ -1,8 +1,8 @@
 #include <core/Model.h>
 #include <core/Logger.h>
-#include <core/Components/Camera.h>
 #include <core/Scene/SceneImporter.h>
 #include <core/Scene/SceneData.h>
+#include <core/Components/Light.h>
 
 using namespace Magnum;
 using namespace Math::Literals;
@@ -14,7 +14,7 @@ Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
     color = Color3::fromHsv({333.0_degf, 0.5f, 1.4f});
     Vector4 lightPositions = {0.4f, 0.0f, 0.75f, 0.0f};
 
-    SetLightColor(color,lightPositions);
+//    SetLightColor(color);
     SetDiffuseColor(color);
 //    shader->SetAmbientColor(Color3::fromHsv({ color.hue(), 1.0f, 0.3f }));
 }
@@ -49,11 +49,13 @@ void Model::SetDiffuseColor(Color3& diffuseColor) {
         .setAmbientColor(diffuseColor)
     });
 }
-void Model::SetLightColor(Color3& lightColor, Vector4& lightPos) {
-    lightUniform.setData({ Shaders::PhongLightUniform{ }.setColor(lightColor).setPosition(lightPos) });
-}
-void Model::SetAmbientColor(Color4& ambientColor) {
-
+void Model::SetLightColor(Light& light) {
+    lightUniform.setData({ Shaders::PhongLightUniform{ }
+        .setColor(light.color)
+        .setRange(light.range)
+        .setSpecularColor(light.specularColor)
+        .setPosition({light.transform->position, 1.0f})
+    });
 }
 
 }

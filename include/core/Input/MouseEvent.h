@@ -26,9 +26,12 @@
 #ifndef CORE_MOUSEEVENT_H
 #define CORE_MOUSEEVENT_H
 
-#include "InputEvent.h"
 #include "core/Math.h"
+#include "InputEvent.h"
 
+#include <Corrade/Containers/Optional.h>
+
+using namespace Corrade;
 namespace core {
 
 /** Mouse GetEvent */

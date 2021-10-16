@@ -26,8 +26,8 @@ public:
 protected:
     void Tick() override;
 
-    shared<Model>     model;
-    Transform* transform { nullptr };
+    shared<Model>   model;
+    Transform*      transform { nullptr };
 
 };
 

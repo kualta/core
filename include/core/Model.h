@@ -5,6 +5,9 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Math.h"
+#include "core/Components/Light.h"
+#include <core/Components/Camera.h>
+#include <core/Components/Transform.h>
 
 
 namespace core {
@@ -19,8 +22,7 @@ public:
     void SetTrasfromMatrix(Matrix4& mtx);
     void SetNormalMatrix(Matrix4& mtx);
     void SetDiffuseColor(Color3& color);
-    void SetAmbientColor(Color4& color);
-    void SetLightColor(Color3& color, Vector4& lightPos);
+    void SetLightColor(Light &light);
 
 protected:
     friend class Renderer;

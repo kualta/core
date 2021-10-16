@@ -29,6 +29,7 @@
 #include "InputEvent.h"
 #include "core/Event.h"
 
+using namespace Corrade;
 namespace core {
 
 /** Text input Event */

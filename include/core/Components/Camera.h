@@ -3,6 +3,7 @@
 
 #include <core/Essentials.h>
 #include <core/IComponent.h>
+#include <core/LayerLinked.h>
 #include <core/Entity.h>
 #include <core/Math.h>
 #include <core/Layer.h>
@@ -10,7 +11,7 @@
 
 namespace core {
 
-class Camera : public IComponent {
+class Camera : public IComponent, public LayerLinked<Camera> {
 public:
     explicit Camera(Entity &parent,
                     float   aspectRatio = 16.0f / 9.0f,
@@ -35,9 +36,6 @@ public:
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
     void SetView(View* view);
-
-    void LinkLayer(const string& name);
-    void UnlinkLayer(const string& name);
 
 protected:
 
@@ -69,7 +67,6 @@ protected:
 
     Matrix4         perspectiveMtx;
     Matrix4         projectionMtx;
-    vector<Layer*>  linkedLayers;
 };
 
 }

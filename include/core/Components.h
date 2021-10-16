@@ -5,6 +5,7 @@
 #define CORE_COMPONENTS_H
 
 #include <core/Components/Transform.h>
+#include <core/Components/Light.h>
 #include <core/Components/Renderer.h>
 #include <core/Components/Camera.h>
 #include <core/Components/Script.h>

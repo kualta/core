@@ -1,8 +1,8 @@
 #ifndef CORE_MATH_H
 #define CORE_MATH_H
 
-#include <Magnum/Magnum.h>
-#include <Magnum/Math/Math.h>
+#include "Color.h"
+
 #include <Magnum/Math/Vector.h>
 #include <Magnum/Math/Vector2.h>
 #include <Magnum/Math/Vector3.h>
