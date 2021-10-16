@@ -23,6 +23,7 @@ Camera::Camera(Entity& parent,
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
     SetView(SceneView::Get());
+    CameraList::Get()->Register(this);
 }
 Camera::Camera(Entity& parent,
                Vector2 viewport,
@@ -39,11 +40,14 @@ Camera::Camera(Entity& parent,
     transform = parent.GetComponent<Transform>();
     UpdatePerspectiveMatrix();
     SetView(SceneView::Get());
+    CameraList::Get()->Register(this);
+}
+Camera::~Camera() {
+    CameraList::Get()->Unregister(this);
 }
 void Camera::Tick() {
     SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)); // FIXME optimize if same
     SetViewport(attachedView->GetFrameBuffer().viewport().size());
-    Draw();
 }
 void Camera::Draw() {
     attachedView->Bind();

@@ -13,37 +13,35 @@ class ITicker {
 public:
 
     /**
-     * Called before main loop is entered, but after Core has been built
+     * Called before entering the Main Loop
      */
     virtual void Start() { };
 
     /**
-     * Update with fixed delta, called before Tick()
-     *      @Includes Physics
+     * Update with fixed delta time
      */
     virtual void FixedTick() { };
 
     /**
-     * Early update function, called before current frame is rendered
+     * Early update function
+     * @note Called before current frame is rendered
      */
     virtual void EarlyTick() { };
 
     /**
      * Main update function
-     *      @Includes Modules update
-     *      @Includes inputModule update
-     *      @Includes Window update
-     *      @Includes Rendering
+     * @note Rendering of the current frame
      */
     virtual void Tick() { };
 
     /**
-     * Late update function, called after current frame has been rendered
+     * Late update function
+     * @note Called after current frame was rendered
      */
     virtual void LateTick() { };
 
     /**
-     * Called after main loop exit is requested
+     * Called after Main Loop exit is requested
      */
     virtual void Stop() { };
 

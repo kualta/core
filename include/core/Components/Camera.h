@@ -1,13 +1,14 @@
 #ifndef CORE_CAMERA_H
 #define CORE_CAMERA_H
 
-#include <core/Essentials.h>
-#include <core/IComponent.h>
-#include <core/LayerLinked.h>
-#include <core/Entity.h>
-#include <core/Math.h>
-#include <core/Layer.h>
-#include <core/View.h>
+#include "core/Essentials.h"
+#include "core/IComponent.h"
+#include "core/LayerLinked.h"
+#include "core/CameraList.h"
+#include "core/Entity.h"
+#include "core/Layer.h"
+#include "core/Math.h"
+#include "core/View.h"
 
 namespace core {
 
@@ -24,6 +25,8 @@ public:
                     Deg     fov         = 90.0_degf,
                     float   farPlane    = 100.0f,
                     float   nearPlane   = 0.1f);
+
+    virtual ~Camera();
 
     void Tick() override;
     void Draw();

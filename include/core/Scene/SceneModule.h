@@ -1,8 +1,9 @@
 #ifndef CORE_SCENEMODULE_H
 #define CORE_SCENEMODULE_H
 
-#include <core/IModule.h>
-#include <core/Entity.h>
+#include "core/IModule.h"
+#include "core/Entity.h"
+#include "core/CameraList.h"
 
 namespace core {
 
@@ -17,7 +18,10 @@ protected:
     void Tick() override;
     void LateTick() override;
 
+    CameraList cameraList { };
+
 };
+
 
 }
 

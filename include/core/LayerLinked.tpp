@@ -9,7 +9,7 @@ LayerLinked<T>::LayerLinked() {
 }
 template<typename T>
 LayerLinked<T>::~LayerLinked() {
-    UnlinkLayer("Default");
+    UnlinkLayer("Default"); // FIXME: Change to unlink from all layers currently linked
 }
 template<typename T>
 void LayerLinked<T>::LinkLayer(const string& name) {
