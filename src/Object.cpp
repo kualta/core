@@ -36,6 +36,7 @@ bool Object::operator!=(const Object &rhs) const {
 }
 Object& Object::operator=(Object &&other) noexcept {
     if (this != &other) {
+        Logger::Log(OBJECT, INFO) << "Object " << other.GetInfo() << " was moved into " << this->GetInfo();
         id = other.id;
         other.id = 0;
         name = std::move(other.name);

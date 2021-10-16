@@ -29,7 +29,8 @@ protected:
 };
 
 template<typename T>
-Script<T>::Script(Entity &parent, const string &name) : IComponent(parent, name + " component") {
+Script<T>::Script(Entity &parent, const string &name)
+: IComponent(parent, name) {
     scriptObj = new T;
     scriptObj->SetEntity(entity);
 }
