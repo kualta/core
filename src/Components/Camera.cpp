@@ -21,6 +21,7 @@ Camera::Camera(Entity& parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
+    transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
     SetView(SceneView::Get());
     CameraList::Get()->Register(this);
@@ -38,6 +39,7 @@ Camera::Camera(Entity& parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
+    transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
     SetView(SceneView::Get());
     CameraList::Get()->Register(this);
@@ -45,12 +47,12 @@ Camera::Camera(Entity& parent,
 Camera::~Camera() {
     CameraList::Get()->Unregister(this);
 }
+void Camera::Start() {
+    transform->OnTransformChange.Subscribe([&](Matrix4& mtx) {
+        SetTransformMatrix(mtx);
+    });
+}
 void Camera::Tick() {
-    // FIXME optimize if same
-    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)
-                                       * Matrix4::rotationX(transform->rotation.x())
-                                       * Matrix4::rotationY(transform->rotation.y())
-                                       * Matrix4::rotationZ(transform->rotation.z()));
     SetViewport(attachedView->GetFrameBuffer().viewport().size());
 }
 void Camera::Draw() {
@@ -84,22 +86,22 @@ void Camera::SetFarPlane(float distance) {
 }
 void Camera::UpdatePerspectiveMatrix() {
     perspectiveMtx = Matrix4::perspectiveProjection(fov, aspectRatio, nearPlane, farPlane);
+    UpdateProjectionMatrix();
+}
+void Camera::SetTransformMatrix(Matrix4& mtx) {
+    transformMtx = &mtx;
+    UpdateProjectionMatrix();
+}
+void Camera::UpdateProjectionMatrix() {
+    projectionMtx = perspectiveMtx * (*transformMtx);
+    FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 Matrix4& Camera::GetPerspectiveMatrix() {
     return perspectiveMtx;
 }
 Matrix4& Camera::GetProjectionMatrix() {
     return projectionMtx;
-}
-void Camera::SetProjectionMatrix(Matrix4&& projMtx) {
-    projectionMtx = projMtx;
-    FixAspectRatio();
-    UpdateLayersProjectionMatrix();
-}
-void Camera::SetProjectionMatrix(Matrix4& projMtx) {
-    projectionMtx = projMtx;
-    FixAspectRatio();
-    UpdateLayersProjectionMatrix();
 }
 void Camera::FixAspectRatio() {
     const Vector2& projectionScale = { Math::abs(projectionMtx[0].x()), Math::abs(projectionMtx[1].y()) };

@@ -17,6 +17,9 @@ Entity::~Entity() {
 bool Entity::operator!=(const Entity &rhs) const {
     return !(rhs == *this);
 }
+void Entity::Start() {
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->Start(); });
+}
 void Entity::FixedTick() {
     std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->FixedTick(); });
 }
@@ -28,6 +31,9 @@ void Entity::Tick() {
 }
 void Entity::LateTick() {
     std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->LateTick(); });
+}
+void Entity::Stop() {
+    std::for_each(components.tickers.begin(), components.tickers.end(), [&](ITicker* t) { t->Stop(); });
 }
 bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();

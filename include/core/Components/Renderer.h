@@ -18,6 +18,7 @@ public:
 
 protected:
 
+    void Start() override;
     void Tick() override;
 
     /**

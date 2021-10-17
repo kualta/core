@@ -28,7 +28,6 @@ public:
 
     virtual ~Camera();
 
-    void Tick() override;
     void Draw();
 
     Matrix4& GetPerspectiveMatrix();
@@ -44,9 +43,12 @@ public:
 
 protected:
 
-    void SetProjectionMatrix(Matrix4&& projMtx);
-    void SetProjectionMatrix(Matrix4& projMtx);
+    void Tick() override;
+    void Start() override;
+
+    void SetTransformMatrix(Matrix4& mtx);
     void UpdatePerspectiveMatrix();
+    void UpdateProjectionMatrix();
     void UpdateLayersProjectionMatrix();
     void FixAspectRatio();
 
@@ -71,8 +73,9 @@ protected:
     /** Attached View camera draws onto */
     View* attachedView;
 
-    Matrix4         perspectiveMtx;
-    Matrix4         projectionMtx;
+    Matrix4* transformMtx;
+    Matrix4  perspectiveMtx;
+    Matrix4  projectionMtx;
 };
 
 }

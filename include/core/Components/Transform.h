@@ -4,6 +4,7 @@
 #include <core/Essentials.h>
 #include <core/IComponent.h>
 #include <core/Math.h>
+#include <core/Event.h>
 
 namespace core {
 
@@ -11,7 +12,9 @@ class Transform : public IComponent {
 public:
     explicit Transform(Entity& parent, const string& name = "Transform");
 
-    void Tick() override;
+    Event<Matrix4> OnTransformChange;
+
+    Matrix4& GetTransformMatrix();
 
     /**
      * Vector representing GetPosition of the entity
@@ -21,12 +24,22 @@ public:
     /**
      * Vector representing rotation of the entity along x, y and z axis
      */
-    Math::Vector3<Rad> rotation { };
+    Math::Vector3<Rad> rotation { 0.0_radf, 0.0_radf, 0.0_radf };
 
     /**
      * Vector representing scale of the entity by x, y and z axis
      */
     Vector3 scale { 1, 1, 1 };
+
+protected:
+
+    void Tick() override;
+
+    void UpdateTransformMatrix();
+
+
+    Matrix4 transformMtx;
+
 };
 
 

@@ -13,10 +13,12 @@ public:
 
 protected:
 
-    void FixedTick() override;
+    void Start() override;
     void EarlyTick() override;
+    void FixedTick() override;
     void Tick() override;
     void LateTick() override;
+    void Stop() override;
 
     CameraList cameraList { };
 
