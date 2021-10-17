@@ -4,6 +4,7 @@
 #include "Essentials.h"
 #include "Object.h"
 #include "Math.h"
+#include "Event.h"
 
 #include <Magnum/GL/Renderbuffer.h>
 #include <Magnum/GL/RenderbufferFormat.h>
@@ -18,6 +19,8 @@ class View : public Object {
 public:
     View(const string& name, Vector2i pos = { }, Vector2i size = { });
     View(NoCreateT);
+
+    Event<Vector2i> OnResize;
 
     /** Copying is not allowed */
     View(const View&) = delete;

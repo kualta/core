@@ -75,6 +75,7 @@ class InputModule;
 
 // Core Components classes
 class Camera;
+class SceneCamera;
 class Renderer;
 class Transform;
 class Light;
@@ -92,8 +93,8 @@ template<typename T> class Pool;
 template<typename T> class Singleton;
 template<typename T> class Instantiable;
 template<typename T> class TypeMap;
-template <class T, class D> class ModuleContainer;
-template <typename T> class LayerLinked;
+template<class T, class D> class ModuleContainer;
+template<typename T> class LayerLinked;
 
 // Core structs
 typedef struct Rect Rect;

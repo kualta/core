@@ -13,29 +13,30 @@ namespace core {
 
 class EditorModule : public IModule, public GUIBehaviour {
 public:
-    explicit EditorModule(GUIModule* guiModule, InputModule* inputModule);
-
-    void Start() override;
-    void OnGUI() override;
+    explicit EditorModule(GUIModule* guiModule, InputModule* inputModule, SceneModule* sceneModule);
 
     template<typename T>
     ImGuiID AddWindow(ImGuiID dockID);
 
 protected:
 
+    void Start() override;
+    void OnGUI() override;
+
     void PushDockStyle() const;
     void PopDockStyle() const;
-    void ReloadViewport() const;
+    void ReloadViewport();
     void BeginEditorDockSpace();
     void ConstructDockSpace();
 
-    ImGuiViewport*      viewport;
     InputModule*        inputModule;
     GUIModule*          guiModule;
+    SceneModule*        sceneModule;
+
+    ImGuiViewport*      viewport;
     SceneView           sceneView;
     ImGuiID             dockSpaceID;
     string              editorDockSpaceName;
-    bool                viewportNeedsReload { true };
 
     ImGuiDockNodeFlags  dockSpaceFlags;
     ImGuiWindowFlags    windowFlags;

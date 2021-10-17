@@ -23,7 +23,6 @@ Camera::Camera(Entity& parent,
     transform = parent.GetComponent<Transform>();
     transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
-    SetView(SceneView::Get());
     CameraList::Get()->Register(this);
 }
 Camera::Camera(Entity& parent,
@@ -41,7 +40,6 @@ Camera::Camera(Entity& parent,
     transform = parent.GetComponent<Transform>();
     transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
-    SetView(SceneView::Get());
     CameraList::Get()->Register(this);
 }
 Camera::~Camera() {
@@ -53,7 +51,7 @@ void Camera::Start() {
     });
 }
 void Camera::Tick() {
-    SetViewport(attachedView->GetFrameBuffer().viewport().size());
+
 }
 void Camera::Draw() {
     attachedView->Bind();
@@ -118,9 +116,11 @@ void Camera::FixAspectRatio() {
 
     projectionMtx = scale * projectionMtx;
 }
-void Camera::SetView(View* view) {
-    if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
-    attachedView = view;
+void Camera::SetView(View& view) {
+    attachedView = &view;
+    attachedView->OnResize.Subscribe([&](Vector2i& vec) {
+        SetViewport(vec);
+    });
 }
 void Camera::UpdateLayersProjectionMatrix() {
     for (Layer* layer : linkedLayers) {
@@ -132,6 +132,18 @@ void Camera::BindAttachedView() {
 }
 void Camera::BlitAttachedView() {
     attachedView->Blit();
+}
+
+
+SceneCamera::SceneCamera(Entity& parent, float aspectRatio, Deg fov, float farPlane, float nearPlane)
+: Camera(parent, aspectRatio, fov, farPlane, nearPlane)
+{
+
+}
+SceneCamera::SceneCamera(Entity& parent, Vector2 viewport, Deg fov, float farPlane, float nearPlane)
+: Camera(parent, viewport, fov, farPlane, nearPlane)
+{
+
 }
 
 }

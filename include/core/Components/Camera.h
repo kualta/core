@@ -37,7 +37,7 @@ public:
     void SetNearPlane(float distance);
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
-    void SetView(View* view);
+    void SetView(View& view);
     void BindAttachedView();
     void BlitAttachedView();
 
@@ -78,6 +78,23 @@ protected:
     Matrix4  projectionMtx;
 };
 
-}
+class SceneCamera : public Camera {
+public:
+    explicit SceneCamera(Entity &parent,
+                    float   aspectRatio = 16.0f / 9.0f,
+                    Deg     fov         = 90.0_degf,
+                    float   farPlane    = 100.0f,
+                    float   nearPlane   = 0.1f);
+
+    explicit SceneCamera(Entity &parent,
+                    Vector2 viewport,   // no default to avoid ambiguous call when constructed with all default params.
+                    Deg     fov         = 90.0_degf,
+                    float   farPlane    = 100.0f,
+                    float   nearPlane   = 0.1f);
+
+};
+
+
+} // namespace core
 
 #endif //CORE_CAMERA_H
