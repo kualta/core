@@ -66,11 +66,12 @@ void Camera::Draw() {
 }
 void Camera::SetViewport(Vector2i v) {
     if (v.x() == 0 || v.y() == 0) {
-        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << v.x() << 'x' << v.y() << " are invalid";
+        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimensions " << v.x() << 'x' << v.y() << " are invalid";
         return;
     }
     viewport = v;
     aspectRatio = (float)viewport.x() / (float)viewport.y();
+    UpdatePerspectiveMatrix();
 }
 void Camera::SetFOV(Deg FOV) {
     fov = FOV;
