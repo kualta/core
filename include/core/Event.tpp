@@ -15,5 +15,11 @@ void Event<T, Args...>::Trigger(T& obj, Args... args) {
         callback(obj, args...);
     }
 }
+template<typename T, typename... Args>
+void Event<T, Args...>::Trigger(T&& obj, Args... args) {
+    for (const auto& callback : callbacks) {
+        callback(obj, args...);
+    }
+}
 
 }

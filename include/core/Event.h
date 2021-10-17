@@ -17,6 +17,7 @@ public:
 
     void Subscribe(std::function<void(T&, Args...)> callback);
     void Trigger(T& obj, Args... args);
+    void Trigger(T&& obj, Args... args);
 
 protected:
 

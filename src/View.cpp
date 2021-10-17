@@ -34,6 +34,8 @@ void View::Resize(Vector2i pos, Vector2i size) {
     frameBuffer = GL::Framebuffer{ { { 0, 0 }, bufferSize } };
     frameBuffer.attachRenderbuffer(GL::Framebuffer::ColorAttachment { 0 }, colorBuffer);
     frameBuffer.attachRenderbuffer(GL::Framebuffer::BufferAttachment::DepthStencil, depthStencil);
+
+    OnResize.Trigger(frameBuffer.viewport().size());
 }
 void View::Bind() {
     frameBuffer
@@ -50,7 +52,7 @@ void View::Blit() {
                           GL::FramebufferBlit::Color | GL::FramebufferBlit::Depth | GL::FramebufferBlit::Stencil,
                           GL::FramebufferBlitFilter::Nearest);
 }
-GL::Framebuffer &View::GetFrameBuffer() {
+GL::Framebuffer& View::GetFrameBuffer() {
     return frameBuffer;
 }
 

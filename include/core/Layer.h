@@ -34,6 +34,7 @@ public:
     void Draw() override;
     void SetProjectionMatrix(Matrix4& mtx) override;
     void SetTransformMatrix(Matrix4& mtx) override;
+    void SetLight(Light& light) override;
 
 protected:
     friend class Camera;

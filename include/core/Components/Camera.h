@@ -28,7 +28,6 @@ public:
 
     virtual ~Camera();
 
-    void Tick() override;
     void Draw();
 
     Matrix4& GetPerspectiveMatrix();
@@ -38,15 +37,18 @@ public:
     void SetNearPlane(float distance);
     void SetFarPlane(float distance);
     void SetViewport(Vector2i viewport);
-    void SetView(View* view);
+    void SetView(View& view);
     void BindAttachedView();
     void BlitAttachedView();
 
 protected:
 
-    void SetProjectionMatrix(Matrix4&& projMtx);
-    void SetProjectionMatrix(Matrix4& projMtx);
+    void Tick() override;
+    void Start() override;
+
+    void SetTransformMatrix(Matrix4& mtx);
     void UpdatePerspectiveMatrix();
+    void UpdateProjectionMatrix();
     void UpdateLayersProjectionMatrix();
     void FixAspectRatio();
 
@@ -71,10 +73,28 @@ protected:
     /** Attached View camera draws onto */
     View* attachedView;
 
-    Matrix4         perspectiveMtx;
-    Matrix4         projectionMtx;
+    Matrix4* transformMtx;
+    Matrix4  perspectiveMtx;
+    Matrix4  projectionMtx;
 };
 
-}
+class SceneCamera : public Camera {
+public:
+    explicit SceneCamera(Entity &parent,
+                    float   aspectRatio = 16.0f / 9.0f,
+                    Deg     fov         = 90.0_degf,
+                    float   farPlane    = 100.0f,
+                    float   nearPlane   = 0.1f);
+
+    explicit SceneCamera(Entity &parent,
+                    Vector2 viewport,   // no default to avoid ambiguous call when constructed with all default params.
+                    Deg     fov         = 90.0_degf,
+                    float   farPlane    = 100.0f,
+                    float   nearPlane   = 0.1f);
+
+};
+
+
+} // namespace core
 
 #endif //CORE_CAMERA_H

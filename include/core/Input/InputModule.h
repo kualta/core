@@ -2,7 +2,6 @@
 #define CORE_INPUTMODULE_H
 
 #include <core/IModule.h>
-#include <core/Publisher.h>
 #include <core/Event.h>
 #include <core/Input/KeyEvent.h>
 #include <core/Input/MouseEvent.h>
@@ -18,7 +17,7 @@
 namespace core {
 
 
-class InputModule : public IModule, public Publisher {
+class InputModule : public IModule {
 public:
     InputModule();
 

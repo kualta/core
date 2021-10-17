@@ -21,8 +21,8 @@ Camera::Camera(Entity& parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
+    transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
-    SetView(SceneView::Get());
     CameraList::Get()->Register(this);
 }
 Camera::Camera(Entity& parent,
@@ -38,16 +38,20 @@ Camera::Camera(Entity& parent,
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
+    transformMtx = &transform->GetTransformMatrix();
     UpdatePerspectiveMatrix();
-    SetView(SceneView::Get());
     CameraList::Get()->Register(this);
 }
 Camera::~Camera() {
     CameraList::Get()->Unregister(this);
 }
+void Camera::Start() {
+    transform->OnTransformChange.Subscribe([&](Matrix4& mtx) {
+        SetTransformMatrix(mtx);
+    });
+}
 void Camera::Tick() {
-    SetProjectionMatrix(perspectiveMtx * Matrix4::translation(transform->position)); // FIXME optimize if same
-    SetViewport(attachedView->GetFrameBuffer().viewport().size());
+
 }
 void Camera::Draw() {
     attachedView->Bind();
@@ -60,11 +64,12 @@ void Camera::Draw() {
 }
 void Camera::SetViewport(Vector2i v) {
     if (v.x() == 0 || v.y() == 0) {
-        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimentions " << v.x() << 'x' << v.y() << " are invalid";
+        Logger::Log(INTERNAL, ERR_HERE) << "Viewport dimensions " << v.x() << 'x' << v.y() << " are invalid";
         return;
     }
     viewport = v;
     aspectRatio = (float)viewport.x() / (float)viewport.y();
+    UpdatePerspectiveMatrix();
 }
 void Camera::SetFOV(Deg FOV) {
     fov = FOV;
@@ -80,22 +85,22 @@ void Camera::SetFarPlane(float distance) {
 }
 void Camera::UpdatePerspectiveMatrix() {
     perspectiveMtx = Matrix4::perspectiveProjection(fov, aspectRatio, nearPlane, farPlane);
+    UpdateProjectionMatrix();
+}
+void Camera::SetTransformMatrix(Matrix4& mtx) {
+    transformMtx = &mtx;
+    UpdateProjectionMatrix();
+}
+void Camera::UpdateProjectionMatrix() {
+    projectionMtx = perspectiveMtx * (*transformMtx);
+    FixAspectRatio();
+    UpdateLayersProjectionMatrix();
 }
 Matrix4& Camera::GetPerspectiveMatrix() {
     return perspectiveMtx;
 }
 Matrix4& Camera::GetProjectionMatrix() {
     return projectionMtx;
-}
-void Camera::SetProjectionMatrix(Matrix4&& projMtx) {
-    projectionMtx = projMtx;
-    FixAspectRatio();
-    UpdateLayersProjectionMatrix();
-}
-void Camera::SetProjectionMatrix(Matrix4& projMtx) {
-    projectionMtx = projMtx;
-    FixAspectRatio();
-    UpdateLayersProjectionMatrix();
 }
 void Camera::FixAspectRatio() {
     const Vector2& projectionScale = { Math::abs(projectionMtx[0].x()), Math::abs(projectionMtx[1].y()) };
@@ -111,9 +116,11 @@ void Camera::FixAspectRatio() {
 
     projectionMtx = scale * projectionMtx;
 }
-void Camera::SetView(View* view) {
-    if (!view) { Log(INTERNAL, WARN_HERE) << "Attaching nullptr as camera view"; }
-    attachedView = view;
+void Camera::SetView(View& view) {
+    attachedView = &view;
+    attachedView->OnResize.Subscribe([&](Vector2i& vec) {
+        SetViewport(vec);
+    });
 }
 void Camera::UpdateLayersProjectionMatrix() {
     for (Layer* layer : linkedLayers) {
@@ -125,6 +132,18 @@ void Camera::BindAttachedView() {
 }
 void Camera::BlitAttachedView() {
     attachedView->Blit();
+}
+
+
+SceneCamera::SceneCamera(Entity& parent, float aspectRatio, Deg fov, float farPlane, float nearPlane)
+: Camera(parent, aspectRatio, fov, farPlane, nearPlane)
+{
+
+}
+SceneCamera::SceneCamera(Entity& parent, Vector2 viewport, Deg fov, float farPlane, float nearPlane)
+: Camera(parent, viewport, fov, farPlane, nearPlane)
+{
+
 }
 
 }

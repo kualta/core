@@ -23,7 +23,7 @@ public:
     void SetTransformMatrix(Matrix4& mtx) override;
     void SetNormalMatrix(Matrix4& mtx);
     void SetDiffuseColor(Color3& color);
-    void SetLightColor(Light& light);
+    void SetLight(Light& light);
 
 protected:
     friend class Renderer;

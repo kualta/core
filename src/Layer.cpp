@@ -66,5 +66,12 @@ void Layer::SetTransformMatrix(Matrix4& mtx) {
         }
     }
 }
+void Layer::SetLight(Light& light) {
+    for (Entity* entity : entities) {
+        for (IDrawable* drawable : entity->components.drawables) {
+            drawable->SetLight(light);
+        }
+    }
+}
 
 }

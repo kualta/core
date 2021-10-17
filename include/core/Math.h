@@ -21,6 +21,9 @@ using namespace Math::Literals;
 namespace core {
 
 typedef Math::Half Half;
+typedef Math::Rad<float> Rad;
+typedef Math::Deg<float> Deg;
+
 typedef Math::BoolVector<2> BoolVector2;
 typedef Math::BoolVector<3> BoolVector3;
 typedef Math::BoolVector<4> BoolVector4;
@@ -45,6 +48,12 @@ typedef Math::Vector4<UnsignedInt> Vector4ui;
 typedef Math::Vector2<Int> Vector2i;
 typedef Math::Vector3<Int> Vector3i;
 typedef Math::Vector4<Int> Vector4i;
+typedef Math::Vector2<Rad> RadVector2;
+typedef Math::Vector3<Rad> RadVector3;
+typedef Math::Vector4<Rad> RadVector4;
+typedef Math::Vector2<Deg> DegVector2;
+typedef Math::Vector3<Deg> DegVector3;
+typedef Math::Vector4<Deg> DegVector4;
 typedef Math::Matrix3<Float> Matrix3;
 typedef Math::Matrix4<Float> Matrix4;
 typedef Math::Matrix2x2<Float> Matrix2x2;
@@ -88,8 +97,6 @@ typedef Math::DualComplex<Float> DualComplex;
 typedef Math::Quaternion<Float> Quaternion;
 typedef Math::DualQuaternion<Float> DualQuaternion;
 typedef Math::Constants<Float> Constants;
-typedef Math::Deg<Float> Deg;
-typedef Math::Rad<Float> Rad;
 typedef Math::Range1D<Float> Range1D;
 typedef Math::Range2D<Float> Range2D;
 typedef Math::Range3D<Float> Range3D;

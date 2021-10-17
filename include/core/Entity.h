@@ -118,16 +118,22 @@ protected:
     friend class Layer;
 
     /** Passes FixedTick to all components of this entity */
+    void Start() override;
+
+    /** Passes FixedTick to all components of this entity */
     void FixedTick() override;
 
     /** Passes EarlyTick to all components of this entity */
     void EarlyTick() override;
 
-    /** Updates all components of this entity */
+    /** Passes Tick to all components of this entity */
     void Tick() override;
 
     /** Passes LateTick to all components of this entity */
     void LateTick() override;
+
+    /** Passes FixedTick to all components of this entity */
+    void Stop() override;
 
 
     struct ComponentsListing {

@@ -4,11 +4,16 @@
 #include <core/Editor/InspectorEditorWindow.h>
 #include <core/Editor/ConsoleEditorWindow.h>
 #include <core/Editor/SceneViewEditorWindow.h>
+#include <core/CameraList.h>
 
 namespace core {
 
-EditorModule::EditorModule(GUIModule* guiModule, InputModule* inputModule)
-: IModule("Editor", EDITOR), inputModule(inputModule), guiModule(guiModule), sceneView(NoCreate)
+EditorModule::EditorModule(GUIModule* guiModule, InputModule* inputModule, SceneModule* sceneModule)
+: IModule("Editor", EDITOR),
+inputModule(inputModule),
+guiModule(guiModule),
+sceneModule(sceneModule),
+sceneView(NoCreate)
 {
     editorDockSpaceName = "EditorDockSpace";
     dockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
@@ -27,10 +32,13 @@ void EditorModule::Start() {
 
     inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event) {
         viewport = ImGui::GetMainViewport();
-        viewportNeedsReload = true;
     });
 
-    sceneView = SceneView({ 0, 0 }, { 100, 100 } );
+    sceneView = SceneView({ 0, 0 }, { 100, 100 });
+    Camera* sceneCamera = CameraList::Get()->GetSceneViewCamera();
+    if (sceneCamera) {
+        sceneCamera->SetView(sceneView);
+    }
 
     ConstructDockSpace();
 }
@@ -67,8 +75,6 @@ void EditorModule::ConstructDockSpace() {
     ImGui::EndFrame();
 }
 void EditorModule::OnGUI() {
-    if (viewportNeedsReload) { ReloadViewport(); }
-
     PushDockStyle();
     BeginEditorDockSpace();
     PopDockStyle();
@@ -90,11 +96,6 @@ void EditorModule::BeginEditorDockSpace() {
     dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
     ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), dockSpaceFlags);
     ImGui::End();
-}
-void EditorModule::ReloadViewport() const {
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
-    ImGui::SetNextWindowViewport(viewport->ID);
 }
 void EditorModule::PushDockStyle() const {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
