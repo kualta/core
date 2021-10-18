@@ -3,6 +3,7 @@
 
 #include "Essentials.h"
 #include "IDrawable.h"
+#include "Material.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Math.h"
@@ -15,24 +16,34 @@ namespace core {
 
 class Model : public IDrawable {
 public:
-    Model(const shared<Mesh>& mesh, const shared<Shader>& shader);
+    Model(const shared<Mesh>&     mesh,
+          const shared<Shader>&   shader = Shader::standard,
+          const shared<Material>& material = Material::standard);
 
+    void SetMesh(Mesh& mesh);
+    void SetMesh(const shared<Mesh>& mesh);
+    void SetShader(Shader& shader);
+    void SetShader(const shared<Shader>& shader);
+    void SetMaterial(Material& material);
+    void SetMaterial(const shared<Material>& material);
+    
     static vector<shared<Model>> Load(const string& filepath);
-
-    void SetProjectionMatrix(Matrix4& mtx) override;
-    void SetTransformMatrix(Matrix4& mtx) override;
-    void SetNormalMatrix(Matrix4& mtx);
-    void SetDiffuseColor(Color3& color);
-    void SetLight(Light& light);
 
 protected:
     friend class Renderer;
-
+    friend class Layer;
+    
+    void SetProjectionMatrix(Matrix4& mtx) override;
+    void SetTransformMatrix(Matrix4& mtx) override;
+    void SetNormalMatrix(Matrix4& mtx);
+    
+    void SetLight(Light& light);
+    
     void Draw();
 
-    Color3         color;
-    shared<Mesh>   mesh;
-    shared<Shader> shader;
+    shared<Mesh>     mesh;
+    shared<Shader>   shader;
+    shared<Material> material;
 
     GL::Buffer transformUniform;
     GL::Buffer projectionUniform;

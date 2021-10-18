@@ -37,6 +37,7 @@ protected:
     SceneView           sceneView;
     ImGuiID             dockSpaceID;
     string              editorDockSpaceName;
+    bool                viewportNeedsReload { true };
 
     ImGuiDockNodeFlags  dockSpaceFlags;
     ImGuiWindowFlags    windowFlags;
