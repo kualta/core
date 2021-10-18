@@ -28,6 +28,8 @@ Application::Application(const string& title, Rect rect, int args)
     GL::Renderer::setBlendFunction(GL::Renderer::BlendFunction::SourceAlpha, GL::Renderer::BlendFunction::OneMinusSourceAlpha);
 
     GL::DebugOutput::setDefaultCallback();
+    
+    Shader::standard = std::make_shared<Shader>(); // FIXME: Move this to Shader.cpp when GL context before application creation is implemented
     Logger::Log(WINDOW, INFO) << "Created Application";
 }
 Vector2i Application::GetWindowSize() {

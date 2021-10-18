@@ -27,6 +27,8 @@ public:
     void BindMaterialBuffer(GL::Buffer& buffer);
     void BindTransformBuffer(GL::Buffer& buffer);
     void BindProjectionBuffer(GL::Buffer& buffer);
+    
+    static shared<Shader> standard;
 
 protected:
 

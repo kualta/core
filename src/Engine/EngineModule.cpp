@@ -1,4 +1,5 @@
 #include <core/Engine/EngineModule.h>
+#include <core/Shader.h>
 #include <core/Layer.h>
 
 namespace core {

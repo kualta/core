@@ -8,15 +8,15 @@ using namespace Magnum;
 using namespace Math::Literals;
 namespace core {
 
-Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader)
-: mesh(mesh), shader(shader)
+Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader, const shared<Material>& material)
+: mesh(mesh), shader(shader), material(material)
 {
-    color = Color3::fromHsv({333.0_degf, 0.5f, 0.4f});
-    Vector4 lightPositions = {0.4f, 0.0f, 0.75f, 0.0f};
-
-//    SetLightColor(color);
-    SetDiffuseColor(color);
-//    shader->SetAmbientColor(Color3::fromHsv({ color.hue(), 1.0f, 0.3f }));
+    SetMaterial(material);
+}
+vector<shared<Model>> Model::Load(const string& filepath) {
+    SceneImporter sceneImporter;
+    SceneData* sceneData = sceneImporter.ImportScene(filepath);
+    return sceneImporter.ImportModels(*sceneData);
 }
 void Model::Draw() {
     shader->BindProjectionBuffer(projectionUniform);
@@ -26,33 +26,56 @@ void Model::Draw() {
     shader->BindDrawBuffer(drawUniform);
     shader->Draw(*mesh);
 }
-vector<shared<Model>> Model::Load(const string& filepath) {
-    SceneImporter sceneImporter;
-    SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    return sceneImporter.ImportModels(*sceneData);
-}
 void Model::SetProjectionMatrix(Matrix4& mtx) {
     projectionUniform.setData({ Shaders::ProjectionUniform3D{ }.setProjectionMatrix(mtx) });
 }
 void Model::SetNormalMatrix(Matrix4& mtx) {
     drawUniform.setData({ Shaders::PhongDrawUniform{ }.setNormalMatrix(mtx.normalMatrix()) });
 }
-void Model::SetTransformMatrix(Matrix4 &mtx) {
+void Model::SetTransformMatrix(Matrix4& mtx) {
     transformUniform.setData({ Shaders::TransformationUniform3D{ }.setTransformationMatrix(mtx) });
 }
-void Model::SetDiffuseColor(Color3& diffuseColor) {
+void Model::SetMaterial(Material& mat) {
+    material = make_shared<Material>(mat);
     materialUniform.setData({ Shaders::PhongMaterialUniform{ }
-        .setDiffuseColor(diffuseColor)
-        .setAmbientColor(diffuseColor)
+        .setDiffuseColor(mat.GetDiffuseColor())
+        .setSpecularColor(mat.GetSpecularColor())
+        .setAmbientColor(mat.GetAmbientColor())
+        .setShininess(mat.GetHardness())
+        .setNormalTextureScale(mat.GetNormalScale())
+        .setAlphaMask(mat.GetAlphaBound())
+    });
+}
+void Model::SetMaterial(const shared<Material>& mat) {
+    material = mat;
+    materialUniform.setData({ Shaders::PhongMaterialUniform{ }
+        .setDiffuseColor(material->GetDiffuseColor())
+        .setSpecularColor(material->GetSpecularColor())
+        .setAmbientColor(material->GetAmbientColor())
+        .setShininess(material->GetHardness())
+        .setNormalTextureScale(material->GetNormalScale())
+        .setAlphaMask(material->GetAlphaBound())
     });
 }
 void Model::SetLight(Light& light) {
     lightUniform.setData({ Shaders::PhongLightUniform{ }
-        .setColor(light.color)
-        .setRange(light.range)
-        .setSpecularColor(light.specularColor)
+        .setColor(light.GetColor())
+        .setSpecularColor(light.GetSpecularColor())
+        .setRange(light.GetRange())
         .setPosition({0.0f, 0.0f, 1.0f, 0.0f}) // FIXME: handle actual data
     });
+}
+void Model::SetMesh(Mesh& m) {
+   mesh = make_shared<Mesh>(m);
+}
+void Model::SetMesh(const shared<Mesh>& m) {
+    mesh = m;
+}
+void Model::SetShader(Shader& s) {
+    shader = make_shared<Shader>(std::move(s));
+}
+void Model::SetShader(const shared<Shader>& s) {
+    shader = s;
 }
 
 }

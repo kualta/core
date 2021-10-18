@@ -18,7 +18,7 @@ vector<shared<Entity>> SceneImporter::ImportEntities(const SceneData& sceneData)
         shared<Entity> object = std::make_shared<Entity>("Entity", Scene::Get());
         object->AddComponent<Transform>();
         object->AddComponent<Renderer>(std::make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])),
-                                                               make_shared<Shader>()));
+                                                               Shader::standard));
         container.push_back(std::move(object));
     } else {
         Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
@@ -33,7 +33,7 @@ vector<shared<Model>> SceneImporter::ImportModels(const SceneData& sceneData) {
             AddModel(models, sceneData, id);
         }
     } else if (!sceneData.meshes.empty() && sceneData.meshes[0]) {
-        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])), make_shared<Shader>()));
+        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])), Shader::standard));
     } else {
         Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes or scene sceneData";
     }
@@ -182,19 +182,19 @@ shared<Model> SceneImporter::LoadModel(const SceneData& data, const unique<Trade
 
         /* Material not available / not loaded, use a default material */
         if (materialId == -1 || !data.materials[materialId]) {
-            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>());
+            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard);
 
             /* Textured material. If the texture failed to load, again just use a default colored material. */
         } else if (data.materials[materialId]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
             const Containers::Optional<GL::Texture2D>& texture = data.textures[data.materials[materialId]->diffuseTexture()];
 
             if (texture) {
-                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>());
+                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard);
             } else {
-                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>());
+                model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard);
             }
         } else {
-            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), make_shared<Shader>());
+            model = std::make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard);
         }
     }
 

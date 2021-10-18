@@ -32,6 +32,7 @@ void EditorModule::Start() {
 
     inputModule->OnViewportEvent.Subscribe([&](ViewportEvent& event) {
         viewport = ImGui::GetMainViewport();
+        viewportNeedsReload = true;
     });
 
     sceneView = SceneView({ 0, 0 }, { 100, 100 });
@@ -52,15 +53,15 @@ void EditorModule::ConstructDockSpace() {
         dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
         ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), dockSpaceFlags);
 
-        ImGui::DockBuilderRemoveNode(dockSpaceID); // clear any previous layout
+        // clear any previous layout
+        ImGui::DockBuilderRemoveNode(dockSpaceID);
         ImGui::DockBuilderAddNode(dockSpaceID, dockSpaceFlags | ImGuiDockNodeFlags_DockSpace);
         ImGui::DockBuilderSetNodeSize(dockSpaceID, viewport->Size);
 
-        // TODO: Change AddWindow to take dock space instead of creating it
         ImGuiID centerSplitID = dockSpaceID;
-        ImGuiID rightSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Right, 0.35, nullptr, &centerSplitID);
-        ImGuiID downSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Down, 0.2, nullptr, &centerSplitID);
-        ImGuiID leftSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Left, 0.25, nullptr, &centerSplitID);
+        ImGuiID rightSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Right, 0.2f, nullptr, &centerSplitID);
+        ImGuiID downSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Down, 0.15f, nullptr, &centerSplitID);
+        ImGuiID leftSplitID = ImGui::DockBuilderSplitNode(centerSplitID, ImGuiDir_Left, 0.15f, nullptr, &centerSplitID);
 
         AddWindow<InspectorEditorWindow>(rightSplitID);
         AddWindow<ProfilerEditorWindow>(downSplitID);
@@ -75,9 +76,9 @@ void EditorModule::ConstructDockSpace() {
     ImGui::EndFrame();
 }
 void EditorModule::OnGUI() {
-    PushDockStyle();
+    if (viewportNeedsReload) { ReloadViewport(); }
+
     BeginEditorDockSpace();
-    PopDockStyle();
 
     for (auto &editorWindow : windows) {
         // CustomStyles were added to make SceneView window render no background, since FrameBuffer is rendered
@@ -92,10 +93,20 @@ void EditorModule::PopDockStyle() const {
     ImGui::PopStyleVar(3);
 }
 void EditorModule::BeginEditorDockSpace() {
+    PushDockStyle();
+
     ImGui::Begin("DockSpace", nullptr, windowFlags);
     dockSpaceID = ImGui::GetID(editorDockSpaceName.c_str());
     ImGui::DockSpace(dockSpaceID, ImVec2(0.0f, 0.0f), dockSpaceFlags);
     ImGui::End();
+
+    PopDockStyle();
+}
+void EditorModule::ReloadViewport() {
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+    viewportNeedsReload = false;
 }
 void EditorModule::PushDockStyle() const {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);

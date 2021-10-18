@@ -2,6 +2,8 @@
 
 namespace core {
 
+shared<Shader> Shader::standard { };
+
 Shader::Shader() {
     shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
                               | Shaders::PhongGL::Flag::UniformBuffers };
