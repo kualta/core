@@ -10,14 +10,14 @@ class Material {
 public:
     explicit Material(Color4 color       = 0xffffffff_rgbaf,
                       float  normalScale = 1.0f,
-                      float  hardness    = 40.0f,
+                      float  shininess   = 40.0f,
                       float  alphaBound  = 0.5f);
 
     explicit Material(Color4 ambient     = 0xffffffff_rgbaf,
                       Color4 diffuse     = 0xffffffff_rgbaf,
                       Color4 specular    = 0xffffff00_rgbaf,
                       float  normalScale = 1.0f,
-                      float  hardness    = 40.0f,
+                      float  shininess   = 40.0f,
                       float  alphaBound  = 0.5f);
 
     const Color4& GetAmbientColor() const;
@@ -54,7 +54,7 @@ protected:
 
     /** Shininess
      * @details The larger value, the smaller specular highlight */
-    float hardness;
+    float shininess;
 
     /** Alpha mask bound color
      * @details Fragments with alpha values smaller than the mask value will be discarded */

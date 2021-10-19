@@ -6,13 +6,13 @@ const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgb
 
 Material::Material(Color4 color,
                    float normalScale,
-                   float hardness,
+                   float shininess,
                    float alphaBound)
 : ambientColor(color),
   diffuseColor(color),
   specularColor(color),
   normalScale(normalScale),
-  hardness(hardness),
+  shininess(shininess),
   alphaBound(alphaBound)
 {
 
@@ -21,13 +21,13 @@ Material::Material(Color4 ambient,
                    Color4 diffuse,
                    Color4 specular,
                    float normalScale,
-                   float hardness,
+                   float shininess,
                    float alphaBound)
 : ambientColor(ambient),
   diffuseColor(diffuse),
   specularColor(specular),
   normalScale(normalScale),
-  hardness(hardness),
+  shininess(shininess),
   alphaBound(alphaBound)
 {
 
@@ -57,10 +57,10 @@ void Material::SetNormalScale(float scale) {
     normalScale = scale;
 }
 float Material::GetHardness() const {
-    return hardness;
+    return shininess;
 }
 void Material::SetHardness(float value) {
-    hardness = value;
+    shininess = value;
 }
 float Material::GetAlphaBound() const {
     return alphaBound;

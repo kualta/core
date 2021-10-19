@@ -4,8 +4,8 @@
 
 namespace core {
 
-Light::Light(Entity &parent, Color3 color, float range, const string& name)
-: IComponent(parent, name), color(color), specularColor(color), range(range)
+Light::Light(Entity& parent, LightType lightType, Color3 color, float range, const string& name)
+: IComponent(parent, name), color(color), specularColor(color), range(range), lightType(lightType)
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
@@ -38,6 +38,18 @@ Color3 &Light::GetSpecularColor() {
 }
 float Light::GetRange() {
     return range;
+}
+LightType Light::GetLightType() const {
+    return lightType;
+}
+void Light::SetLightType(LightType type) {
+    lightType = type;
+}
+Vector3& Light::GetPosition() {
+    return transform->GetPosition();
+}
+Vector3 Light::GetDirection() {
+    return transform->GetRotation().toMatrix() * Vector3::zAxis();
 }
 
 }

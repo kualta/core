@@ -8,12 +8,20 @@
 
 namespace core {
 
+enum LightType {
+    Point,
+    Directional,
+    Spot,           // TODO: not yet implemented
+    Area            // TODO: not yet implemented
+};
+
 class Light : public IComponent, public LayerLinked<Light> {
 public:
-    explicit Light(Entity&     parent,
-                   Color3       color = { 1.0f, 1.0f, 1.0f },
-                   float        range =   0.0f,
-                   const string& name = "Light");
+    explicit Light(Entity& parent,
+                   LightType lightType  = LightType::Spot,
+                   Color3 color         = { 1.0f, 1.0f, 1.0f },
+                   float range          = 0.0f,
+                   const string& name   = "Light");
 
     /**
      * Set color of the light
@@ -36,12 +44,23 @@ public:
      * @note By default equal to color of the light
      */
     void SetSpecularColor(Color3&& color);
+    
+    /**
+     * Make this light behave like light of the type
+     */
+    void SetLightType(LightType type);
 
     /**
      * Set range of the light
      */
     void SetRange(float range);
-
+    
+    /**
+     * Get Type of the light
+     * @details Avaiable types: Spot, Point, Directional, Area
+     */
+    LightType GetLightType() const;
+    
     /**
      * Get color of the light
      */
@@ -56,9 +75,23 @@ public:
      * Get range of the light
      */
     float GetRange();
-
+    
+    /**
+     * Get position of the light
+     */
+    Vector3& GetPosition();
+    
+    /**
+     * Get direction of the light
+     */
+    Vector3 GetDirection();
+    
+    
 protected:
-
+    
+    void Tick() override;
+    
+    
     /** Light color */
     Color3 color;
 
@@ -68,12 +101,13 @@ protected:
 
     /** Attenuation range */
     float range;
-
-
-    void Tick() override;
-
+    
+    /* Type of light */
+    LightType lightType;
+    
+    
     Transform* transform { nullptr };
-
+    
 };
 
 }

@@ -15,6 +15,7 @@
 #include "Magnum/Math/Bezier.h"
 #include "Magnum/Math/Angle.h"
 #include "Magnum/Math/Range.h"
+#include "Magnum/Math/Quaternion.h"
 
 using namespace Magnum;
 using namespace Math::Literals;
