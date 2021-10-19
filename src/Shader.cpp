@@ -6,6 +6,7 @@ shared<Shader> Shader::standard { };
 
 Shader::Shader() {
     shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
+                              | Shaders::PhongGL::Flag::AmbientTexture
                               | Shaders::PhongGL::Flag::UniformBuffers };
 }
 void Shader::Draw(Mesh& mesh) {

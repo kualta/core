@@ -29,7 +29,12 @@ void Renderer::SetTransformMatrix(Matrix4& mtx) {
     model->SetNormalMatrix(mtx);
 }
 void Renderer::SetLight(Light& light) {
-    model->SetLight(light);
+    switch (light.GetLightType()) {
+        case Point:         model->SetPointLight(light);        break;
+        case Directional:   model->SetDirectionalLight(light);  break;
+        case Spot: throw std::logic_error("Not yet implemented"); break;
+        case Area: throw std::logic_error("Not yet implemented"); break;
+    }
 }
 
 }

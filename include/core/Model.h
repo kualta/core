@@ -37,6 +37,8 @@ protected:
     void SetTransformMatrix(Matrix4& mtx) override;
     void SetNormalMatrix(Matrix4& mtx);
     
+    void SetPointLight(Light& light);
+    void SetDirectionalLight(Light& light);
     void SetLight(Light& light);
     
     void Draw();

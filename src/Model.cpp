@@ -77,5 +77,21 @@ void Model::SetShader(Shader& s) {
 void Model::SetShader(const shared<Shader>& s) {
     shader = s;
 }
+void Model::SetPointLight(Light& light) {
+    lightUniform.setData({ Shaders::PhongLightUniform{ }
+        .setColor(light.GetColor())
+        .setSpecularColor(light.GetSpecularColor())
+        .setRange(light.GetRange())
+        .setPosition({light.GetPosition(), 1.0f}) // FIXME relative to camera
+    });
+}
+void Model::SetDirectionalLight(Light& light) {
+    lightUniform.setData({ Shaders::PhongLightUniform{ }
+        .setColor(light.GetColor())
+        .setSpecularColor(light.GetSpecularColor())
+        .setRange(light.GetRange())
+        .setPosition({light.GetDirection(), 0.0f})
+    });
+}
 
 }

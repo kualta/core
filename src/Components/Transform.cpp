@@ -10,11 +10,9 @@ void Transform::Tick() {
 
 }
 void Transform::UpdateTransformMatrix() {
-    transformMtx = Matrix4::translation(position)
-                 * Matrix4::rotationX(rotation.x())
-                 * Matrix4::rotationY(rotation.y())
-                 * Matrix4::rotationZ(rotation.z())
+    transformMtx = Matrix4::from(rotation.toMatrix(), position)
                  * Matrix4::scaling(scale);
+    
     OnTransformChange.Trigger(transformMtx);
 }
 Matrix4& Transform::GetTransformMatrix() {
@@ -23,9 +21,9 @@ Matrix4& Transform::GetTransformMatrix() {
 Vector3& Transform::GetPosition() {
     return position;
 };
-RadVector3& Transform::GetRotation() {
+Quaternion& Transform::GetRotation() {
     return rotation;
-};
+}
 Vector3& Transform::GetScale() {
     return scale;
 }
@@ -39,13 +37,13 @@ void Transform::SetPosition(Vector3&& vec) {
     UpdateTransformMatrix();
     OnPositionChange.Trigger(position);
 }
-void Transform::SetRotation(RadVector3& vec) {
-    rotation = vec;
+void Transform::SetRotation(const Quaternion& rot) {
+    rotation = rot;
     UpdateTransformMatrix();
     OnRotationChange.Trigger(rotation);
-};
-void Transform::SetRotation(RadVector3&& vec) {
-    rotation = vec;
+}
+void Transform::SetRotation(const Quaternion&& rot) {
+    rotation = rot;
     UpdateTransformMatrix();
     OnRotationChange.Trigger(rotation);
 }
@@ -65,11 +63,11 @@ void Transform::Translate(Vector3& vec) {
 void Transform::Translate(Vector3&& vec) {
     SetPosition(position + vec);
 }
-void Transform::Rotate(RadVector3& vec) {
-    SetRotation(rotation + vec);
+void Transform::Rotate(Quaternion& rot) {
+    SetRotation(rotation * rot);
 }
-void Transform::Rotate(RadVector3&& vec) {
-    SetRotation(rotation + vec);
+void Transform::Rotate(Quaternion&& rot) {
+    SetRotation(rotation * rot);
 }
 void Transform::Scale(Vector3& vec) {
     SetScale(scale + vec);
