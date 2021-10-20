@@ -154,4 +154,5 @@ typedef Math::Frustum<Double> Frustumd;
 
 } // namespace
 
+
 #endif //CORE_MATH_H

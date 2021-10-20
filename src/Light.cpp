@@ -49,7 +49,7 @@ Vector3& Light::GetPosition() {
     return transform->GetPosition();
 }
 Vector3 Light::GetDirection() {
-    return transform->GetRotation().toMatrix() * Vector3::zAxis();
+    return transform->GetRotation().toMatrix()[2];
 }
 
 }
