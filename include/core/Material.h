@@ -27,10 +27,17 @@
 #include "Essentials.h"
 #include "Math.h"
 
+#include <Magnum/GL/Texture.h>
+
 namespace core {
 
 class Material {
 public:
+    explicit Material(const shared<GL::Texture2D>& texture,
+                      float  normalScale = 1.0f,
+                      float  shininess   = 40.0f,
+                      float  alphaBound  = 0.5f);
+    
     explicit Material(Color4 color       = 0xffffffff_rgbaf,
                       float  normalScale = 1.0f,
                       float  shininess   = 40.0f,
@@ -43,6 +50,8 @@ public:
                       float  shininess   = 40.0f,
                       float  alphaBound  = 0.5f);
 
+    bool HasTexture() const;
+    const GL::Texture2D* GetTexture() const;
     const Color4& GetAmbientColor() const;
     const Color4& GetDiffuseColor() const;
     const Color4& GetSpecularColor() const;
@@ -60,11 +69,11 @@ public:
     static const shared<Material> standard;
 
 protected:
+    
+    shared<GL::Texture2D> texture;
 
     /** Ambient color */
     Color4 ambientColor;
-
-protected:
 
     /** Diffuse color */
     Color4 diffuseColor;

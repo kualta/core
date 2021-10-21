@@ -44,7 +44,8 @@ public:
     Shader();
 
     void Draw(Mesh& mesh);
-
+    
+    void BindDiffuseTexture(const GL::Texture2D& texture);
     void BindLightBuffer(GL::Buffer& buffer);
     void BindDrawBuffer(GL::Buffer& buffer);
     void BindMaterialBuffer(GL::Buffer& buffer);

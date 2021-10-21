@@ -44,7 +44,7 @@ struct SceneData {
     Containers::Optional<Trade::SceneData> childrenData;
     Containers::Array<Containers::Optional<GL::Mesh>> meshes;
     Containers::Array<Containers::Optional<GL::Texture2D>> textures;
-    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials;
+    Containers::Array<Containers::Optional<Trade::MaterialData>> materials;
 };
 
 }

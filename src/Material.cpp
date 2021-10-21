@@ -27,11 +27,26 @@ namespace core {
 
 const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgbaf, 1.0f, 100.0f, 0.5f);
 
+Material::Material(const shared<GL::Texture2D>& texture,
+                   float normalScale,
+                   float shininess,
+                   float alphaBound)
+: texture(texture),
+  ambientColor(0xffffffff_rgbaf),
+  diffuseColor(0xffffffff_rgbaf),
+  specularColor(0xffffffff_rgbaf),
+  normalScale(normalScale),
+  shininess(shininess),
+  alphaBound(alphaBound)
+{
+
+}
 Material::Material(Color4 color,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: ambientColor(color),
+: texture(nullptr),
+  ambientColor(color),
   diffuseColor(color),
   specularColor(color),
   normalScale(normalScale),
@@ -46,7 +61,8 @@ Material::Material(Color4 ambient,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: ambientColor(ambient),
+: texture(nullptr),
+  ambientColor(ambient),
   diffuseColor(diffuse),
   specularColor(specular),
   normalScale(normalScale),
@@ -90,6 +106,12 @@ float Material::GetAlphaBound() const {
 }
 void Material::SetAlphaBound(float value) {
     alphaBound = value;
+}
+const GL::Texture2D* Material::GetTexture() const {
+    return texture.get();
+}
+bool Material::HasTexture() const {
+    return texture ? true : false;
 }
 
 }

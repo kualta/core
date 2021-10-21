@@ -47,6 +47,9 @@ void Model::Draw() {
     shader->BindLightBuffer(lightUniform);
     shader->BindMaterialBuffer(materialUniform);
     shader->BindDrawBuffer(drawUniform);
+    if (material->HasTexture()) {
+        shader->BindDiffuseTexture(*material->GetTexture());
+    }
     shader->Draw(*mesh);
 }
 void Model::SetProjectionMatrix(Matrix4& mtx) {
@@ -81,15 +84,10 @@ void Model::SetMaterial(const shared<Material>& mat) {
     });
 }
 void Model::SetLight(Light& light) {
-    lightUniform.setData({ Shaders::PhongLightUniform{ }
-        .setColor(light.GetColor())
-        .setSpecularColor(light.GetSpecularColor())
-        .setRange(light.GetRange())
-        .setPosition({0.0f, 0.0f, 1.0f, 0.0f}) // FIXME: handle actual data
-    });
+    throw std::logic_error("Deprecated");
 }
 void Model::SetMesh(Mesh& m) {
-   mesh = make_shared<Mesh>(m);
+    mesh = make_shared<Mesh>(m);
 }
 void Model::SetMesh(const shared<Mesh>& m) {
     mesh = m;

@@ -25,11 +25,11 @@
 #define CORE_SCENEIMPORTER_H
 
 #include "core/Essentials.h"
-#include "SceneData.h"
 #include "core/Importer.h"
 #include "core/Shader.h"
 #include "core/Entity.h"
 #include "core/Model.h"
+#include "core/Scene/SceneData.h"
 
 using namespace Magnum;
 namespace core {
@@ -73,6 +73,7 @@ protected:
     shared<Model> LoadModel(const SceneData& data, const unique<Trade::ObjectData3D>& objectData) const;
 
     Containers::Pointer<Trade::AbstractImporter> importer;
+    GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat) const;
 };
 
 }

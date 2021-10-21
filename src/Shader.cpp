@@ -22,14 +22,14 @@
  SOFTWARE.
  */
 #include <core/Shader.h>
+#include "Magnum/GL/Texture.h"
 
 namespace core {
 
 shared<Shader> Shader::standard { };
 
 Shader::Shader() {
-    shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
-                              | Shaders::PhongGL::Flag::AmbientTexture
+    shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture | Shaders::PhongGL::Flag::AmbientTexture | Shaders::PhongGL::Flag::SpecularTexture
                               | Shaders::PhongGL::Flag::UniformBuffers };
 }
 void Shader::Draw(Mesh& mesh) {
@@ -49,6 +49,10 @@ void Shader::BindLightBuffer(GL::Buffer& buffer) {
 }
 void Shader::BindDrawBuffer(GL::Buffer& buffer) {
     shader.bindDrawBuffer(buffer);
+}
+void Shader::BindDiffuseTexture(const GL::Texture2D& texture) {
+    //shader.bindDiffuseTexture(const_cast<GL::Texture2D&>(texture));
+    shader.bindTextures(nullptr, &const_cast<GL::Texture2D&>(texture), nullptr, nullptr);
 }
 
 }
