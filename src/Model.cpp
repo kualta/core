@@ -36,19 +36,14 @@ Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader, const share
 {
     SetMaterial(material);
 }
-vector<shared<Model>> Model::Load(const string& filepath) {
-    SceneImporter sceneImporter;
-    SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    return sceneImporter.ImportModels(*sceneData);
-}
 void Model::Draw() {
     shader->BindProjectionBuffer(projectionUniform);
     shader->BindTransformBuffer(transformUniform);
     shader->BindLightBuffer(lightUniform);
     shader->BindMaterialBuffer(materialUniform);
     shader->BindDrawBuffer(drawUniform);
-    if (material->HasTexture()) {
-        shader->BindDiffuseTexture(*material->GetTexture());
+    if (material->IsTextured()) {
+        shader->BindTextures(*material);
     }
     shader->Draw(*mesh);
 }
@@ -60,17 +55,6 @@ void Model::SetNormalMatrix(Matrix4& mtx) {
 }
 void Model::SetTransformMatrix(Matrix4& mtx) {
     transformUniform.setData({ Shaders::TransformationUniform3D{ }.setTransformationMatrix(mtx) });
-}
-void Model::SetMaterial(Material& mat) {
-    material = make_shared<Material>(mat);
-    materialUniform.setData({ Shaders::PhongMaterialUniform{ }
-        .setDiffuseColor(mat.GetDiffuseColor())
-        .setSpecularColor(mat.GetSpecularColor())
-        .setAmbientColor(mat.GetAmbientColor())
-        .setShininess(mat.GetHardness())
-        .setNormalTextureScale(mat.GetNormalScale())
-        .setAlphaMask(mat.GetAlphaBound())
-    });
 }
 void Model::SetMaterial(const shared<Material>& mat) {
     material = mat;

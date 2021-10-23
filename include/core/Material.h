@@ -25,40 +25,46 @@
 #define CORE_MATERIAL_H
 
 #include "Essentials.h"
+#include "Texture.h"
 #include "Math.h"
-
-#include <Magnum/GL/Texture.h>
 
 namespace core {
 
 class Material {
 public:
-    explicit Material(const shared<GL::Texture2D>& texture,
-                      float  normalScale = 1.0f,
-                      float  shininess   = 40.0f,
-                      float  alphaBound  = 0.5f);
+    explicit Material(const shared <Texture>& diffuseTexture    = nullptr,
+                      const shared <Texture>& ambientTexture    = nullptr,
+                      const shared <Texture>& specularTexture   = nullptr,
+                      const shared <Texture>& normalTexture     = nullptr,
+                      Color4 diffuse    = 0xffffffff_rgbaf,
+                      Color4 ambient    = 0xffffffff_rgbaf,
+                      Color4 specular   = 0xffffff00_rgbaf,
+                      float normalScale = 1.0f,
+                      float shininess   = 40.0f,
+                      float alphaBound  = 0.5f);
     
-    explicit Material(Color4 color       = 0xffffffff_rgbaf,
-                      float  normalScale = 1.0f,
-                      float  shininess   = 40.0f,
-                      float  alphaBound  = 0.5f);
-
-    explicit Material(Color4 ambient     = 0xffffffff_rgbaf,
-                      Color4 diffuse     = 0xffffffff_rgbaf,
+    explicit Material(Color4 diffuse,
+                      Color4 ambient     = 0xffffffff_rgbaf,
                       Color4 specular    = 0xffffff00_rgbaf,
                       float  normalScale = 1.0f,
-                      float  shininess   = 40.0f,
+                      float  shininess   = 80.0f,
                       float  alphaBound  = 0.5f);
 
-    bool HasTexture() const;
-    const GL::Texture2D* GetTexture() const;
+    bool IsTextured() const;
+    const shared<Texture>& GetDiffuseTexture() const;
+    const shared<Texture>& GetAmbientTexture() const;
+    const shared<Texture>& GetSpecularTexture() const;
+    const shared<Texture>& GetNormalTexture() const;
     const Color4& GetAmbientColor() const;
     const Color4& GetDiffuseColor() const;
     const Color4& GetSpecularColor() const;
     float GetNormalScale() const;
     float GetHardness() const;
     float GetAlphaBound() const;
-
+    
+    void SetAmbientTexture(const shared<Texture>& texture);
+    void SetSpecularTexture(const shared<Texture>& texture);
+    void SetNormalTexture(const shared<Texture>& texture);
     void SetAmbientColor(const Color4& ambientColor);
     void SetDiffuseColor(const Color4& diffuseColor);
     void SetSpecularColor(const Color4& specularColor);
@@ -69,8 +75,6 @@ public:
     static const shared<Material> standard;
 
 protected:
-    
-    shared<GL::Texture2D> texture;
 
     /** Ambient color */
     Color4 ambientColor;
@@ -91,6 +95,12 @@ protected:
     /** Alpha mask bound color
      * @details Fragments with alpha values smaller than the mask value will be discarded */
     float alphaBound;
+    
+    shared<Texture> diffuseTexture;
+    
+    shared<Texture> ambientTexture;
+    shared<Texture> specularTexture;
+    shared<Texture> normalTexture;
 
 };
 

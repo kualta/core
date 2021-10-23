@@ -21,46 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_SHADER_H
-#define CORE_SHADER_H
+#include <core/Texture.h>
 
-#include "Essentials.h"
-#include "FileSystem.h"
-#include "Mesh.h"
-#include "Math.h"
-#include "Material.h"
-
-#include <string>
-#include <fstream>
-
-#include <Magnum/Shaders/PhongGL.h>
-#include <Magnum/Shaders/Generic.h>
-#include <Magnum/Shaders/Phong.h>
-
-using namespace Magnum;
 namespace core {
 
-class Shader {
-public:
-    Shader();
-
-    void Draw(Mesh& mesh);
-    
-    void BindTextures(const Material& material);
-    void BindLightBuffer(GL::Buffer& buffer);
-    void BindDrawBuffer(GL::Buffer& buffer);
-    void BindMaterialBuffer(GL::Buffer& buffer);
-    void BindTransformBuffer(GL::Buffer& buffer);
-    void BindProjectionBuffer(GL::Buffer& buffer);
-    
-    static shared<Shader> standard;
-
-protected:
-
-    Shaders::PhongGL shader;
-
-};
+GL::Texture2D* core::Texture::GetGLTexture() {
+    return texture ? const_cast<GL::Texture2D*>(texture) : nullptr;
+}
+Texture::Texture(const GL::Texture2D* texture)
+: texture(texture) {
 
 }
 
-#endif //CORE_SHADER_H
+}

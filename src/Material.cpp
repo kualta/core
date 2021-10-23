@@ -25,46 +25,44 @@
 
 namespace core {
 
-const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgbaf, 1.0f, 100.0f, 0.5f);
+const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgbaf);
 
-Material::Material(const shared<GL::Texture2D>& texture,
+Material::Material(const shared<Texture>& diffuseTexture,
+                   const shared<Texture>& ambientTexture,
+                   const shared<Texture>& specularTexture,
+                   const shared<Texture>& normalTexture,
+                   Color4 diffuseColor,
+                   Color4 ambientColor,
+                   Color4 specularColor,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: texture(texture),
-  ambientColor(0xffffffff_rgbaf),
-  diffuseColor(0xffffffff_rgbaf),
-  specularColor(0xffffffff_rgbaf),
+: diffuseTexture(diffuseTexture),
+  ambientTexture(ambientTexture),
+  specularTexture(specularTexture),
+  normalTexture(normalTexture),
+  diffuseColor(diffuseColor),
+  ambientColor(ambientColor),
+  specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
   alphaBound(alphaBound)
 {
 
 }
-Material::Material(Color4 color,
+Material::Material(Color4 diffuseColor,
+                   Color4 ambientColor,
+                   Color4 specularColor,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: texture(nullptr),
-  ambientColor(color),
-  diffuseColor(color),
-  specularColor(color),
-  normalScale(normalScale),
-  shininess(shininess),
-  alphaBound(alphaBound)
-{
-
-}
-Material::Material(Color4 ambient,
-                   Color4 diffuse,
-                   Color4 specular,
-                   float normalScale,
-                   float shininess,
-                   float alphaBound)
-: texture(nullptr),
-  ambientColor(ambient),
-  diffuseColor(diffuse),
-  specularColor(specular),
+: diffuseTexture(nullptr),
+  ambientTexture(nullptr),
+  specularTexture(nullptr),
+  normalTexture(nullptr),
+  ambientColor(ambientColor),
+  diffuseColor(diffuseColor),
+  specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
   alphaBound(alphaBound)
@@ -107,11 +105,29 @@ float Material::GetAlphaBound() const {
 void Material::SetAlphaBound(float value) {
     alphaBound = value;
 }
-const GL::Texture2D* Material::GetTexture() const {
-    return texture.get();
+const shared<Texture>& Material::GetDiffuseTexture() const {
+    return diffuseTexture;
 }
-bool Material::HasTexture() const {
-    return texture ? true : false;
+const shared<Texture>& Material::GetAmbientTexture() const {
+    return ambientTexture;
+}
+void Material::SetAmbientTexture(const shared<Texture>& ambient) {
+    Material::ambientTexture = ambient;
+}
+const shared<Texture>& Material::GetSpecularTexture() const {
+    return specularTexture;
+}
+void Material::SetSpecularTexture(const shared<Texture>& specular) {
+    Material::specularTexture = specular;
+}
+const shared<Texture>& Material::GetNormalTexture() const {
+    return normalTexture;
+}
+void Material::SetNormalTexture(const shared<Texture>& normal) {
+    Material::normalTexture = normal;
+}
+bool Material::IsTextured() const {
+    return diffuseTexture || normalTexture || specularTexture || ambientTexture ? true : false;
 }
 
 }

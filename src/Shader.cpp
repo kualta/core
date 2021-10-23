@@ -23,14 +23,18 @@
  */
 #include <core/Shader.h>
 #include "Magnum/GL/Texture.h"
+#include "Magnum/GL/Context.h"
 
 namespace core {
 
 shared<Shader> Shader::standard { };
 
 Shader::Shader() {
-    shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture | Shaders::PhongGL::Flag::AmbientTexture | Shaders::PhongGL::Flag::SpecularTexture
-                              | Shaders::PhongGL::Flag::UniformBuffers };
+    shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
+                              | Shaders::PhongGL::Flag::AmbientTexture
+                              | Shaders::PhongGL::Flag::SpecularTexture
+                              | Shaders::PhongGL::Flag::NormalTexture
+                              | Shaders::PhongGL::Flag::UniformBuffers, 1024 };
 }
 void Shader::Draw(Mesh& mesh) {
     shader.draw(*mesh.GetGLMesh());
@@ -50,9 +54,11 @@ void Shader::BindLightBuffer(GL::Buffer& buffer) {
 void Shader::BindDrawBuffer(GL::Buffer& buffer) {
     shader.bindDrawBuffer(buffer);
 }
-void Shader::BindDiffuseTexture(const GL::Texture2D& texture) {
-    //shader.bindDiffuseTexture(const_cast<GL::Texture2D&>(texture));
-    shader.bindTextures(nullptr, &const_cast<GL::Texture2D&>(texture), nullptr, nullptr);
+void Shader::BindTextures(const Material& material) {
+    shader.bindTextures(material.GetAmbientTexture()  ? material.GetAmbientTexture()->GetGLTexture()  : nullptr,
+                        material.GetDiffuseTexture()  ? material.GetDiffuseTexture()->GetGLTexture()  : nullptr,
+                        material.GetSpecularTexture() ? material.GetSpecularTexture()->GetGLTexture() : nullptr,
+                        material.GetNormalTexture()   ? material.GetNormalTexture()->GetGLTexture()   : nullptr);
 }
 
 }

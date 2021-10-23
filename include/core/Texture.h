@@ -21,46 +21,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_SCENEIMPORTER_H
-#define CORE_SCENEIMPORTER_H
+#ifndef CORE_TEXTURE_H
+#define CORE_TEXTURE_H
 
-#include "core/Essentials.h"
-#include "core/Importer.h"
-#include "core/Shader.h"
-#include "core/Entity.h"
-#include "core/Model.h"
-#include "core/Scene/SceneData.h"
+#include "Essentials.h"
+#include <Magnum/GL/Texture.h>
 
 using namespace Magnum;
 namespace core {
 
-class SceneImporter : public Importer {
+class Texture {
 public:
-
-    /**
-     * Imports and returns pointer to core::SceneData
-     * @param filepath - path to scene file
-     * @return core::SceneData* data
-     */
-    static shared<SceneData> ImportScene(const string& filepath);
+    Texture(const GL::Texture2D* texture);
     
+    GL::Texture2D* GetGLTexture();
 
 protected:
     
-    static void ImportChildrenData(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportObjectData(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportMaterials(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportTextures(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportMeshes(Trade::AbstractImporter& importer, SceneData& data);
-    
-    static GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat);
-    
-    void InitImporter();
-    void OpenFile(const string& filepath);
+    const GL::Texture2D* texture;
 
-    Containers::Pointer<Trade::AbstractImporter> importer;
 };
 
 }
 
-#endif //CORE_SCENEIMPORTER_H
+#endif //CORE_TEXTURE_H

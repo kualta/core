@@ -127,12 +127,6 @@ public:
      */
     Layer* GetLayer();
 
-    /**
-     * Imports and adds Entities from the file to the scene
-     * @param filepath - path to model file
-     */
-    static vector<shared<Entity>> Load(const string& filepath);
-
 
     bool operator==(const Entity &rhs) const;
     bool operator!=(const Entity &rhs) const;

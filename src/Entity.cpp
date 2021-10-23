@@ -61,11 +61,6 @@ void Entity::Stop() {
 bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();
 }
-vector<shared<Entity>> Entity::Load(const string& filepath) {
-    SceneImporter sceneImporter;
-    SceneData* sceneData = sceneImporter.ImportScene(filepath);
-    return sceneImporter.ImportEntities(*sceneData);
-}
 void Entity::SetLayer(const string& name) {
     Layer* newLayer = Layer::Get(name);
     layer->Unlink(*this);

@@ -47,11 +47,8 @@ public:
     void SetMesh(const shared<Mesh>& mesh);
     void SetShader(Shader& shader);
     void SetShader(const shared<Shader>& shader);
-    void SetMaterial(Material& material);
     void SetMaterial(const shared<Material>& material);
     
-    static vector<shared<Model>> Load(const string& filepath);
-
 protected:
     friend class Renderer;
     friend class Layer;

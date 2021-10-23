@@ -36,37 +36,6 @@
 
 namespace core {
 
-vector<shared<Entity>> SceneImporter::ImportEntities(const SceneData& sceneData) {
-    vector<shared<Entity>> container;
-    if (sceneData.childrenData) {
-        for (uint32_t id : sceneData.childrenData->children3D()) {
-            AddEntity(container, sceneData, Scene::Get(), id);
-        }
-    } else if (!sceneData.meshes.empty() && sceneData.meshes[0]) {
-        shared<Entity> object = std::make_shared<Entity>("Entity", Scene::Get());
-        object->AddComponent<Transform>();
-        object->AddComponent<Renderer>(std::make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])), Shader::standard));
-        container.push_back(std::move(object));
-    } else {
-        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
-    }
-
-    return container;
-}
-vector<shared<Model>> SceneImporter::ImportModels(const SceneData& sceneData) {
-    vector<shared<Model>> models;
-    if (sceneData.childrenData) {
-        for (uint32_t id : sceneData.childrenData->children3D()) {
-            AddModel(models, sceneData, id);
-        }
-    } else if (!sceneData.meshes.empty() && sceneData.meshes[0]) {
-        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*sceneData.meshes[0])), Shader::standard));
-    } else {
-        Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes or SceneData";
-    }
-
-    return models;
-}
 void SceneImporter::InitImporter() {
     importer = manager.loadAndInstantiate("AnySceneImporter");
     if (!importer) {
@@ -82,23 +51,25 @@ void SceneImporter::OpenFile(const string& filepath) {
     }
     Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
 }
-SceneData* SceneImporter::ImportScene(const string& filepath) {
-    if (!importer) { InitImporter(); }
-    OpenFile(filepath);
+shared<SceneData> SceneImporter::ImportScene(const string& filepath) {
+    shared<SceneImporter> sceneImporter = make_shared<SceneImporter>();
+    sceneImporter->InitImporter();
+    sceneImporter->OpenFile(filepath);
 
-    SceneData* data = new SceneData();
-    ImportChildrenData(*data);
-    ImportMaterials(*data);
-    ImportTextures(*data);
-    ImportMeshes(*data);
+    shared<SceneData> data = make_shared<SceneData>();
+    ImportChildrenData(*sceneImporter->importer, *data);
+    ImportObjectData(*sceneImporter->importer, *data);
+    ImportMaterials(*sceneImporter->importer, *data);
+    ImportTextures(*sceneImporter->importer, *data);
+    ImportMeshes(*sceneImporter->importer, *data);
 
     return data;
 }
-void SceneImporter::ImportTextures(SceneData& data) {
-    data.textures = Containers::Array<Containers::Optional<GL::Texture2D>> { importer->textureCount() };
+void SceneImporter::ImportTextures(Trade::AbstractImporter& importer, SceneData& data) {
+    data.textures = Containers::Array<Containers::Optional<GL::Texture2D>> { importer.textureCount() };
     
-    for (uint32_t i = 0; i != importer->textureCount(); ++i) {
-        Containers::Optional<Trade::TextureData> textureData = importer->texture(i);
+    for (uint32_t i = 0; i != importer.textureCount(); ++i) {
+        Containers::Optional<Trade::TextureData> textureData = importer.texture(i);
         if (!textureData) {
             Logger::Log(IMPORT, WARN) << "[" << i << "] " << "failed to load, skipping";
             continue;
@@ -106,14 +77,14 @@ void SceneImporter::ImportTextures(SceneData& data) {
             Logger::Log(IMPORT, WARN_HERE) << "[" << i << "] " << "unsupported texture type, skipping";
             continue;
         }
-        Logger::Log(IMPORT, INFO)  << "[" << i << "] Texture " << importer->textureName(i);
+        Logger::Log(IMPORT, INFO)  << "[" << i << "] Texture " << importer.textureName(i);
         Logger::Log(IMPORT, DEBUG) << " | Filter: "    << (int)textureData->magnificationFilter();
         Logger::Log(IMPORT, DEBUG) << " | Mipmap: "    << (int)textureData->mipmapFilter();
         Logger::Log(IMPORT, DEBUG) << " | Wrapping: "  << (int)textureData->wrapping().x() << 'x'
                                                        << (int)textureData->wrapping().y();
     
         const uint32_t imageID = textureData->image();
-        const Containers::Optional<Trade::ImageData2D> imageData = importer->image2D(imageID);
+        const Containers::Optional<Trade::ImageData2D> imageData = importer.image2D(imageID);
         const GL::TextureFormat format = GetTextureFormat(imageData->format());
         if (!imageData) {
             Logger::Log(IMPORT, WARN_HERE) << " | Image " << imageID << " failed to load, skipping";
@@ -133,16 +104,16 @@ void SceneImporter::ImportTextures(SceneData& data) {
         data.textures[i] = std::move(texture);
     }
 }
-void SceneImporter::ImportMaterials(SceneData& data) {
-    data.materials = Containers::Array<Containers::Optional<Trade::MaterialData>> { importer->materialCount() };
-    for (uint32_t i = 0; i != importer->materialCount(); ++i) {
-        
-        Containers::Optional<Trade::MaterialData> materialData = importer->material(i);
+void SceneImporter::ImportMaterials(Trade::AbstractImporter& importer, SceneData& data) {
+    data.materials = Containers::Array<Containers::Optional<Trade::MaterialData>> { importer.materialCount() };
+    for (uint32_t i = 0; i != importer.materialCount(); ++i) {
+   
+        Containers::Optional<Trade::MaterialData> materialData = importer.material(i);
         if (!materialData) {
             Logger::Log(IMPORT, WARN) << "[" << i << "] Material failed to load, skipping";
             continue;
         }
-        Logger::Log(IMPORT, INFO) << "[" << i << "] Material " << importer->materialName(i);
+        Logger::Log(IMPORT, INFO) << "[" << i << "] Material " << importer.materialName(i);
     
         Trade::MaterialTypes materialTypes = materialData->types();
         if (materialTypes & Trade::MaterialType::PbrSpecularGlossiness
@@ -161,10 +132,10 @@ void SceneImporter::ImportMaterials(SceneData& data) {
         }
     }
 }
-void SceneImporter::ImportMeshes(SceneData& data) {
-    data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
-    for (uint32_t i = 0; i != importer->meshCount(); ++i) {
-        Containers::Optional<Trade::MeshData> meshData = importer->mesh(i);
+void SceneImporter::ImportMeshes(Trade::AbstractImporter& importer, SceneData& data) {
+    data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer.meshCount() };
+    for (uint32_t i = 0; i != importer.meshCount(); ++i) {
+        Containers::Optional<Trade::MeshData> meshData = importer.mesh(i);
         if (!meshData) {
             Logger::Log(IMPORT, WARN_HERE) << "[" << i << "] Mesh failed to load, skipping";
             continue;
@@ -173,81 +144,38 @@ void SceneImporter::ImportMeshes(SceneData& data) {
             Logger::Log(IMPORT, WARN_HERE) << "[" << i << "] Mesh: Cannot deduce normal data, skipping";
             continue;
         }
-        Logger::Log(IMPORT, INFO) << "[" << i << "] Mesh " << importer->meshName(i);
+        Logger::Log(IMPORT, INFO) << "[" << i << "] Mesh " << importer.meshName(i);
     
         data.meshes[i] = MeshTools::compile(*meshData);
     }
 }
-void SceneImporter::ImportChildrenData(SceneData &data) {
-    if (importer->defaultScene() != -1) {
-        Logger::Log(IMPORT, INFO) << "Importing Default Scene " << importer->sceneName(importer->defaultScene());
-        data.childrenData = importer->scene(importer->defaultScene());
+void SceneImporter::ImportObjectData(Trade::AbstractImporter& importer, SceneData& data) {
+    data.objects = Containers::Array<Containers::Pointer<Trade::ObjectData3D>> { importer.object3DCount() };
+    data.objectNames = Containers::Array<string> { importer.object3DCount() };
+    for (uint32_t i = 0; i != importer.object3DCount(); ++i) {
+        Containers::Pointer<Trade::ObjectData3D> objectData = importer.object3D(i);
+        string name = importer.object3DName(i);
+        if (!objectData) {
+            Logger::Log(IMPORT, INFO) << "[" << i << "] Model failed to import, skipping";
+            continue;
+        }
+        Logger::Log(IMPORT, INFO) << "[" << i << "] Model" << importer.object3DName(i);
+        
+        data.objects[i] = std::move(objectData);
+        data.objectNames[i] = name;
+    }
+}
+void SceneImporter::ImportChildrenData(Trade::AbstractImporter& importer, SceneData& data) {
+    if (importer.defaultScene() != -1) {
+        Logger::Log(IMPORT, INFO) << "Importing Default Scene " << importer.sceneName(importer.defaultScene());
+        data.childrenData = importer.scene(importer.defaultScene());
         if (!data.childrenData) {
             Logger::Log(IMPORT, ERR_HERE) << "Children data failed to load";
             throw std::runtime_error("Cannot load scene, Children data failed to load");
         }
     }
 }
-void SceneImporter::AddEntity(vector <shared<Entity>>& container, const SceneData& sceneData, GraphObject* parent, uint32_t id) {
-    unique<Trade::ObjectData3D> objectData = importer->object3D(id);
-    if (!objectData) {
-        Logger::Log(IMPORT, ERR_HERE)<< "[" << id << "] Entity failed to import, skipping";
-        return;
-    }
-    Logger::Log(IMPORT, INFO) << "[" << id << "] Entity" << importer->object3DName(id);
-
-    shared<Entity> entity = std::make_shared<Entity>(importer->object3DName(id), parent);
-    entity->AddComponent<Transform>();
-    entity->AddComponent<Renderer>(LoadModel(sceneData, objectData));
-    entity->setTransformation(objectData->transformation());
-    container.push_back(std::move(entity));
-
-    /* Recursively add children */
-    for (std::size_t childId : objectData->children()) {
-        AddEntity(container, sceneData, entity.get(), childId);
-    }
-}
-void SceneImporter::AddModel(vector<shared<Model>>& container, const SceneData& sceneData, uint32_t id) {
-    unique<Trade::ObjectData3D> objectData = importer->object3D(id);
-    if (!objectData) {
-        Logger::Log(IMPORT, INFO) << "[" << id << "] Model failed to import, skipping";
-        return;
-    }
-    Logger::Log(IMPORT, INFO) << "[" << id << "] Model" << importer->object3DName(id);
-    
-    container.push_back(LoadModel(sceneData, objectData));
-
-    for (std::size_t childId : objectData->children()) {
-        AddModel(container, sceneData, childId);
-    }
-}
-shared<Model> SceneImporter::LoadModel(const SceneData& data, const unique<Trade::ObjectData3D>& objectData) const {
-    shared<Model> model;
-    const int32_t id = objectData->instance();
-    if (objectData->instanceType() == Trade::ObjectInstanceType3D::Mesh && id != -1 && data.meshes[id]) {
-        const int32_t materialID = dynamic_cast<Trade::MeshObjectData3D*>(objectData.get())->material();
-
-        /* Material not available / not loaded, use a default material */
-        if (materialID == -1 || !data.materials[materialID]) {
-            model = make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard, Material::standard);
-
-            /* Textured material. If the texture failed to load, use a default material. */
-        } else if (data.materials[materialID]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
-            const Containers::Optional<GL::Texture2D>& texture
-            = data.textures[static_cast<const Trade::PhongMaterialData&>(*data.materials[materialID]).diffuseTexture()];
-
-            model = texture
-                    ? make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard, make_shared<Material>(
-                            make_shared<GL::Texture2D>(std::move(const_cast<GL::Texture2D&>(*texture)))))
-                    : make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard, Material::standard);
-        } else {
-            model = make_shared<Model>(make_shared<Mesh>(&(*data.meshes[id])), Shader::standard, Material::standard);
-        }
-    }
-
-    return model;
-}
-GL::TextureFormat SceneImporter::GetTextureFormat(PixelFormat pixelFormat) const {
+GL::TextureFormat SceneImporter::GetTextureFormat(PixelFormat pixelFormat) {
     GL::TextureFormat format;
     switch (pixelFormat) {
         case PixelFormat::R8Unorm:      format = GL::TextureFormat::R8; break;
