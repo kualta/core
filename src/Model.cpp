@@ -31,8 +31,12 @@ using namespace Magnum;
 using namespace Math::Literals;
 namespace core {
 
-Model::Model(const shared<Mesh>& mesh, const shared<Shader>& shader, const shared<Material>& material)
-: mesh(mesh), shader(shader), material(material)
+Model::Model(const shared<Mesh>& mesh,
+             const shared<Shader>& shader,
+             const shared<Material>& material)
+: mesh(mesh),
+  shader(shader),
+  material(material)
 {
     SetMaterial(material);
 }
@@ -62,7 +66,7 @@ void Model::SetMaterial(const shared<Material>& mat) {
         .setDiffuseColor(material->GetDiffuseColor())
         .setSpecularColor(material->GetSpecularColor())
         .setAmbientColor(material->GetAmbientColor())
-        .setShininess(material->GetHardness())
+        .setShininess(material->GetShininess())
         .setNormalTextureScale(material->GetNormalScale())
         .setAlphaMask(material->GetAlphaBound())
     });

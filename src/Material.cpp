@@ -37,16 +37,16 @@ Material::Material(const shared<Texture>& diffuseTexture,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: diffuseTexture(diffuseTexture),
-  ambientTexture(ambientTexture),
-  specularTexture(specularTexture),
-  normalTexture(normalTexture),
+: ambientColor(ambientColor),
   diffuseColor(diffuseColor),
-  ambientColor(ambientColor),
   specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
-  alphaBound(alphaBound)
+  alphaBound(alphaBound),
+  diffuseTexture(diffuseTexture),
+  ambientTexture(ambientTexture),
+  specularTexture(specularTexture),
+  normalTexture(normalTexture)
 {
 
 }
@@ -56,16 +56,16 @@ Material::Material(Color4 diffuseColor,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: diffuseTexture(nullptr),
-  ambientTexture(nullptr),
-  specularTexture(nullptr),
-  normalTexture(nullptr),
-  ambientColor(ambientColor),
+: ambientColor(ambientColor),
   diffuseColor(diffuseColor),
   specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
-  alphaBound(alphaBound)
+  alphaBound(alphaBound),
+  diffuseTexture(nullptr),
+  ambientTexture(nullptr),
+  specularTexture(nullptr),
+  normalTexture(nullptr)
 {
 
 }
@@ -93,10 +93,10 @@ float Material::GetNormalScale() const {
 void Material::SetNormalScale(float scale) {
     normalScale = scale;
 }
-float Material::GetHardness() const {
+float Material::GetShininess() const {
     return shininess;
 }
-void Material::SetHardness(float value) {
+void Material::SetShininess(float value) {
     shininess = value;
 }
 float Material::GetAlphaBound() const {
@@ -127,7 +127,7 @@ void Material::SetNormalTexture(const shared<Texture>& normal) {
     Material::normalTexture = normal;
 }
 bool Material::IsTextured() const {
-    return diffuseTexture || normalTexture || specularTexture || ambientTexture ? true : false;
+    return diffuseTexture || normalTexture || specularTexture || ambientTexture;
 }
 
 }

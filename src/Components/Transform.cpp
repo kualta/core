@@ -30,7 +30,6 @@ Transform::Transform(Entity& parent, const string& name) : IComponent(parent, na
     parent.assertExistingComponent<Transform>();
 }
 void Transform::Tick() {
-
 }
 void Transform::UpdateTransformMatrix() {
     transformMtx = Matrix4::from(rotation.toMatrix(), position)

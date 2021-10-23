@@ -34,7 +34,7 @@ Shader::Shader() {
                               | Shaders::PhongGL::Flag::AmbientTexture
                               | Shaders::PhongGL::Flag::SpecularTexture
                               | Shaders::PhongGL::Flag::NormalTexture
-                              | Shaders::PhongGL::Flag::UniformBuffers, 1024 };
+                              | Shaders::PhongGL::Flag::UniformBuffers };
 }
 void Shader::Draw(Mesh& mesh) {
     shader.draw(*mesh.GetGLMesh());

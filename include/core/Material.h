@@ -32,20 +32,20 @@ namespace core {
 
 class Material {
 public:
-    explicit Material(const shared <Texture>& diffuseTexture    = nullptr,
-                      const shared <Texture>& ambientTexture    = nullptr,
-                      const shared <Texture>& specularTexture   = nullptr,
-                      const shared <Texture>& normalTexture     = nullptr,
-                      Color4 diffuse    = 0xffffffff_rgbaf,
-                      Color4 ambient    = 0xffffffff_rgbaf,
-                      Color4 specular   = 0xffffff00_rgbaf,
+    explicit Material(const shared<Texture>& diffuseTexture    = nullptr,
+                      const shared<Texture>& ambientTexture    = nullptr,
+                      const shared<Texture>& specularTexture   = nullptr,
+                      const shared<Texture>& normalTexture     = nullptr,
+                      Color4 diffuse    = 0xFFFFFFFF_rgbaf,
+                      Color4 ambient    = 0xFFFFFFFF_rgbaf,
+                      Color4 specular   = 0xFFFFFFFF_rgbaf,
                       float normalScale = 1.0f,
-                      float shininess   = 40.0f,
+                      float shininess   = 80.0f,
                       float alphaBound  = 0.5f);
     
     explicit Material(Color4 diffuse,
-                      Color4 ambient     = 0xffffffff_rgbaf,
-                      Color4 specular    = 0xffffff00_rgbaf,
+                      Color4 ambient     = 0xFFFFFFFF_rgbaf,
+                      Color4 specular    = 0xFFFFFF00_rgbaf,
                       float  normalScale = 1.0f,
                       float  shininess   = 80.0f,
                       float  alphaBound  = 0.5f);
@@ -59,7 +59,7 @@ public:
     const Color4& GetDiffuseColor() const;
     const Color4& GetSpecularColor() const;
     float GetNormalScale() const;
-    float GetHardness() const;
+    float GetShininess() const;
     float GetAlphaBound() const;
     
     void SetAmbientTexture(const shared<Texture>& texture);
@@ -69,7 +69,7 @@ public:
     void SetDiffuseColor(const Color4& diffuseColor);
     void SetSpecularColor(const Color4& specularColor);
     void SetNormalScale(float normalScale);
-    void SetHardness(float hardness);
+    void SetShininess(float hardness);
     void SetAlphaBound(float alphaBound);
     
     static const shared<Material> standard;
@@ -99,7 +99,9 @@ protected:
     shared<Texture> diffuseTexture;
     
     shared<Texture> ambientTexture;
+    
     shared<Texture> specularTexture;
+    
     shared<Texture> normalTexture;
 
 };
