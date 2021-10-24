@@ -36,15 +36,43 @@
 #include <Magnum/Trade/SceneData.h>
 
 #include <core/Logger.h>
+#include <core/Scene/Scene.h>
+#include <core/Entity.h>
+#include <core/Material.h>
 
 using namespace Magnum;
 namespace core {
 
-struct SceneData {
+class SceneData {
+public:
+    
+    /*
+     * Creates entities with models from SceneData
+     * @note Each Entity in return vector has Transform and Renderer components added
+     * @param sceneData - SceneData to import from
+     * @return vector<shared<Entity>>
+     */
+    vector<shared<Entity>> ImportEntities();
+    
+    /**
+     * Imports models from SceneData
+     * @param sceneData - SceneData to import from
+     * @return vector<shared<Model>>
+     */
+    vector<shared<Model>> ImportModels();
+    
+    void AddEntity(vector<shared<Entity>>& container, GraphObject* parent, uint32_t id);
+    void AddModel(vector<shared<Model>>& container, uint32_t id);
+    shared<Model> LoadModel(uint32_t id);
+    void SetTextures(const shared<Material>& material, uint32_t id);
+
+    
     Containers::Optional<Trade::SceneData> childrenData;
     Containers::Array<Containers::Optional<GL::Mesh>> meshes;
     Containers::Array<Containers::Optional<GL::Texture2D>> textures;
-    Containers::Array<Containers::Optional<Trade::PhongMaterialData>> materials;
+    vector<Containers::Optional<Trade::MaterialData>> materials;
+    Containers::Array<Containers::Pointer<Trade::ObjectData3D>> objects;
+    Containers::Array<string> objectNames;
 };
 
 }

@@ -22,6 +22,10 @@
  SOFTWARE.
  */
 #include <core/Shader.h>
+#include <Magnum/GL/TextureFormat.h>
+#include "Magnum/GL/Texture.h"
+#include "Magnum/GL/Context.h"
+#include "Magnum/GL/BufferImage.h"
 
 namespace core {
 
@@ -30,6 +34,8 @@ shared<Shader> Shader::standard { };
 Shader::Shader() {
     shader = Shaders::PhongGL { Shaders::PhongGL::Flag::DiffuseTexture
                               | Shaders::PhongGL::Flag::AmbientTexture
+                              | Shaders::PhongGL::Flag::SpecularTexture
+                              | Shaders::PhongGL::Flag::NormalTexture
                               | Shaders::PhongGL::Flag::UniformBuffers };
 }
 void Shader::Draw(Mesh& mesh) {
@@ -49,6 +55,12 @@ void Shader::BindLightBuffer(GL::Buffer& buffer) {
 }
 void Shader::BindDrawBuffer(GL::Buffer& buffer) {
     shader.bindDrawBuffer(buffer);
+}
+void Shader::BindTextures(const Material& material) {
+    shader.bindTextures(material.GetAmbientTexture()  ? material.GetAmbientTexture()->GetGLTexture()  : nullptr,
+                        material.GetDiffuseTexture()  ? material.GetDiffuseTexture()->GetGLTexture()  : nullptr,
+                        material.GetSpecularTexture() ? material.GetSpecularTexture()->GetGLTexture() : nullptr,
+                        material.GetNormalTexture()   ? material.GetNormalTexture()->GetGLTexture()   : nullptr);
 }
 
 }

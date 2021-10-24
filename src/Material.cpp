@@ -25,33 +25,47 @@
 
 namespace core {
 
-const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgbaf, 1.0f, 100.0f, 0.5f);
+const shared<Material> Material::standard = make_shared<Material>(0xe1f2fbff_rgbaf);
 
-Material::Material(Color4 color,
+Material::Material(const shared<Texture>& diffuseTexture,
+                   const shared<Texture>& ambientTexture,
+                   const shared<Texture>& specularTexture,
+                   const shared<Texture>& normalTexture,
+                   Color4 diffuseColor,
+                   Color4 ambientColor,
+                   Color4 specularColor,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: ambientColor(color),
-  diffuseColor(color),
-  specularColor(color),
+: ambientColor(ambientColor),
+  diffuseColor(diffuseColor),
+  specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
-  alphaBound(alphaBound)
+  alphaBound(alphaBound),
+  diffuseTexture(diffuseTexture),
+  ambientTexture(ambientTexture),
+  specularTexture(specularTexture),
+  normalTexture(normalTexture)
 {
 
 }
-Material::Material(Color4 ambient,
-                   Color4 diffuse,
-                   Color4 specular,
+Material::Material(Color4 diffuseColor,
+                   Color4 ambientColor,
+                   Color4 specularColor,
                    float normalScale,
                    float shininess,
                    float alphaBound)
-: ambientColor(ambient),
-  diffuseColor(diffuse),
-  specularColor(specular),
+: ambientColor(ambientColor),
+  diffuseColor(diffuseColor),
+  specularColor(specularColor),
   normalScale(normalScale),
   shininess(shininess),
-  alphaBound(alphaBound)
+  alphaBound(alphaBound),
+  diffuseTexture(nullptr),
+  ambientTexture(nullptr),
+  specularTexture(nullptr),
+  normalTexture(nullptr)
 {
 
 }
@@ -79,10 +93,10 @@ float Material::GetNormalScale() const {
 void Material::SetNormalScale(float scale) {
     normalScale = scale;
 }
-float Material::GetHardness() const {
+float Material::GetShininess() const {
     return shininess;
 }
-void Material::SetHardness(float value) {
+void Material::SetShininess(float value) {
     shininess = value;
 }
 float Material::GetAlphaBound() const {
@@ -90,6 +104,33 @@ float Material::GetAlphaBound() const {
 }
 void Material::SetAlphaBound(float value) {
     alphaBound = value;
+}
+const shared<Texture>& Material::GetDiffuseTexture() const {
+    return diffuseTexture;
+}
+const shared<Texture>& Material::GetAmbientTexture() const {
+    return ambientTexture;
+}
+void Material::SetAmbientTexture(const shared<Texture>& ambient) {
+    Material::ambientTexture = ambient;
+}
+const shared<Texture>& Material::GetSpecularTexture() const {
+    return specularTexture;
+}
+void Material::SetSpecularTexture(const shared<Texture>& specular) {
+    Material::specularTexture = specular;
+}
+const shared<Texture>& Material::GetNormalTexture() const {
+    return normalTexture;
+}
+void Material::SetNormalTexture(const shared<Texture>& normal) {
+    Material::normalTexture = normal;
+}
+bool Material::IsTextured() const {
+    return diffuseTexture || normalTexture || specularTexture || ambientTexture;
+}
+void Material::SetDiffuseTexture(const shared<Texture>& texture) {
+    diffuseTexture = texture;
 }
 
 }

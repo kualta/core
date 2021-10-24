@@ -25,36 +25,52 @@
 #define CORE_MATERIAL_H
 
 #include "Essentials.h"
+#include "Texture.h"
 #include "Math.h"
 
 namespace core {
 
 class Material {
 public:
-    explicit Material(Color4 color       = 0xffffffff_rgbaf,
+    explicit Material(const shared<Texture>& diffuseTexture    = nullptr,
+                      const shared<Texture>& ambientTexture    = nullptr,
+                      const shared<Texture>& specularTexture   = nullptr,
+                      const shared<Texture>& normalTexture     = nullptr,
+                      Color4 diffuse    = 0xFFFFFFFF_rgbaf,
+                      Color4 ambient    = 0xFFFFFFFF_rgbaf,
+                      Color4 specular   = 0xFFFFFFFF_rgbaf,
+                      float normalScale = 1.0f,
+                      float shininess   = 80.0f,
+                      float alphaBound  = 0.5f);
+    
+    explicit Material(Color4 diffuse,
+                      Color4 ambient     = 0xFFFFFFFF_rgbaf,
+                      Color4 specular    = 0xFFFFFF00_rgbaf,
                       float  normalScale = 1.0f,
-                      float  shininess   = 40.0f,
+                      float  shininess   = 80.0f,
                       float  alphaBound  = 0.5f);
 
-    explicit Material(Color4 ambient     = 0xffffffff_rgbaf,
-                      Color4 diffuse     = 0xffffffff_rgbaf,
-                      Color4 specular    = 0xffffff00_rgbaf,
-                      float  normalScale = 1.0f,
-                      float  shininess   = 40.0f,
-                      float  alphaBound  = 0.5f);
-
+    bool IsTextured() const;
+    const shared<Texture>& GetDiffuseTexture() const;
+    const shared<Texture>& GetAmbientTexture() const;
+    const shared<Texture>& GetSpecularTexture() const;
+    const shared<Texture>& GetNormalTexture() const;
     const Color4& GetAmbientColor() const;
     const Color4& GetDiffuseColor() const;
     const Color4& GetSpecularColor() const;
     float GetNormalScale() const;
-    float GetHardness() const;
+    float GetShininess() const;
     float GetAlphaBound() const;
-
+    
+    void SetAmbientTexture(const shared<Texture>& texture);
+    void SetSpecularTexture(const shared<Texture>& texture);
+    void SetDiffuseTexture(const shared<Texture>& texture);
+    void SetNormalTexture(const shared<Texture>& texture);
     void SetAmbientColor(const Color4& ambientColor);
     void SetDiffuseColor(const Color4& diffuseColor);
     void SetSpecularColor(const Color4& specularColor);
     void SetNormalScale(float normalScale);
-    void SetHardness(float hardness);
+    void SetShininess(float hardness);
     void SetAlphaBound(float alphaBound);
     
     static const shared<Material> standard;
@@ -63,8 +79,6 @@ protected:
 
     /** Ambient color */
     Color4 ambientColor;
-
-protected:
 
     /** Diffuse color */
     Color4 diffuseColor;
@@ -82,6 +96,14 @@ protected:
     /** Alpha mask bound color
      * @details Fragments with alpha values smaller than the mask value will be discarded */
     float alphaBound;
+    
+    shared<Texture> diffuseTexture;
+    
+    shared<Texture> ambientTexture;
+    
+    shared<Texture> specularTexture;
+    
+    shared<Texture> normalTexture;
 
 };
 

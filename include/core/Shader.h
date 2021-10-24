@@ -28,6 +28,7 @@
 #include "FileSystem.h"
 #include "Mesh.h"
 #include "Math.h"
+#include "Material.h"
 
 #include <string>
 #include <fstream>
@@ -44,7 +45,8 @@ public:
     Shader();
 
     void Draw(Mesh& mesh);
-
+    
+    void BindTextures(const Material& material);
     void BindLightBuffer(GL::Buffer& buffer);
     void BindDrawBuffer(GL::Buffer& buffer);
     void BindMaterialBuffer(GL::Buffer& buffer);

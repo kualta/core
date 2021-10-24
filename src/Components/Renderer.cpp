@@ -34,9 +34,11 @@ Renderer::Renderer(Entity& parent, const shared<Model>& model, const string& nam
 {
     parent.assertRequiredComponent<Transform>(this);
     transform = parent.GetComponent<Transform>();
+    SetTransformMatrix(transform->GetTransformMatrix());
+    transform->OnTransformChange.Subscribe([&](Matrix4& mtx) { SetTransformMatrix(mtx); });
 }
 void Renderer::Start() {
-    transform->OnTransformChange.Subscribe([&](Matrix4& mtx) { SetTransformMatrix(mtx); });
+
 }
 void Renderer::Tick() {
 

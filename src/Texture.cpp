@@ -21,45 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_SCENEIMPORTER_H
-#define CORE_SCENEIMPORTER_H
+#include <core/Texture.h>
 
-#include "core/Essentials.h"
-#include "core/Importer.h"
-#include "core/Shader.h"
-#include "core/Entity.h"
-#include "core/Model.h"
-#include "core/Scene/SceneData.h"
-
-using namespace Magnum;
 namespace core {
 
-class SceneImporter : public Importer {
-public:
-
-    /**
-     * Imports and returns pointer to core::SceneData
-     * @param filepath - path to scene file
-     * @return core::SceneData* data
-     */
-    static shared<SceneData> ImportScene(const string& filepath);
-    
-protected:
-    
-    static void ImportChildrenData(SceneData& data);
-    static void ImportObjectData(SceneData& data);
-    static void ImportMaterials(SceneData& data);
-    static void ImportTextures(SceneData& data);
-    static void ImportMeshes(SceneData& data);
-    
-    static GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat);
-    
-    void InitImporter();
-    void OpenFile(const string& filepath);
-
-    static Containers::Pointer<Trade::AbstractImporter> importer;
-};
+GL::Texture2D* core::Texture::GetGLTexture() {
+    return texture ? const_cast<GL::Texture2D*>(texture) : nullptr;
+}
+Texture::Texture(const GL::Texture2D* texture)
+: texture(texture) {
 
 }
 
-#endif //CORE_SCENEIMPORTER_H
+}

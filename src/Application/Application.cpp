@@ -31,6 +31,7 @@
 #include "Magnum/GL/Renderer.h"
 #include "Magnum/Math/Vector2.h"
 
+
 namespace core {
 
 Application::Application(const string& title, Rect rect, int args)
@@ -44,8 +45,8 @@ Application::Application(const string& title, Rect rect, int args)
     GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
     GL::Renderer::enable(GL::Renderer::Feature::Blending);
     GL::Renderer::enable(GL::Renderer::Feature::ScissorTest);
-//    GL::Renderer::enable(GL::Renderer::Feature::DebugOutput);
-//    GL::Renderer::enable(GL::Renderer::Feature::DebugOutputSynchronous);
+    //GL::Renderer::enable(GL::Renderer::Feature::DebugOutput);
+    //GL::Renderer::enable(GL::Renderer::Feature::DebugOutputSynchronous);
 
     GL::Renderer::setBlendEquation(GL::Renderer::BlendEquation::Add, GL::Renderer::BlendEquation::Add);
     GL::Renderer::setBlendFunction(GL::Renderer::BlendFunction::SourceAlpha, GL::Renderer::BlendFunction::OneMinusSourceAlpha);
