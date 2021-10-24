@@ -83,29 +83,53 @@ void SceneData::AddModel(vector<shared<Model>>& container, uint32_t id) {
     }
 }
 shared<Model> SceneData::LoadModel(uint32_t id) {
-    shared<Model> model;
+    shared<Material> material = make_shared<Material>();
     const Containers::Pointer<Trade::ObjectData3D>& object = objects[id];
     if (object->instanceType() == Trade::ObjectInstanceType3D::Mesh && id != -1 && meshes[id]) {
         const int32_t materialID = dynamic_cast<const Trade::MeshObjectData3D*>(object.get())->material();
         
-        /* Material not available / not loaded, use a default material */
-        if (materialID == -1 || !materials[materialID]) {
-            model = make_shared<Model>(make_shared<Mesh>(&(*meshes[id])), Shader::standard, Material::standard);
-            
-            /* Textured material. If the texture failed to load, use a default material. */
-        } else if (materials[materialID]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
-            const Containers::Optional<GL::Texture2D>& texture
-                    = textures[static_cast<const Trade::PhongMaterialData&>(*materials[materialID]).diffuseTexture()];
-            
-            model = texture
-                    ? make_shared<Model>(make_shared<Mesh>(&(*meshes[id])), Shader::standard, make_shared<Material>(make_shared<Texture>(&*texture)))
-                    : make_shared<Model>(make_shared<Mesh>(&(*meshes[id])), Shader::standard, Material::standard);
-        } else {
-            model = make_shared<Model>(make_shared<Mesh>(&(*meshes[id])), Shader::standard, Material::standard);
+        if (materialID != -1 && materials[materialID]) {
+            SetTextures(material, materialID);
         }
     }
     
-    return model;
+    return make_shared<Model>(make_shared<Mesh>(&(*meshes[id])), Shader::standard, material);
+}
+void SceneData::SetTextures(const shared<Material>& material, uint32_t id) {
+    auto& sceneMaterial = static_cast<const Trade::PhongMaterialData&>(*materials[id]);
+    
+    if (materials[id]->hasAttribute(Trade::MaterialAttribute::DiffuseTexture)) {
+        auto& diffuseTexture = textures[sceneMaterial.diffuseTexture()];
+        if (diffuseTexture) {
+            material->SetDiffuseTexture(make_shared<Texture>(&*diffuseTexture));
+        } else {
+            Logger::Log(IMPORT, WARN) << "Failed to set diffuse texture of " << id << " material";
+        }
+    }
+    if (materials[id]->hasAttribute(Trade::MaterialAttribute::SpecularTexture)) {
+        auto& specularTexture = textures[sceneMaterial.specularTexture()];
+        if (specularTexture) {
+            material->SetSpecularTexture(make_shared<Texture>(&*specularTexture));
+        } else {
+            Logger::Log(IMPORT, WARN) << "Failed to set specular texture of " << id << " material";
+        }
+    }
+    if (materials[id]->hasAttribute(Trade::MaterialAttribute::NormalTexture)) {
+        auto& normalTexture = textures[sceneMaterial.normalTexture()];
+        if (normalTexture) {
+            material->SetNormalTexture(make_shared<Texture>(&*normalTexture));
+        } else {
+            Logger::Log(IMPORT, WARN) << "Failed to set normal texture of " << id << " material";
+        }
+    }
+    if (materials[id]->hasAttribute(Trade::MaterialAttribute::AmbientTexture)) {
+        auto& ambientTexture = textures[sceneMaterial.ambientTexture()];
+        if (ambientTexture) {
+            material->SetAmbientTexture(make_shared<Texture>(&*ambientTexture));
+        } else {
+            Logger::Log(IMPORT, WARN) << "Failed to set ambient texture of " << id << " material";
+        }
+    }
 }
 
 }

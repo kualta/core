@@ -22,8 +22,10 @@
  SOFTWARE.
  */
 #include <core/Shader.h>
+#include <Magnum/GL/TextureFormat.h>
 #include "Magnum/GL/Texture.h"
 #include "Magnum/GL/Context.h"
+#include "Magnum/GL/BufferImage.h"
 
 namespace core {
 

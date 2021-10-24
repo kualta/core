@@ -64,6 +64,7 @@ public:
     
     void SetAmbientTexture(const shared<Texture>& texture);
     void SetSpecularTexture(const shared<Texture>& texture);
+    void SetDiffuseTexture(const shared<Texture>& texture);
     void SetNormalTexture(const shared<Texture>& texture);
     void SetAmbientColor(const Color4& ambientColor);
     void SetDiffuseColor(const Color4& diffuseColor);

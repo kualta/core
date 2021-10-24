@@ -44,21 +44,20 @@ public:
      */
     static shared<SceneData> ImportScene(const string& filepath);
     
-
 protected:
     
-    static void ImportChildrenData(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportObjectData(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportMaterials(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportTextures(Trade::AbstractImporter& importer, SceneData& data);
-    static void ImportMeshes(Trade::AbstractImporter& importer, SceneData& data);
+    static void ImportChildrenData(SceneData& data);
+    static void ImportObjectData(SceneData& data);
+    static void ImportMaterials(SceneData& data);
+    static void ImportTextures(SceneData& data);
+    static void ImportMeshes(SceneData& data);
     
     static GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat);
     
     void InitImporter();
     void OpenFile(const string& filepath);
 
-    Containers::Pointer<Trade::AbstractImporter> importer;
+    static Containers::Pointer<Trade::AbstractImporter> importer;
 };
 
 }

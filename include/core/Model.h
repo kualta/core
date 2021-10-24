@@ -64,6 +64,11 @@ protected:
     void Draw();
 
     shared<Mesh>     mesh;
+public:
+    const shared<core::Mesh>& GetMesh() const;
+    const shared<core::Shader>& GetShader() const;
+    const shared<core::Material>& GetMaterial() const;
+protected:
     shared<Shader>   shader;
     shared<Material> material;
 

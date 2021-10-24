@@ -129,5 +129,8 @@ void Material::SetNormalTexture(const shared<Texture>& normal) {
 bool Material::IsTextured() const {
     return diffuseTexture || normalTexture || specularTexture || ambientTexture;
 }
+void Material::SetDiffuseTexture(const shared<Texture>& texture) {
+    diffuseTexture = texture;
+}
 
 }

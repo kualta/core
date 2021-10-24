@@ -102,5 +102,14 @@ void Model::SetDirectionalLight(Light& light) {
         .setPosition({light.GetDirection(), 0.0f})
     });
 }
+const shared<core::Mesh>& Model::GetMesh() const {
+    return mesh;
+}
+const shared<core::Shader>& Model::GetShader() const {
+    return shader;
+}
+const shared<core::Material>& Model::GetMaterial() const {
+    return material;
+}
 
 }
