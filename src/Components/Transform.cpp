@@ -92,10 +92,10 @@ void Transform::Rotate(Quaternion&& rot) {
     SetRotation(rotation * rot);
 }
 void Transform::Scale(Vector3& vec) {
-    SetScale(scale + vec);
+    SetScale(scale * vec);
 }
 void Transform::Scale(Vector3&& vec) {
-    SetScale(scale + vec);
+    SetScale(scale * vec);
 }
 
 }
