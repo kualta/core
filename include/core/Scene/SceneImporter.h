@@ -57,7 +57,7 @@ protected:
     void InitImporter();
     void OpenFile(const string& filepath);
 
-    static Containers::Pointer<Trade::AbstractImporter> importer;
+    static unique<Trade::AbstractImporter> importer;
 };
 
 }

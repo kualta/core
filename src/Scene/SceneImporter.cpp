@@ -27,6 +27,7 @@
 #include <core/Logger.h>
 
 #include <Corrade/Containers/PointerStl.h>
+#include <Corrade/Containers/OptionalStl.h>
 #include <Magnum/Trade/FlatMaterialData.h>
 #include <Magnum/Trade/PhongMaterialData.h>
 #include <Magnum/Trade/MaterialData.h>
@@ -35,7 +36,7 @@
 
 namespace core {
 
-Containers::Pointer<Trade::AbstractImporter> SceneImporter::importer { nullptr };
+unique<Trade::AbstractImporter> SceneImporter::importer { nullptr };
 
 void SceneImporter::InitImporter() {
     importer = manager.loadAndInstantiate("AnySceneImporter");
@@ -69,10 +70,10 @@ shared<SceneData> SceneImporter::ImportScene(const string& filepath) {
     return data;
 }
 void SceneImporter::ImportTextures(SceneData& data) {
-    data.textures = Containers::Array<Containers::Optional<GL::Texture2D>> { importer->textureCount() };
+    data.textures = std::vector<std::optional<GL::Texture2D>> { importer->textureCount() };
     
     for (uint32_t i = 0; i != importer->textureCount(); ++i) {
-        Containers::Optional<Trade::TextureData> textureData = importer->texture(i);
+        std::optional<Trade::TextureData> textureData = std::optional<Trade::TextureData>(importer->texture(i));
         if (!textureData) {
             Logger::Log(IMPORT, WARN) << "[" << i << "] " << "failed to load, skipping";
             continue;
@@ -87,7 +88,7 @@ void SceneImporter::ImportTextures(SceneData& data) {
                                                        << (int)textureData->wrapping().y();
     
         const uint32_t imageID = textureData->image();
-        const Containers::Optional<Trade::ImageData2D> imageData = importer->image2D(imageID);
+        const std::optional<Trade::ImageData2D> imageData = std::optional<Trade::ImageData2D>(importer->image2D(imageID));
         const GL::TextureFormat format = GetTextureFormat(imageData->format());
         if (!imageData) {
             Logger::Log(IMPORT, WARN_HERE) << " | Image " << imageID << " failed to load, skipping";
@@ -108,10 +109,10 @@ void SceneImporter::ImportTextures(SceneData& data) {
     }
 }
 void SceneImporter::ImportMaterials(SceneData& data) {
-    data.materials = std::vector<Containers::Optional<Trade::MaterialData>> { importer->materialCount() };
+    data.materials = std::vector<std::optional<Trade::MaterialData>> { importer->materialCount() };
     for (uint32_t i = 0; i != importer->materialCount(); ++i) {
    
-        Containers::Optional<Trade::MaterialData> materialData = importer->material(i);
+        std::optional<Trade::MaterialData> materialData = std::optional<Trade::MaterialData>(importer->material(i));
         if (!materialData) {
             Logger::Log(IMPORT, WARN) << "[" << i << "] Material failed to load, skipping";
             continue;
@@ -143,9 +144,9 @@ void SceneImporter::ImportMaterials(SceneData& data) {
     }
 }
 void SceneImporter::ImportMeshes(SceneData& data) {
-    data.meshes = Containers::Array<Containers::Optional<GL::Mesh>> { importer->meshCount() };
+    data.meshes = std::vector<std::optional<GL::Mesh>> { importer->meshCount() };
     for (uint32_t i = 0; i != importer->meshCount(); ++i) {
-        Containers::Optional<Trade::MeshData> meshData = importer->mesh(i);
+        std::optional<Trade::MeshData> meshData = std::optional<Trade::MeshData>(importer->mesh(i));
         if (!meshData) {
             Logger::Log(IMPORT, WARN_HERE) << "[" << i << "] Mesh failed to load, skipping";
             continue;
@@ -160,10 +161,10 @@ void SceneImporter::ImportMeshes(SceneData& data) {
     }
 }
 void SceneImporter::ImportObjectData(SceneData& data) {
-    data.objects = Containers::Array<Containers::Pointer<Trade::ObjectData3D>> { importer->object3DCount() };
-    data.objectNames = Containers::Array<string> { importer->object3DCount() };
+    data.objects = std::vector<unique<Trade::ObjectData3D>> { importer->object3DCount() };
+    data.objectNames = std::vector<string> { importer->object3DCount() };
     for (uint32_t i = 0; i != importer->object3DCount(); ++i) {
-        Containers::Pointer<Trade::ObjectData3D> objectData = importer->object3D(i);
+        unique<Trade::ObjectData3D> objectData = importer->object3D(i);
         string name = importer->object3DName(i);
         if (!objectData) {
             Logger::Log(IMPORT, INFO) << "[" << i << "] Model failed to import, skipping";
@@ -178,7 +179,7 @@ void SceneImporter::ImportObjectData(SceneData& data) {
 void SceneImporter::ImportChildrenData(SceneData& data) {
     if (importer->defaultScene() != -1) {
         Logger::Log(IMPORT, INFO) << "Importing Default Scene " << importer->sceneName(importer->defaultScene());
-        data.childrenData = importer->scene(importer->defaultScene());
+        data.childrenData = std::optional<Trade::SceneData>(importer->scene(importer->defaultScene()));
         if (!data.childrenData) {
             Logger::Log(IMPORT, ERR_HERE) << "Children data failed to load";
             throw std::runtime_error("Cannot load scene, Children data failed to load");
