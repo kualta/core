@@ -32,13 +32,15 @@ namespace core {
 
 class ApplicationModule : public IModule {
 public:
-    ApplicationModule(InputModule* inputModule);
+    ApplicationModule(InputModule* inputModule,
+                      const string& windowTitle = "Core Application",
+                      const Rect& windowRect = { 0, 0, 1280, 720 });
 
-    void CreateApplication(const string &title = "Core Application", Rect rect = { 0, 0, 1280, 720 });
+    void CreateApplication(const string& title, Rect rect);
 
-    Vector2 GetWindowDpiScale(uint32_t id = 0);
+    Vector2  GetWindowDpiScale(uint32_t id = 0);
     Vector2i GetWindowSize(uint32_t id = 0);
-    Vector2i GetFrameBufferSize(uint32_t id = 0);
+    Vector2i GetWindowFrameBufferSize(uint32_t id = 0);
 
     void SwapRedraw();
     void Redraw();

@@ -27,10 +27,15 @@
 
 namespace core {
 
-ApplicationModule::ApplicationModule(InputModule* inputModule)
-: IModule("Application", WINDOW), inputModule(inputModule)
+ApplicationModule::ApplicationModule(InputModule*   inputModule,
+                                     const string&  windowTitle,
+                                     const Rect&    windowRect)
+: IModule("Application", WINDOW),
+inputModule(inputModule)
 {
-
+    CreateApplication(windowTitle, windowRect);
+    
+    Shader::standard = std::make_shared<Shader>(); // When moved to Vulkan, could be moved to Shader.cpp
 }
 void ApplicationModule::Start() {
     inputModule->OnViewportEvent.Subscribe([&] (ViewportEvent& event)
@@ -64,7 +69,7 @@ Vector2i ApplicationModule::GetWindowSize(uint32_t id) {
 Vector2 ApplicationModule::GetWindowDpiScale(uint32_t id) {
     return apps[id]->GetDpiScaling();
 }
-Vector2i ApplicationModule::GetFrameBufferSize(uint32_t id) {
+Vector2i ApplicationModule::GetWindowFrameBufferSize(uint32_t id) {
     return apps[id]->GetFrameBufferSize();
 }
 
