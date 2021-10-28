@@ -39,6 +39,7 @@ namespace core {
 unique<Trade::AbstractImporter> SceneImporter::importer { nullptr };
 
 void SceneImporter::InitImporter() {
+    manager.setPreferredPlugins("GltfImporter", { "CgltfImporter" });
     importer = manager.loadAndInstantiate("AnySceneImporter");
     if (!importer) {
         Logger::Log(IMPORT, ERR_HERE) << "Failed to load or instantiate importer";
@@ -130,10 +131,10 @@ void SceneImporter::ImportMaterials(SceneData& data) {
         if (materialTypes & Trade::MaterialType::Phong) {
             auto& material = static_cast<Trade::PhongMaterialData&>(*materialData);
             Logger::Log(IMPORT, INFO) << " | Material type: Phong";
-            Logger::Log(IMPORT, INFO) << " | Diffuse texture:   " << (material.hasAttribute(Trade::MaterialAttribute::DiffuseTexture) ? "Yes" : "No");
-            Logger::Log(IMPORT, INFO) << " | Specular texture:  " << (material.hasAttribute(Trade::MaterialAttribute::SpecularTexture) ? "Yes" : "No");
+            Logger::Log(IMPORT, INFO) << " | Diffuse texture:   " << (material.hasAttribute(Trade::MaterialAttribute::DiffuseTexture)   ? "Yes" : "No");
+            Logger::Log(IMPORT, INFO) << " | Specular texture:  " << (material.hasAttribute(Trade::MaterialAttribute::SpecularTexture)  ? "Yes" : "No");
             Logger::Log(IMPORT, INFO) << " | Occlusion texture: " << (material.hasAttribute(Trade::MaterialAttribute::OcclusionTexture) ? "Yes" : "No");
-            Logger::Log(IMPORT, INFO) << " | Normal texture:    " << (material.hasAttribute(Trade::MaterialAttribute::NormalTexture) ? "Yes" : "No");
+            Logger::Log(IMPORT, INFO) << " | Normal texture:    " << (material.hasAttribute(Trade::MaterialAttribute::NormalTexture)    ? "Yes" : "No");
             data.materials[i] = std::move(material);
         } else if (materialTypes & Trade::MaterialType::Flat) {
             auto& material = static_cast<Trade::FlatMaterialData&>(*materialData);

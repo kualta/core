@@ -20,6 +20,23 @@ option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
 
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    add_link_options(-pthread -lpthread)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W3" )
+
+    # required by corrade
+    set(MSVC2019_COMPATIBILITY TRUE)
+endif()
+
+
 #       Core Engine
 set( CORE_INCLUDE_DIR include )
 set( CORE_LIB_DIR     lib )
@@ -81,6 +98,7 @@ set(MAGNUM_PLUGINS_DIR lib/magnum-plugins)
 
 set(WITH_ANYSCENEIMPORTER   ON CACHE BOOL "" FORCE)
 set(WITH_ANYIMAGEIMPORTER   ON CACHE BOOL "" FORCE)
+set(WITH_CGLTFIMPORTER      ON CACHE BOOL "" FORCE)
 set(WITH_STBIMAGEIMPORTER   ON CACHE BOOL "" FORCE)
 set(WITH_TINYGLTFIMPORTER   ON CACHE BOOL "" FORCE)
 set(WITH_SDL2APPLICATION    ON CACHE BOOL "" FORCE)
@@ -94,7 +112,8 @@ add_subdirectory(${CORE_LIB_DIR}/magnum             EXCLUDE_FROM_ALL)
 add_subdirectory(${CORE_LIB_DIR}/magnum-plugins     EXCLUDE_FROM_ALL)
 add_subdirectory(${CORE_LIB_DIR}/magnum-integration EXCLUDE_FROM_ALL)
 
-add_dependencies(core MagnumPlugins::StbImageImporter)
+add_dependencies(core MagnumPlugins::StbImageImporter
+                      MagnumPlugins::CgltfImporter)
 
 find_package(MagnumIntegration REQUIRED
         ImGui)
@@ -125,18 +144,3 @@ target_link_libraries(core PUBLIC
         Magnum::AnySceneImporter
         MagnumPlugins::AssimpImporter
         MagnumIntegration::ImGui)
-
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    add_link_options(-pthread -lpthread)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fvisibility=hidden -Wall -O3 -Wa,-mbig-obj" )
-    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W3" )
-
-    # required by corrade
-    set(MSVC2019_COMPATIBILITY ON)
-endif()
