@@ -53,8 +53,7 @@ Application::Application(const string& title, Rect rect, int args)
 
     GL::DebugOutput::setDefaultCallback();
     
-    Shader::standard = std::make_shared<Shader>(); // FIXME: Move this to Shader.cpp when GL context before application creation is implemented
-    Logger::Log(WINDOW, INFO) << "Created Application";
+    Logger::Log(WINDOW, INFO) << "Created Application " << std::quoted(title);
 }
 Vector2i Application::GetWindowSize() {
     return windowSize();

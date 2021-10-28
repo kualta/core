@@ -60,12 +60,23 @@ vector<shared<Model>> SceneData::ImportModels(){
     return models;
 }
 void SceneData::AddEntity(vector<shared<Entity>>& container, GraphObject* parent, uint32_t id) {
-    Logger::Log(IMPORT, INFO) << "[" << id << "] Entity" << objectNames[id];
+    Logger::Log(IMPORT, INFO) << "[" << id << "] Entity " << objectNames[id];
     
     shared<Entity> entity = std::make_shared<Entity>(objectNames[id], parent);
     entity->AddComponent<Transform>();
     entity->AddComponent<Renderer>(LoadModel(id));
-    entity->setTransformation(objects[id]->transformation());
+    
+    // FIXME: Relative to parent
+    if (objects[id]->flags() & Trade::ObjectFlag3D::HasTranslationRotationScaling) {
+        entity->GetComponent<Transform>()->SetScale(objects[id]->scaling());
+        entity->GetComponent<Transform>()->SetRotation(objects[id]->rotation());
+        entity->GetComponent<Transform>()->SetPosition(objects[id]->translation());
+    } else {
+        entity->GetComponent<Transform>()->SetScale(objects[id]->transformation().scaling());
+        entity->GetComponent<Transform>()->SetRotation(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
+        entity->GetComponent<Transform>()->SetPosition(objects[id]->transformation().translation());
+    }
+    
     container.push_back(std::move(entity));
     
     /* Recursively add children */
@@ -84,7 +95,7 @@ void SceneData::AddModel(vector<shared<Model>>& container, uint32_t id) {
 }
 shared<Model> SceneData::LoadModel(uint32_t id) {
     shared<Material> material = make_shared<Material>();
-    const Containers::Pointer<Trade::ObjectData3D>& object = objects[id];
+    const unique<Trade::ObjectData3D>& object = objects[id];
     if (object->instanceType() == Trade::ObjectInstanceType3D::Mesh && id != -1 && meshes[id]) {
         const int32_t materialID = dynamic_cast<const Trade::MeshObjectData3D*>(object.get())->material();
         

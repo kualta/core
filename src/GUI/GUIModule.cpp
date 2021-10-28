@@ -36,7 +36,7 @@ GUIModule::GUIModule(ApplicationModule* appModule, InputModule* inputModule)
 void GUIModule::Start() {
     const Vector2 dpiScale         = appModule->GetWindowDpiScale(0);
     const Vector2i windowSize      = appModule->GetWindowSize(0);
-    const Vector2i frameBufferSize = appModule->GetFrameBufferSize(0);
+    const Vector2i frameBufferSize = appModule->GetWindowFrameBufferSize(0);
     const float supersamplingRatio = frameBufferSize.x() / windowSize.x();
 
     ImGui::CreateContext();
