@@ -36,10 +36,12 @@ public:
     explicit Transform(Entity& parent, const string& name = "Transform");
 
     Event<Matrix4>    OnTransformChange;
+    Event<Matrix4>    OnLocalTransformChange;
     Event<Vector3>    OnPositionChange;
     Event<Vector3>    OnScaleChange;
     Event<Quaternion> OnRotationChange;
     
+    Matrix4&    GetFullTransformMatrix();
     Matrix4&    GetTransformMatrix();
     Vector3&    GetPosition();
     Quaternion& GetRotation();
@@ -73,7 +75,7 @@ protected:
     /** Vector representing scale of the entity by x, y and z axis */
     Vector3    scale    { 1, 1, 1 };
 
-    Matrix4 transformMtx;
+    Matrix4 localTransformMtx;
 
 };
 

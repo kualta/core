@@ -26,19 +26,19 @@
 
 namespace core {
 
-Transform::Transform(Entity& parent, const string& name) : IComponent(parent, name) {
+Transform::Transform(Entity& parent, const string& name)
+: IComponent(parent, name) {
     parent.assertExistingComponent<Transform>();
 }
 void Transform::Tick() {
+
 }
 void Transform::UpdateTransformMatrix() {
-    transformMtx = Matrix4::from(rotation.toMatrix(), position)
-                 * Matrix4::scaling(scale);
-    
-    OnTransformChange.Trigger(transformMtx);
+    localTransformMtx = Matrix4::from(rotation.toMatrix(), position) * Matrix4::scaling(scale);
+    OnTransformChange.Trigger(localTransformMtx);
 }
 Matrix4& Transform::GetTransformMatrix() {
-    return transformMtx;
+    return localTransformMtx;
 }
 Vector3& Transform::GetPosition() {
     return position;

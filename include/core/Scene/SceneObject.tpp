@@ -21,30 +21,39 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_LAYERLINKED_H
-#define CORE_LAYERLINKED_H
+#ifndef CORE_SCENEOBJECT_TPP
+#define CORE_SCENEOBJECT_TPP
 
-#include "Essentials.h"
-#include "Layer.h"
+#include "SceneObject.h"
 
 namespace core {
 
-template<typename T> class LayerLinked {
-public:
-    LayerLinked();
-    virtual ~LayerLinked();
+template<typename T>
+SceneObject<T>::SceneObject(const shared<SceneObject<T>>& parent)
+: parent(parent)
+{
 
-    void LinkLayer(const string& name);
-    void UnlinkLayer(const string& name);
+}
+template<typename T>
+shared<SceneObject<T>>& SceneObject<T>::GetParent() {
+    return parent;
+}
+template<typename T>
+vector<shared<SceneObject<T>>>& SceneObject<T>::GetChildren() {
+    return children;
+}
+template<typename T>
+void SceneObject<T>::SetParent(const shared<SceneObject<T>>& newParent) {
+    parent = newParent;
+}
+template<typename T>
+void SceneObject<T>::DestroyChildren() {
+    for (auto& child : children) {
+        child->DestroyChildren();
+        child.reset();
+    }
+}
 
-protected:
+}
 
-    vector<shared<Layer>> linkedLayers;
-
-};
-
-} // namespace core
-
-#include "LayerLinked.tpp"
-
-#endif //CORE_LAYERLINKED_H
+#endif //CORE_SCENEOBJECT_TPP

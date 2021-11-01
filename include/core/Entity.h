@@ -1,7 +1,6 @@
 /**
  *  Check Entity.tpp for template definitions
  */
-
 /*
  MIT License
  
@@ -33,11 +32,9 @@
 #include "IComponent.h"
 #include "Object.h"
 #include "Layer.h"
-#include "Scene/Scene.h"
 #include "IDrawable.h"
-
-#include <Magnum/SceneGraph/MatrixTransformation3D.h>
-#include <Magnum/SceneGraph/Scene.h>
+#include "Scene/Scene.h"
+#include "Scene/SceneObject.h"
 
 #include <memory>
 #include <utility>
@@ -45,17 +42,15 @@
 
 namespace core {
 
-typedef SceneGraph::Object<SceneGraph::MatrixTransformation3D> GraphObject;
-
 /**
  *  Class of every object appearing on the scene.
  *  @note Not derivable, use Component system instead
  */
-class Entity final : public Object, public GraphObject, public ITicker, public Instantiable<Entity> {
+class Entity final : public Object, public ITicker, public SceneObject<Entity>, public Instantiable<Entity> {
 public:
-    explicit Entity(const string& name = "Entity",
-                    GraphObject* parent = Scene::Get(),
-                    Layer* layer = Layer::Get("Default") );
+    explicit Entity(const string&           name = "Entity",
+                    const shared<Entity>& parent = Scene::Get("Default")->Root(),
+                    const shared<Layer>&   layer = Layer::Get("Default") );
     ~Entity() final;
 
     /**
@@ -125,7 +120,12 @@ public:
      * Get Layer this entity is attached to
      * @return pointer to Layer
      */
-    Layer* GetLayer();
+    shared<Layer> GetLayer();
+    
+    /**
+     * Destroys this entity and its children
+     */
+    static void Destroy(shared<Entity>& entity);
 
 
     bool operator==(const Entity &rhs) const;
@@ -160,7 +160,7 @@ protected:
         vector<IDrawable*>          drawables     { };
     } components;
 
-    Layer* layer;
+    shared<Layer> layer;
 };
 
 } // namespace core

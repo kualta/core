@@ -31,6 +31,12 @@
 #include <Magnum/Trade/FlatMaterialData.h>
 #include <Magnum/Trade/PhongMaterialData.h>
 #include <Magnum/Trade/MaterialData.h>
+#include <Magnum/Trade/TextureData.h>
+#include <Magnum/Trade/ObjectData3D.h>
+#include <Magnum/Trade/ImageData.h>
+#include <Magnum/GL/Texture.h>
+#include <Magnum/PixelFormat.h>
+#include <Magnum/ImageView.h>
 
 #include <memory>
 

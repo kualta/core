@@ -26,16 +26,19 @@
 #include <core/Components.h>
 #include <core/Model.h>
 
+#include <Magnum/Trade/ObjectData3D.h>
+#include <Magnum/Trade/MeshObjectData3D.h>
+
 namespace core {
 
 vector<shared<Entity>> SceneData::ImportEntities() {
     vector<shared<Entity>> container;
     if (childrenData) {
         for (uint32_t id : childrenData->children3D()) {
-            SceneData::AddEntity(container, Scene::Get(), id);
+            SceneData::AddEntity(container, Scene::Get("Default")->Root(), id);
         }
     } else if (!meshes.empty() && meshes[0]) {
-        shared<Entity> object = make_shared<Entity>("Entity", Scene::Get());
+        shared<Entity> object = make_shared<Entity>("Entity", Scene::Get("Default")->Root());
         object->AddComponent<Transform>();
         object->AddComponent<Renderer>(make_shared<Model>(make_shared<Mesh>(&(*meshes[0])), Shader::standard));
         container.push_back(std::move(object));
@@ -59,29 +62,36 @@ vector<shared<Model>> SceneData::ImportModels(){
     
     return models;
 }
-void SceneData::AddEntity(vector<shared<Entity>>& container, GraphObject* parent, uint32_t id) {
+void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id) {
     Logger::Log(IMPORT, INFO) << "[" << id << "] Entity " << objectNames[id];
     
     shared<Entity> entity = std::make_shared<Entity>(objectNames[id], parent);
     entity->AddComponent<Transform>();
     entity->AddComponent<Renderer>(LoadModel(id));
     
-    // FIXME: Relative to parent
-    if (objects[id]->flags() & Trade::ObjectFlag3D::HasTranslationRotationScaling) {
-        entity->GetComponent<Transform>()->SetScale(objects[id]->scaling());
-        entity->GetComponent<Transform>()->SetRotation(objects[id]->rotation());
-        entity->GetComponent<Transform>()->SetPosition(objects[id]->translation());
-    } else {
-        entity->GetComponent<Transform>()->SetScale(objects[id]->transformation().scaling());
-        entity->GetComponent<Transform>()->SetRotation(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
-        entity->GetComponent<Transform>()->SetPosition(objects[id]->transformation().translation());
+    // If GetParent() returns null, parent is root
+    if (parent->GetParent()) {
+        Transform* parentTransform = parent->GetComponent<Transform>();
+        entity->GetComponent<Transform>()->SetScale(parentTransform->GetScale());
+        entity->GetComponent<Transform>()->SetRotation(parentTransform->GetRotation());
+        entity->GetComponent<Transform>()->SetPosition(parentTransform->GetPosition());
     }
     
-    container.push_back(std::move(entity));
+    if (objects[id]->flags() & Trade::ObjectFlag3D::HasTranslationRotationScaling) {
+        entity->GetComponent<Transform>()->Scale(objects[id]->scaling());
+        entity->GetComponent<Transform>()->Rotate(objects[id]->rotation());
+        entity->GetComponent<Transform>()->Translate(objects[id]->translation());
+    } else {
+        entity->GetComponent<Transform>()->Scale(objects[id]->transformation().scaling());
+        entity->GetComponent<Transform>()->Rotate(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
+        entity->GetComponent<Transform>()->Translate(objects[id]->transformation().translation());
+    }
+    
+    container.push_back(entity);
     
     /* Recursively add children */
     for (std::size_t childId : objects[id]->children()) {
-        AddEntity(container, entity.get(), childId);
+        AddEntity(container, entity, childId);
     }
 }
 void SceneData::AddModel(vector<shared<Model>>& container, uint32_t id) {

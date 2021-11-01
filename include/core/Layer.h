@@ -24,14 +24,15 @@
 #ifndef CORE_LAYER_H
 #define CORE_LAYER_H
 
-#include "Essentials.h"
-#include "IDrawable.h"
-#include "Instantiable.h"
-#include "Object.h"
+#include "core/Essentials.h"
+#include "core/IDrawable.h"
+#include "core/Instantiable.h"
+#include "core/Object.h"
+#include "core/NamedObjectContainer.h"
 
 namespace core {
 
-class Layer : public Object, public IDrawable {
+class Layer : public Object, public NamedObjectContainer<Layer>, public IDrawable {
 public:
     explicit Layer(const string& name);
 
@@ -40,10 +41,6 @@ public:
 
     /** Copying is not allowed */
     Layer(const Layer& other) = delete;
-
-    static bool LayerExist(const string& name);
-    static Layer* CreateNewLayer(const string& name);
-    static Layer* Get(const string& name);
 
     template<typename T>
     void Link(T& obj);
@@ -73,9 +70,6 @@ private:
 
     template<typename T>
     void assertSupportedType();
-
-
-    static std::vector<unique<Layer>> layers;
 
 };
 

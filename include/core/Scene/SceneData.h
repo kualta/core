@@ -61,7 +61,7 @@ public:
      */
     vector<shared<Model>> ImportModels();
     
-    void AddEntity(vector<shared<Entity>>& container, GraphObject* parent, uint32_t id);
+    void AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id);
     void AddModel(vector<shared<Model>>& container, uint32_t id);
     shared<Model> LoadModel(uint32_t id);
     void SetTextures(const shared<Material>& material, uint32_t id);
