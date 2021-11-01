@@ -78,7 +78,7 @@ void Camera::Tick() {
 }
 void Camera::Draw() {
     attachedView->Bind();
-    for (Layer* layer : linkedLayers) {
+    for (const shared<Layer>& layer : linkedLayers) {
         layer->Draw();
     }
     attachedView->Blit();
@@ -146,7 +146,7 @@ void Camera::SetView(View& view) {
     });
 }
 void Camera::UpdateLayersProjectionMatrix() {
-    for (Layer* layer : linkedLayers) {
+    for (const shared<Layer>& layer : linkedLayers) {
         layer->SetProjectionMatrix(projectionMtx);
     }
 }
@@ -156,8 +156,6 @@ void Camera::BindAttachedView() {
 void Camera::BlitAttachedView() {
     attachedView->Blit();
 }
-
-
 SceneCamera::SceneCamera(Entity& parent, float aspectRatio, Deg fov, float farPlane, float nearPlane)
 : Camera(parent, aspectRatio, fov, farPlane, nearPlane)
 {

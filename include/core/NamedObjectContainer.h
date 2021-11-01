@@ -21,30 +21,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_LAYERLINKED_H
-#define CORE_LAYERLINKED_H
+#ifndef CORE_NAMEDOBJECTCONTAINER_H
+#define CORE_NAMEDOBJECTCONTAINER_H
 
-#include "Essentials.h"
-#include "Layer.h"
+#include "core/Essentials.h"
 
 namespace core {
 
-template<typename T> class LayerLinked {
+template<typename T>
+class NamedObjectContainer {
 public:
-    LayerLinked();
-    virtual ~LayerLinked();
-
-    void LinkLayer(const string& name);
-    void UnlinkLayer(const string& name);
+    
+    static bool Exists(const string& obj);
+    static void Delete(const string& name);
+    static shared<T> Create(const string& name);
+    static shared<T> Get(const string& o);
 
 protected:
-
-    vector<shared<Layer>> linkedLayers;
-
+    
+    static vector<shared<T>> container;
 };
 
 } // namespace core
 
-#include "LayerLinked.tpp"
+#include "NamedObjectContainer.tpp"
 
-#endif //CORE_LAYERLINKED_H
+#endif //CORE_NAMEDOBJECTCONTAINER_H

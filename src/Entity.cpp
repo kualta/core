@@ -29,8 +29,8 @@
 
 namespace core {
 
-Entity::Entity(const string& name, GraphObject* parent, Layer* layer)
-: core::Object(name), GraphObject(parent), layer(layer)
+Entity::Entity(const string& name, const shared<Entity>& parent, const shared<Layer>& layer)
+: Object(name), SceneObject(parent), layer(layer)
 {
     layer->Link(*this);
 }
@@ -62,14 +62,18 @@ bool Entity::operator==(const Entity &rhs) const {
     return this->GetId() == rhs.GetId();
 }
 void Entity::SetLayer(const string& name) {
-    Layer* newLayer = Layer::Get(name);
+    shared<Layer> newLayer = Layer::Get(name);
     layer->Unlink(*this);
     newLayer->Link(*this);
 
     layer = newLayer;
 }
-Layer* Entity::GetLayer() {
+shared<Layer> Entity::GetLayer() {
     return layer;
+}
+void Entity::Destroy(shared<Entity>& entity) {
+    entity->DestroyChildren();
+    entity.reset();
 }
 
 } // namespace core

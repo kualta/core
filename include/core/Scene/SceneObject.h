@@ -21,30 +21,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#ifndef CORE_LAYERLINKED_H
-#define CORE_LAYERLINKED_H
+#ifndef CORE_SCENEOBJECT_H
+#define CORE_SCENEOBJECT_H
 
-#include "Essentials.h"
-#include "Layer.h"
+#include "core/Essentials.h"
 
 namespace core {
 
-template<typename T> class LayerLinked {
+template<typename T>
+class SceneObject {
 public:
-    LayerLinked();
-    virtual ~LayerLinked();
-
-    void LinkLayer(const string& name);
-    void UnlinkLayer(const string& name);
+    SceneObject(const shared<SceneObject>& parent);
+    
+    shared<SceneObject<T>>& GetParent();
+    vector<shared<SceneObject<T>>>& GetChildren();
+    
+    void SetParent(const shared<SceneObject<T>>& newParent);
+    void DestroyChildren();
 
 protected:
-
-    vector<shared<Layer>> linkedLayers;
+    
+    shared<SceneObject<T>> parent;
+    vector<shared<SceneObject<T>>> children;
 
 };
 
 } // namespace core
 
-#include "LayerLinked.tpp"
+#include "SceneObject.tpp"
 
-#endif //CORE_LAYERLINKED_H
+#endif //CORE_SCENEOBJECT_H

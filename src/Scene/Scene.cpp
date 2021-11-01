@@ -22,9 +22,18 @@
  SOFTWARE.
  */
 #include <core/Scene/Scene.h>
+#include <core/Entity.h>
 
 namespace core {
 
-SceneGraph::DrawableGroup3D Scene::drawables;
+shared<Entity> Scene::root = std::make_shared<Entity>("Root", nullptr);
+
+Scene::Scene(const string& name)
+: Object(name) {
+
+}
+shared<Entity> Scene::Root() {
+    return root;
+}
 
 }

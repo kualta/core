@@ -53,7 +53,7 @@ bool Layer::IsLinked(T& obj) {
     std::vector<T*>& container = GetContainerForType<T>();
 
     auto item = std::find(container.begin(), container.end(), &obj);
-    return item != container.end() ? true : false;
+    return item != container.end();
 }
 template<typename T>
 void Layer::assertSupportedType() {
