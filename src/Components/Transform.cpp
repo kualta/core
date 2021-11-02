@@ -23,22 +23,27 @@
  */
 #include <core/Components/Transform.h>
 #include <core/Entity.h>
+#include <core/Math.h>
 
 namespace core {
 
-Transform::Transform(Entity& parent, const string& name)
-: IComponent(parent, name) {
-    parent.assertExistingComponent<Transform>();
+Transform::Transform(Entity& entity, const string& name)
+: IComponent(entity, name), parentTransform(const_cast<Matrix4&>(Math::identityMatrix)) {
+    entity.assertExistingComponent<Transform>();
+    
+    if (entity.GetParent() && entity.GetParent()->HasComponent<Transform>()) {
+        parentTransform = entity.GetParent()->GetComponent<Transform>()->GetTransformMatrix();
+    }
 }
 void Transform::Tick() {
 
 }
-void Transform::UpdateTransformMatrix() {
-    localTransformMtx = Matrix4::from(rotation.toMatrix(), position) * Matrix4::scaling(scale);
-    OnTransformChange.Trigger(localTransformMtx);
+void Transform::UpdateTransform() {
+    localTransform = parentTransform * Matrix4::from(rotation.toMatrix(), position) * Matrix4::scaling(scale);
+    OnTransformChange.Trigger(localTransform);
 }
 Matrix4& Transform::GetTransformMatrix() {
-    return localTransformMtx;
+    return localTransform;
 }
 Vector3& Transform::GetPosition() {
     return position;
@@ -49,34 +54,37 @@ Quaternion& Transform::GetRotation() {
 Vector3& Transform::GetScale() {
     return scale;
 }
+void Transform::SetParent(Transform* parent) {
+    parentTransform = parent->GetTransformMatrix();
+}
 void Transform::SetPosition(Vector3& vec) {
     position = vec;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnPositionChange.Trigger(position);
 }
 void Transform::SetPosition(Vector3&& vec) {
     position = vec;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnPositionChange.Trigger(position);
 }
 void Transform::SetRotation(const Quaternion& rot) {
     rotation = rot;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnRotationChange.Trigger(rotation);
 }
 void Transform::SetRotation(const Quaternion&& rot) {
     rotation = rot;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnRotationChange.Trigger(rotation);
 }
 void Transform::SetScale(Vector3& vec) {
     scale = vec;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnScaleChange.Trigger(scale);
 }
 void Transform::SetScale(Vector3&& vec) {
     scale = vec;
-    UpdateTransformMatrix();
+    UpdateTransform();
     OnScaleChange.Trigger(scale);
 }
 void Transform::Translate(Vector3& vec) {
@@ -96,6 +104,9 @@ void Transform::Scale(Vector3& vec) {
 }
 void Transform::Scale(Vector3&& vec) {
     SetScale(scale * vec);
+}
+Matrix4& Transform::GetWorldTransformMatrix() {
+    throw std::logic_error("Not yet implmented");
 }
 
 }

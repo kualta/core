@@ -1,3 +1,6 @@
+/**
+ * Check SceneObject.tpp for template difinitions.
+ */
 /*
  MIT License
  
@@ -31,18 +34,19 @@ namespace core {
 template<typename T>
 class SceneObject {
 public:
-    SceneObject(const shared<SceneObject>& parent);
+    SceneObject(const shared<T>& parent);
+    virtual ~SceneObject();
     
-    shared<SceneObject<T>>& GetParent();
-    vector<shared<SceneObject<T>>>& GetChildren();
+    shared<T>& GetParent();
+    vector<shared<T>>& GetChildren();
     
-    void SetParent(const shared<SceneObject<T>>& newParent);
+    void SetParent(const shared<T>& newParent);
     void DestroyChildren();
 
 protected:
     
-    shared<SceneObject<T>> parent;
-    vector<shared<SceneObject<T>>> children;
+    shared<T> parent;
+    vector<shared<T>> children;
 
 };
 

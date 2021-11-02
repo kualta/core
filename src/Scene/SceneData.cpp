@@ -69,8 +69,7 @@ void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity
     entity->AddComponent<Transform>();
     entity->AddComponent<Renderer>(LoadModel(id));
     
-    // If GetParent() returns null, parent is root
-    if (parent->GetParent()) {
+    if (parent && parent->HasComponent<Transform>()) {
         Transform* parentTransform = parent->GetComponent<Transform>();
         entity->GetComponent<Transform>()->SetScale(parentTransform->GetScale());
         entity->GetComponent<Transform>()->SetRotation(parentTransform->GetRotation());

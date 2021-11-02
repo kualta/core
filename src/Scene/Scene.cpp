@@ -26,13 +26,13 @@
 
 namespace core {
 
-shared<Entity> Scene::root = std::make_shared<Entity>("Root", nullptr);
+const shared<Entity> Scene::root = std::make_shared<Entity>("Root", nullptr);
 
 Scene::Scene(const string& name)
 : Object(name) {
 
 }
-shared<Entity> Scene::Root() {
+const shared<Entity>& Scene::Root() {
     return root;
 }
 

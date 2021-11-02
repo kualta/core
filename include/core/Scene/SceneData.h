@@ -40,6 +40,8 @@
 #include <core/Entity.h>
 #include <core/Material.h>
 
+#include <optional>
+
 using namespace Magnum;
 namespace core {
 
