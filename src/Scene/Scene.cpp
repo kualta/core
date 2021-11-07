@@ -26,14 +26,25 @@
 
 namespace core {
 
-const shared<Entity> Scene::root = std::make_shared<Entity>("Root", nullptr);
+shared<Scene> Scene::current { nullptr };
 
 Scene::Scene(const string& name)
-: Object(name) {
-
+: Object(name), root(std::make_shared<Entity>("Root", nullptr))
+{
+    if (!current) { current = shared<Scene>(this); }
 }
 const shared<Entity>& Scene::Root() {
     return root;
+}
+shared<Scene> Scene::GetCurrent() {
+    if (!current) {
+        Logger::Log(SCENE, ERR) << "No available scene found";
+        throw std::logic_error("No available scene found");
+    }
+    return current;
+}
+void Scene::SetCurrent(const shared<Scene>& scene) {
+    current = scene;
 }
 
 }

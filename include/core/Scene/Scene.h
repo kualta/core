@@ -35,11 +35,15 @@ class Scene : public Object, public NamedObjectContainer<Scene> {
 public:
     explicit Scene(const string& name);
 
-    static const shared<Entity>& Root(); // FIXME: make non-static
+    const shared<Entity>& Root();
+    
+    static shared<Scene> GetCurrent();
+    static void SetCurrent(const shared<Scene>& scene);
     
 protected:
     
-    static const shared<Entity> root;
+    const shared<Entity> root;
+    static shared<Scene> current;
 
 };
 

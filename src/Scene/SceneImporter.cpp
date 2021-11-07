@@ -169,7 +169,7 @@ void SceneImporter::ImportMeshes(SceneData& data) {
 }
 void SceneImporter::ImportObjectData(SceneData& data) {
     data.objects = std::vector<unique<Trade::ObjectData3D>> { importer->object3DCount() };
-    data.objectNames = std::vector<string> { importer->object3DCount() };
+    data.names = std::vector<string> { importer->object3DCount() };
     for (uint32_t i = 0; i != importer->object3DCount(); ++i) {
         unique<Trade::ObjectData3D> objectData = importer->object3D(i);
         string name = importer->object3DName(i);
@@ -180,14 +180,14 @@ void SceneImporter::ImportObjectData(SceneData& data) {
         Logger::Log(IMPORT, INFO) << "[" << i << "] Model" << importer->object3DName(i);
         
         data.objects[i] = std::move(objectData);
-        data.objectNames[i] = name;
+        data.names[i] = name;
     }
 }
 void SceneImporter::ImportChildrenData(SceneData& data) {
     if (importer->defaultScene() != -1) {
         Logger::Log(IMPORT, INFO) << "Importing Default Scene " << importer->sceneName(importer->defaultScene());
-        data.childrenData = std::optional<Trade::SceneData>(importer->scene(importer->defaultScene()));
-        if (!data.childrenData) {
+        data.children = std::optional<Trade::SceneData>(importer->scene(importer->defaultScene()));
+        if (!data.children) {
             Logger::Log(IMPORT, ERR_HERE) << "Children data failed to load";
             throw std::runtime_error("Cannot load scene, Children data failed to load");
         }
