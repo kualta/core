@@ -24,16 +24,34 @@
 #include <core/Scene/Scene.h>
 #include <core/Entity.h>
 
+#include <utility>
+
 namespace core {
 
-shared<Entity> Scene::root = std::make_shared<Entity>("Root", nullptr);
+Scene* Scene::current { nullptr };
 
 Scene::Scene(const string& name)
-: Object(name) {
-
+: Object(name), root { make_shared<Entity>("Root", nullptr) }
+{
+    if (!current) current = this;
+}
+Scene::~Scene() {
+    if (current && current == this) {
+        current = nullptr;
+    }
 }
 shared<Entity> Scene::Root() {
     return root;
+}
+Scene* Scene::GetCurrent() {
+    if (!current) {
+        Logger::Log(SCENE, ERR_HERE) << "No current scene set";
+        throw std::logic_error("No current scene set");
+    }
+    return current;
+}
+void Scene::SetCurrent(shared<Scene> scene) {
+    current = scene.get();
 }
 
 }

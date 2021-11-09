@@ -1,7 +1,6 @@
 /**
- * This header contains forward-declarations for core and bgfx classes
+ * Forward declarations for Core classes
  */
-
 /*
  MIT License
  
@@ -28,13 +27,23 @@
 #ifndef CORE_ESSENTIALS_H
 #define CORE_ESSENTIALS_H
 
-// ### Core defines ###
+/**     Core defines     */
 #ifndef SDL_MAIN_HANDLED
 #   define SDL_MAIN_HANDLED
 #endif
 
 #ifndef NULL
 #   define NULL 0
+#endif
+
+#ifndef CORE_MAJOR_VERSION
+#   define CORE_MAJOR_VERSION 0
+#endif
+#ifndef CORE_MINOR_VERSION
+#   define CORE_MINOR_VERSION 4
+#endif
+#ifndef CORE_PATCH_VERSION
+#   define CORE_PATCH_VERSION 0
 #endif
 
 #ifndef __FILENAME__
@@ -46,29 +55,32 @@
 #   endif
 #endif
 
-#ifndef CORE_MAJOR_VERSION
-#   define CORE_MAJOR_VERSION 0
-#endif
-
-#ifndef CORE_MINOR_VERSION
-#   define CORE_MINOR_VERSION 2
-#endif
-
-#ifndef CORE_PATCH_VERSION
-#   define CORE_PATCH_VERSION 0
-#endif
-// Core defines
-
-// ### Core includes ###
-#include <string>
+/**     Core std includes     */
+#include <optional>
 #include <cstring>
-#include <vector>
-#include <memory>
 #include <utility>
 #include <cstdint>
 #include <cassert>
-// Core includes
+#include <string>
+#include <vector>
+#include <memory>
 
+/**     Core std defines     */
+namespace core {
+
+template<typename T> using shared = std::shared_ptr<T>;
+template<typename T> using unique = std::unique_ptr<T>;
+template<typename T> using weak = std::weak_ptr<T>;
+using std::make_shared;
+using std::make_unique;
+using std::optional;
+using std::vector;
+using std::string;
+using std::size_t;
+
+}
+
+/**     Core forward-declarations     */
 namespace core {
 
 class Core;
@@ -130,16 +142,6 @@ struct WireCube;
 struct WireSphere;
 struct WireCone;
 struct WireCylinder;
-
-
-//      std
-template <typename T>
-using shared = std::shared_ptr<T>;
-template <typename T>
-using unique = std::unique_ptr<T>;
-using std::make_shared;
-using std::vector;
-using std::string;
 
 } // namespace core
 

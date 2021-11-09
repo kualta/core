@@ -48,9 +48,9 @@ namespace core {
  */
 class Entity final : public Object, public ITicker, public SceneObject<Entity>, public Instantiable<Entity> {
 public:
-    explicit Entity(const string&           name = "Entity",
-                    const shared<Entity>& parent = Scene::Get("Default")->Root(),
-                    const shared<Layer>&   layer = Layer::Get("Default") );
+    explicit Entity(const string&    name = "Entity",
+                    shared<Entity> parent = Scene::Get("Default")->Root(),
+                    shared<Layer>   layer = Layer::Get("Default") );
     ~Entity() final;
 
     /**

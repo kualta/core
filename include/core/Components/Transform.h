@@ -33,20 +33,20 @@ namespace core {
 
 class Transform : public IComponent {
 public:
-    explicit Transform(Entity& parent, const string& name = "Transform");
+    explicit Transform(Entity& entity, const string& name = "Transform");
 
     Event<Matrix4>    OnTransformChange;
-    Event<Matrix4>    OnLocalTransformChange;
     Event<Vector3>    OnPositionChange;
     Event<Vector3>    OnScaleChange;
     Event<Quaternion> OnRotationChange;
     
-    Matrix4&    GetFullTransformMatrix();
+    Matrix4&    GetWorldTransformMatrix();
     Matrix4&    GetTransformMatrix();
     Vector3&    GetPosition();
     Quaternion& GetRotation();
     Vector3&    GetScale();
 
+    void SetParent(Transform* parent);
     void SetRotation(const Quaternion& rotation);
     void SetRotation(const Quaternion&& rotation);
     void SetPosition(Vector3& position);
@@ -64,7 +64,7 @@ public:
 protected:
 
     void Tick() override;
-    void UpdateTransformMatrix();
+    void UpdateTransform();
 
     /** Vector representing position of the entity */
     Vector3    position { 0, 0, 0 };
@@ -75,7 +75,8 @@ protected:
     /** Vector representing scale of the entity by x, y and z axis */
     Vector3    scale    { 1, 1, 1 };
 
-    Matrix4 localTransformMtx;
+    Matrix4     localTransform;
+    Matrix4&    parentTransform;
 
 };
 

@@ -36,28 +36,30 @@ namespace core {
 
 class SceneImporter : public Importer {
 public:
+    SceneImporter();
 
     /**
      * Imports and returns pointer to core::SceneData
      * @param filepath - path to scene file
      * @return core::SceneData* data
      */
-    static shared<SceneData> ImportScene(const string& filepath);
+    shared<SceneData> ImportScene(const string& filepath);
     
 protected:
-    
-    static void ImportChildrenData(SceneData& data);
-    static void ImportObjectData(SceneData& data);
-    static void ImportMaterials(SceneData& data);
-    static void ImportTextures(SceneData& data);
-    static void ImportMeshes(SceneData& data);
     
     static GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat);
     
     void InitImporter();
     void OpenFile(const string& filepath);
-
-    static unique<Trade::AbstractImporter> importer;
+    
+    void ImportChildrenData(SceneData& data);
+    void ImportObjectData(SceneData& data);
+    void ImportMaterials(SceneData& data);
+    void ImportTextures(SceneData& data);
+    void ImportMeshes(SceneData& data);
+    
+    unique<Trade::AbstractImporter> importer;
+    
 };
 
 }

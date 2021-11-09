@@ -27,10 +27,12 @@
 #include <core/Entity.h>
 #include <core/Logger.h>
 
+#include <utility>
+
 namespace core {
 
-Entity::Entity(const string& name, const shared<Entity>& parent, const shared<Layer>& layer)
-: Object(name), SceneObject(parent), layer(layer)
+Entity::Entity(const string& name, shared<Entity> parent, shared<Layer> layer)
+: Object(name), SceneObject(std::move(parent)), layer(layer)
 {
     layer->Link(*this);
 }

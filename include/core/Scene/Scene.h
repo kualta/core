@@ -31,15 +31,21 @@
 
 namespace core {
 
-class Scene : public Object, public NamedObjectContainer<Scene> {
+class Scene : public Object, public NamedObjectContainer<Scene>, public std::enable_shared_from_this<Scene> {
 public:
     explicit Scene(const string& name);
+    virtual ~Scene();
 
-    static shared<Entity> Root(); // FIXME: make non-static
+    shared<Entity> Root();
+    
+    static Scene* GetCurrent();
+    static void SetCurrent(shared<Scene> scene);
     
 protected:
     
-    static shared<Entity> root;
+    const shared<Entity> root;
+    
+    static Scene* current;
 
 };
 

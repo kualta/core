@@ -27,7 +27,7 @@ set( CORE_SRC_DIR     src )
 
 file( GLOB_RECURSE CORE_SOURCES
         ${CORE_INCLUDE_DIR}/core/*.h
-        ${CORE_INCLUDE_DIR}/core/*.hpp
+        ${CORE_INCLUDE_DIR}/core/*.tpp
         ${CORE_SRC_DIR}/*.cpp )
 
 add_library( core STATIC ${CORE_SOURCES} )
@@ -44,7 +44,6 @@ if ( CORE_SIMPLIFY_SYNTAX )
 endif()
 
 
-
 #       Compiler-specific options
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
@@ -55,7 +54,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W3" )
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /W4" )
 
     # required by corrade
     set(MSVC2019_COMPATIBILITY TRUE)

@@ -40,6 +40,8 @@
 #include <core/Entity.h>
 #include <core/Material.h>
 
+#include <optional>
+
 using namespace Magnum;
 namespace core {
 
@@ -61,17 +63,23 @@ public:
      */
     vector<shared<Model>> ImportModels();
     
+    vector<optional<Trade::MaterialData>> materials;
+    vector<unique<Trade::ObjectData3D>>   objects;
+    vector<optional<GL::Texture2D>>       textures;
+    vector<optional<GL::Mesh>>            meshes;
+    vector<string>                        names;
+    
+    optional<Trade::SceneData>            children;
+
+protected:
+    
     void AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id);
     void AddModel(vector<shared<Model>>& container, uint32_t id);
-    shared<Model> LoadModel(uint32_t id);
     void SetTextures(const shared<Material>& material, uint32_t id);
     
-    std::optional<Trade::SceneData> childrenData;
-    vector<std::optional<GL::Mesh>> meshes;
-    vector<std::optional<GL::Texture2D>> textures;
-    vector<std::optional<Trade::MaterialData>> materials;
-    vector<unique<Trade::ObjectData3D>> objects;
-    vector<string> objectNames;
+    shared<Model> LoadModel(uint32_t id);
+    
+    
 };
 
 }

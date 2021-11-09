@@ -29,21 +29,25 @@
 namespace core {
 
 template<typename T>
-SceneObject<T>::SceneObject(const shared<SceneObject<T>>& parent)
+SceneObject<T>::SceneObject(shared<T> parent)
 : parent(parent)
 {
 
 }
 template<typename T>
-shared<SceneObject<T>>& SceneObject<T>::GetParent() {
-    return parent;
+SceneObject<T>::~SceneObject() {
+
 }
 template<typename T>
-vector<shared<SceneObject<T>>>& SceneObject<T>::GetChildren() {
+shared<T> SceneObject<T>::GetParent() {
+    if (!parent.expired()) { return parent.lock(); }
+}
+template<typename T>
+vector<shared<T>>& SceneObject<T>::GetChildren() {
     return children;
 }
 template<typename T>
-void SceneObject<T>::SetParent(const shared<SceneObject<T>>& newParent) {
+void SceneObject<T>::SetParent(shared<T> newParent) {
     parent = newParent;
 }
 template<typename T>

@@ -22,10 +22,12 @@
  SOFTWARE.
  */
 #include <core/Scene/SceneData.h>
-#include <core/Scene/SceneData.h>
 #include <core/Components.h>
 #include <core/Model.h>
 
+#include <Corrade/Containers/Pointer.h>
+#include <Corrade/Containers/Array.h>
+#include <Corrade/Containers/PointerStl.h>
 #include <Magnum/Trade/ObjectData3D.h>
 #include <Magnum/Trade/MeshObjectData3D.h>
 
@@ -33,14 +35,15 @@ namespace core {
 
 vector<shared<Entity>> SceneData::ImportEntities() {
     vector<shared<Entity>> container;
-    if (childrenData) {
-        for (uint32_t id : childrenData->children3D()) {
-            SceneData::AddEntity(container, Scene::Get("Default")->Root(), id);
+    if (children) {
+        for (uint32_t id : children->children3D()) {
+            SceneData::AddEntity(container, Scene::GetCurrent()->Root(), id);
         }
     } else if (!meshes.empty() && meshes[0]) {
-        shared<Entity> object = make_shared<Entity>("Entity", Scene::Get("Default")->Root());
+        shared<Entity> object = make_shared<Entity>("Entity", Scene::GetCurrent()->Root());
         object->AddComponent<Transform>();
         object->AddComponent<Renderer>(make_shared<Model>(make_shared<Mesh>(&(*meshes[0])), Shader::standard));
+        
         container.push_back(std::move(object));
     } else {
         Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
@@ -50,8 +53,8 @@ vector<shared<Entity>> SceneData::ImportEntities() {
 }
 vector<shared<Model>> SceneData::ImportModels(){
     vector<shared<Model>> models;
-    if (childrenData) {
-        for (uint32_t id : childrenData->children3D()) {
+    if (children) {
+        for (uint32_t id : children->children3D()) {
             AddModel(models, id);
         }
     } else if (!meshes.empty() && meshes[0]) {
@@ -63,14 +66,13 @@ vector<shared<Model>> SceneData::ImportModels(){
     return models;
 }
 void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id) {
-    Logger::Log(IMPORT, INFO) << "[" << id << "] Entity " << objectNames[id];
+    Logger::Log(IMPORT, INFO) << "[" << id << "] Entity " << names[id];
     
-    shared<Entity> entity = std::make_shared<Entity>(objectNames[id], parent);
+    shared<Entity> entity = make_shared<Entity>(names[id], parent);
     entity->AddComponent<Transform>();
     entity->AddComponent<Renderer>(LoadModel(id));
     
-    // If GetParent() returns null, parent is root
-    if (parent->GetParent()) {
+    if (parent && parent->HasComponent<Transform>()) {
         Transform* parentTransform = parent->GetComponent<Transform>();
         entity->GetComponent<Transform>()->SetScale(parentTransform->GetScale());
         entity->GetComponent<Transform>()->SetRotation(parentTransform->GetRotation());
@@ -90,17 +92,17 @@ void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity
     container.push_back(entity);
     
     /* Recursively add children */
-    for (std::size_t childId : objects[id]->children()) {
-        AddEntity(container, entity, childId);
+    for (size_t childID : objects[id]->children()) {
+        AddEntity(container, entity, childID);
     }
 }
 void SceneData::AddModel(vector<shared<Model>>& container, uint32_t id) {
-    Logger::Log(IMPORT, INFO) << "[" << id << "] Model" << objectNames[id];
+    Logger::Log(IMPORT, INFO) << "[" << id << "] Model" << names[id];
     
     container.push_back(LoadModel(id));
     
-    for (std::size_t childId : objects[id]->children()) {
-        AddModel(container, childId);
+    for (size_t childID : objects[id]->children()) {
+        AddModel(container, childID);
     }
 }
 shared<Model> SceneData::LoadModel(uint32_t id) {

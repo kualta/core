@@ -29,7 +29,7 @@ namespace core {
 template<typename T>
 void Layer::Link(T& obj) {
     assertSupportedType<T>();
-    std::vector<T*>& container = GetContainerForType<T>();
+    vector<T*>& container = GetContainerForType<T>();
 
     if (IsLinked(obj)) {
         Logger::Log(INTERNAL, WARN_HERE) << "Layer " << std::quoted(name) << " is already linked with " << obj.GetInfo();
@@ -41,7 +41,7 @@ void Layer::Link(T& obj) {
 template<typename T>
 void Layer::Unlink(T& obj) {
     assertSupportedType<T>();
-    std::vector<T*>& container = GetContainerForType<T>();
+    vector<T*>& container = GetContainerForType<T>();
 
     container.erase(std::remove_if(container.begin(),
                                    container.end(),
@@ -50,7 +50,7 @@ void Layer::Unlink(T& obj) {
 template<typename T>
 bool Layer::IsLinked(T& obj) {
     assertSupportedType<T>();
-    std::vector<T*>& container = GetContainerForType<T>();
+    vector<T*>& container = GetContainerForType<T>();
 
     auto item = std::find(container.begin(), container.end(), &obj);
     return item != container.end();
