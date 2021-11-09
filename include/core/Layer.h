@@ -32,7 +32,7 @@
 
 namespace core {
 
-class Layer : public Object, public NamedObjectContainer<Layer>, public IDrawable {
+class Layer : public Object, public IDrawable, public NamedObjectContainer<Layer> {
 public:
     explicit Layer(const string& name);
 
@@ -62,9 +62,9 @@ protected:
     template<typename T>
     vector<T*>& GetContainerForType();
 
-    std::vector<Entity*> entities;
-    std::vector<Camera*> cameras;
-    std::vector<Light*>  lights;
+    vector<Entity*> entities { };
+    vector<Camera*> cameras  { };
+    vector<Light*>  lights   { };
 
 private:
 

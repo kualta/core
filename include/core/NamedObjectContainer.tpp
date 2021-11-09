@@ -36,11 +36,11 @@ vector<shared<T>> NamedObjectContainer<T>::container { };
 
 template<typename T>
 bool NamedObjectContainer<T>::Exists(const string& name) {
-    return std::any_of(container.begin(), container.end(), [&](const shared<T>& obj) { return obj->GetName() == name; });
+    return std::any_of(container.begin(), container.end(), [&](shared<T>& obj) { return obj->GetName() == name; });
 }
 template<typename T>
 void NamedObjectContainer<T>::Delete(const string& name) {
-    Get(name).reset;
+    NamedObjectContainer<T>::Get(name).reset;
 }
 template<typename T>
 shared<T> NamedObjectContainer<T>::Create(const string& name) {
@@ -52,14 +52,13 @@ shared<T> NamedObjectContainer<T>::Create(const string& name) {
     
     shared<T> obj = make_shared<T>(name);
     container.push_back(std::move(obj));
-    
     return container.back();
 }
 template<typename T>
 shared<T> NamedObjectContainer<T>::Get(const string& name) {
-    auto obj = std::find_if(container.begin(), container.end(), [&](shared<T>& o) { return o->GetName() == name; });
-    if (obj != container.end()) {
-        return *obj;
+    auto item = std::find_if(container.begin(), container.end(), [&](shared<T>& o) { return o->GetName() == name; });
+    if (item != container.end()) {
+        return *item;
     } else {
         return Create(name);
     }

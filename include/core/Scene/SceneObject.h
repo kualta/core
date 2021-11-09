@@ -34,18 +34,18 @@ namespace core {
 template<typename T>
 class SceneObject {
 public:
-    SceneObject(const shared<T>& parent);
+    SceneObject(shared<T> parent);
     virtual ~SceneObject();
     
-    shared<T>& GetParent();
+    shared<T> GetParent();
     vector<shared<T>>& GetChildren();
     
-    void SetParent(const shared<T>& newParent);
+    void SetParent(shared<T> newParent);
     void DestroyChildren();
 
 protected:
     
-    shared<T> parent;
+    weak<T> parent;
     vector<shared<T>> children;
 
 };

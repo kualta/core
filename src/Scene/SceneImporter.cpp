@@ -42,10 +42,10 @@
 
 namespace core {
 
-unique<Trade::AbstractImporter> SceneImporter::importer { nullptr };
-
+SceneImporter::SceneImporter() {
+    InitImporter();
+}
 void SceneImporter::InitImporter() {
-    manager.setPreferredPlugins("GltfImporter", { "CgltfImporter" });
     importer = manager.loadAndInstantiate("AnySceneImporter");
     if (!importer) {
         Logger::Log(IMPORT, ERR_HERE) << "Failed to load or instantiate importer";
@@ -61,17 +61,16 @@ void SceneImporter::OpenFile(const string& filepath) {
     Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
 }
 shared<SceneData> SceneImporter::ImportScene(const string& filepath) {
-    unique<SceneImporter> sceneImporter = std::make_unique<SceneImporter>();
+    if (!importer) { InitImporter(); }
+    OpenFile(filepath);
     
-    if (!importer) { sceneImporter->InitImporter(); }
-    sceneImporter->OpenFile(filepath);
-
     shared<SceneData> data = make_shared<SceneData>();
-    sceneImporter->ImportChildrenData(*data);
-    sceneImporter->ImportObjectData(*data);
-    sceneImporter->ImportMaterials(*data);
-    sceneImporter->ImportTextures(*data);
-    sceneImporter->ImportMeshes(*data);
+    ImportChildrenData(*data);
+    ImportObjectData(*data);
+    ImportMaterials(*data);
+    ImportTextures(*data);
+    ImportMeshes(*data);
+    
     importer->close();
     
     return data;

@@ -32,10 +32,10 @@ template<typename T>
 class NamedObjectContainer {
 public:
     
-    static bool Exists(const string& obj);
+    static bool Exists(const string& name);
     static void Delete(const string& name);
     static shared<T> Create(const string& name);
-    static shared<T> Get(const string& o);
+    static shared<T> Get(const string& name);
 
 protected:
     

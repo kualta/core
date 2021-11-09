@@ -25,6 +25,8 @@
 
 namespace core {
 
-PluginManager::Manager<Trade::AbstractImporter> Importer::manager { };
+Importer::Importer() : Object("Plugin Manager"), manager{ } {
+    manager.setPreferredPlugins("GltfImporter", { "CgltfImporter" });
+}
 
 }

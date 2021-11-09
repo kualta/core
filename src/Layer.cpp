@@ -21,15 +21,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
 #include <core/Layer.h>
-#include <core/Logger.h>
 #include <core/Entity.h>
 #include <core/LayerLinked.h>
 #include <core/Components/Camera.h>
 
 #include <algorithm>
 #include <iomanip>
-
 
 namespace core {
 

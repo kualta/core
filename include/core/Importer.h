@@ -25,6 +25,7 @@
 #define CORE_IMPORTER_H
 
 #include "Essentials.h"
+#include "Object.h"
 
 #include <Corrade/PluginManager/Manager.h>
 #include <Magnum/Trade/AbstractImporter.h>
@@ -32,10 +33,11 @@
 using namespace Magnum;
 namespace core {
 
-class Importer {
+class Importer : public Object {
 public:
+    Importer();
 
-    static PluginManager::Manager<Trade::AbstractImporter> manager;
+    PluginManager::Manager<Trade::AbstractImporter> manager;
 
 };
 
