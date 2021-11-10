@@ -44,7 +44,9 @@ protected:
     void Stop() override;
 
     CameraList cameraList { };
-
+    
+    shared<Scene> defaultScene;
+    
 };
 
 
