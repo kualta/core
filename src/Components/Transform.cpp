@@ -28,18 +28,18 @@
 namespace core {
 
 Transform::Transform(Entity& entity, const string& name)
-: IComponent(entity, name), parentTransform(const_cast<Matrix4&>(Math::identityMatrix)) {
+: IComponent(entity, name), parentTransform(const_cast<Matrix4*>(&Math::identityMatrix)) {
     entity.assertExistingComponent<Transform>();
     
     if (entity.GetParent() && entity.GetParent()->HasComponent<Transform>()) {
-        parentTransform = entity.GetParent()->GetComponent<Transform>()->GetTransformMatrix();
+        SetParent(entity.GetParent()->GetComponent<Transform>());
     }
 }
 void Transform::Tick() {
 
 }
 void Transform::UpdateTransform() {
-    localTransform = parentTransform * Matrix4::from(rotation.toMatrix(), position) * Matrix4::scaling(scale);
+    localTransform = (*parentTransform) * Matrix4::from(rotation.toMatrix(), position) * Matrix4::scaling(scale);
     OnTransformChange.Trigger(localTransform);
 }
 Matrix4& Transform::GetTransformMatrix() {
@@ -55,7 +55,7 @@ Vector3& Transform::GetScale() {
     return scale;
 }
 void Transform::SetParent(Transform* parent) {
-    parentTransform = parent->GetTransformMatrix();
+    parentTransform = &parent->GetTransformMatrix();
 }
 void Transform::SetPosition(Vector3& vec) {
     position = vec;

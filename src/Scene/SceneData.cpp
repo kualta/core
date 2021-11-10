@@ -67,16 +67,9 @@ void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity
     entity->AddComponent<Transform>();
     entity->AddComponent<Renderer>(SceneData::LoadModel(id));
     
-    if (parent && parent->HasComponent<Transform>()) {
-        Transform* parentTransform = parent->GetComponent<Transform>();
-        entity->GetComponent<Transform>()->SetScale(parentTransform->GetScale());
-        entity->GetComponent<Transform>()->SetRotation(parentTransform->GetRotation());
-        entity->GetComponent<Transform>()->SetPosition(parentTransform->GetPosition());
-    }
-    
-    entity->GetComponent<Transform>()->Scale(objects[id]->transformation().scaling());
-    entity->GetComponent<Transform>()->Rotate(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
-    entity->GetComponent<Transform>()->Translate(objects[id]->transformation().translation());
+    entity->GetComponent<Transform>()->SetPosition(objects[id]->transformation().translation());
+    entity->GetComponent<Transform>()->SetRotation(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
+    entity->GetComponent<Transform>()->SetScale(objects[id]->transformation().scaling());
     
     container.push_back(entity);
     

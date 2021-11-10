@@ -75,8 +75,8 @@ protected:
     /** Vector representing scale of the entity by x, y and z axis */
     Vector3    scale    { 1, 1, 1 };
 
-    Matrix4     localTransform;
-    Matrix4&    parentTransform;
+    Matrix4     localTransform { };
+    Matrix4*    parentTransform;
 
 };
 
