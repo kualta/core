@@ -16,7 +16,6 @@ option(CORE_LOG_FULL_PATH "LOG_HERE adds full filepath to log"             OFF)
 
 # Adds core::VkRenderer -> core::Renderer kind of typedefs. Gives better looking client-side
 # code, but you will not be able to include two modules with same typedefs in the same file
-# (e.g. VkRenderer and BgfxRenderer)
 option(CORE_SIMPLIFY_SYNTAX "Adds typedefs for modules and components"     ON)
 
 

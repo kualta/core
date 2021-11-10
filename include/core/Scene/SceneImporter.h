@@ -43,14 +43,13 @@ public:
      * @param filepath - path to scene file
      * @return core::SceneData* data
      */
-    shared<SceneData> ImportScene(const string& filepath);
+    shared<SceneData> Import(const string& filepath);
     
 protected:
     
-    static GL::TextureFormat GetTextureFormat(PixelFormat pixelFormat);
-    
     void InitImporter();
     void OpenFile(const string& filepath);
+    void CloseFile();
     
     void ImportChildrenData(SceneData& data);
     void ImportObjectData(SceneData& data);

@@ -71,6 +71,7 @@ enum LogLevel {
     WARN,
     ERR,
 };
+
 enum PassInfo {
     SUCCESS,
     NO_INFO,
@@ -84,9 +85,10 @@ struct LogPlace {
     int32_t lineNumber;
 };
 
-class Logger : public Singleton<Logger>, public Object {
+class Logger : public Object {
 public:
     Logger();
+    ~Logger() = default;
 
     /**
      * Creates a Log entry
@@ -96,17 +98,6 @@ public:
     static LogEntry Log(ObjectTag tag = GENERAL, LogLevel level = INFO, const LogPlace& place = { });
 
     /**
-     * Adds current time stamp to string stream
-     * @note Format: HH.MM.SS.ms
-     * @note CORE_LOG_DATE defined macro changes format to YY/MM/DD HH:MM:SS.ms
-     */
-    static std::stringstream& LogTimeStamp(std::stringstream& stream);
-
-    static std::stringstream& LogTagText(std::stringstream& stream, ObjectTag tag);
-
-    static std::stringstream& LogLevelText(std::stringstream& stream, LogLevel level);
-
-    /**
      * Sets width and fill char for next value in stream
      * @param stream - stream to set values to
      * @param ch - char to fill the width with
@@ -114,13 +105,73 @@ public:
      * @return std::stringstream&
      */
     static std::stringstream& FillWidth(std::stringstream& stream, const char& ch, const int8_t& width);
-
-    static string GetLogTypeText(ObjectTag tag);
+    
+    /**
+     * Set minimal LogLevel for the log entry to appear
+     * @note default: LogLevel::INFO
+     * @details if log entry level is lower than minimal, it will be skipped in the output stream
+     */
+    static void SetMinLogLevel(LogLevel level);
+    
+    /**
+     * Get minimal LogLevel for log entry to appear
+     * @return
+     */
+    static LogLevel GetMinLogLevel();
+    
+    /**
+     * Get ObjectTag text
+     * @note Format: |MODULE|
+     */
+    static string GetObjectTagText(ObjectTag tag);
+    
+    /**
+     * Get LogLevel text
+     * @note Format: ERROR!, WARN:, or empty string
+     */
     static string GetLogLevelText(LogLevel level);
-    static string GetPlaceText(const LogPlace& place);
+    
+    /**
+     * Get LogPlace text
+     * @note Format: - at [filename::line]
+     */
+    static string GetLogPlaceText(const LogPlace& place);
+    
+    /**
+     * Get PassInfo text
+     * @note Format: - success, - failed or empty string
+     */
     static string GetPassText(PassInfo success);
+    
+    /**
+     * Convert all characters in string to uppercase
+     */
     static string ToUpper(string str);
 
+protected:
+    friend class LogEntry;
+    
+    /**
+     * Adds current time stamp to string stream
+     * @note Format: HH.MM.SS.ms
+     * @note CORE_LOG_DATE defined macro changes format to YY/MM/DD HH:MM:SS.ms
+     */
+    static std::stringstream& LogTimeStamp(std::stringstream& stream);
+    
+    /**
+     * Adds ObjectTag text to string stream
+     * @note Format: |MODULE|
+     */
+    static std::stringstream& LogTagText(std::stringstream& stream, ObjectTag tag);
+    
+    /**
+     * Adds LogLevel text to string stream
+     * @note Format: ERROR!, WARN:, or empty string
+     */
+    static std::stringstream& LogLevelText(std::stringstream& stream, LogLevel level);
+    
+    static LogLevel minLogLevel;
+    
 }; // class Logger
 
 class LogEntry {
@@ -130,16 +181,18 @@ public:
 
     template<class T>
     LogEntry& operator<<(const T& thing) {
-        logStream << thing;
+        stream << thing;
         return *this;
     };
 
 private:
-    LogLevel level;
-    LogPlace logPlace;
-    std::stringstream logStream;
-    std::ostream& output;
-}; // class Log
+    
+    LogPlace            logPlace;
+    LogLevel            level;
+    std::ostream&       outStream;
+    std::stringstream   stream;
+    
+}; // class LogEntry
 
 /**
  * Global wraper of Logger::Log for rapid development

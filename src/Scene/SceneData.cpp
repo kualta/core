@@ -26,7 +26,6 @@
 #include <core/Model.h>
 
 #include <Corrade/Containers/Pointer.h>
-#include <Corrade/Containers/Array.h>
 #include <Corrade/Containers/PointerStl.h>
 #include <Magnum/Trade/ObjectData3D.h>
 #include <Magnum/Trade/MeshObjectData3D.h>
@@ -40,11 +39,7 @@ vector<shared<Entity>> SceneData::ImportEntities() {
             SceneData::AddEntity(container, Scene::GetCurrent()->Root(), id);
         }
     } else if (!meshes.empty() && meshes[0]) {
-        shared<Entity> object = make_shared<Entity>("Entity", Scene::GetCurrent()->Root());
-        object->AddComponent<Transform>();
-        object->AddComponent<Renderer>(make_shared<Model>(make_shared<Mesh>(&(*meshes[0])), Shader::standard));
-        
-        container.push_back(std::move(object));
+        SceneData::AddEntity(container, Scene::GetCurrent()->Root(), 0);
     } else {
         Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes";
     }
@@ -52,25 +47,25 @@ vector<shared<Entity>> SceneData::ImportEntities() {
     return container;
 }
 vector<shared<Model>> SceneData::ImportModels(){
-    vector<shared<Model>> models;
+    vector<shared<Model>> container;
     if (children) {
         for (uint32_t id : children->children3D()) {
-            AddModel(models, id);
+            SceneData::AddModel(container, id);
         }
     } else if (!meshes.empty() && meshes[0]) {
-        models.push_back(make_shared<Model>(make_shared<Mesh>(&(*meshes[0])), Shader::standard));
+        SceneData::AddModel(container, 0);
     } else {
         Logger::Log(IMPORT, WARN_HERE) << "SceneData does not contain any meshes or SceneData";
     }
     
-    return models;
+    return container;
 }
 void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id) {
     Logger::Log(IMPORT, INFO) << "[" << id << "] Entity " << names[id];
     
     shared<Entity> entity = make_shared<Entity>(names[id], parent);
     entity->AddComponent<Transform>();
-    entity->AddComponent<Renderer>(LoadModel(id));
+    entity->AddComponent<Renderer>(SceneData::LoadModel(id));
     
     if (parent && parent->HasComponent<Transform>()) {
         Transform* parentTransform = parent->GetComponent<Transform>();
@@ -79,15 +74,9 @@ void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity
         entity->GetComponent<Transform>()->SetPosition(parentTransform->GetPosition());
     }
     
-    if (objects[id]->flags() & Trade::ObjectFlag3D::HasTranslationRotationScaling) {
-        entity->GetComponent<Transform>()->Scale(objects[id]->scaling());
-        entity->GetComponent<Transform>()->Rotate(objects[id]->rotation());
-        entity->GetComponent<Transform>()->Translate(objects[id]->translation());
-    } else {
-        entity->GetComponent<Transform>()->Scale(objects[id]->transformation().scaling());
-        entity->GetComponent<Transform>()->Rotate(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
-        entity->GetComponent<Transform>()->Translate(objects[id]->transformation().translation());
-    }
+    entity->GetComponent<Transform>()->Scale(objects[id]->transformation().scaling());
+    entity->GetComponent<Transform>()->Rotate(Quaternion::fromMatrix(objects[id]->transformation().rotation()));
+    entity->GetComponent<Transform>()->Translate(objects[id]->transformation().translation());
     
     container.push_back(entity);
     
@@ -99,20 +88,21 @@ void SceneData::AddEntity(vector<shared<Entity>>& container, const shared<Entity
 void SceneData::AddModel(vector<shared<Model>>& container, uint32_t id) {
     Logger::Log(IMPORT, INFO) << "[" << id << "] Model" << names[id];
     
-    container.push_back(LoadModel(id));
+    container.push_back(SceneData::LoadModel(id));
     
     for (size_t childID : objects[id]->children()) {
-        AddModel(container, childID);
+        SceneData::AddModel(container, childID);
     }
 }
 shared<Model> SceneData::LoadModel(uint32_t id) {
     shared<Material> material = make_shared<Material>();
     const unique<Trade::ObjectData3D>& object = objects[id];
+    
     if (object->instanceType() == Trade::ObjectInstanceType3D::Mesh && id != -1 && meshes[id]) {
         const int32_t materialID = dynamic_cast<const Trade::MeshObjectData3D*>(object.get())->material();
         
         if (materialID != -1 && materials[materialID]) {
-            SetTextures(material, materialID);
+            SceneData::SetTextures(material, materialID);
         }
     }
     
