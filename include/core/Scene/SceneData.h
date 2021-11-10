@@ -73,12 +73,34 @@ public:
 
 protected:
     
+    /**
+     * Add entity and its children to container
+     * @param container - container to add Entities to
+     * @param parent - parent of the root nodes
+     * @param id - SceneData Entity id
+     */
     void AddEntity(vector<shared<Entity>>& container, const shared<Entity>& parent, uint32_t id);
+    
+    /**
+     * Add Model and its children to container
+     * @param container - container to add Models to
+     * @param id - SceneData Model id
+     */
     void AddModel(vector<shared<Model>>& container, uint32_t id);
+    
+    /**
+     * Add textures to the material
+     * @param material - Material to add textures to
+     * @param id - SceneData Material id
+     */
     void SetTextures(const shared<Material>& material, uint32_t id);
     
+    /**
+     * Load Model from SceneData
+     * @param id - id of the model
+     * @return shared<Model>
+     */
     shared<Model> LoadModel(uint32_t id);
-    
     
 };
 
