@@ -21,25 +21,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
 #include <core/Logger.h>
+#include <core/ObjectTag.h>
+
 #include <iostream>
 #include <ctime>
 #include <utility>
-#include "core/ObjectTag.h"
 
 namespace core {
+
+LogLevel Logger::minLogLevel { INFO };
 
 Logger::Logger() : Object("Logger") {
 
 }
 LogEntry Logger::Log(ObjectTag tag, LogLevel level, const LogPlace& place) {
     switch (level) {
-        case   ERR: return core::LogEntry {std::cout, ERR, tag, place };
-        case  WARN: return core::LogEntry {std::cout, WARN, tag, place };
-        case  INFO: return core::LogEntry {std::cout, INFO, tag, place };
-        case DEBUG: return core::LogEntry {std::cout, DEBUG, tag, place };
+        case   ERR: return LogEntry { std::cerr, ERR,   tag, place };
+        case  WARN: return LogEntry { std::cerr, WARN,  tag, place };
+        case  INFO: return LogEntry { std::cout, INFO,  tag, place };
+        case DEBUG: return LogEntry { std::cout, DEBUG, tag, place };
     }
-    return core::LogEntry {std::cout, ERR, INTERNAL };
+    return LogEntry { std::cout, ERR, INTERNAL };
 }
 string Logger::GetPassText(PassInfo success) {
    string text;
@@ -64,7 +68,7 @@ string Logger::GetLogLevelText(LogLevel level) {
 
     return text;
 }
-string Logger::GetLogTypeText(ObjectTag tag) {
+string Logger::GetObjectTagText(ObjectTag tag) {
     string text;
 
     switch (tag) {
@@ -84,26 +88,21 @@ string Logger::GetLogTypeText(ObjectTag tag) {
 
     return text;
 }
-string Logger::GetPlaceText(const LogPlace& place) {
+string Logger::GetLogPlaceText(const LogPlace& place) {
     // TODO: Add build option to include place.functionName in the text
 
-    if ( !place.exist ) {
-        return "";
-    }
+    if ( !place.exist ) { return ""; }
 
     string text = " - at [";
-
-    text += place.fileName;
-    text += ":";
-    text += std::to_string(place.lineNumber);
-    text += "]";
+    text        += place.fileName;
+    text        += ":";
+    text        += std::to_string(place.lineNumber);
+    text        += "]";
 
     return text;
 }
-// FIXME: That's way too heavy for every single log, refactoring needed
 std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
     auto now = std::chrono::system_clock::now();
-
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(now);
     auto fraction = now - seconds;
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(fraction);
@@ -134,7 +133,7 @@ std::stringstream& Logger::LogTimeStamp(std::stringstream& stream) {
     return stream;
 }
 std::stringstream &Logger::LogTagText(std::stringstream &stream, ObjectTag tag) {
-    stream << GetLogTypeText(tag);
+    stream << GetObjectTagText(tag);
 
     return stream;
 }
@@ -153,24 +152,35 @@ string Logger::ToUpper(string str) {
     std::transform(str.begin(), str.end(), str.begin(), ::toupper);
     return std::move(str);
 }
-LogEntry::~LogEntry() {
-    logStream << Logger::GetPlaceText(logPlace);
-    logStream << "\n";
-    output << logStream.rdbuf();
-    output.flush();
+void Logger::SetMinLogLevel(LogLevel level) {
+    minLogLevel = level;
 }
-LogEntry::LogEntry(std::ostream &out, LogLevel level, ObjectTag tag, LogPlace logPlace)
-: level(level),
-logPlace(std::move(logPlace)),
-output(out)
+LogLevel Logger::GetMinLogLevel() {
+    return minLogLevel;
+}
+LogEntry::~LogEntry() {
+    stream << Logger::GetLogPlaceText(logPlace);
+    stream << "\n";
+    
+    if (level < Logger::minLogLevel) { return; }
+    
+    outStream << stream.rdbuf();
+    outStream.flush();
+}
+LogEntry::LogEntry(std::ostream& out, LogLevel level, ObjectTag tag, LogPlace logPlace)
+: outStream(out),
+  level(level),
+  logPlace(std::move(logPlace))
 {
-    logStream << "- ";
-    Logger::LogTimeStamp(logStream);
-    Logger::LogTagText(logStream, tag);
-    Logger::LogLevelText(logStream, level);
+    if (level < Logger::minLogLevel) { return; } // TODO: Add mandatory file logging
+    
+    stream << "- ";
+    Logger::LogTimeStamp(stream);
+    Logger::LogTagText(stream, tag);
+    Logger::LogLevelText(stream, level);
 }
 
-LogEntry Log(ObjectTag tag, LogLevel level, const LogPlace &place) {
+LogEntry Log(ObjectTag tag, LogLevel level, const LogPlace& place) {
     return Logger::Log(tag, level, place);
 }
 

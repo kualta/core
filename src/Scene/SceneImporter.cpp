@@ -104,7 +104,7 @@ void SceneImporter::ImportTextures(SceneData& data) {
             Logger::Log(IMPORT, WARN_HERE) << " | Image " << imageID << " failed to load, skipping";
             continue;
         }
-        Logger::Log(IMPORT, INFO) << " | Image format: " << (int) imageData->format();
+        Logger::Log(IMPORT, DEBUG) << " | Image format: " << (int) imageData->format();
     
         GL::Texture2D texture;
         texture
