@@ -28,7 +28,7 @@ namespace core {
 SceneModule::SceneModule()
 : IModule("Scene", SCENE)
 {
-
+    defaultScene = Scene::Get("Default");
 }
 void SceneModule::Start() {
     std::for_each(Entity::instances.begin(), Entity::instances.end(),   [&](Entity* e) { e->Start(); } );
