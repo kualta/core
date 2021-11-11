@@ -45,11 +45,15 @@
 using namespace Magnum;
 namespace core {
 
-class SceneData {
+/**
+ * Owns imported scene data
+ * @details Meshes, Materials, ObjectData, Textures, ChildData, Names
+ */
+struct SceneData {
 public:
     
     /*
-     * Creates entities with models from SceneData
+     * Creates entities with models from this SceneData
      * @note Each Entity in return vector has Transform and Renderer components added
      * @param sceneData - SceneData to import from
      * @return vector<shared<Entity>>
@@ -57,19 +61,31 @@ public:
     vector<shared<Entity>> ImportEntities();
     
     /**
-     * Imports models from SceneData
+     * Imports models from this SceneData
      * @param sceneData - SceneData to import from
      * @return vector<shared<Model>>
      */
     vector<shared<Model>> ImportModels();
     
+    
+    /** Scene materials */
     vector<optional<Trade::MaterialData>> materials;
+    
+    /** Scene objects */
     vector<unique<Trade::ObjectData3D>>   objects;
+    
+    /** Scene textures */
     vector<optional<GL::Texture2D>>       textures;
+    
+    /** Scene object children data */
+    optional<Trade::SceneData>            children;
+    
+    /** Scene meshes */
     vector<optional<GL::Mesh>>            meshes;
+    
+    /** Scene object names */
     vector<string>                        names;
     
-    optional<Trade::SceneData>            children;
 
 protected:
     

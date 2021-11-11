@@ -25,7 +25,6 @@
 #include <core/Components.h>
 #include <core/Model.h>
 
-#include <Corrade/Containers/Pointer.h>
 #include <Corrade/Containers/PointerStl.h>
 #include <Magnum/Trade/ObjectData3D.h>
 #include <Magnum/Trade/MeshObjectData3D.h>

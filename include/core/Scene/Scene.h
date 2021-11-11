@@ -31,20 +31,38 @@
 
 namespace core {
 
-class Scene : public Object, public NamedObjectContainer<Scene>, public std::enable_shared_from_this<Scene> {
+/**
+ * Describes parent/child Entity relationships
+ */
+class Scene : public Object, public NamedObjectContainer<Scene> {
 public:
     explicit Scene(const string& name);
     virtual ~Scene();
 
+    /**
+     * Get root entity of this scene
+     * @return shared_ptr Entity
+     */
     shared<Entity> Root();
     
+    /**
+     * Get current scene
+     * @throws std::logic_error if no scene is set as current
+     * @note Call to Scene::Get(name) implicitly sets first created scene as current
+     */
     static Scene* GetCurrent();
-    static void SetCurrent(shared<Scene> scene);
+    
+    /**
+     * Set scene as current
+     */
+    static void SetCurrent(const shared<Scene>& scene);
     
 protected:
     
+    /** Root Entity node */
     const shared<Entity> root;
     
+    /** Current scene */
     static Scene* current;
 
 };

@@ -1,3 +1,6 @@
+/**
+ * Check Script.tpp for template definitions
+ */
 /*
  MIT License
  
@@ -30,39 +33,34 @@
 
 namespace core {
 
+/**
+ * Handles lifetime of ScriptedBehaviour, passes all ITcker calls to it
+ */
 template<typename T>
 class Script : public IComponent {
-    static_assert(std::is_base_of<core::ScriptedBehaviour, T>::value, "Script T must inherit from ScriptedBehaviour");
+static_assert(std::is_base_of<ScriptedBehaviour, T>::value, "Script T must inherit from ScriptedBehaviour");
 
 public:
+    
     Script(Entity& parent, const string& name = "Script");
     ~Script();
 
-    void FixedTick() override { scriptObj->FixedTick(); }
-
-    void EarlyTick() override { scriptObj->EarlyTick(); };
-
-    void Tick()      override { scriptObj->Tick(); };
-
-    void LateTick()  override { scriptObj->LateTick(); }
-
 protected:
+    
+    void FixedTick() override;
+    void EarlyTick() override;
+    void Start() override;
+    void Tick() override;
+    void Stop() override;
+    void LateTick() override;
+    
 
-    ScriptedBehaviour* scriptObj;
+    /** Attached ScriptedBehaviour */
+    ScriptedBehaviour* scriptedBehaviour;
 };
 
-template<typename T>
-Script<T>::Script(Entity &parent, const string &name)
-: IComponent(parent, name) {
-    scriptObj = new T;
-    scriptObj->SetEntity(entity);
-}
-template<typename T>
-Script<T>::~Script() {
-    delete scriptObj;
-}
-// class
-
 } // namespace core
+
+#include "Script.tpp"
 
 #endif //CORE_SCRIPT_H

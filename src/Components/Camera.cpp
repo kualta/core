@@ -77,13 +77,13 @@ void Camera::Tick() {
 
 }
 void Camera::Draw() {
-    attachedView->Bind();
+    BindAttachedView();
+    
     for (const shared<Layer>& layer : linkedLayers) {
         layer->Draw();
     }
-    attachedView->Blit();
-
-    GL::defaultFramebuffer.bind();
+    
+    BlitAttachedView();
 }
 void Camera::SetViewport(Vector2i v) {
     if (v.x() == 0 || v.y() == 0) {
@@ -155,6 +155,8 @@ void Camera::BindAttachedView() {
 }
 void Camera::BlitAttachedView() {
     attachedView->Blit();
+    
+    GL::defaultFramebuffer.bind();
 }
 SceneCamera::SceneCamera(Entity& parent, float aspectRatio, Deg fov, float farPlane, float nearPlane)
 : Camera(parent, aspectRatio, fov, farPlane, nearPlane)

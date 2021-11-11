@@ -52,7 +52,7 @@ void SceneImporter::InitImporter() {
     
     if (!importer) {
         Logger::Log(IMPORT, ERR_HERE) << "Failed to load or instantiate importer";
-        throw std::runtime_error("Failed to load or instantiate importer");
+        throw std::logic_error("Failed to load or instantiate importer");
     }
     Logger::Log(IMPORT, DEBUG) << "Loaded scene importer successfully";
 }
@@ -63,7 +63,7 @@ void SceneImporter::OpenFile(const string& filepath) {
     }
     Logger::Log(IMPORT, DEBUG) << "Opened file " << filepath;
 }
-void SceneImporter::CloseFile() {
+void SceneImporter::CloseFile() noexcept {
     importer->close();
 }
 shared<SceneData> SceneImporter::Import(const string& filepath) {

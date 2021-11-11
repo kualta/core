@@ -30,6 +30,13 @@
 
 namespace core {
 
+/**
+ * Passes all core::ITicker calls to every active entity,
+ * Manages cameras list
+ *
+ * @dependencies None
+ * @details Implicitly creates "Default" scene
+ */
 class SceneModule : public IModule {
 public:
     SceneModule();

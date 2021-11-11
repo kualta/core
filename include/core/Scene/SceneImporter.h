@@ -47,14 +47,57 @@ public:
     
 protected:
     
+    /**
+     * Initializes SceneImporter::importer, if it's not yet initialized
+     * @throws std::logic_error if failed to initialize the importer
+     */
     void InitImporter();
-    void OpenFile(const string& filepath);
-    void CloseFile();
     
+    /**
+     * Open file for import
+     * @param filepath - path to file
+     * @throws std::runtime_error if fails to open file
+     */
+    void OpenFile(const string& filepath);
+    
+    /**
+     * Closes currently open file
+     */
+    void CloseFile() noexcept;
+    
+    /**
+     * Add Child object data to SceneData
+     * @note expects that importer is initialized
+     * @see SceneImporter::Import
+     */
     void ImportChildrenData(SceneData& data);
+    
+    /**
+     * Add Object data to SceneData
+     * @note expects that importer is initialized
+     * @see SceneImporter::Import
+     */
     void ImportObjectData(SceneData& data);
+    
+    /**
+     * Add Material data to SceneData
+     * @note expects that importer is initialized
+     * @see SceneImporter::Import
+     */
     void ImportMaterials(SceneData& data);
+    
+    /**
+     * Add Texture data to SceneData
+     * @note expects that importer is initialized
+     * @see SceneImporter::Import
+     */
     void ImportTextures(SceneData& data);
+    
+    /**
+     * Add Mesh data to SceneData
+     * @note expects that importer is initialized
+     * @see SceneImporter::Import
+     */
     void ImportMeshes(SceneData& data);
     
     unique<Trade::AbstractImporter> importer;

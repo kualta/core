@@ -36,13 +36,39 @@ public:
                       const string& windowTitle = "Core Application",
                       const Rect& windowRect = { 0, 0, 1280, 720 });
 
+    /**
+     * Creates new Application
+     * @param title - Title of the new application
+     * @param rect - Rect of the new application (x, y, w, h)
+     */
     void CreateApplication(const string& title, Rect rect);
-
+    
+    /**
+     * Get DPI scaling factor of Window with id
+     * @warning Multiple windows (id > 0) is not yet implemented
+     */
     Vector2  GetWindowDpiScale(uint32_t id = 0);
+    
+    /**
+     * Get size of Window with id
+     * @warning Multiple windows (id > 0) is not yet implemented
+     */
     Vector2i GetWindowSize(uint32_t id = 0);
+    
+    /**
+     * Get framebuffer size of Window with id
+     * @warning Multiple windows (id > 0) is not yet implemented
+     */
     Vector2i GetWindowFrameBufferSize(uint32_t id = 0);
 
+    /**
+     * Calls Application::Swap() and Application::Redraw() on every existing application
+     */
     void SwapRedraw();
+    
+    /**
+     * Calls Application::Redraw() on every existing application
+     */
     void Redraw();
 
 protected:
@@ -53,7 +79,9 @@ protected:
 
 private:
 
-    std::vector<Application*> apps;
+    /** Vector of existing applications */
+    vector<Application*> apps;
+    
     InputModule* inputModule;
 };
 

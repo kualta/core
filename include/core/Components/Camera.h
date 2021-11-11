@@ -35,6 +35,9 @@
 
 namespace core {
 
+/**
+ * Handles perspective projection and Layer::Draw() calls
+ */
 class Camera : public IComponent, public LayerLinked<Camera> {
 public:
     explicit Camera(Entity &parent,
@@ -51,17 +54,62 @@ public:
 
     virtual ~Camera();
 
+    /**
+     * Calls Layer::Draw() on every linked layer
+     * @details Everything on the layer gets drawn onto the attached view
+     */
     void Draw();
 
+    /**
+     * Get internal perspective matrix of the camera
+     * @return Matrix4&
+     */
     Matrix4& GetPerspectiveMatrix();
+    
+    /**
+     * Get internal projection matrix of the camera
+     * @return Matrix4&
+     */
     Matrix4& GetProjectionMatrix();
 
+    /**
+     * Set FOV of the camera
+     * @details Updates internal perspecive matrix of the camera
+     */
     void SetFOV(Deg fov);
+    
+    /**
+     * Set distance to the near clipping plane of the camera
+     * @details Updates internal perspecive matrix of the camera
+     */
     void SetNearPlane(float distance);
+    
+    /**
+     * Set distance to the further clipping plane of the camera
+     * @details Updates internal perspecive matrix of the camera
+     */
     void SetFarPlane(float distance);
+    
+    /**
+     * Set viewport of the camera
+     * @details Updates internal perspecive matrix of the camera
+     */
     void SetViewport(Vector2i viewport);
+    
+    /**
+     * Attach View camera will draw onto
+     */
     void SetView(View& view);
+    
+    /**
+     * Binds currently attached view's framebuffer for draw
+     */
     void BindAttachedView();
+    
+    /**
+     * Blits currently attached view's framebuffer on default one
+     * @details After that, binds back default framebuffer
+     */
     void BlitAttachedView();
 
 protected:
@@ -69,11 +117,32 @@ protected:
     void Tick() override;
     void Start() override;
 
+    /**
+     * Sets internal transfrom matrix
+     * @details Updates internal projection matrix of the camera
+     */
     void SetTransformMatrix(Matrix4& mtx);
+    
+    /**
+     * Recalculates perspective matrix of the camera
+     */
     void UpdatePerspectiveMatrix();
+    
+    /**
+     * Recalculates projection matrix of the camera
+     */
     void UpdateProjectionMatrix();
+    
+    /**
+     * Sets current projection matrix for use on every attached layer
+     */
     void UpdateLayersProjectionMatrix();
+    
+    /**
+     * Modifies projection matrix to match desired aspect ratio
+     */
     void FixAspectRatio();
+    
 
     /** Field of View */
     Deg fov;
@@ -87,13 +156,13 @@ protected:
     /** Near clipping plane distance */
     float nearPlane;
 
-    /**  Far clipping plane distance */
+    /** Far clipping plane distance */
     float farPlane;
 
-    /** Sister transform */
+    /** Sibling transform */
     Transform* transform;
 
-    /** Attached View camera draws onto */
+    /** Attached View camera draws on */
     View* attachedView;
 
     Matrix4* transformMtx;
