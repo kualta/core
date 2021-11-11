@@ -37,12 +37,6 @@ Renderer::Renderer(Entity& parent, const shared<Model>& model, const string& nam
     SetTransformMatrix(transform->GetTransformMatrix());
     transform->OnTransformChange.Subscribe([&](Matrix4& mtx) { SetTransformMatrix(mtx); });
 }
-void Renderer::Start() {
-
-}
-void Renderer::Tick() {
-
-}
 void Renderer::Draw() {
     model->Draw();
 }
@@ -55,8 +49,8 @@ void Renderer::SetTransformMatrix(Matrix4& mtx) {
 }
 void Renderer::SetLight(Light& light) {
     switch (light.GetLightType()) {
-        case Point:         model->SetPointLight(light);        break;
-        case Directional:   model->SetDirectionalLight(light);  break;
+        case Point:         model->SetPointLight(light);          break;
+        case Directional:   model->SetDirectionalLight(light);    break;
         case Spot: throw std::logic_error("Not yet implemented"); break;
         case Area: throw std::logic_error("Not yet implemented"); break;
     }

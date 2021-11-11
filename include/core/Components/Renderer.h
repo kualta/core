@@ -32,17 +32,16 @@
 
 namespace core {
 
+/**
+ * Manages Model for draw
+ */
 class Renderer : public IComponent, public IDrawable {
 public:
     Renderer(Entity& parent,
              const shared<Model>& model,
              const string& name = "Renderer");
 
-
 protected:
-
-    void Start() override;
-    void Tick() override;
 
     /**
      * Draws attached Model
@@ -52,11 +51,25 @@ protected:
      */
     void Draw() override;
 
+    /**
+     * Sets provided projection matrix as current on attached Model
+     */
     void SetProjectionMatrix(Matrix4& mtx) override;
+    
+    /**
+     * Sets provided transformation matrix as current on attached Model
+     */
     void SetTransformMatrix(Matrix4& mtx) override;
+    
+    /**
+     * Sets provided Light as current on attached Model
+     */
     void SetLight(Light& light) override;
 
+    /** Managed Model */
     shared<Model>   model;
+    
+    /** Sibling Transform */
     Transform*      transform { nullptr };
 
 };

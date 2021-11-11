@@ -21,10 +21,49 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-#include <core/Components/Script.h>
+#ifndef CORE_SCRIPT_TPP
+#define CORE_SCRIPT_TPP
+
+#include "Script.h"
 
 namespace core {
 
-
+template<typename T>
+Script<T>::Script(Entity &parent, const string &name)
+: IComponent(parent, name)
+{
+    scriptedBehaviour = new T;
+    scriptedBehaviour->SetEntity(entity);
+}
+template<typename T>
+Script<T>::~Script() {
+    delete scriptedBehaviour;
+}
+template<typename T>
+void Script<T>::FixedTick() {
+    scriptedBehaviour->FixedTick();
+}
+template<typename T>
+void Script<T>::EarlyTick() {
+    scriptedBehaviour->EarlyTick();
+}
+template<typename T>
+void Script<T>::Tick() {
+    scriptedBehaviour->Tick();
+}
+template<typename T>
+void Script<T>::LateTick() {
+    scriptedBehaviour->LateTick();
+}
+template<typename T>
+void Script<T>::Start() {
+    scriptedBehaviour->Start();
+}
+template<typename T>
+void Script<T>::Stop() {
+    scriptedBehaviour->Stop();
+}
 
 } // namespace core
+
+#endif //CORE_SCRIPT_TPP
