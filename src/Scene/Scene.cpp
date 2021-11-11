@@ -31,7 +31,8 @@ namespace core {
 Scene* Scene::current { nullptr };
 
 Scene::Scene(const string& name)
-: Object(name), root { make_shared<Entity>("Root", nullptr) }
+: Object(name),
+  root(make_shared<Entity>("Root", nullptr))
 {
     if (!current) current = this;
 }
@@ -50,7 +51,7 @@ Scene* Scene::GetCurrent() {
     }
     return current;
 }
-void Scene::SetCurrent(shared<Scene> scene) {
+void Scene::SetCurrent(const shared<Scene>& scene) {
     current = scene.get();
 }
 

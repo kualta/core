@@ -40,7 +40,7 @@ SceneObject<T>::~SceneObject() {
 }
 template<typename T>
 shared<T> SceneObject<T>::GetParent() {
-    if (!parent.expired()) { return parent.lock(); }
+    return !parent.expired() ? parent.lock() : nullptr;
 }
 template<typename T>
 vector<shared<T>>& SceneObject<T>::GetChildren() {
