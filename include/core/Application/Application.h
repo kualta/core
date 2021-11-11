@@ -43,12 +43,37 @@ public:
                 Rect           rect = { 0, 0, 1280, 720 },
                 int32_t        args = 0);
 
+    /**
+     * Get DPI scaling factor of current Window
+     * @return Vector2 scaling for (x, y)
+     */
     Vector2 GetDpiScaling();
+    
+    /**
+     * Get size of current Window
+     * @return Vector2i size (h, w)
+     */
     Vector2i GetWindowSize();
+    
+    /**
+     * Get framebuffer size for current Window
+     * @return Vector2i size (h, w)
+     */
     Vector2i GetFrameBufferSize();
 
+    /**
+     * Swap framebuffers for current Window
+     */
     void SwapBuffers();
+    
+    /**
+     * Clear framebuffer
+     */
     void ClearBuffers();
+    
+    /**
+     * Redraw framebuffer
+     */
     void Redraw();
 
 private:

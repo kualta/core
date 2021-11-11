@@ -22,9 +22,6 @@
  SOFTWARE.
  */
 #include <core/Scene/SceneView.h>
-#include <core/Logger.h>
-#include "Magnum/GL/Renderer.h"
-#include "Magnum/GL/AbstractFramebuffer.h"
 
 namespace core {
 
