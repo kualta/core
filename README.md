@@ -1,6 +1,6 @@
 <img alt="Core Engine" height=110 align="right" valign="middle" src="CoreLogo.png">
 
-## FINALLY, A NEAT GAME ENGINE
+# FINALLY, A NEAT GAME ENGINE
 
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
@@ -8,8 +8,8 @@
 ### Check out **[Core Engine Roadmap](https://github.com/lectroMathew/Core/projects/1)**
 
 
-## Building 
-_For full guide, read **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine_
+# Building 
+For full guide, read **[Building](https://github.com/lectroMathew/Core/wiki/Building-Core-Engine)** the engine
 1. Clone the main repository:
 ```
 git clone --recursive https://github.com/lectroMathew/Core.git
@@ -33,8 +33,8 @@ cmake --build ./build --target MyApplication
 > Note: Make sure you're using 64bit version of your compiler
 
 
-## Using the engine
-_For full guide, read **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers_
+# Using the engine
+For full guide, read **[Quick Start](https://github.com/lectroMathew/Core/wiki/Quick-Start-guide)** guide for newcomers
 1. In your application, `#include` all module files you wish to use, together with `CoreConfig.h` header:
 ````c++
 #include <core/Modules.h>
@@ -52,7 +52,7 @@ int main() {
       .Add(NewModule<EngineModule, InputModule>)
       .Add(NewModule<SceneModule>)
       .Add(NewModule<ApplicationModule>);
-  CoreContainer coreContainer = config.Build();
+  shared<Core> core = config.Build();
 ```
 3. Create a window and enter the main engine loop like so:
 ```c++
@@ -72,10 +72,10 @@ Find out how to make more exciting stuff with **Core Engine** by reading archite
 
 Check out **Core Engine [Wiki](https://github.com/lectroMathew/Core/wiki)** for more information and guides
 
-## Contributing
+# Contributing
 Get involved into **Core Engine** development, read **[Contributing](https://github.com/lectroMathew/Core/wiki/Contributing)** guidelines
 
-## License
+# License
 **Core Engine** is destributed under **MIT License**, check [LICENSE](LICENSE) for details
 
 <br>
