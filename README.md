@@ -1,6 +1,6 @@
 <img alt="Core Engine" height=110 align="right" valign="middle" src="CoreLogo.png">
 
-# FINALLY, A NEAT GAME ENGINE
+## FINALLY, A NEAT GAME ENGINE
 
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
