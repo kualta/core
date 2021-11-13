@@ -5,6 +5,26 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen)](LICENSE)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/358e19c958144c918940a8f1a1ad7f6f)](https://www.codacy.com/gh/lectroMathew/Core/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lectroMathew/Core&amp;utm_campaign=Badge_Grade)
 
+
+# Main Features
+
+- Modular architecture
+  - with modern **C++17/20** codebase
+- Full-featured **GUI Module** powered by **[Dear ImGUI](https://github.com/ocornut/imgui)**
+- Easy-to-use **Input Module**
+- Neat **Entity-Component System**
+- High-performance **Event System**
+- **Scene**, **SceneGraph** and **Layers** support
+- Quick **Model Importer**
+  - with all major 3D file formats support
+- On-board **Math library** powered by **[Magnum](https://github.com/mosra/magnum)**
+- Full-featured **Renderer** powered by **[Magnum](https://github.com/mosra/magnum)**
+  - with **PBR Rendering**     _coming in 0.8.0_
+- **Networking Module** _coming in 0.5.0_
+- **Physics Module**    _coming in 0.6.0_
+- **Audio Module**      _coming in 0.7.0_
+- **Editor Module**     _coming in 0.9.0_
+
 ### Check out **[Core Engine Roadmap](https://github.com/lectroMathew/Core/projects/1)**
 
 
