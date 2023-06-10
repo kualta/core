@@ -1,22 +1,27 @@
+# if you're reading this: the links are long dead. 
+# you'll have to update all of those dependencies to the latest versions 
+# and fix all the build errors. They all have been forked by me and all 
+# had modifications to the source code, so there'll be a lot. Sorry lol
+
 [submodule "lib/magnum"]
 	path = lib/magnum
-	url = https://github.com/lectroMathew/magnum.git
+	url = https://github.com/kualta/magnum.git
 [submodule "lib/corrade"]
 	path = lib/corrade
-	url = https://github.com/lectroMathew/corrade.git
+	url = https://github.com/kualta/corrade.git
 [submodule "lib/SDL2-2.0.10"]
 	path = lib/SDL2-2.0.10
-	url = git@github.com:lectroMathew/SDL2-2.0.10.git
+	url = git@github.com:kualta/SDL2-2.0.10.git
 [submodule "lib/magnum-plugins"]
 	path = lib/magnum-plugins
-	url = https://github.com/lectroMathew/magnum-plugins.git
+	url = https://github.com/kualta/magnum-plugins.git
 [submodule "lib/assimp"]
 	path = lib/assimp
-	url = https://github.com/lectroMathew/assimp.git
+	url = https://github.com/kualta/assimp.git
 [submodule "lib/imgui"]
 	path = lib/imgui
-	url = https://github.com/lectroMathew/imgui
+	url = https://github.com/kualta/imgui
 	branch = docking
 [submodule "lib/magnum-integration"]
 	path = lib/magnum-integration
-	url = https://github.com/lectroMathew/magnum-integration
+	url = https://github.com/kualta/magnum-integration

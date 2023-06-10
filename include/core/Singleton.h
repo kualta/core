@@ -6,7 +6,7 @@
 /*
  MIT License
  
- Copyright (c) 2021 lectroMathew <contact@lectro.moe>
+ Copyright (c) 2021 kualta <contact@kualta.dev>
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
